@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { FlexContainer, StyledButton } from "../styled-component/common";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -11,12 +12,23 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <FlexContainer justify="center" align="center" dir="col" height="100vh">
-          <HomeSpan>Welcome My Toy Project</HomeSpan>
-          <StyledButton>Button</StyledButton>
-        </FlexContainer>
-      </main>
+      <div class="outer-scratch">
+        <div class="inner-scratch">
+          <div class="background grain">
+            <FlexContainer
+              justify="center"
+              align="center"
+              dir="col"
+              height="100vh"
+            >
+              <HomeSpan>Welcome My Toy Project</HomeSpan>
+              <Link href="/login">
+                <StyledButton>Login Page</StyledButton>
+              </Link>
+            </FlexContainer>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

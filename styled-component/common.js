@@ -21,15 +21,51 @@ export const FlexContainer = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  background-color: pink;
+  background-color: white;
+  color: black;
+
   border: none;
-  color: white;
+  border-radius: 15px;
+
+  margin: 4px 2px;
   padding: 13px 23px;
+
   text-align: center;
   text-decoration: none;
+
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
-  border-radius: 15px;
   cursor: pointer;
+
+  &:hover {
+    padding: 15px 25px;
+    background-color: blueviolet;
+    color: white;
+  }
+
+  transition: 0.5s;
+`;
+
+export const StyledInput = styled.input`
+  background-color: transparent;
+  border: 0.5px solid white;
+  color: white;
+
+  padding: 13px 18px;
+  text-align: left;
+  text-decoration: none;
+
+  display: flex;
+  font-size: 16px;
+  border-radius: 20px;
+
+  transition: 0.5s;
+
+  &:focus {
+    padding: 15px 20px;
+  }
+
+  &::placeholder {
+    color: wheat;
+  }
 `;
