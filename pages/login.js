@@ -8,11 +8,15 @@ import {
   StyledInput,
 } from "../styled-component/common";
 import { loginAPI } from "@/fetchAPI";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [check, setCheck] = useState(false);
+
+  // NextJs는 useNavigate 대신 useRouter를 사용한다
+  const router = useRouter();
 
   useEffect(() => {
     console.log(check);
@@ -30,6 +34,8 @@ export default function Login() {
 
     if (flag) {
       alert("성공");
+      // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
+      router.push("/");
     } else {
       alert("실패");
     }
