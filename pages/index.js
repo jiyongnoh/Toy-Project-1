@@ -3,15 +3,21 @@ import { FlexContainer } from "../styled-component/common";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
+import { useRecoilState } from "recoil";
+import { log } from "../store/state";
+
 export default function Home() {
   const [loading, setLoading] = useState(false);
+  const [login, setLogin] = useRecoilState(log);
 
   // 1초 뒤에 로딩 상태 true로 변경. 최초 1번만 실행
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(true);
-    }, 1000);
-  }, []);
+    if (!login) {
+      setTimeout(() => {
+        setLoading(true);
+      }, 1000);
+    }
+  }, [login]);
 
   return (
     <MainContainer>

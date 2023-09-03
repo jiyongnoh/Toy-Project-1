@@ -23,9 +23,7 @@ export const FlexContainer = styled.div`
 export const StyledButton = styled.button`
   background-color: #ffffff;
   background-color: rgba(255, 255, 255, 0.05);
-
-  // 불투명 필터
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px); // 불투명 필터
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
   color: white;

@@ -2,26 +2,55 @@ import styled from "styled-components";
 import { StyledButton } from "../styled-component/common";
 import Link from "next/link";
 
+import { useRecoilState } from "recoil";
+import { log } from "../store/state";
+
 export default function Nav() {
+  const [login, setLogin] = useRecoilState(log);
+
   return (
     <NavContainer height="4rem" justify="end">
-      <NavUl>
-        <NavLi>
-          <Link href="/" style={{ textDecoration: "none" }}>
-            <StyledButton>Main</StyledButton>
-          </Link>
-        </NavLi>
-        <NavLi>
-          <Link href="/login" style={{ textDecoration: "none" }}>
-            <StyledButton>Login</StyledButton>
-          </Link>
-        </NavLi>
-        <NavLi>
-          <Link href="/signup" style={{ textDecoration: "none" }}>
-            <StyledButton>Sign Up</StyledButton>
-          </Link>
-        </NavLi>
-      </NavUl>
+      {login ? (
+        <NavUl>
+          <NavLi>
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <StyledButton>Main</StyledButton>
+            </Link>
+          </NavLi>
+          <NavLi>
+            <StyledButton
+              onClick={() => {
+                setLogin(false);
+              }}
+            >
+              LogOut
+            </StyledButton>
+          </NavLi>
+          <NavLi>
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <StyledButton>MyPage</StyledButton>
+            </Link>
+          </NavLi>
+        </NavUl>
+      ) : (
+        <NavUl>
+          <NavLi>
+            <Link href="/" style={{ textDecoration: "none" }}>
+              <StyledButton>Main</StyledButton>
+            </Link>
+          </NavLi>
+          <NavLi>
+            <Link href="/login" style={{ textDecoration: "none" }}>
+              <StyledButton>Login</StyledButton>
+            </Link>
+          </NavLi>
+          <NavLi>
+            <Link href="/signup" style={{ textDecoration: "none" }}>
+              <StyledButton>Sign Up</StyledButton>
+            </Link>
+          </NavLi>
+        </NavUl>
+      )}
     </NavContainer>
   );
 }

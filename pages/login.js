@@ -7,19 +7,26 @@ import {
   StyledInput,
 } from "../styled-component/common";
 import { loginAPI } from "@/fetchAPI";
+
+// Router
 import { useRouter } from "next/router";
+// Recoil
+import { useRecoilState } from "recoil";
+import { log } from "../store/state";
 
 export default function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [check, setCheck] = useState(false);
 
+  const [login, setLogin] = useRecoilState(log);
+
   // NextJs는 useNavigate 대신 useRouter를 사용한다
   const router = useRouter();
 
   useEffect(() => {
-    console.log(check);
-  }, [check]);
+    console.log(log);
+  }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -38,6 +45,7 @@ export default function Login() {
 
     if (flag) {
       alert("성공");
+      setLogin(true);
       // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
       router.push("/");
     } else {
