@@ -21,10 +21,16 @@ export const FlexContainer = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  background-color: white;
-  color: black;
+  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
 
-  border: 0.5px solid black;
+  // 불투명 필터
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  color: white;
+
+  border: none;
   border-radius: 15px;
 
   margin: 4px 2px;
@@ -40,7 +46,6 @@ export const StyledButton = styled.button`
   &:hover {
     padding: 15px 25px;
     background-color: blueviolet;
-    color: white;
   }
 
   transition: 0.5s;
