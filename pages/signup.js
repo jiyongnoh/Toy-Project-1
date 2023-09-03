@@ -7,12 +7,16 @@ import {
   StyledInput,
 } from "../styled-component/common";
 
+import { useRouter } from "next/router";
+
 export default function Signup() {
   const [name, setName] = useState("");
   const [age, setAge] = useState();
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [check, setCheck] = useState(false);
+
+  const router = useRouter();
 
   useEffect(() => {
     console.log(check);
@@ -91,10 +95,19 @@ export default function Signup() {
               <StyledButton
                 onClick={(e) => {
                   e.preventDefault();
-                  console.log("click btn");
+                  console.log("SignUp btn");
                 }}
               >
                 Sign up!
+              </StyledButton>
+              <StyledButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log("Cancle btn");
+                  router.back(); // 뒤로가기
+                }}
+              >
+                Cancle
               </StyledButton>
             </BtnContainer>
           </FormContainer>
