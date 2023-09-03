@@ -108,10 +108,6 @@ export default function Login() {
 
 const LoginPageContainer = styled.main`
   background-image: url("/src/img.jpg");
-
-  position: relative;
-  width: 100%;
-  overflow: hidden;
 `;
 
 const FormContainer = styled.form`

@@ -27,7 +27,12 @@ export default function Nav() {
 }
 
 const NavContainer = styled.div`
-  background-color: #4e11a2;
+  width: 100vw;
+
+  background-color: #5818a8;
+
+  position: fixed;
+  top: 0;
 
   display: flex;
   justify-content: end;
