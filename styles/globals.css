@@ -2,4 +2,16 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: "times";
 }
+
+@font-face {
+  font-family: "NanumSquareB";
+  src: url("/fonts/NanumSquareB.ttf");
+}
+
+@font-face {
+  font-family: "times";
+  src: url("/fonts/times.ttf");
+}
+
