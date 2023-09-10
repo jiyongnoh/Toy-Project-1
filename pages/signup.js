@@ -8,19 +8,61 @@ import {
 } from "../styled-component/common";
 
 import { useRouter } from "next/router";
+import { signupAPI } from "@/fetchAPI";
+// SweetAlert2
+import Swal from "sweetalert2";
 
 export default function Signup() {
-  const [name, setName] = useState("");
-  const [age, setAge] = useState();
+  const [vrNum, setVrNum] = useState("");
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [check, setCheck] = useState(false);
 
   const router = useRouter();
 
-  useEffect(() => {
-    console.log(check);
-  }, [check]);
+  // useEffect(() => {
+  //   console.log(check);
+  // }, [check]);
+
+  const signupHandler = async (e) => {
+    e.preventDefault();
+
+    if (!id || !pwd || !vrNum || !check) {
+      Swal.fire({
+        icon: "error",
+        title: "Input is empty!",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return;
+    }
+
+    const flag = await signupAPI("http://43.201.75.68:4000", {
+      id,
+      pwd,
+      vrNum,
+    });
+
+    console.log(flag);
+
+    if (flag) {
+      Swal.fire({
+        icon: "success",
+        title: "Sign Up Success!",
+        text: "Login Page로 이동합니다",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
+        router.push("/login");
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Sign Up Fail",
+      });
+    }
+  };
 
   return (
     <>
@@ -29,30 +71,6 @@ export default function Signup() {
           {/* Form */}
           <FormContainer>
             <H1>Sign Up</H1>
-            {/* Name Input */}
-            <InputContainer>
-              <StyledInput
-                id="name"
-                placeholder="Name"
-                type="text"
-                value={name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
-              />
-            </InputContainer>
-            {/* Age Input */}
-            <InputContainer>
-              <StyledInput
-                id="age"
-                placeholder="Age"
-                type="number"
-                value={age}
-                onChange={(e) => {
-                  setAge(e.target.value);
-                }}
-              />
-            </InputContainer>
             {/* ID Input */}
             <InputContainer>
               <StyledInput
@@ -77,6 +95,18 @@ export default function Signup() {
                 }}
               />
             </InputContainer>
+            {/* Number Input */}
+            <InputContainer>
+              <StyledInput
+                id="number"
+                placeholder="Serial Number"
+                type="text"
+                value={vrNum}
+                onChange={(e) => {
+                  setVrNum(e.target.value);
+                }}
+              />
+            </InputContainer>
 
             {/* 약관 체크박스 */}
             <CheckboxContainer>
@@ -90,16 +120,11 @@ export default function Signup() {
               <label for="check">약관 동의?</label>
             </CheckboxContainer>
 
-            {/* Submit Button */}
+            {/* Button Container*/}
             <BtnContainer>
-              <StyledButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log("SignUp btn");
-                }}
-              >
-                Sign up!
-              </StyledButton>
+              {/* Submit 버튼 */}
+              <StyledButton onClick={signupHandler}>Sign up!</StyledButton>
+              {/* Cancle 버튼 */}
               <StyledButton
                 onClick={(e) => {
                   e.preventDefault();
