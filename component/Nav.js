@@ -4,9 +4,45 @@ import Link from "next/link";
 
 import { useRecoilState } from "recoil";
 import { log } from "../store/state";
+// Router
+import { useRouter } from "next/router";
+// SweetAlert2
+import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 export default function Nav() {
   const [login, setLogin] = useRecoilState(log);
+  const router = useRouter();
+
+  // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
+  useEffect(() => {
+    if (localStorage.getItem("log")) {
+      setLogin(true);
+    }
+  }, []);
+
+  const logoutHandler = () => {
+    Swal.fire({
+      title: "Do you want to LogOut?",
+      showDenyButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          icon: "success",
+          title: "LogOut Success!",
+          text: "Main Page로 이동합니다",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          setLogin(false);
+          localStorage.removeItem("log");
+          router.push("/");
+        });
+      }
+    });
+  };
 
   return (
     <NavContainer height="4rem" justify="end">
@@ -18,16 +54,10 @@ export default function Nav() {
             </Link>
           </NavLi>
           <NavLi>
-            <StyledButton
-              onClick={() => {
-                setLogin(false);
-              }}
-            >
-              LogOut
-            </StyledButton>
+            <StyledButton onClick={logoutHandler}>LogOut</StyledButton>
           </NavLi>
           <NavLi>
-            <Link href="/" style={{ textDecoration: "none" }}>
+            <Link href="/mypage" style={{ textDecoration: "none" }}>
               <StyledButton>MyPage</StyledButton>
             </Link>
           </NavLi>

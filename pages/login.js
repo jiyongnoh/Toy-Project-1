@@ -13,6 +13,8 @@ import { useRouter } from "next/router";
 // Recoil
 import { useRecoilState } from "recoil";
 import { log } from "../store/state";
+// SweetAlert2
+import Swal from "sweetalert2";
 
 export default function Login() {
   const [id, setId] = useState("");
@@ -24,15 +26,24 @@ export default function Login() {
   // NextJs는 useNavigate 대신 useRouter를 사용한다
   const router = useRouter();
 
+  // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
   useEffect(() => {
-    console.log(log);
+    if (localStorage.getItem("id")) {
+      setId(localStorage.getItem("id"));
+      setCheck(true);
+    }
   }, []);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (!id || !pwd) {
-      alert("똑바로 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "Input is empty!",
+        showConfirmButton: false,
+        timer: 1000,
+      });
       return;
     }
 
@@ -44,12 +55,29 @@ export default function Login() {
     console.log(flag);
 
     if (flag) {
-      alert("성공");
-      setLogin(true);
-      // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
-      router.push("/");
+      Swal.fire({
+        icon: "success",
+        title: "Login Success!",
+        text: "Main Page로 이동합니다",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        setLogin(true);
+        localStorage.setItem("log", true);
+        if (check) {
+          localStorage.setItem("id", id);
+        } else if (localStorage.getItem("id") && !check) {
+          localStorage.removeItem("id");
+        }
+        // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
+        router.push("/");
+      });
     } else {
-      alert("실패");
+      Swal.fire({
+        icon: "error",
+        title: "Login Fail",
+        text: "No Matching Input",
+      });
     }
   };
 
@@ -86,11 +114,12 @@ export default function Login() {
               <input
                 type="checkbox"
                 id="check"
+                checked={check}
                 onClick={(e) => {
                   setCheck(e.target.checked);
                 }}
               />
-              <label for="check">Remeber</label>
+              <label for="check">ID Remeber</label>
             </CheckboxContainer>
 
             <BtnContainer>
