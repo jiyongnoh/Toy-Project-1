@@ -27,6 +27,7 @@ export default function Home() {
     <MainContainer>
       <FlexContainer justify="center" align="center" dir="col" height="100vh">
         <HomeSpan>Welcome My Toy Project</HomeSpan>
+        <HomeSpan>Deploy Success!</HomeSpan>
         {loading ? (
           <Link href="/login" style={{ textDecoration: "none" }}>
             <MainButton>Login</MainButton>
