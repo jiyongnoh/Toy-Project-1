@@ -21,6 +21,7 @@ export default function Nav() {
     }
   }, []);
 
+  // 로그 아웃 핸들러
   const logoutHandler = () => {
     Swal.fire({
       title: "Do you want to LogOut?",
@@ -107,4 +108,8 @@ const NavUl = styled.ul`
 
 const NavLi = styled.li`
   display: flex;
+`;
+
+const NavBtn = styled.button`
+  padding: 0.3rem;
 `;
