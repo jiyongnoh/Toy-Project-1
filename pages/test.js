@@ -96,14 +96,14 @@ export default function Test() {
                 setChat(e.target.value);
               }}
               onKeyPress={(e) => {
-                if (e.key === "Enter") setFlagEnter(true);
+                if (e.key === "Enter" && chat !== "") setFlagEnter(true);
               }}
               type="text"
               placeholder="Ask a question..."
             />
             <button
               onClick={() => {
-                setFlagEnter(true);
+                if (chat !== "") setFlagEnter(true);
               }}
             >
               Send
