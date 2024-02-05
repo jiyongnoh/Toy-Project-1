@@ -1,7 +1,5 @@
 import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
-import Image from "next/image";
-import soyes_logo from "../public/src/soyesKids_Logo.png";
 
 import { useEffect, useState } from "react";
 
@@ -84,7 +82,7 @@ export default function Test() {
     <MainContainer>
       <FlexContainer justify="center" align="center" dir="col" height="100vh">
         <div class="logo-container">
-          <Image src={soyes_logo} alt="soyes_logo" />
+          <img src="/src/soyesKids_Logo.png" alt="soyes_logo" />
         </div>
         <div class="chat-box">
           <div class="chat-box-header">SOYES KIDS</div>
