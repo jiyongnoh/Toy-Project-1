@@ -12,6 +12,7 @@ import { signupAPI } from "@/fetchAPI";
 // SweetAlert2
 import Swal from "sweetalert2";
 
+// SignUp 페이지
 export default function Signup() {
   const [vrNum, setVrNum] = useState("");
   const [id, setId] = useState("");

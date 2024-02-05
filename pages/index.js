@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { log } from "../store/state";
 
+// Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const login = useRecoilValue(log);

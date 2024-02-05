@@ -16,6 +16,7 @@ import { log } from "../store/state";
 // SweetAlert2
 import Swal from "sweetalert2";
 
+// Login 페이지
 export default function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");

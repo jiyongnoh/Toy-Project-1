@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { log } from "../store/state";
 
+// MyPage 페이지
 export default function MyPage() {
   const [loading, setLoading] = useState(false);
   const [login, setLogin] = useRecoilState(log);
