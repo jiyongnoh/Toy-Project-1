@@ -58,10 +58,15 @@ export default function Nav() {
             <StyledButton onClick={logoutHandler}>LogOut</StyledButton>
           </NavLi>
           <NavLi>
+            <Link href="/test" style={{ textDecoration: "none" }}>
+              <StyledButton>Test</StyledButton>
+            </Link>
+          </NavLi>
+          {/* <NavLi>
             <Link href="/mypage" style={{ textDecoration: "none" }}>
               <StyledButton>MyPage</StyledButton>
             </Link>
-          </NavLi>
+          </NavLi> */}
         </NavUl>
       ) : (
         <NavUl>
@@ -76,10 +81,15 @@ export default function Nav() {
             </Link>
           </NavLi>
           <NavLi>
+            <Link href="/test" style={{ textDecoration: "none" }}>
+              <StyledButton>Test</StyledButton>
+            </Link>
+          </NavLi>
+          {/* <NavLi>
             <Link href="/signup" style={{ textDecoration: "none" }}>
               <StyledButton>Sign Up</StyledButton>
             </Link>
-          </NavLi>
+          </NavLi> */}
         </NavUl>
       )}
     </NavContainer>
@@ -90,6 +100,7 @@ const NavContainer = styled.div`
   width: 100vw;
 
   background-color: #5818a8;
+  background-color: rgba(255, 255, 255, 0.01);
 
   position: fixed;
   top: 0;
@@ -103,6 +114,7 @@ const NavUl = styled.ul`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  padding: 2rem;
   gap: 0.5rem;
 `;
 

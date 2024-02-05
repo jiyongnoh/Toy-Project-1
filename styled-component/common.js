@@ -26,7 +26,7 @@ export const StyledButton = styled.button`
   backdrop-filter: blur(10px); // 불투명 필터
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-  color: white;
+  color: ${(props) => (props.color ? props.color : "white")};
 
   border: none;
   border-radius: 15px;
@@ -43,7 +43,8 @@ export const StyledButton = styled.button`
 
   &:hover {
     padding: 15px 25px;
-    background-color: blueviolet;
+    background-color: rgba(0, 42, 255, 0.5);
+    color: white;
   }
 
   transition: 0.5s;
@@ -51,8 +52,9 @@ export const StyledButton = styled.button`
 
 export const StyledInput = styled.input`
   background-color: transparent;
-  border: 0.5px solid white;
-  color: white;
+  border: 0.5px solid gray;
+
+  color: ${(props) => (props.color ? props.color : "white")};
 
   padding: 13px 18px;
   text-align: left;

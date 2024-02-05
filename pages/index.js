@@ -26,15 +26,13 @@ export default function Home() {
 
   return (
     <MainContainer>
-      <FlexContainer justify="center" align="center" dir="col" height="100vh">
-        <HomeSpan>Welcome My Toy Project</HomeSpan>
-        <HomeSpan>Deploy Success!</HomeSpan>
-        {loading ? (
-          <Link href="/login" style={{ textDecoration: "none" }}>
-            <MainButton>Login</MainButton>
+      {loading ? (
+        <MainBtnContainer>
+          <Link href="/test" style={{ textDecoration: "none" }}>
+            <MainButton>Test</MainButton>
           </Link>
-        ) : null}
-      </FlexContainer>
+        </MainBtnContainer>
+      ) : null}
     </MainContainer>
   );
 }
@@ -50,7 +48,6 @@ const FadeInSpan = keyframes`
     font-size: 3rem;
   }
 `;
-
 const FadeIn = keyframes`
   0% {
     opacity: 0;
@@ -61,7 +58,29 @@ const FadeIn = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url("/src/img.jpg");
+  background-image: url("/src/soyesKids_Background_image.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  width: 100%;
+  padding-top: 61.5%; // 16:9 비율
+
+  // 화면 맞춤 설정
+  @media (max-width: 1490px) {
+    height: 100vh;
+  }
+`;
+
+const MainBtnContainer = styled.div`
+  position: absolute;
+  top: 12%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const HomeSpan = styled.span`
@@ -75,8 +94,8 @@ const HomeSpan = styled.span`
 `;
 
 const MainButton = styled.button`
-  background-color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: #000000;
+  background-color: rgba(0, 150, 255, 0.5); // 투명 처리
   backdrop-filter: blur(10px); // 불투명 필터
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
@@ -96,8 +115,8 @@ const MainButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    padding: 15px 25px;
-    background-color: blueviolet;
+    padding: 1rem 1.8rem;
+    background-color: rgba(0, 42, 255, 0.5);
   }
 
   animation: ${FadeIn} 1s linear alternate;

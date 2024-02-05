@@ -83,69 +83,74 @@ export default function Login() {
   };
 
   return (
-    <>
-      <LoginPageContainer>
-        <FlexContainer justify="center" align="center" dir="col" height="100vh">
-          <FormContainer>
-            <H1>Login</H1>
-            <InputContainer>
-              <StyledInput
-                id="id"
-                placeholder="ID"
-                type="text"
-                value={id}
-                onChange={(e) => {
-                  setId(e.target.value);
-                }}
-              />
-            </InputContainer>
-            <InputContainer>
-              <StyledInput
-                id="password"
-                placeholder="Password"
-                type="password"
-                value={pwd}
-                onChange={(e) => {
-                  setPwd(e.target.value);
-                }}
-              />
-            </InputContainer>
+    <LoginPageContainer>
+      <FlexContainer justify="center" align="center" dir="col" height="100vh">
+        <FormContainer>
+          <H1>Login</H1>
+          <InputContainer>
+            <StyledInput
+              color="black"
+              id="id"
+              placeholder="ID"
+              type="text"
+              value={id}
+              onChange={(e) => {
+                setId(e.target.value);
+              }}
+            />
+          </InputContainer>
+          <InputContainer>
+            <StyledInput
+              color="black"
+              id="password"
+              placeholder="Password"
+              type="password"
+              value={pwd}
+              onChange={(e) => {
+                setPwd(e.target.value);
+              }}
+            />
+          </InputContainer>
 
-            <CheckboxContainer>
-              <input
-                type="checkbox"
-                id="check"
-                checked={check}
-                onClick={(e) => {
-                  setCheck(e.target.checked);
-                }}
-              />
-              <label for="check">ID Remeber</label>
-            </CheckboxContainer>
+          <CheckboxContainer>
+            <input
+              color="black"
+              type="checkbox"
+              id="check"
+              checked={check}
+              onClick={(e) => {
+                setCheck(e.target.checked);
+              }}
+            />
+            <label for="check">ID Remeber</label>
+          </CheckboxContainer>
 
-            <BtnContainer>
-              <Link href="/login">
-                <StyledButton onClick={submitHandler}>Login</StyledButton>
-              </Link>
-              <Link href="/signup">
-                <StyledButton
-                  onClick={() => {
-                    console.log("click btn");
-                  }}
-                >
-                  Sign up
-                </StyledButton>
-              </Link>
-            </BtnContainer>
-          </FormContainer>
-        </FlexContainer>
-      </LoginPageContainer>
-    </>
+          <BtnContainer>
+            <Link href="/login">
+              <StyledButton color="black" onClick={submitHandler}>
+                Login
+              </StyledButton>
+            </Link>
+            <Link href="/signup">
+              <StyledButton
+                color="black"
+                onClick={() => {
+                  console.log("click btn");
+                }}
+              >
+                Sign up
+              </StyledButton>
+            </Link>
+          </BtnContainer>
+        </FormContainer>
+      </FlexContainer>
+    </LoginPageContainer>
   );
 }
 
 const LoginPageContainer = styled.main`
-  background-image: url("/src/img.jpg");
+  background-image: url("/src/soyesKids_Background_image.png");
+  background-position: center;
 `;
 
 const FormContainer = styled.form`
@@ -177,7 +182,7 @@ const CheckboxContainer = styled.div`
 `;
 
 const H1 = styled.h1`
-  color: white;
+  color: black;
 `;
 
 const BtnContainer = styled.div`
