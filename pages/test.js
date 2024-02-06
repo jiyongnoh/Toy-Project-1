@@ -87,7 +87,7 @@ export default function Test() {
         <div class="chat-box">
           <div class="chat-box-header">SOYES KIDS</div>
           <div class="chat-box-body">
-            <div class="response">안녕? 나는 푸푸야! 같이 재밌게 놀자~</div>
+            <div class="response">안녕? 같이 재밌게 놀자~</div>
           </div>
           <div class="chat-box-footer">
             <input

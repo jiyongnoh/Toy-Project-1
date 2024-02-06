@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
+import styled from "styled-components";
 // import * as PIXI from "pixi.js";
 // import { Live2DModel } from "pixi-live2d-display";
 
@@ -16,8 +17,9 @@ export default function Live2DViewer() {
   useEffect(() => {
     const app = new PIXI.Application({
       view: canvasRef.current,
-      width: 400, // 캔버스 너비
+      width: 350, // 캔버스 너비
       height: 400, // 캔버스 높이
+      transparent: true,
     });
     cubismModelCall(cubism2Model).then((model2) => {
       app.stage.addChild(model2);
@@ -38,3 +40,7 @@ export default function Live2DViewer() {
 
   return <canvas ref={canvasRef}></canvas>;
 }
+
+const Canvas = styled.canvas`
+  background-color: #ffffff;
+`;
