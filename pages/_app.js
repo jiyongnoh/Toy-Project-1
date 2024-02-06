@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import "@/styles/globals.css";
 import Head from "next/head";
 import Nav from "@/component/Nav";
@@ -16,6 +17,10 @@ export default function App({ Component, pageProps }) {
         <Nav />
         <Component {...pageProps} />
       </RecoilRoot>
+      <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/pixi-live2d-display/dist/index.min.js"></script>
     </>
   );
 }

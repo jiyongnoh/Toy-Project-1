@@ -151,6 +151,8 @@ export default function Login() {
 const LoginPageContainer = styled.main`
   background-image: url("/src/soyesKids_Background_image.png");
   background-position: center;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const FormContainer = styled.form`

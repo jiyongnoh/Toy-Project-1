@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
-
+import Live2DViewer from "@/component/Live2DViewer";
 import { useEffect, useState } from "react";
 
 const messageArr = [];
@@ -80,7 +80,7 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <FlexContainer justify="center" align="center" dir="col" height="100vh">
+      <FlexContainer justify="center" align="center" dir="col" height="100%">
         <div class="logo-container">
           <img src="/src/soyesKids_Logo.png" alt="soyes_logo" />
         </div>
@@ -114,6 +114,7 @@ export default function Test() {
           <a>Created by SoyesKids</a>
         </div>
       </FlexContainer>
+      <Live2DViewer />
     </MainContainer>
   );
 }
@@ -133,6 +134,13 @@ const FadeInSpan = keyframes`
 const MainContainer = styled.div`
   background-image: url("/src/soyesKids_Background_image.png");
   background-position: center;
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 `;
 
 const MyPageSpan = styled.span`

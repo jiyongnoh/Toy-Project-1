@@ -1,10 +1,18 @@
 import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
+// import { FlexContainer } from "../styled-component/common";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { useRecoilValue } from "recoil";
 import { log } from "../store/state";
+
+import Live2DViewer from "@/component/Live2DViewer";
+
+// import dynamic from "next/dynamic";
+// const Live2DViewer = dynamic(() => import("../component/Live2DViewer"), {
+//   loading: () => <p>Loading...</p>,
+//   ssr: true, // 이 옵션은 서버 사이드 렌더링을 비활성화합니다.
+// });
 
 // Home 페이지
 export default function Home() {
@@ -28,6 +36,7 @@ export default function Home() {
     <MainContainer>
       {loading ? (
         <MainBtnContainer>
+          <Live2DViewer />
           <Link href="/test" style={{ textDecoration: "none" }}>
             <MainButton>Test</MainButton>
           </Link>
@@ -63,7 +72,7 @@ const MainContainer = styled.div`
   background-position: center;
   background-repeat: no-repeat;
 
-  width: 100%;
+  width: 100vw;
   padding-top: 61.5%; // 16:9 비율
 
   // 화면 맞춤 설정
@@ -79,6 +88,7 @@ const MainBtnContainer = styled.div`
   right: 0;
   bottom: 0;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `;
