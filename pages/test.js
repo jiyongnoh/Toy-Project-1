@@ -34,7 +34,7 @@ export default function Test() {
 
     // Chat Compleation Request
     try {
-      fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion`, {
+      fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/message`, {
         method: "POST",
         headers: {
           accept: "application.json",
