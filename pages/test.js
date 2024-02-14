@@ -21,7 +21,7 @@ async function emotionAPI(messageArr) {
   return result.message + parseInt(Math.random() * 10);
 }
 
-// TTS
+// TTS 함수
 const handleSpeak = (text) => {
   const speech = new SpeechSynthesisUtterance(text);
   window.speechSynthesis.speak(speech);
@@ -41,6 +41,7 @@ export default function Test() {
     const res = await emotionAPI([{ role: "user", content: message }]);
     setEmotion(res);
 
+    // 채팅 내역 추가
     chatBoxBody.innerHTML += `<div class="message">${message}</div>`;
     chatBoxBody.innerHTML += `<div id="loading" class="response loading">.</div>`;
     scrollToBottom(chatBoxBody);
@@ -69,11 +70,9 @@ export default function Test() {
         },
         body: JSON.stringify({ messageArr }),
       })
-        .then((response) => {
-          return response.json();
-        })
+        .then((res) => res.json())
         .then((data) => {
-          handleSpeak(data.message);
+          handleSpeak(data.message); // TTS 음성
           messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
           document.getElementById("loading").remove();
           chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`;

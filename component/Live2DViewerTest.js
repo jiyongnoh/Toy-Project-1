@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useRef, useEffect, useState } from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 // import * as PIXI from "pixi.js";
 // import { Live2DModel } from "pixi-live2d-display";
 
@@ -28,8 +28,9 @@ export default function Live2DViewerTest({ emotion }) {
     cubismModelCall(cubism2Model_Mao).then((model) => {
       app.stage.addChild(model);
       model.scale.set(0.03);
-      console.log(emotion);
+      // console.log(emotion);
 
+      // 표정 및 모션 처리
       if (emotion.includes("긍정")) {
         model.expression(3); // 맑눈광 표정
         model.motion("TapBody", 3);
