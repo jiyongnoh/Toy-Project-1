@@ -6,10 +6,4 @@ const log = atom({
   default: false,
 });
 
-// 다크모드 전역 상태
-const dark = atom({
-  key: "dark",
-  default: false,
-});
-
-export { log, dark };
+export { log };

@@ -1,18 +1,38 @@
 import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
-import Live2DViewer from "@/component/Live2DViewer";
+import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
 
 const messageArr = [];
+
+// 감정 분석 API 호출 함수
+async function emotionAPI(messageArr) {
+  const result = await fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/emotion`, {
+    method: "POST",
+    headers: {
+      accept: "application.json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ messageArr }),
+  })
+    .then((res) => res.json())
+    .then((data) => data);
+  return result.message;
+}
 
 // Test 페이지
 export default function Test() {
   const [chat, setChat] = useState("");
   const [flagEnter, setFlagEnter] = useState(false);
+  const [emotion, setEmotion] = useState("중립");
 
-  const sendMessage = (chatBoxBody) => {
+  const sendMessage = async (chatBoxBody) => {
     const message = chat;
     messageArr.push({ role: "user", content: message }); // 내가 쓴 메세지 저장
+
+    // 감정 분석 API 호출 이후 state 갱신
+    const res = await emotionAPI([{ role: "user", content: message }]);
+    setEmotion(res);
 
     chatBoxBody.innerHTML += `<div class="message">${message}</div>`;
     chatBoxBody.innerHTML += `<div id="loading" class="response loading">.</div>`;
@@ -73,7 +93,6 @@ export default function Test() {
     const chatBoxBody = chatBox.querySelector(".chat-box-body");
 
     sendMessage(chatBoxBody);
-
     setFlagEnter(false);
     setChat("");
   }, [flagEnter]);
@@ -89,6 +108,9 @@ export default function Test() {
           <div class="chat-box-body">
             <div class="response">안녕? 같이 재밌게 놀자~</div>
           </div>
+
+          <Live2DViewerTest emotion={emotion} />
+
           <div class="chat-box-footer">
             <input
               value={chat}
@@ -114,7 +136,6 @@ export default function Test() {
           <a>Created by SoyesKids</a>
         </div>
       </FlexContainer>
-      <Live2DViewer />
     </MainContainer>
   );
 }
@@ -151,4 +172,10 @@ const MyPageSpan = styled.span`
   animation: ${FadeInSpan} 0.6s linear alternate;
 
   transition: 0.5s;
+`;
+
+const Live2DContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 36%;
 `;

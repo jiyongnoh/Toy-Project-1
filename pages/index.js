@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { log } from "../store/state";
 
-import Live2DViewer from "@/component/Live2DViewer";
+import Live2DViewerMain from "@/component/Live2DViewerMain";
 
 // import dynamic from "next/dynamic";
 // const Live2DViewer = dynamic(() => import("../component/Live2DViewer"), {
@@ -34,14 +34,14 @@ export default function Home() {
 
   return (
     <MainContainer>
-      {loading ? (
-        <MainBtnContainer>
-          <Live2DViewer />
+      <MainBtnContainer>
+        <Live2DViewerMain />
+        {loading ? (
           <Link href="/test" style={{ textDecoration: "none" }}>
             <MainButton>Test</MainButton>
           </Link>
-        </MainBtnContainer>
-      ) : null}
+        ) : null}
+      </MainBtnContainer>
     </MainContainer>
   );
 }
