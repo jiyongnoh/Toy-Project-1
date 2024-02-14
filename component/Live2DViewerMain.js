@@ -29,6 +29,12 @@ export default function Live2DViewerMain() {
       app.stage.addChild(model);
       model.scale.set(0.1);
 
+      // 클릭 이벤트
+      model.on("click", () => {
+        // 랜덤한 표정 및 동작 발생
+        model.motion("TapBody", parseInt(Math.random() * 10) % 6);
+        model.expression(parseInt(Math.random() * 10) % 8);
+      });
       return () => {
         app.destroy(true, true);
       };

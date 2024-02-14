@@ -17,7 +17,6 @@ const cubism2Model_Mao =
 
 export default function Live2DViewerTest({ emotion }) {
   const canvasRef = useRef(null);
-  const [flag, setFlag] = useState(true);
 
   useEffect(() => {
     const app = new PIXI.Application({
@@ -29,13 +28,16 @@ export default function Live2DViewerTest({ emotion }) {
     cubismModelCall(cubism2Model_Mao).then((model) => {
       app.stage.addChild(model);
       model.scale.set(0.03);
-      // console.log(emotion);
+      console.log(emotion);
 
-      if (emotion === "긍정") {
+      if (emotion.includes("긍정")) {
+        model.expression(3); // 맑눈광 표정
         model.motion("TapBody", 3);
-      } else if (emotion === "부정") {
+      } else if (emotion.includes("부정")) {
+        model.expression(7); // 불쌍한 표정
         model.motion("TapBody", 1);
       } else {
+        model.expression(1); // 웃는 표정
         model.motion("TapBody", 0);
       }
 

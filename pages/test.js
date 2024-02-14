@@ -17,8 +17,15 @@ async function emotionAPI(messageArr) {
   })
     .then((res) => res.json())
     .then((data) => data);
-  return result.message;
+
+  return result.message + parseInt(Math.random() * 10);
 }
+
+// TTS
+const handleSpeak = (text) => {
+  const speech = new SpeechSynthesisUtterance(text);
+  window.speechSynthesis.speak(speech);
+};
 
 // Test 페이지
 export default function Test() {
@@ -66,6 +73,7 @@ export default function Test() {
           return response.json();
         })
         .then((data) => {
+          handleSpeak(data.message);
           messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
           document.getElementById("loading").remove();
           chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`;
@@ -73,7 +81,8 @@ export default function Test() {
 
           // console.log(messageArr);
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err);
           document.getElementById("loading").remove();
           chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
         });
