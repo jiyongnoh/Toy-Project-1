@@ -7,21 +7,42 @@ const messageArr = [];
 
 // 감정 분석 API 호출 함수
 async function emotionAPI(messageArr) {
-  const result = await fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/emotion`, {
-    method: "POST",
-    headers: {
-      accept: "application.json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ messageArr }),
-  })
-    .then((res) => res.json())
-    .then((data) => data);
+  // 로딩 중 애니메이션
+  window.dotsGoingUp = true;
+  var dots = window.setInterval(() => {
+    var wait = document.getElementById("loading");
+    if (wait === null) return;
+    else if (window.dotsGoingUp) wait.innerHTML += ".";
+    else {
+      wait.innerHTML = wait.innerHTML?.substring(1, wait.innerHTML.length);
+      if (wait.innerHTML.length < 2) window.dotsGoingUp = true;
+    }
+    if (wait.innerHTML.length > 3) window.dotsGoingUp = false;
+  }, 250);
 
-  return result.message + parseInt(Math.random() * 10);
+  // 감정 분석 API 호출
+  try {
+    const result = await fetch(
+      `${process.env.NEXT_PUBLIC_URL}/openAI/emotion`,
+      {
+        method: "POST",
+        headers: {
+          accept: "application.json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ messageArr }),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => data);
+    return result.message + parseInt(Math.random() * 10);
+  } catch (err) {
+    console.error(err);
+    return "부정" + parseInt(Math.random() * 10);
+  }
 }
 
-// TTS 함수
+// TTS 함수. 브라우저 내장 객체라 따로 import 필요 없음
 const handleSpeak = (text) => {
   const speech = new SpeechSynthesisUtterance(text);
   window.speechSynthesis.speak(speech);
@@ -37,14 +58,14 @@ export default function Test() {
     const message = chat;
     messageArr.push({ role: "user", content: message }); // 내가 쓴 메세지 저장
 
+    // 채팅 내역 추가
+    chatBoxBody.innerHTML += `<div class="message">${message}</div>`; // 내 채팅 내역 추가
+    chatBoxBody.innerHTML += `<div id="loading" class="response loading">.</div>`; // 로딩창 추가
+    scrollToBottom(chatBoxBody);
+
     // 감정 분석 API 호출 이후 state 갱신
     const res = await emotionAPI([{ role: "user", content: message }]);
     setEmotion(res);
-
-    // 채팅 내역 추가
-    chatBoxBody.innerHTML += `<div class="message">${message}</div>`;
-    chatBoxBody.innerHTML += `<div id="loading" class="response loading">.</div>`;
-    scrollToBottom(chatBoxBody);
 
     // 로딩 중 애니메이션
     window.dotsGoingUp = true;
@@ -62,31 +83,54 @@ export default function Test() {
 
     // Chat Compleation Request
     try {
-      fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/message`, {
-        method: "POST",
-        headers: {
-          accept: "application.json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ messageArr }),
-      })
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/openAI/message`,
+        {
+          method: "POST",
+          headers: {
+            accept: "application.json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ messageArr }),
+        }
+      )
         .then((res) => res.json())
-        .then((data) => {
-          handleSpeak(data.message); // TTS 음성
-          messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
-          document.getElementById("loading").remove();
-          chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`;
-          scrollToBottom(chatBoxBody);
+        .then((data) => data);
 
-          // console.log(messageArr);
-        })
-        .catch((err) => {
-          console.log(err);
-          document.getElementById("loading").remove();
-          chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
-        });
+      handleSpeak(data.message); // TTS 음성
+      messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
+      document.getElementById("loading").remove(); // 로딩창 제거
+      chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+      scrollToBottom(chatBoxBody);
+
+      /* await 없는 코드 */
+      // fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/message`, {
+      //   method: "POST",
+      //   headers: {
+      //     accept: "application.json",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ messageArr }),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     handleSpeak(data.message); // TTS 음성
+      //     messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
+      //     document.getElementById("loading").remove(); // 로딩창 제거
+      //     chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+      //     scrollToBottom(chatBoxBody);
+
+      //     // console.log(messageArr);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     document.getElementById("loading").remove();
+      //     chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
+      //   });
     } catch (error) {
       console.log(error);
+      document.getElementById("loading").remove();
+      chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
     }
   };
 
@@ -95,7 +139,7 @@ export default function Test() {
   };
 
   useEffect(() => {
-    if (!flagEnter) return;
+    if (!flagEnter) return; // 공백 Enter 체크
 
     const chatBox = document.querySelector(".chat-box");
     const chatBoxBody = chatBox.querySelector(".chat-box-body");
