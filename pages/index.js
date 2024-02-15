@@ -35,10 +35,13 @@ export default function Home() {
   return (
     <MainContainer>
       <MainBtnContainer>
+        <Link href="/test" style={{ textDecoration: "none" }}>
+          <MainButton>Test</MainButton>
+        </Link>
         <Live2DViewerMain />
         {loading ? (
-          <Link href="/test" style={{ textDecoration: "none" }}>
-            <MainButton>Test</MainButton>
+          <Link href="/login" style={{ textDecoration: "none" }}>
+            <MainButton>Login</MainButton>
           </Link>
         ) : null}
       </MainBtnContainer>
@@ -72,7 +75,7 @@ const MainContainer = styled.div`
   background-position: center;
   background-repeat: no-repeat;
 
-  width: 100vw;
+  width: 100%;
   padding-top: 61.5%; // 16:9 비율
 
   // 화면 맞춤 설정
@@ -104,7 +107,6 @@ const HomeSpan = styled.span`
 `;
 
 const MainButton = styled.button`
-  background-color: #000000;
   background-color: rgba(0, 150, 255, 0.5); // 투명 처리
   backdrop-filter: blur(10px); // 불투명 필터
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

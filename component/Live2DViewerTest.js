@@ -11,7 +11,7 @@ async function cubismModelCall(model) {
 }
 
 const cubism2Model_shizuku =
-  "https://cdn.jsdelivr.net/gh/guansss/pixi-live2d-display/test/assets/shizuku/shizuku.model.json";
+  "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/shizuku/shizuku.model.json";
 const cubism2Model_Mao =
   "https://cdn.jsdelivr.net/gh/Live2D/CubismWebSamples/Samples/Resources/Mao/Mao.model3.json";
 
@@ -42,6 +42,7 @@ export default function Live2DViewerTest({ emotion }) {
         model.motion("TapBody", 0);
       }
 
+      // clean up 함수. 해당 컴포넌트 언마운트 시 실행
       return () => {
         app.destroy(true, true);
       };

@@ -153,7 +153,7 @@ export default function Test() {
     <MainContainer>
       <FlexContainer justify="center" align="center" dir="col" height="100%">
         <div class="logo-container">
-          <img src="/src/soyesKids_Logo.png" alt="soyes_logo" />
+          <img src="src/soyesKids_Logo.png" alt="soyes_logo" />
         </div>
         <div class="chat-box">
           <div class="chat-box-header">SOYES KIDS</div>
