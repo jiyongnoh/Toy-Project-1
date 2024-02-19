@@ -84,7 +84,7 @@ export default function Test() {
     // Chat Compleation Request
     try {
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/message`,
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v2`,
         {
           method: "POST",
           headers: {
@@ -149,6 +149,13 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
+  const start_ment = `정서행동검사결과 반영 Test입니다 
+  "요즘 학교생활 하는 건 어때?"
+  "요즘 숙제는 잘 해 가?" 
+  "공부 잘 하는 편이야?" 
+  3가지 항목에 대한
+  질문에 낮은 점수를 얻은 것으로 가정했습니다.`;
+
   return (
     <MainContainer>
       <FlexContainer
@@ -164,7 +171,7 @@ export default function Test() {
         <div class="chat-box">
           <div class="chat-box-header">SOYES KIDS</div>
           <div class="chat-box-body">
-            <div class="response">안녕? 같이 재밌게 놀자~</div>
+            <div class="response">{start_ment}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />

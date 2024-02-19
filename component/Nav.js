@@ -85,6 +85,11 @@ export default function Nav() {
               <StyledButton>Test</StyledButton>
             </Link>
           </NavLi>
+          <NavLi>
+            <Link href="/ebt_test" style={{ textDecoration: "none" }}>
+              <StyledButton>EBTest</StyledButton>
+            </Link>
+          </NavLi>
           {/* <NavLi>
             <Link href="/signup" style={{ textDecoration: "none" }}>
               <StyledButton>Sign Up</StyledButton>
