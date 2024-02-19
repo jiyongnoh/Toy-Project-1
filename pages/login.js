@@ -48,12 +48,12 @@ export default function Login() {
       return;
     }
 
-    const flag = await loginAPI("http://43.201.75.68:4000", {
+    const flag = await loginAPI(process.env.NEXT_PUBLIC_URL, {
       id,
       pwd,
     });
 
-    console.log(flag);
+    // console.log(flag);
 
     if (flag) {
       Swal.fire({
@@ -84,7 +84,13 @@ export default function Login() {
 
   return (
     <LoginPageContainer>
-      <FlexContainer justify="center" align="center" dir="col" height="100vh">
+      <FlexContainer
+        justify="center"
+        align="center"
+        dir="col"
+        width="100vw"
+        height="100vh"
+      >
         <FormContainer>
           <H1>Login</H1>
           <InputContainer>
@@ -150,7 +156,10 @@ export default function Login() {
 
 const LoginPageContainer = styled.main`
   background-image: url("/src/soyesKids_Background_image.png");
+  background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+
   width: 100vw;
   height: 100vh;
 `;

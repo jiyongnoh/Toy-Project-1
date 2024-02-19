@@ -84,7 +84,7 @@ export default function Test() {
     // Chat Compleation Request
     try {
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/message`,
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion`,
         {
           method: "POST",
           headers: {
@@ -151,7 +151,13 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <FlexContainer justify="center" align="center" dir="col" height="100%">
+      <FlexContainer
+        justify="center"
+        align="center"
+        dir="col"
+        width="100vw"
+        height="100%"
+      >
         <div class="logo-container">
           <img src="src/soyesKids_Logo.png" alt="soyes_logo" />
         </div>
@@ -206,7 +212,10 @@ const FadeInSpan = keyframes`
 
 const MainContainer = styled.div`
   background-image: url("/src/soyesKids_Background_image.png");
+  background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+
   width: 100vw;
   height: 100vh;
 

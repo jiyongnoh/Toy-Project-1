@@ -38,7 +38,7 @@ export default function Signup() {
       return;
     }
 
-    const flag = await signupAPI("http://43.201.75.68:4000", {
+    const flag = await signupAPI(process.env.NEXT_PUBLIC_URL, {
       id,
       pwd,
       vrNum,

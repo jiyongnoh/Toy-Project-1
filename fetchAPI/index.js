@@ -9,15 +9,13 @@ export const loginAPI = async (url, post) => {
         // Authorization: document.cookies.accessToken,
       },
       body: JSON.stringify(post),
-    })
-      .then((res) => res.json())
-      .catch((err) => {
-        throw err;
-      });
-    console.log(res);
+    }).then((res) => res.json());
+    // console.log(res);
     return res.data === "Login Success" ? true : false;
   } catch (err) {
-    throw err;
+    // 에러시 false 반환
+    console.log(err);
+    return false;
   }
 };
 
@@ -32,14 +30,12 @@ export const signupAPI = async (url, post) => {
         // Authorization: document.cookies.accessToken,
       },
       body: JSON.stringify(post),
-    })
-      .then((res) => res.json())
-      .catch((err) => {
-        throw err;
-      });
-    console.log(res);
+    }).then((res) => res.json());
+    // console.log(res);
     return res.data === "Success" ? true : false;
   } catch (err) {
-    throw err;
+    // 에러시 false 반환
+    console.log(err);
+    return false;
   }
 };
