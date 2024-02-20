@@ -100,7 +100,11 @@ export default function Test() {
       handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
-      chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      dataMsgArr.forEach((msg) => {
+        chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
+      });
+      // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
       scrollToBottom(chatBoxBody);
 
       /* await 없는 코드 */
