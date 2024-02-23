@@ -50,8 +50,8 @@ const handleSpeak = (text) => {
 
 // Test 페이지
 export default function Test() {
-  const [chat, setChat] = useState("");
-  const [flagEnter, setFlagEnter] = useState(false);
+  const [chat, setChat] = useState("안녕");
+  const [flagEnter, setFlagEnter] = useState(true);
   const [emotion, setEmotion] = useState("중립");
 
   const sendMessage = async (chatBoxBody) => {
