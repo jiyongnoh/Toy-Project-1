@@ -53,6 +53,7 @@ export default function Test() {
   const [chat, setChat] = useState("안녕");
   const [flagEnter, setFlagEnter] = useState(true);
   const [emotion, setEmotion] = useState("중립");
+  const [audioUrl, setAudioUrl] = useState("");
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -97,7 +98,22 @@ export default function Test() {
         .then((res) => res.json())
         .then((data) => data);
 
-      handleSpeak(data.message); // TTS 음성
+      const response = await fetch("/api/speech", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: data.message }),
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        // console.log(url);
+        setAudioUrl(url);
+      }
+
+      // handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
       const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
@@ -127,6 +143,17 @@ export default function Test() {
     setFlagEnter(false);
     setChat("");
   }, [flagEnter]);
+
+  useEffect(() => {
+    if (audioUrl) {
+      document
+        .getElementById("playButton")
+        .addEventListener("click", function () {
+          var audio = new Audio(audioUrl);
+          audio.play().catch((e) => console.error(e));
+        });
+    }
+  }, [audioUrl]);
 
   const start_ment = `Prompt Module Test`;
 
@@ -173,6 +200,7 @@ export default function Test() {
         </div>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
+          <button id="playButton"></button>
         </div>
       </FlexContainer>
     </MainContainer>
