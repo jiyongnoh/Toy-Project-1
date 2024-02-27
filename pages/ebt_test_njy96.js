@@ -2,7 +2,6 @@ import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
-import { Howl } from "howler";
 
 const messageArr = [];
 
@@ -51,25 +50,10 @@ const handleSpeak = (text) => {
 
 // Test 페이지
 export default function Test() {
-  const [chat, setChat] = useState("안녕");
-  const [flagEnter, setFlagEnter] = useState(true);
+  const [chat, setChat] = useState("");
+  const [flagEnter, setFlagEnter] = useState(false);
   const [emotion, setEmotion] = useState("중립");
-
-  let sound = null;
-
-  const handleClovaVoice = async (text) => {
-    const response = await fetch("/api/speech", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    });
-
-    if (response.ok) {
-      console.log(response);
-    }
-  };
+  const [audioUrl, setAudioUrl] = useState("");
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -108,37 +92,20 @@ export default function Test() {
             accept: "application.json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ messageArr, pUid: "njy95" }),
+          body: JSON.stringify({ messageArr, pUid: "njy96" }),
         }
       )
         .then((res) => res.json())
         .then((data) => data);
 
-      handleClovaVoice(data.message);
-
-      // handleSpeak(data.message); // TTS 음성
+      handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
-
-      const response = document.createElement("div");
-      response.className = "response";
-      response.textContent = data.message;
-
-      const sound_button = document.createElement("button");
-      sound_button.className = "sound";
-      sound_button.textContent = "Play";
-      sound_button.addEventListener("click", () => {
-        sound = new Howl({
-          src: [`/tts1.mp3?${Date.now()}`],
-          html5: true, // 이 옵션은 모바일 장치에서 더 나은 호환성을 위해 사용됩니다.
-        });
-        sound.play();
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      dataMsgArr.forEach((msg) => {
+        chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
       });
-
-      response.appendChild(sound_button);
-
-      chatBoxBody.appendChild(response); // AI 답변 채팅 추가
-      //chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+      // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
       scrollToBottom(chatBoxBody);
     } catch (error) {
       console.log(error);
@@ -162,7 +129,15 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `Prompt Module Test`;
+  useEffect(() => {
+    if (audioUrl) {
+      document.getElementById("playButton").click();
+    }
+  }, [audioUrl]);
+
+  const start_ment = `정서행동검사 - 학교생활 진행`;
+  const start_ment2 = `6가지 문항 모두 2점을 획득한 아동 (총 12점)`;
+  const start_ment3 = `검사 결과: 위험`;
 
   return (
     <MainContainer>
@@ -180,6 +155,8 @@ export default function Test() {
           <div class="chat-box-header">SOYES KIDS</div>
           <div class="chat-box-body">
             <div class="response">{start_ment}</div>
+            <div class="response">{start_ment2}</div>
+            <div class="response">{start_ment3}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />
@@ -207,6 +184,15 @@ export default function Test() {
         </div>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
+          <button
+            id="playButton"
+            onClick={() => {
+              const audio = new Audio(audioUrl);
+              audio.play().catch((e) => console.error(e));
+            }}
+          >
+            asdf
+          </button>
         </div>
       </FlexContainer>
     </MainContainer>
