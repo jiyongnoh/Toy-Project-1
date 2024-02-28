@@ -23,7 +23,8 @@
     "recoil": "^0.7.7",
     "request": "^2.88.2",
     "styled-components": "^6.0.7",
-    "sweetalert2": "^11.7.27"
+    "sweetalert2": "^11.7.27",
+    "vercel": "^33.5.2"
   },
   "devDependencies": {
     "babel-plugin-styled-components": "^2.1.4",
