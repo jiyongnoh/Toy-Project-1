@@ -135,6 +135,14 @@ export default function Nav() {
               <StyledButton>Case8</StyledButton>
             </Link>
           </NavLi>
+          <NavLi>
+            <Link
+              href="/ebt_test_njy96_lala"
+              style={{ textDecoration: "none" }}
+            >
+              <StyledButton>Case9(라라)</StyledButton>
+            </Link>
+          </NavLi>
           {/* <NavLi>
             <Link href="/signup" style={{ textDecoration: "none" }}>
               <StyledButton>Sign Up</StyledButton>
