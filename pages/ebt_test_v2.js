@@ -58,7 +58,7 @@ export default function Test() {
   let sound = null;
 
   const handleClovaVoice = async (text) => {
-    const response = await fetch("/api/speech", {
+    const response = await fetch(`/api/speech`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
