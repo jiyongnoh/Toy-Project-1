@@ -96,46 +96,6 @@ export default function Nav() {
             </Link>
           </NavLi> */}
           <NavLi>
-            <Link href="/ebt_test_njy95" style={{ textDecoration: "none" }}>
-              <StyledButton>Case1</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy96" style={{ textDecoration: "none" }}>
-              <StyledButton>Case2</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy97" style={{ textDecoration: "none" }}>
-              <StyledButton>Case3</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy98" style={{ textDecoration: "none" }}>
-              <StyledButton>Case4</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy99" style={{ textDecoration: "none" }}>
-              <StyledButton>Case5</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy901" style={{ textDecoration: "none" }}>
-              <StyledButton>Case6</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy902" style={{ textDecoration: "none" }}>
-              <StyledButton>Case7</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy903" style={{ textDecoration: "none" }}>
-              <StyledButton>Case8</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
             <Link
               href="/ebt_test_njy96_lala"
               style={{ textDecoration: "none" }}

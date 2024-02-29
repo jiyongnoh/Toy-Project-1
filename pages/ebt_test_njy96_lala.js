@@ -84,7 +84,7 @@ export default function Test() {
     // Chat Compleation Request
     try {
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v4`,
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_lala`,
         {
           method: "POST",
           headers: {
@@ -100,8 +100,9 @@ export default function Test() {
       handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
-      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      const dataMsgArr = data.message.split(". "); // 줄바꿈 단위로 대화 분리
       dataMsgArr.forEach((msg) => {
+        if (!msg) return;
         chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
       });
       // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
@@ -128,9 +129,11 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `정서행동검사 - 학교생활 진행 (심리 상담사)`;
-  const start_ment2 = `6가지 문항 모두 2점을 획득한 아동 (총 12점)`;
-  const start_ment3 = `검사 결과: 위험`;
+  const start_ment = `정서행동검사 - 학교생활, 또래관계, 가족관계 진행`;
+  const start_ment2 = `Persona : 라라 (아동 전문 심리 상담사)`;
+  const start_ment3 = `현재 아동은 각 분야의 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
+  const start_ment4 = `학교생활: 6문항 12점 / 또래관계: 8문항 16점 / 가족관계: 7문항 14점`;
+  const start_ment5 = `정서행동검사 3개의 분야 중 1를 랜덤으로 선택한 뒤 검사 결과를 말해줍니다`;
 
   return (
     <MainContainer>
@@ -150,6 +153,8 @@ export default function Test() {
             <div class="response">{start_ment}</div>
             <div class="response">{start_ment2}</div>
             <div class="response">{start_ment3}</div>
+            <div class="response">{start_ment4}</div>
+            <div class="response">{start_ment5}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />
