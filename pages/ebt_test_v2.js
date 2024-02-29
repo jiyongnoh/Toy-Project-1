@@ -67,7 +67,25 @@ export default function Test() {
     });
 
     if (response.ok) {
-      console.log(response);
+      // console.log(response);
+    }
+  };
+
+  const handleGptCompletion = async (input) => {
+    try {
+      const response = await fetch(`/api/openAI`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(input),
+      })
+        .then((res) => res.json())
+        .then((data) => data);
+
+      return response;
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -100,19 +118,21 @@ export default function Test() {
 
     // Chat Compleation Request
     try {
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`,
-        {
-          method: "POST",
-          headers: {
-            accept: "application.json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ messageArr, pUid: "njy95" }),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => data);
+      const data = await handleGptCompletion({ messageArr, pUid: "njy95" });
+      // console.log(data);
+      // const data = await fetch(
+      //   `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`,
+      //   {
+      //     method: "POST",
+      //     headers: {
+      //       accept: "application.json",
+      //       "Content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ messageArr, pUid: "njy95" }),
+      //   }
+      // )
+      //   .then((res) => res.json())
+      //   .then((data) => data);
 
       handleClovaVoice(data.message);
 
