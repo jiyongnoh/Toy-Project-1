@@ -84,14 +84,14 @@ export default function Test() {
     // Chat Compleation Request
     try {
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`,
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_lala`,
         {
           method: "POST",
           headers: {
             accept: "application.json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ messageArr, pUid: "njy98" }),
+          body: JSON.stringify({ messageArr, pUid: "njy96_v2" }),
         }
       )
         .then((res) => res.json())
@@ -100,8 +100,9 @@ export default function Test() {
       handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
-      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      const dataMsgArr = data.message.split(". "); // 줄바꿈 단위로 대화 분리
       dataMsgArr.forEach((msg) => {
+        if (!msg) return;
         chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
       });
       // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
@@ -128,10 +129,13 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `정서행동검사 - 학교생활 진행`;
-  const start_ment2 = `2번 문항만 2점, 나머지 문항은 0점 획득 (총 2점)`;
-  const start_ment3 = `담임 선생님은 어떠셔? => 별로야`;
-  const start_ment4 = `검사 결과: 양호`;
+  const start_ment = `2024/3/4 박사님 프롬프트 수정본 삽입`;
+  const start_ment2 = `Persona : 라라 (아동 전문 심리 상담사)`;
+  const start_ment3 = `정서행동 - 학교생활 검사 결과 : 숙제하기 싫어. 좋아하는 과목이 없어`;
+  const start_ment4 = `진로 검사 결과 : 아이돌이 되고 싶어. 영화 배우가 되고 싶어. 유투버가 되고 싶어.`;
+  const start_ment5 = `성격 검사 결과 : user의 성격은 명랑하고 쾌활합니다.`;
+  const start_ment6 = `이전 대화 내용 : 친구들과 싸워서 담임 선생님에게 혼나서 속상해.`;
+  const start_ment7 = `수정사항 : 모든 답변을 2문장 이내로 생성 + 공감과 문제해결을 적절히 섞은 답변을 생성하도록 프롬프트 변경.`;
 
   return (
     <MainContainer>
@@ -152,6 +156,9 @@ export default function Test() {
             <div class="response">{start_ment2}</div>
             <div class="response">{start_ment3}</div>
             <div class="response">{start_ment4}</div>
+            <div class="response">{start_ment5}</div>
+            <div class="response">{start_ment6}</div>
+            <div class="response">{start_ment7}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />
