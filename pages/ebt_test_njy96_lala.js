@@ -131,9 +131,9 @@ export default function Test() {
 
   const start_ment = `정서행동검사 - 학교생활, 또래관계, 가족관계 진행`;
   const start_ment2 = `Persona : 라라 (아동 전문 심리 상담사)`;
-  const start_ment3 = `현재 아동은 각 분야의 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
+  const start_ment3 = `현재 아동은 3가지 분야의 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
   const start_ment4 = `학교생활: 6문항 12점 / 또래관계: 8문항 16점 / 가족관계: 7문항 14점`;
-  const start_ment5 = `정서행동검사 3개의 분야 중 1를 랜덤으로 선택한 뒤 검사 결과를 말해줍니다`;
+  const start_ment5 = `특이사항 : 첫 대화에서 정서행동검사 3개의 분야 중 1를 서버에서 랜덤으로 선택하여 검사 결과를 말해줍니다`;
 
   return (
     <MainContainer>

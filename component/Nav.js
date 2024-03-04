@@ -91,9 +91,14 @@ export default function Nav() {
             </Link>
           </NavLi>
           */}
-          <NavLi>
+          {/* <NavLi>
             <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
               <StyledButton>EBTest_V2</StyledButton>
+            </Link>
+          </NavLi> */}
+          <NavLi>
+            <Link href="/ebt_test_njy96" style={{ textDecoration: "none" }}>
+              <StyledButton>Case8(푸푸)</StyledButton>
             </Link>
           </NavLi>
           <NavLi>
