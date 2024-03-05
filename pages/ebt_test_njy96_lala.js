@@ -94,13 +94,16 @@ export default function Test() {
           body: JSON.stringify({ EBTData: { messageArr, pUid: "njy96" } }),
         }
       )
-        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.headers);
+          return res.json();
+        })
         .then((data) => data);
 
       handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
-      const dataMsgArr = data.message.split(". "); // 줄바꿈 단위로 대화 분리
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
       dataMsgArr.forEach((msg) => {
         if (!msg) return;
         chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
@@ -133,7 +136,8 @@ export default function Test() {
   const start_ment2 = `Persona : 라라 (아동 전문 심리 상담사)`;
   const start_ment3 = `현재 아동은 5가지 분야의 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
   const start_ment4 = `학교생활: 6문항 12점 / 또래관계: 8문항 16점 / 가족관계: 7문항 14점 / 전반적 기분: 3문항 6점 / 불안: 6문항 12점`;
-  const start_ment5 = `특이사항 : 첫 대화에서 정서행동검사 5개의 분야 중 1를 서버에서 랜덤으로 선택하여 검사 결과를 분석한 내용을 말해줍니다`;
+  const start_ment5 = `특이사항 : 첫 답변으로 정서행동검사 5개의 분야 중 1를 서버에서 랜덤으로 선택하여 검사 결과를 분석한 내용을 말해줍니다`;
+  const start_ment6 = `특이사항2 : 3번째 답변으로 인지행동 치료 문제(또래관계)를 랜덤으로 하나 제시합니다.`;
 
   return (
     <MainContainer>
@@ -150,11 +154,12 @@ export default function Test() {
         <div class="chat-box">
           <div class="chat-box-header">SOYES KIDS</div>
           <div class="chat-box-body">
-            <div class="response">{start_ment}</div>
-            <div class="response">{start_ment2}</div>
-            <div class="response">{start_ment3}</div>
-            <div class="response">{start_ment4}</div>
-            <div class="response">{start_ment5}</div>
+            <div class="ment">{start_ment}</div>
+            <div class="ment">{start_ment2}</div>
+            <div class="ment">{start_ment3}</div>
+            <div class="ment">{start_ment4}</div>
+            <div class="ment">{start_ment5}</div>
+            <div class="ment">{start_ment6}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />

@@ -86,7 +86,7 @@ body {
 /* Style the chat messages */
 .chat-box-body .message,
 .chat-box-body .response {
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   padding: 8px 16px;
   border-radius: 8px;
 }
@@ -107,6 +107,18 @@ body {
   width: fit-content;
   margin-right: auto;
   text-align: left;
+}
+
+/* Style the chatbot's responses */
+.chat-box-body .ment {
+  background-color: #0084ff;
+  color: #ffffff;
+  width: fit-content;
+  margin-right: auto;
+  text-align: left;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 2px;
 }
 
 /* Style the chat box footer */

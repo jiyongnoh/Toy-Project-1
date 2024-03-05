@@ -109,7 +109,7 @@ export default function Nav() {
               href="/ebt_test_njy96_lala"
               style={{ textDecoration: "none" }}
             >
-              <StyledButton>Case2(라라)</StyledButton>
+              <StyledButton>Case2(라라_origin)</StyledButton>
             </Link>
           </NavLi>
           <NavLi>
