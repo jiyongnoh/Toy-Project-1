@@ -91,7 +91,9 @@ export default function Test() {
             accept: "application.json",
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ EBTData: { messageArr, pUid: "njy96" } }),
+          body: JSON.stringify({
+            EBTData: { messageArr, pUid: "njy96_20240304_v2" },
+          }),
         }
       )
         .then((res) => res.json())
