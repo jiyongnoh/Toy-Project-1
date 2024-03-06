@@ -112,7 +112,7 @@ export default function Nav() {
               <StyledButton>Case2(라라_origin)</StyledButton>
             </Link>
           </NavLi>
-          <NavLi>
+          {/* <NavLi>
             <Link
               href="/ebt_test_njy96_lala_0304"
               style={{ textDecoration: "none" }}
@@ -127,13 +127,10 @@ export default function Nav() {
             >
               <StyledButton>Case4(라라_0304_v2)</StyledButton>
             </Link>
-          </NavLi>
+          </NavLi> */}
           <NavLi>
-            <Link
-              href="/ebt_test_njy96_lala_0305"
-              style={{ textDecoration: "none" }}
-            >
-              <StyledButton>Case5(라라_0305_v1)</StyledButton>
+            <Link href="ebt_test_v2" style={{ textDecoration: "none" }}>
+              <StyledButton>ebt_test_v2</StyledButton>
             </Link>
           </NavLi>
           {/* <NavLi>

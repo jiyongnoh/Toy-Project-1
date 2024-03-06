@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default async (req, res) => {
   const { messageArr, pUid } = req.body;
-  const api_url = `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`;
+  const api_url = `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_pupu`;
   let parseMessageArr;
 
   try {
@@ -16,8 +16,7 @@ export default async (req, res) => {
       .post(
         api_url,
         {
-          messageArr,
-          pUid,
+          EBTData: { messageArr, pUid },
         },
         {
           headers: {
