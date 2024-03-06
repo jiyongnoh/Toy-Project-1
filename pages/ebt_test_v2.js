@@ -73,7 +73,7 @@ export default function Test() {
 
   const handleGptCompletion = async (input) => {
     try {
-      const response = await fetch(`/api/openAI`, {
+      const response = await fetch(`api/openAI`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
