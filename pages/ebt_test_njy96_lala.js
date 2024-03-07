@@ -90,14 +90,12 @@ export default function Test() {
           headers: {
             accept: "application.json",
             "Content-Type": "application/json",
+            credentials: "include",
           },
           body: JSON.stringify({ EBTData: { messageArr, pUid: "njy96" } }),
         }
       )
-        .then((res) => {
-          console.log(res.headers);
-          return res.json();
-        })
+        .then((res) => res.json())
         .then((data) => data);
 
       handleSpeak(data.message); // TTS 음성
