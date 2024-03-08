@@ -2,6 +2,8 @@ import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
+// import { cookies } from "next/headers";
+// const cookieStore = cookies();
 
 const messageArr = [];
 
@@ -87,10 +89,11 @@ export default function Test() {
         `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_lala`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             accept: "application.json",
             "Content-Type": "application/json",
-            credentials: "include",
+            // cookies: cookieStore.get("connect.sid"),
           },
           body: JSON.stringify({ EBTData: { messageArr, pUid: "njy96" } }),
         }
