@@ -135,8 +135,8 @@ export default function Test() {
 
   const start_ment = `Persona: 소예 (아동 전문 심리 상담사)`;
   const start_ment2 = `정서행동검사 - 11분야 모두 진행`;
-  const start_ment3 = `11가지 분야의 정서행동 검사의 모든 질문에 2점을 획득한 상태`;
-  const start_ment4 = `텍스트 감지: "학교생활",
+  const start_ment3 = `삽입 프롬프트: 소예 페르소나 + 아동 정보 + 정서행동 결과 11종`;
+  const start_ment4 = `감지 텍스트(분석): "학교생활",
   "친구관계",
   "가족관계",
   "전반적기분",

@@ -200,9 +200,9 @@ export default function Test() {
   }, [flagEnter]);
 
   const start_ment = `Persona: 우비 (10살 남자 초등학생)`;
-  const start_ment2 = `성격검사 결과 추후 삽입 예정`;
-  const start_ment3 = `삽입 프롬프트: 우비 페르소나 + 아동 정보 + 성격검사 결과(예정)`;
-  const start_ment4 = `특이사항 : 공부 관련 고민이 있는 User에게 비상학습을 추천합니다`;
+  const start_ment2 = `성격검사 결과 삽입`;
+  const start_ment3 = `삽입 프롬프트: 우비 페르소나 + 아동 정보 + 성격검사 결과 + 솔루션(학습)`;
+  const start_ment4 = `솔루션(학습) : 공부 관련 고민이 있는 User에게 비상학습을 추천합니다`;
 
   return (
     <MainContainer>

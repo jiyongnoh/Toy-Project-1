@@ -135,7 +135,7 @@ export default function Test() {
 
   const start_ment = `Persona: 라라 (정서 멘토)`;
   const start_ment2 = `정서행동검사 - 11분야 모두 진행`;
-  const start_ment3 = `11가지 분야의 정서행동 검사의 모든 질문에 2점을 획득한 상태`;
+  const start_ment3 = `삽입 프롬프트: 라라 페르소나 + 아동 정보 + 정서행동 결과 11종`;
   const start_ment4 = `감지 텍스트(분석): "학교생활",
   "친구관계",
   "가족관계",
@@ -148,7 +148,7 @@ export default function Test() {
   "분노",
   "자기인식"`;
   const start_ment5 = `분석 세션: 정서검사 11가지 분야 중 키워드에 감지된 검사 결과를 분석합니다 (세션당 1회만 진행)`;
-  const start_ment6 = `감지 텍스트(인지): "인지", "인지행동", "인지 행동"`;
+  const start_ment6 = `감지 텍스트(인지): "학교인지", "가족인지", "친구인지", "그외인지"`;
   const start_ment7 = `인지행동 솔루션 : 4번 이내에 정답을 맞추면 세션 종료. 이전까진 정답 유도`;
 
   return (
