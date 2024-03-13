@@ -103,6 +103,7 @@ export default function Test() {
       document.getElementById("loading").remove(); // 로딩창 제거
       const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
       dataMsgArr.forEach((msg) => {
+        if (!msg) return;
         chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
       });
       // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
@@ -156,6 +157,7 @@ export default function Test() {
       document.getElementById("loading").remove(); // 로딩창 제거
       const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
       dataMsgArr.forEach((msg) => {
+        if (!msg) return;
         chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
       });
       // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
@@ -197,10 +199,10 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `Persona : 푸푸 (9살 남자 초등학생)`;
-  const start_ment2 = `성격검사 결과 추후 삽입 예정`;
-  const start_ment3 = `삽입 프롬프트: 푸푸 페르소나 + 아동 정보 + 성격검사 결과(예정)`;
-  const start_ment4 = `특이사항 : 모든 답변을 30글자 이내로 생성합니다`;
+  const start_ment = `Persona: 푸푸 (9살 남자 초등학생)`;
+  const start_ment2 = `성격검사 결과 프롬프트 삽입`;
+  const start_ment3 = `삽입 프롬프트: 푸푸 페르소나 + 아동 정보 + 성격검사 결과`;
+  const start_ment4 = `특이사항 : User가 불안해하거나 초조함을 느낄 경우 음악/그림 명상 컨텐츠를 추천합니다`;
 
   return (
     <MainContainer>

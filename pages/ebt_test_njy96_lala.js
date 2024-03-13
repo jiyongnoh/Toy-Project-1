@@ -133,13 +133,23 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `Persona: 라라 (아동 전문 심리 상담사)`;
+  const start_ment = `Persona: 라라 (정서 멘토)`;
   const start_ment2 = `정서행동검사 - 11분야 모두 진행`;
   const start_ment3 = `11가지 분야의 정서행동 검사의 모든 질문에 2점을 획득한 상태`;
-  const start_ment4 = `결과분석: "심리검사", "검사결과", "심리 검사", "검사 결과" `;
-  const start_ment5 = `결과분석 세션: 정서검사 11가지 분야 중 랜덤 1개의 검사 결과를 분석합니다`;
-  const start_ment6 = `인지행동: "인지", "인지행동", "인지 행동"`;
-  const start_ment7 = `인지행동 세션 : 4번 이내에 정답을 맞추면 세션 종료`;
+  const start_ment4 = `감지 텍스트(분석): "학교생활",
+  "친구관계",
+  "가족관계",
+  "전반적기분",
+  "불안",
+  "우울",
+  "신체증상",
+  "주의집중",
+  "과잉행동",
+  "분노",
+  "자기인식"`;
+  const start_ment5 = `분석 세션: 정서검사 11가지 분야 중 키워드에 감지된 검사 결과를 분석합니다 (세션당 1회만 진행)`;
+  const start_ment6 = `감지 텍스트(인지): "인지", "인지행동", "인지 행동"`;
+  const start_ment7 = `인지행동 솔루션 : 4번 이내에 정답을 맞추면 세션 종료. 이전까진 정답 유도`;
 
   return (
     <MainContainer>

@@ -53,6 +53,7 @@ export default function Test() {
   const [chat, setChat] = useState("");
   const [flagEnter, setFlagEnter] = useState(false);
   const [emotion, setEmotion] = useState("중립");
+  const [noReqCnt, setNoReqCnt] = useState(0);
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -84,7 +85,7 @@ export default function Test() {
     // Chat Compleation Request
     try {
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_lala`,
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_ubi`,
         {
           method: "POST",
           headers: {
@@ -100,7 +101,61 @@ export default function Test() {
       handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
-      const dataMsgArr = data.message.split(". "); // 줄바꿈 단위로 대화 분리
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      dataMsgArr.forEach((msg) => {
+        if (!msg) return;
+        chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
+      });
+      // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+      scrollToBottom(chatBoxBody);
+    } catch (error) {
+      console.log(error);
+      document.getElementById("loading").remove();
+      chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
+    }
+  };
+
+  // NO REQUEST 메서드
+  const sendMessage_noRequest = async (chatBoxBody) => {
+    messageArr.push({ role: "user", content: "NO REQUEST" }); // NO REQUEST 질문 임시 삽입
+    chatBoxBody.innerHTML += `<div id="loading" class="response loading">.</div>`; // 로딩창 추가
+    scrollToBottom(chatBoxBody);
+
+    // 로딩 중 애니메이션
+    window.dotsGoingUp = true;
+    var dots = window.setInterval(() => {
+      var wait = document.getElementById("loading");
+      if (wait === null) return;
+      else if (window.dotsGoingUp) wait.innerHTML += ".";
+      else {
+        wait.innerHTML = wait.innerHTML?.substring(1, wait.innerHTML.length);
+
+        if (wait.innerHTML.length < 2) window.dotsGoingUp = true;
+      }
+      if (wait.innerHTML.length > 3) window.dotsGoingUp = false;
+    }, 250);
+
+    // Chat Compleation Request
+    try {
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_ubi`,
+        {
+          method: "POST",
+          headers: {
+            accept: "application.json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ EBTData: { messageArr, pUid: "njy96" } }),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => data);
+
+      messageArr.pop(); // NO REQUEST 질문 삭제
+      handleSpeak(data.message); // TTS 음성
+      messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
+      document.getElementById("loading").remove(); // 로딩창 제거
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
       dataMsgArr.forEach((msg) => {
         if (!msg) return;
         chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
@@ -119,6 +174,21 @@ export default function Test() {
   };
 
   useEffect(() => {
+    if (noReqCnt < 5) {
+      const timer = setTimeout(() => {
+        const chatBox = document.querySelector(".chat-box");
+        const chatBoxBody = chatBox.querySelector(".chat-box-body");
+        sendMessage_noRequest(chatBoxBody);
+        setNoReqCnt(noReqCnt + 1);
+      }, 15000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [chat, noReqCnt]);
+
+  useEffect(() => {
     if (!flagEnter) return; // 공백 Enter 체크
 
     const chatBox = document.querySelector(".chat-box");
@@ -129,13 +199,10 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `2024/3/4 박사님 프롬프트 삽입`;
-  const start_ment2 = `Persona : 라라 (아동 전문 심리 상담사)`;
-  const start_ment3 = `정서행동 - 학교생활 검사 결과 : 숙제하기 싫어. 좋아하는 과목이 없어`;
-  const start_ment4 = `진로 검사 결과 : 아이돌이 되고 싶어. 영화 배우가 되고 싶어. 유투버가 되고 싶어.`;
-  const start_ment5 = `성격 검사 결과 : user의 성격은 명랑하고 쾌활합니다. INFJ입니다.`;
-  const start_ment6 = `이전 대화 내용 : 친구들과 싸워서 담임 선생님에게 혼나서 속상해.`;
-  const start_ment7 = `특이사항 : 모든 답변을 2문장, 40글자 이내로 생성합니다.`;
+  const start_ment = `Persona: 우비 (10살 남자 초등학생)`;
+  const start_ment2 = `성격검사 결과 추후 삽입 예정`;
+  const start_ment3 = `삽입 프롬프트: 우비 페르소나 + 아동 정보 + 성격검사 결과(예정)`;
+  const start_ment4 = `특이사항 : 공부 관련 고민이 있는 User에게 비상학습을 추천합니다`;
 
   return (
     <MainContainer>
@@ -152,13 +219,10 @@ export default function Test() {
         <div class="chat-box">
           <div class="chat-box-header">SOYES KIDS</div>
           <div class="chat-box-body">
-            <div class="response">{start_ment}</div>
-            <div class="response">{start_ment2}</div>
-            <div class="response">{start_ment3}</div>
-            <div class="response">{start_ment4}</div>
-            <div class="response">{start_ment5}</div>
-            <div class="response">{start_ment6}</div>
-            <div class="response">{start_ment7}</div>
+            <div class="ment">{start_ment}</div>
+            <div class="ment">{start_ment2}</div>
+            <div class="ment">{start_ment3}</div>
+            <div class="ment">{start_ment4}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />

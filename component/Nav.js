@@ -105,11 +105,24 @@ export default function Nav() {
             </Link>
           </NavLi>
           <NavLi>
+            <Link href="/ebt_test_njy96_ubi" style={{ textDecoration: "none" }}>
+              <StyledButton>공부친구 모델(우비)</StyledButton>
+            </Link>
+          </NavLi>
+          <NavLi>
             <Link
               href="/ebt_test_njy96_lala"
               style={{ textDecoration: "none" }}
             >
-              <StyledButton>정서멘토 모델(라라_origin)</StyledButton>
+              <StyledButton>정서멘토 모델(라라)</StyledButton>
+            </Link>
+          </NavLi>
+          <NavLi>
+            <Link
+              href="/ebt_test_njy96_soyes"
+              style={{ textDecoration: "none" }}
+            >
+              <StyledButton>전문상담사 (소예)</StyledButton>
             </Link>
           </NavLi>
           {/* <NavLi>
