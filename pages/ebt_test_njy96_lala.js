@@ -135,10 +135,11 @@ export default function Test() {
 
   const start_ment = `Persona: 라라 (아동 전문 심리 상담사)`;
   const start_ment2 = `정서행동검사 - 11분야 모두 진행`;
-  const start_ment3 = `현재 아동은 11가지 분야의 정서행동 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
-  const start_ment4 = `결과 분석: "심리검사", "검사결과", "심리 검사", "검사 결과" `;
-  const start_ment5 = `인지행동: "인지", "인지행동", "인지 행동"`;
-  const start_ment6 = `인지행동 세션 : 4번 이내에 정답을 맞추면 세션 종료`;
+  const start_ment3 = `11가지 분야의 정서행동 검사의 모든 질문에 2점을 획득한 상태`;
+  const start_ment4 = `결과분석: "심리검사", "검사결과", "심리 검사", "검사 결과" `;
+  const start_ment5 = `결과분석 세션: 정서검사 11가지 분야 중 랜덤 1개의 검사 결과를 분석합니다`;
+  const start_ment6 = `인지행동: "인지", "인지행동", "인지 행동"`;
+  const start_ment7 = `인지행동 세션 : 4번 이내에 정답을 맞추면 세션 종료`;
 
   return (
     <MainContainer>
@@ -161,6 +162,7 @@ export default function Test() {
             <div class="ment">{start_ment4}</div>
             <div class="ment">{start_ment5}</div>
             <div class="ment">{start_ment6}</div>
+            <div class="ment">{start_ment7}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />

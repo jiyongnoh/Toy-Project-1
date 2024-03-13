@@ -101,7 +101,7 @@ export default function Nav() {
               href="/ebt_test_njy96_pupu"
               style={{ textDecoration: "none" }}
             >
-              <StyledButton>Case1(푸푸)</StyledButton>
+              <StyledButton>공감친구 모델(푸푸)</StyledButton>
             </Link>
           </NavLi>
           <NavLi>
@@ -109,7 +109,7 @@ export default function Nav() {
               href="/ebt_test_njy96_lala"
               style={{ textDecoration: "none" }}
             >
-              <StyledButton>Case2(라라_origin)</StyledButton>
+              <StyledButton>정서멘토 모델(라라_origin)</StyledButton>
             </Link>
           </NavLi>
           {/* <NavLi>
@@ -128,11 +128,11 @@ export default function Nav() {
               <StyledButton>Case4(라라_0304_v2)</StyledButton>
             </Link>
           </NavLi> */}
-          <NavLi>
+          {/* <NavLi>
             <Link href="ebt_test_v2" style={{ textDecoration: "none" }}>
               <StyledButton>ebt_test_v2</StyledButton>
             </Link>
-          </NavLi>
+          </NavLi> */}
           {/* <NavLi>
             <Link href="/signup" style={{ textDecoration: "none" }}>
               <StyledButton>Sign Up</StyledButton>

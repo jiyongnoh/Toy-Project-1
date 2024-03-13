@@ -179,11 +179,10 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `정서행동검사 - 학교생활 진행`;
-  const start_ment2 = `Persona : 푸푸 (9살 남자 초등학생)`;
-  const start_ment3 = `현재 아동은 1가지 분야의 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
-  const start_ment4 = `학교생활: 6문항 12점`;
-  const start_ment5 = `특이사항 : 모든 답변을 30글자 이내로 생성합니다`;
+  const start_ment = `Persona : 푸푸 (9살 남자 초등학생)`;
+  const start_ment2 = `성격검사 결과 추후 삽입 예정`;
+  const start_ment3 = `삽입 프롬프트: 푸푸 페르소나 + 아동 정보 + 성격검사 결과(예정)`;
+  const start_ment4 = `특이사항 : 모든 답변을 30글자 이내로 생성합니다`;
 
   return (
     <MainContainer>
@@ -200,11 +199,10 @@ export default function Test() {
         <div class="chat-box">
           <div class="chat-box-header">SOYES KIDS</div>
           <div class="chat-box-body">
-            <div class="response">{start_ment}</div>
-            <div class="response">{start_ment2}</div>
-            <div class="response">{start_ment3}</div>
-            <div class="response">{start_ment4}</div>
-            <div class="response">{start_ment5}</div>
+            <div class="ment">{start_ment}</div>
+            <div class="ment">{start_ment2}</div>
+            <div class="ment">{start_ment3}</div>
+            <div class="ment">{start_ment4}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />
