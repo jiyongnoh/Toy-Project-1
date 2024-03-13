@@ -53,6 +53,7 @@ export default function Test() {
   const [chat, setChat] = useState("");
   const [flagEnter, setFlagEnter] = useState(false);
   const [emotion, setEmotion] = useState("중립");
+  const [noReqCnt, setNoReqCnt] = useState(0);
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -115,6 +116,7 @@ export default function Test() {
 
   // NO REQUEST 메서드
   const sendMessage_noRequest = async (chatBoxBody) => {
+    messageArr.push({ role: "user", content: "NO REQUEST" }); // NO REQUEST 질문 임시 삽입
     chatBoxBody.innerHTML += `<div id="loading" class="response loading">.</div>`; // 로딩창 추가
     scrollToBottom(chatBoxBody);
 
@@ -148,6 +150,7 @@ export default function Test() {
         .then((res) => res.json())
         .then((data) => data);
 
+      messageArr.pop(); // NO REQUEST 질문 삭제
       handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
@@ -167,6 +170,21 @@ export default function Test() {
   const scrollToBottom = (chatBoxBody) => {
     chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
   };
+
+  useEffect(() => {
+    if (noReqCnt < 5) {
+      const timer = setTimeout(() => {
+        const chatBox = document.querySelector(".chat-box");
+        const chatBoxBody = chatBox.querySelector(".chat-box-body");
+        sendMessage_noRequest(chatBoxBody);
+        setNoReqCnt(noReqCnt + 1);
+      }, 15000);
+
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [chat, noReqCnt]);
 
   useEffect(() => {
     if (!flagEnter) return; // 공백 Enter 체크
