@@ -133,12 +133,12 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `정서행동검사 - 학교생활, 또래관계, 가족관계 진행`;
-  const start_ment2 = `Persona : 라라 (아동 전문 심리 상담사)`;
-  const start_ment3 = `현재 아동은 5가지 분야의 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
-  const start_ment4 = `학교생활: 6문항 12점 / 또래관계: 8문항 16점 / 가족관계: 7문항 14점 / 전반적 기분: 3문항 6점 / 불안: 6문항 12점`;
-  const start_ment5 = `특이사항 : 첫 답변으로 정서행동검사 5개의 분야 중 1를 서버에서 랜덤으로 선택하여 검사 결과를 분석한 내용을 말해줍니다`;
-  const start_ment6 = `특이사항2 : 3번째 답변으로 인지행동 치료 문제(또래관계)를 랜덤으로 하나 제시합니다.`;
+  const start_ment = `Persona: 라라 (아동 전문 심리 상담사)`;
+  const start_ment2 = `정서행동검사 - 11분야 모두 진행`;
+  const start_ment3 = `현재 아동은 11가지 분야의 정서행동 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
+  const start_ment4 = `결과 분석: "심리검사", "검사결과", "심리 검사", "검사 결과" `;
+  const start_ment5 = `인지행동: "인지", "인지행동", "인지 행동"`;
+  const start_ment6 = `인지행동 세션 : 4번 이내에 정답을 맞추면 세션 종료`;
 
   return (
     <MainContainer>

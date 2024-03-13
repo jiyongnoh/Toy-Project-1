@@ -53,7 +53,6 @@ export default function Test() {
   const [chat, setChat] = useState("");
   const [flagEnter, setFlagEnter] = useState(false);
   const [emotion, setEmotion] = useState("중립");
-  const [audioUrl, setAudioUrl] = useState("");
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -67,6 +66,57 @@ export default function Test() {
     // 감정 분석 API 호출 이후 state 갱신
     const res = await emotionAPI([{ role: "user", content: message }]);
     setEmotion(res);
+
+    // 로딩 중 애니메이션
+    window.dotsGoingUp = true;
+    var dots = window.setInterval(() => {
+      var wait = document.getElementById("loading");
+      if (wait === null) return;
+      else if (window.dotsGoingUp) wait.innerHTML += ".";
+      else {
+        wait.innerHTML = wait.innerHTML?.substring(1, wait.innerHTML.length);
+
+        if (wait.innerHTML.length < 2) window.dotsGoingUp = true;
+      }
+      if (wait.innerHTML.length > 3) window.dotsGoingUp = false;
+    }, 250);
+
+    // Chat Compleation Request
+    try {
+      const data = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_pupu`,
+        {
+          method: "POST",
+          headers: {
+            accept: "application.json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ EBTData: { messageArr, pUid: "njy96" } }),
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => data);
+
+      handleSpeak(data.message); // TTS 음성
+      messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
+      document.getElementById("loading").remove(); // 로딩창 제거
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      dataMsgArr.forEach((msg) => {
+        chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
+      });
+      // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+      scrollToBottom(chatBoxBody);
+    } catch (error) {
+      console.log(error);
+      document.getElementById("loading").remove();
+      chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
+    }
+  };
+
+  // NO REQUEST 메서드
+  const sendMessage_noRequest = async (chatBoxBody) => {
+    chatBoxBody.innerHTML += `<div id="loading" class="response loading">.</div>`; // 로딩창 추가
+    scrollToBottom(chatBoxBody);
 
     // 로딩 중 애니메이션
     window.dotsGoingUp = true;
@@ -129,12 +179,6 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  useEffect(() => {
-    if (audioUrl) {
-      document.getElementById("playButton").click();
-    }
-  }, [audioUrl]);
-
   const start_ment = `정서행동검사 - 학교생활 진행`;
   const start_ment2 = `Persona : 푸푸 (9살 남자 초등학생)`;
   const start_ment3 = `현재 아동은 1가지 분야의 검사에 대해 모든 질문에 2점을 획득한 상태입니다`;
@@ -188,15 +232,6 @@ export default function Test() {
         </div>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
-          <button
-            id="playButton"
-            onClick={() => {
-              const audio = new Audio(audioUrl);
-              audio.play().catch((e) => console.error(e));
-            }}
-          >
-            asdf
-          </button>
         </div>
       </FlexContainer>
     </MainContainer>
