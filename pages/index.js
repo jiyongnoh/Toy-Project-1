@@ -35,15 +35,12 @@ export default function Home() {
   return (
     <MainContainer>
       <MainBtnContainer>
-        <Link href="/test" style={{ textDecoration: "none" }}>
-          <MainButton>Test</MainButton>
-        </Link>
         <Live2DViewerMain />
-        {loading ? (
+        {/* {loading ? (
           <Link href="/login" style={{ textDecoration: "none" }}>
             <MainButton>Login</MainButton>
           </Link>
-        ) : null}
+        ) : null} */}
       </MainBtnContainer>
     </MainContainer>
   );
