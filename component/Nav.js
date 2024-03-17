@@ -91,11 +91,11 @@ export default function Nav() {
             </Link>
           </NavLi>
           */}
-          {/* <NavLi>
+          <NavLi>
             <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
               <StyledButton>EBTest_V2</StyledButton>
             </Link>
-          </NavLi> */}
+          </NavLi>
           <NavLi>
             <Link
               href="/ebt_test_njy96_pupu"
