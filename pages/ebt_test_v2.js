@@ -75,6 +75,7 @@ export default function Test() {
     try {
       const response = await fetch("/api/openAI", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
