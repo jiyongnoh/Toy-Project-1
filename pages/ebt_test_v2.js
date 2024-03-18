@@ -3,6 +3,7 @@ import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
 import { Howl } from "howler";
+import axios from "axios";
 
 const messageArr = [];
 
@@ -58,14 +59,14 @@ export default function Test() {
   let sound = null;
 
   const handleClovaVoice = async (text) => {
-    const response = await fetch(
+    console.log(text);
+    const response = await axios.post(
       `${process.env.NEXT_PUBLIC_INNER_URL}/api/speech`,
+      { text },
       {
-        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ text }),
       }
     );
 
@@ -76,20 +77,17 @@ export default function Test() {
 
   const handleGptCompletion = async (input) => {
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_INNER_URL}/api/openAI`,
+        input,
         {
-          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(input),
         }
-      )
-        .then((res) => res.json())
-        .then((data) => data);
-
-      return response;
+      );
+      // console.log(response);
+      return response.data;
     } catch (err) {
       console.log("Next.js 내부 API 호출 실패");
       console.error(err);

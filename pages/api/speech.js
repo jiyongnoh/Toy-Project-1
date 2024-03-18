@@ -1,5 +1,4 @@
 /* eslint-disable import/no-anonymous-default-export */
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 const client_id = "tcxypw1fkm";
 const client_secret = "hdVu9xHqyW1Kzw1m0w6vnHGtQagKKeYwGR91UciV";
@@ -15,6 +14,7 @@ export default async function POST(req, res) {
   }
 
   const { text } = req.body;
+
   const api_url = "https://naveropenapi.apigw.ntruss.com/tts-premium/v1/tts";
 
   try {
