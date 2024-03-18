@@ -3,6 +3,7 @@
 import axios from "axios";
 
 export default async function POST(req, res) {
+  console.log(req.method);
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
