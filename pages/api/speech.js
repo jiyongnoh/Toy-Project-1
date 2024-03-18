@@ -46,8 +46,6 @@ export default async function POST(req, res) {
     writer.on("finish", () => res.status(200).send("File saved successfully"));
   } catch (error) {
     // console.error(error);
-    res
-      .status(500)
-      .json({ message: "Next.js 서버리스(speech)에서 오류가 발생했습니다." });
+    res.status(500).json({ message: "Next.js Serverlss(speech) Error" });
   }
 }

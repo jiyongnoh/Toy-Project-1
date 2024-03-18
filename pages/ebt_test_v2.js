@@ -59,7 +59,6 @@ export default function Test() {
   let sound = null;
 
   const handleClovaVoice = async (text) => {
-    console.log(text);
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_INNER_URL}/api/speech`,
       { text },

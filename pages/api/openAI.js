@@ -11,7 +11,7 @@ export default async function POST(req, res) {
   const { messageArr, pUid } = req.body;
   const api_url = `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_pupu`;
   let parseMessageArr;
-
+  console.log(messageArr);
   try {
     if (typeof messageArr === "string") {
       parseMessageArr = JSON.parse(messageArr);
@@ -34,8 +34,6 @@ export default async function POST(req, res) {
     res.json(response);
   } catch (error) {
     console.log(error);
-    res
-      .status(500)
-      .json({ message: "Next.js 서버리스(openAI)에서 오류가 발생했습니다." });
+    res.status(500).json({ message: "Next.js Serverlss(openAI) Error" });
   }
 }
