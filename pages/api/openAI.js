@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-export default async (req, res) => {
+export default async function POST(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
@@ -38,4 +38,4 @@ export default async (req, res) => {
       .status(500)
       .json({ message: "Next.js 서버리스(openAI)에서 오류가 발생했습니다." });
   }
-};
+}
