@@ -60,7 +60,7 @@ export default function Test() {
 
   const handleClovaVoice = async (text) => {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_INNER_URL}/api/speech`,
+      `/api/speech`,
       { text },
       {
         headers: {
@@ -76,15 +76,11 @@ export default function Test() {
 
   const handleGptCompletion = async (input) => {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_INNER_URL}/api/openAI`,
-        input,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`/api/openAI`, input, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       // console.log(response);
       return response.data;
     } catch (err) {
