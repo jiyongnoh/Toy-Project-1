@@ -75,7 +75,6 @@ export default function Test() {
     try {
       const response = await fetch("/api/openAI", {
         method: "POST",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -88,6 +87,10 @@ export default function Test() {
     } catch (err) {
       console.log("Next.js 내부 API 호출 실패");
       console.error(err);
+      return {
+        message: "Serverless Error",
+        emotion: 0,
+      };
     }
   };
 
