@@ -58,7 +58,7 @@ export default function Test() {
   let sound = null;
 
   const handleClovaVoice = async (text) => {
-    const response = await fetch(`/api/speech`, {
+    const response = await fetch("/api/speech", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export default function Test() {
 
   const handleGptCompletion = async (input) => {
     try {
-      const response = await fetch(`api/openAI`, {
+      const response = await fetch("/api/openAI", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -119,6 +119,7 @@ export default function Test() {
     // Chat Compleation Request
     try {
       const data = await handleGptCompletion({ messageArr, pUid: "njy95" });
+
       // console.log(data);
       // const data = await fetch(
       //   `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`,
