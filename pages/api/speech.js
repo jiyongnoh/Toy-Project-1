@@ -1,5 +1,4 @@
 /* eslint-disable import/no-anonymous-default-export */
-
 const client_id = "tcxypw1fkm";
 const client_secret = "hdVu9xHqyW1Kzw1m0w6vnHGtQagKKeYwGR91UciV";
 

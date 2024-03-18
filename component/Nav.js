@@ -93,7 +93,7 @@ export default function Nav() {
           */}
           <NavLi>
             <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
-              <StyledButton>EBTest_V2</StyledButton>
+              <StyledButton>Clova Voice Test</StyledButton>
             </Link>
           </NavLi>
           <NavLi>
