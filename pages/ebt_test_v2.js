@@ -86,6 +86,7 @@ export default function Test() {
 
       return response;
     } catch (err) {
+      console.log("Next.js 내부 API 호출 실패");
       console.error(err);
     }
   };
