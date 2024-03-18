@@ -58,13 +58,16 @@ export default function Test() {
   let sound = null;
 
   const handleClovaVoice = async (text) => {
-    const response = await fetch(`${process.env.NEXT_INNER_URL}/api/speech`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ text }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_INNER_URL}/api/speech`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text }),
+      }
+    );
 
     if (response.ok) {
       // console.log(response);
@@ -73,13 +76,16 @@ export default function Test() {
 
   const handleGptCompletion = async (input) => {
     try {
-      const response = await fetch(`${process.env.NEXT_INNER_URL}/api/openAI`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(input),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_INNER_URL}/api/openAI`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(input),
+        }
+      )
         .then((res) => res.json())
         .then((data) => data);
 
