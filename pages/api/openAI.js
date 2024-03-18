@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from "axios";
 
-export default async function POST(req, res) {
+export default async function post(req, res) {
   console.log(req.method);
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);

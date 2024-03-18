@@ -6,7 +6,7 @@ import axios from "axios";
 import fs from "fs";
 import path from "path";
 
-export default async function POST(req, res) {
+export default async function post(req, res) {
   console.log(req.method);
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
