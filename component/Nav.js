@@ -59,8 +59,8 @@ export default function Nav() {
             <StyledButton onClick={logoutHandler}>LogOut</StyledButton>
           </NavLi>
           <NavLi>
-            <Link href="/test" style={{ textDecoration: "none" }}>
-              <StyledButton>Test</StyledButton>
+            <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
+              <StyledButton>Clova Voice Test</StyledButton>
             </Link>
           </NavLi>
           {/* <NavLi>
@@ -93,11 +93,6 @@ export default function Nav() {
             </Link>
           </NavLi>
           */}
-          <NavLi>
-            <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
-              <StyledButton>Clova Voice Test</StyledButton>
-            </Link>
-          </NavLi>
           <NavLi>
             <Link
               href="/ebt_test_njy96_pupu"
