@@ -22,6 +22,7 @@ import { log } from "../store/state";
 // SweetAlert2
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
+import GoogleOAuthBtn from "@/component/googleOAuthBtn";
 
 // Login 페이지
 export default function Login() {
@@ -86,8 +87,7 @@ export default function Login() {
   };
 
   const oauthsubmitHandler = async (e) => {
-    e.preventDefault();
-
+    if (e.target !== e.currentTarget) return;
     const url = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
       oauthType: e.target.value,
     });
@@ -214,7 +214,7 @@ export default function Login() {
               </StyledButton>
             </Link>
           </BtnContainer>
-          <GoogleOAuthButton
+          {/* <GoogleOAuthButton
             color="black"
             value="google"
             onClick={oauthsubmitHandler}
@@ -225,7 +225,8 @@ export default function Login() {
               height={18}
             />
             <span>Google Login</span>
-          </GoogleOAuthButton>
+          </GoogleOAuthButton> */}
+          <GoogleOAuthBtn />
         </FormContainer>
       </FlexContainer>
     </LoginPageContainer>
