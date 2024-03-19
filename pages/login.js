@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import Link from "next/link";
@@ -218,7 +219,12 @@ export default function Login() {
             value="google"
             onClick={oauthsubmitHandler}
           >
-            Google Login
+            <img
+              src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fmeta-q.cdn.bubble.io%2Ff1536920601855x691820740932598700%2Fgoogle-logo-icon-PNG-Transparent-Background.png?w=&h=&auto=compress&dpr=1&fit=max"
+              width={18}
+              height={18}
+            />
+            <span>Google Login</span>
           </GoogleOAuthButton>
         </FormContainer>
       </FlexContainer>
@@ -289,7 +295,8 @@ const GoogleOAuthButton = styled.button`
   text-align: center;
   text-decoration: none;
 
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   font-size: 16px;
   cursor: pointer;
 
@@ -298,4 +305,6 @@ const GoogleOAuthButton = styled.button`
   }
 
   transition: 0.5s;
+
+  gap: 0.5rem;
 `;
