@@ -39,6 +39,7 @@ export default function Nav() {
         }).then(() => {
           setLogin(false);
           localStorage.removeItem("log");
+          localStorage.removeItem("id");
           router.push("/");
         });
       }
@@ -75,11 +76,12 @@ export default function Nav() {
               <StyledButton>Main</StyledButton>
             </Link>
           </NavLi>
-          {/* <NavLi>
+          <NavLi>
             <Link href="/login" style={{ textDecoration: "none" }}>
               <StyledButton>Login</StyledButton>
             </Link>
           </NavLi>
+          {/*
           <NavLi>
             <Link href="/test" style={{ textDecoration: "none" }}>
               <StyledButton>Test</StyledButton>

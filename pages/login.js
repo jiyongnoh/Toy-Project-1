@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -6,7 +7,11 @@ import {
   StyledButton,
   StyledInput,
 } from "../styled-component/common";
-import { loginAPI } from "@/fetchAPI";
+import {
+  loginAPI,
+  loginAPI_OAuth_URL,
+  loginAPI_OAuth_AccessToken,
+} from "@/fetchAPI";
 
 // Router
 import { useRouter } from "next/router";
@@ -15,6 +20,7 @@ import { useRecoilState } from "recoil";
 import { log } from "../store/state";
 // SweetAlert2
 import Swal from "sweetalert2";
+import { useSearchParams } from "next/navigation";
 
 // Login 페이지
 export default function Login() {
@@ -27,13 +33,9 @@ export default function Login() {
   // NextJs는 useNavigate 대신 useRouter를 사용한다
   const router = useRouter();
 
-  // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
-  useEffect(() => {
-    if (localStorage.getItem("id")) {
-      setId(localStorage.getItem("id"));
-      setCheck(true);
-    }
-  }, []);
+  // 권한 code Params 찾기
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code");
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -81,6 +83,69 @@ export default function Login() {
       });
     }
   };
+
+  const oauthsubmitHandler = async (e) => {
+    e.preventDefault();
+
+    const url = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
+      oauthType: e.target.value,
+    });
+
+    // console.log(url);
+
+    // OAuth 인증 URL 이동
+    window.location.href = url;
+  };
+
+  const oauthTokenHandler = async () => {
+    // console.log(code);
+    if (code) {
+      try {
+        const data = await loginAPI_OAuth_AccessToken(
+          process.env.NEXT_PUBLIC_URL,
+          { code }
+        );
+        // console.log(data);
+
+        if (data.id) {
+          Swal.fire({
+            icon: "success",
+            title: "Login Success!",
+            text: "Main Page로 이동합니다",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            setLogin(true);
+            localStorage.setItem("log", true);
+            localStorage.setItem("id", data.id);
+
+            // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
+            router.push("/");
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Login Fail",
+            text: "No Matching Input",
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
+  useEffect(() => {
+    if (localStorage.getItem("id")) {
+      setId(localStorage.getItem("id"));
+      setCheck(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    oauthTokenHandler();
+  }, [code]);
 
   return (
     <LoginPageContainer>
@@ -148,6 +213,13 @@ export default function Login() {
               </StyledButton>
             </Link>
           </BtnContainer>
+          <GoogleOAuthButton
+            color="black"
+            value="google"
+            onClick={oauthsubmitHandler}
+          >
+            Google Login
+          </GoogleOAuthButton>
         </FormContainer>
       </FlexContainer>
     </LoginPageContainer>
@@ -200,4 +272,30 @@ const BtnContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+`;
+
+const GoogleOAuthButton = styled.button`
+  background-color: rgba(255, 255, 255);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  color: ${(props) => (props.color ? props.color : "white")};
+
+  border: none;
+  border-radius: 15px;
+
+  margin: 4px 2px;
+  padding: 13px 23px;
+
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  transition: 0.5s;
 `;
