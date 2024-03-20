@@ -18,7 +18,7 @@ import {
 import { useRouter } from "next/router";
 // Recoil
 import { useRecoilState } from "recoil";
-import { log } from "../store/state";
+import { log, oauthType } from "../store/state";
 // SweetAlert2
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
@@ -39,6 +39,7 @@ export default function Login() {
   // 권한 code Params 찾기
   const searchParams = useSearchParams();
   const code = searchParams.get("code");
+  const type = searchParams.get("type"); // 리디렉트 URI에 포함된 플랫폼 query
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -87,24 +88,12 @@ export default function Login() {
     }
   };
 
-  const oauthsubmitHandler = async (e) => {
-    if (e.target !== e.currentTarget) return;
-    const url = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
-      oauthType: e.target.value,
-    });
-
-    // console.log(url);
-
-    // OAuth 인증 URL 이동
-    window.location.href = url;
-  };
-
-  const oauthTokenHandler = async () => {
+  const oauthGoogleHandler = async () => {
     console.log(code);
     if (code) {
       try {
         const data = await loginAPI_OAuth_AccessToken(
-          process.env.NEXT_PUBLIC_URL,
+          `${process.env.NEXT_PUBLIC_URL}/login/oauth_token/google`,
           { code }
         );
         // console.log(data);
@@ -112,7 +101,44 @@ export default function Login() {
         if (data.id) {
           Swal.fire({
             icon: "success",
-            title: "Login Success!",
+            title: "Google Login Success!",
+            text: "Main Page로 이동합니다",
+            showConfirmButton: false,
+            timer: 1500,
+          }).then(() => {
+            setLogin(true);
+            localStorage.setItem("log", true);
+            localStorage.setItem("id", data.id);
+
+            // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
+            router.push("/");
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Login Fail",
+            text: "No Matching Input",
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+  const oauthKakaoHandler = async () => {
+    console.log(code);
+    if (code) {
+      try {
+        const data = await loginAPI_OAuth_AccessToken(
+          `${process.env.NEXT_PUBLIC_URL}/login/oauth_token/kakao`,
+          { code }
+        );
+        console.log(data);
+
+        if (data.id) {
+          Swal.fire({
+            icon: "success",
+            title: "KAKAO Login Success!",
             text: "Main Page로 이동합니다",
             showConfirmButton: false,
             timer: 1500,
@@ -143,9 +169,14 @@ export default function Login() {
       setId(localStorage.getItem("id"));
       setCheck(true);
     }
+    // 카카오 SDK 초기화
+    if (window.Kakao && !window.Kakao.isInitialized()) {
+      // Kakao.init을 이용하여 JavaScript Key를 사용하여 초기화합니다.
+      window.Kakao.init(process.env.NEXT_PUBLIC_JS_KEY);
+    }
   }, []);
 
-  // url 변경 시 사용
+  // url 이동
   useEffect(() => {
     if (url) {
       window.location.href = url;
@@ -153,7 +184,8 @@ export default function Login() {
   }, [url]);
 
   useEffect(() => {
-    oauthTokenHandler();
+    if (type === "kakao") oauthKakaoHandler();
+    else oauthGoogleHandler(); // default는 구글
   }, [code]);
 
   return (
@@ -222,18 +254,6 @@ export default function Login() {
               </StyledButton>
             </Link>
           </BtnContainer>
-          {/* <GoogleOAuthButton
-            color="black"
-            value="google"
-            onClick={oauthsubmitHandler}
-          >
-            <img
-              src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fmeta-q.cdn.bubble.io%2Ff1536920601855x691820740932598700%2Fgoogle-logo-icon-PNG-Transparent-Background.png?w=&h=&auto=compress&dpr=1&fit=max"
-              width={18}
-              height={18}
-            />
-            <span>Google Login</span>
-          </GoogleOAuthButton> */}
           <GoogleOAuthBtn setUrl={setUrl} />
           <KakaoOAuthBtn setUrl={setUrl} />
         </FormContainer>
@@ -287,34 +307,5 @@ const H1 = styled.h1`
 const BtnContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-`;
-
-const GoogleOAuthButton = styled.button`
-  background-color: rgba(255, 255, 255);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-  color: ${(props) => (props.color ? props.color : "white")};
-
-  border: none;
-  border-radius: 15px;
-
-  margin: 4px 2px;
-  padding: 13px 23px;
-
-  text-align: center;
-  text-decoration: none;
-
-  display: flex;
-  justify-content: center;
-  font-size: 16px;
-  cursor: pointer;
-
-  &:hover {
-    font-weight: bold;
-  }
-
-  transition: 0.5s;
-
   gap: 0.5rem;
 `;

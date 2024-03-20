@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { loginAPI_OAuth_URL } from "@/fetchAPI";
-import { useEffect, useState } from "react";
+
 // Component usage
 const GoogleOAuthBtn = ({ setUrl }) => {
   const handleLogin = async (e) => {
@@ -10,7 +10,6 @@ const GoogleOAuthBtn = ({ setUrl }) => {
     });
 
     console.log(directUrl);
-
     // url state 변경
     setUrl(directUrl);
   };

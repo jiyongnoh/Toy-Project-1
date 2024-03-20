@@ -66,7 +66,7 @@ export const loginAPI_OAuth_URL = async (url, post) => {
 export const loginAPI_OAuth_AccessToken = async (url, post) => {
   // console.log(url, post);
   try {
-    const res = await fetch(`${url}/login/oauth_token`, {
+    const res = await fetch(`${url}`, {
       method: "POST",
       credentials: "include",
       // content-type을 명시하지 않으면 json 파일인지 인식하지 못함
