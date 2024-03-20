@@ -14,7 +14,7 @@ const KakaoOAuthBtn = ({ setUrl }) => {
   return (
     <KakaoLoginButton value="google" onClick={handleLogin}>
       <KakaoIcon className="google-icon" />
-      Sign in with 카카오
+      Sign in with Kakao
     </KakaoLoginButton>
   );
 };
@@ -32,12 +32,12 @@ const KakaoLoginButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #357ae8;
+    background-color: #3a2929;
     color: #ffffff;
   }
 
   &:active {
-    background-color: #3367d6;
+    background-color: #3a2929;
     color: #ffffff;
   }
 
@@ -58,7 +58,7 @@ const KakaoLoginButton = styled.button`
 `;
 
 const KakaoIcon = styled.img.attrs({
-  src: "/kakao_logo.jpg", // The path to your Google icon image file
+  src: "/kakao_logo.png", // The path to your Google icon image file
   alt: "Google sign-in",
 })`
   width: 20px;
