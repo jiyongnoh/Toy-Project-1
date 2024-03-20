@@ -149,7 +149,6 @@ export default function Login() {
     console.log("url: " + url);
     if (url) {
       window.location.href = url;
-      setUrl(""); // 초기화
     }
   }, [url]);
 
