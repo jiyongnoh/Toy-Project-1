@@ -1,15 +1,19 @@
 import styled from "styled-components";
 import { loginAPI_OAuth_URL } from "@/fetchAPI";
+import { useEffect, useState } from "react";
 // Component usage
-const GoogleOAuthBtn = () => {
+const GoogleOAuthBtn = ({ setUrl }) => {
   const handleLogin = async (e) => {
     const url = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
       oauthType: e.target.value,
     });
 
-    // OAuth 인증 URL 이동
-    window.location.href = url;
+    console.log(url);
+
+    // url state 변경
+    setUrl(url);
   };
+
   return (
     <GoogleLoginButton value="google" onClick={handleLogin}>
       <GoogleIcon className="google-icon" />

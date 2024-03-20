@@ -29,8 +29,8 @@ export default function Login() {
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
   const [check, setCheck] = useState(false);
-
   const [login, setLogin] = useRecoilState(log);
+  const [url, setUrl] = useState("");
 
   // NextJs는 useNavigate 대신 useRouter를 사용한다
   const router = useRouter();
@@ -99,7 +99,7 @@ export default function Login() {
   };
 
   const oauthTokenHandler = async () => {
-    // console.log(code);
+    console.log(code);
     if (code) {
       try {
         const data = await loginAPI_OAuth_AccessToken(
@@ -143,6 +143,14 @@ export default function Login() {
       setCheck(true);
     }
   }, []);
+
+  // url 변경 시 사용
+  useEffect(() => {
+    if (url) {
+      window.location.href = url;
+      setUrl(""); // 초기화
+    }
+  }, [url]);
 
   useEffect(() => {
     oauthTokenHandler();
@@ -226,7 +234,7 @@ export default function Login() {
             />
             <span>Google Login</span>
           </GoogleOAuthButton> */}
-          <GoogleOAuthBtn />
+          <GoogleOAuthBtn setUrl={setUrl} />
         </FormContainer>
       </FlexContainer>
     </LoginPageContainer>
