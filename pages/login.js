@@ -146,7 +146,6 @@ export default function Login() {
 
   // url 변경 시 사용
   useEffect(() => {
-    console.log("url: " + url);
     if (url) {
       window.location.href = url;
     }
@@ -234,7 +233,7 @@ export default function Login() {
             />
             <span>Google Login</span>
           </GoogleOAuthButton> */}
-          <GoogleOAuthBtn url={url} setUrl={setUrl} />
+          <GoogleOAuthBtn setUrl={setUrl} />
         </FormContainer>
       </FlexContainer>
     </LoginPageContainer>
