@@ -2,29 +2,27 @@ import styled from "styled-components";
 import { loginAPI_OAuth_URL } from "@/fetchAPI";
 import { useEffect, useState } from "react";
 // Component usage
-const GoogleOAuthBtn = ({ setUrl }) => {
+const KakaoOAuthBtn = ({ setUrl }) => {
   const handleLogin = async (e) => {
     e.preventDefault(); // 새로고침 방지
-    const directUrl = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
-      oauthType: e.target.value,
-    });
-
-    console.log(directUrl);
-
+    // const directUrl = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
+    //   oauthType: e.target.value,
+    // });
+    console.log("미구현 기능입니다~");
     // url state 변경
-    setUrl(directUrl);
+    // setUrl(directUrl);
   };
 
   return (
-    <GoogleLoginButton value="google" onClick={handleLogin}>
-      <GoogleIcon className="google-icon" />
-      Sign in with Google
-    </GoogleLoginButton>
+    <KakaoLoginButton value="google" onClick={handleLogin}>
+      <KakaoIcon className="google-icon" />
+      Sign in with 카카오
+    </KakaoLoginButton>
   );
 };
 
-const GoogleLoginButton = styled.button`
-  background-color: #ffffff; // Google Blue
+const KakaoLoginButton = styled.button`
+  background-color: #fee500; // Google Blue
   color: black;
   padding: 10px 15px;
   border: none;
@@ -61,12 +59,12 @@ const GoogleLoginButton = styled.button`
   }
 `;
 
-const GoogleIcon = styled.img.attrs({
-  src: "/path-to-your-google-icon.png", // The path to your Google icon image file
+const KakaoIcon = styled.img.attrs({
+  src: "/kakao_logo.jpg", // The path to your Google icon image file
   alt: "Google sign-in",
 })`
   width: 20px;
   height: 20px;
 `;
 
-export default GoogleOAuthBtn;
+export default KakaoOAuthBtn;

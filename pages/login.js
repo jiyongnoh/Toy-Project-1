@@ -23,6 +23,7 @@ import { log } from "../store/state";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
 import GoogleOAuthBtn from "@/component/googleOAuthBtn";
+import KakaoOAuthBtn from "@/component/kakaoOAuthBtn";
 
 // Login 페이지
 export default function Login() {
@@ -234,6 +235,7 @@ export default function Login() {
             <span>Google Login</span>
           </GoogleOAuthButton> */}
           <GoogleOAuthBtn setUrl={setUrl} />
+          <KakaoOAuthBtn setUrl={setUrl} />
         </FormContainer>
       </FlexContainer>
     </LoginPageContainer>
