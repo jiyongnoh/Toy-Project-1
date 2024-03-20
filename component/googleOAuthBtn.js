@@ -2,16 +2,18 @@ import styled from "styled-components";
 import { loginAPI_OAuth_URL } from "@/fetchAPI";
 import { useEffect, useState } from "react";
 // Component usage
-const GoogleOAuthBtn = ({ setUrl }) => {
+const GoogleOAuthBtn = ({ url, setUrl }) => {
   const handleLogin = async (e) => {
-    const url = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
-      oauthType: e.target.value,
-    });
+    if (!url) {
+      const directUrl = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
+        oauthType: e.target.value,
+      });
 
-    console.log(url);
+      console.log(directUrl);
 
-    // url state 변경
-    setUrl(url);
+      // url state 변경
+      setUrl(directUrl);
+    }
   };
 
   return (
