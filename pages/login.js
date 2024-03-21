@@ -89,14 +89,14 @@ export default function Login() {
   };
 
   const oauthGoogleHandler = async () => {
-    console.log(code);
+    // console.log(code);
     if (code) {
       try {
         const data = await loginAPI_OAuth_AccessToken(
           `${process.env.NEXT_PUBLIC_URL}/login/oauth_token/google`,
           { code }
         );
-        // console.log(data);
+        console.log(data);
 
         if (data.id) {
           Swal.fire({
@@ -126,7 +126,7 @@ export default function Login() {
     }
   };
   const oauthKakaoHandler = async () => {
-    console.log(code);
+    // console.log(code);
     if (code) {
       try {
         const data = await loginAPI_OAuth_AccessToken(
