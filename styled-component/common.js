@@ -37,7 +37,7 @@ export const StyledButton = styled.button`
   text-decoration: none;
 
   display: inline-block;
-  font-size: 16px;
+  font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
   cursor: pointer;
 
   &:hover {

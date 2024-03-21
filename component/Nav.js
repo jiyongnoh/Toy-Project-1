@@ -52,15 +52,15 @@ export default function Nav() {
         <NavUl>
           <NavLi>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <StyledButton>Main</StyledButton>
+              <NavBtn>Main</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
-            <StyledButton onClick={logoutHandler}>LogOut</StyledButton>
+            <NavBtn onClick={logoutHandler}>LogOut</NavBtn>
           </NavLi>
           <NavLi>
             <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
-              <StyledButton>Clova Voice Test</StyledButton>
+              <NavBtn>Clova Voice Test</NavBtn>
             </Link>
           </NavLi>
           {/* <NavLi>
@@ -73,37 +73,25 @@ export default function Nav() {
         <NavUl>
           <NavLi>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <StyledButton>Main</StyledButton>
+              <NavBtn>Main</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/login" style={{ textDecoration: "none" }}>
-              <StyledButton>Login</StyledButton>
+              <NavBtn>Login</NavBtn>
             </Link>
           </NavLi>
-          {/*
-          <NavLi>
-            <Link href="/test" style={{ textDecoration: "none" }}>
-              <StyledButton>Test</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test" style={{ textDecoration: "none" }}>
-              <StyledButton>EBTest</StyledButton>
-            </Link>
-          </NavLi>
-          */}
           <NavLi>
             <Link
               href="/ebt_test_njy96_pupu"
               style={{ textDecoration: "none" }}
             >
-              <StyledButton>공감친구 모델 - 푸푸</StyledButton>
+              <NavBtn>공감친구 모델 - 푸푸</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/ebt_test_njy96_ubi" style={{ textDecoration: "none" }}>
-              <StyledButton>공부친구 모델 - 우비</StyledButton>
+              <NavBtn>공부친구 모델 - 우비</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
@@ -111,7 +99,7 @@ export default function Nav() {
               href="/ebt_test_njy96_lala"
               style={{ textDecoration: "none" }}
             >
-              <StyledButton>정서멘토 모델 - 라라</StyledButton>
+              <NavBtn>정서멘토 모델 - 라라</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
@@ -119,35 +107,9 @@ export default function Nav() {
               href="/ebt_test_njy96_soyes"
               style={{ textDecoration: "none" }}
             >
-              <StyledButton>전문상담사 - 소예</StyledButton>
+              <NavBtn>전문상담사 - 소예</NavBtn>
             </Link>
           </NavLi>
-          {/* <NavLi>
-            <Link
-              href="/ebt_test_njy96_lala_0304"
-              style={{ textDecoration: "none" }}
-            >
-              <StyledButton>Case3(라라_0304_v1)</StyledButton>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link
-              href="/ebt_test_njy96_lala_0304_v2"
-              style={{ textDecoration: "none" }}
-            >
-              <StyledButton>Case4(라라_0304_v2)</StyledButton>
-            </Link>
-          </NavLi> */}
-          {/* <NavLi>
-            <Link href="ebt_test_v2" style={{ textDecoration: "none" }}>
-              <StyledButton>ebt_test_v2</StyledButton>
-            </Link>
-          </NavLi> */}
-          {/* <NavLi>
-            <Link href="/signup" style={{ textDecoration: "none" }}>
-              <StyledButton>Sign Up</StyledButton>
-            </Link>
-          </NavLi> */}
         </NavUl>
       )}
     </NavContainer>
@@ -166,6 +128,11 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: end;
   height: 4rem;
+
+  @media (max-width: 500px) {
+    height: 20%;
+  }
+  z-index: 1;
 `;
 
 const NavUl = styled.ul`
@@ -174,6 +141,13 @@ const NavUl = styled.ul`
   align-items: center;
   padding: 2rem;
   gap: 0.5rem;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    justify-content: start;
+    padding: 0;
+    gap: 0;
+  }
 `;
 
 const NavLi = styled.li`
@@ -181,5 +155,42 @@ const NavLi = styled.li`
 `;
 
 const NavBtn = styled.button`
-  padding: 0.3rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px); // 불투명 필터
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  color: ${(props) => (props.color ? props.color : "white")};
+
+  border: none;
+  border-radius: 15px;
+
+  margin: 4px 2px;
+  padding: 13px 23px;
+
+  text-align: center;
+  text-decoration: none;
+
+  display: inline-block;
+  font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
+
+  &:hover {
+    padding: 15px 25px;
+    background-color: rgba(0, 42, 255, 0.5);
+    color: white;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 10px;
+    margin: 2px;
+    padding: 7px 10px;
+
+    &:hover {
+      padding: 7px 10px;
+      background-color: rgba(0, 42, 255, 0.5);
+    }
+  }
+
+  cursor: pointer;
+
+  transition: 0.5s;
 `;

@@ -18,16 +18,29 @@ const cubism2Model_Mao =
 export default function Live2DViewerMain() {
   const canvasRef = useRef(null);
   // console.log(emotion);
+
   useEffect(() => {
+    let width, height, scale;
+
+    if (window.innerWidth < 500) {
+      width = 160;
+      height = 250;
+      scale = 0.03;
+    } else {
+      width = 370;
+      height = 630;
+      scale = 0.07;
+    }
+
     const app = new PIXI.Application({
       view: canvasRef.current,
-      width: 570, // 캔버스 너비
-      height: 830, // 캔버스 높이
+      width: width, // 캔버스 너비
+      height: height, // 캔버스 높이
       transparent: true,
     });
     cubismModelCall(cubism2Model_Mao).then((model) => {
       app.stage.addChild(model);
-      model.scale.set(0.1);
+      model.scale.set(scale);
 
       // 클릭 이벤트
       model.on("click", () => {

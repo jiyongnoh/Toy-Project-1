@@ -126,7 +126,7 @@ export default function Test() {
 
       // console.log(data);
       // const data = await fetch(
-      //   `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`,
+      //   `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_pupu`,
       //   {
       //     method: "POST",
       //     headers: {
