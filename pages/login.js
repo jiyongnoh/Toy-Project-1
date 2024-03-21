@@ -243,7 +243,7 @@ export default function Login() {
                 Login
               </StyledButton>
             </Link>
-            <Link href="/signup">
+            {/* <Link href="/signup">
               <StyledButton
                 color="black"
                 onClick={() => {
@@ -252,7 +252,7 @@ export default function Login() {
               >
                 Sign up
               </StyledButton>
-            </Link>
+            </Link> */}
           </BtnContainer>
           <GoogleOAuthBtn setUrl={setUrl} />
           <KakaoOAuthBtn setUrl={setUrl} />
