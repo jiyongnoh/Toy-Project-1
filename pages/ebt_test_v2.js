@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
@@ -56,6 +57,8 @@ export default function Test() {
   const [flagEnter, setFlagEnter] = useState(true);
   const [emotion, setEmotion] = useState("중립");
 
+  let currentSound = null;
+
   // const handleClovaVoice = async (text) => {
   //   const response = await axios.post(
   //     `/api/speech`,
@@ -86,11 +89,11 @@ export default function Test() {
       { responseType: "arraybuffer" }
     );
 
-    console.log(response.data);
+    // console.log(response.data);
     const audioBlob = new Blob([response.data], { type: "audio/mp3" });
     const audioUrl = URL.createObjectURL(audioBlob);
     // const audio = new Audio(audioUrl);
-    console.log(audioUrl);
+    // console.log(audioUrl);
     return audioUrl;
   };
 
@@ -105,7 +108,7 @@ export default function Test() {
           },
         }
       );
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (err) {
       console.log("Next.js 내부 API 호출 실패");
@@ -155,23 +158,18 @@ export default function Test() {
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
 
+      // 응답 채팅 생성
       const response = document.createElement("div");
       response.className = "response";
       response.textContent = data.message;
 
+      // 사운드 버튼 생성
       const sound_button = document.createElement("button");
       sound_button.className = "sound";
       sound_button.textContent = "Play";
-      sound_button.addEventListener("click", () => {
-        const sound = new Howl({
-          src: [`${audioURL}`],
-          html5: true, // 이 옵션은 모바일 장치에서 더 나은 호환성을 위해 사용됩니다.
-        });
-        console.log(audioURL);
-        sound.play();
-        sound_button.remove();
-      });
+      sound_button.setAttribute("data-audio-url", audioURL); // 상위 이벤트 식별 속성
 
+      // 응답 채팅에 사운드 버튼 할당
       response.appendChild(sound_button);
 
       chatBoxBody.appendChild(response); // AI 답변 채팅 추가
@@ -193,6 +191,27 @@ export default function Test() {
 
     const chatBox = document.querySelector(".chat-box");
     const chatBoxBody = chatBox.querySelector(".chat-box-body");
+
+    // 사운드 재생 이벤트 추가
+    chatBoxBody.addEventListener("click", function (e) {
+      // 클릭된 요소가 'Play' 버튼인지 확인
+      if (e.target && e.target.classList.contains("sound")) {
+        // 'Play' 버튼에 저장된 오디오 URL을 가져옵니다.
+
+        const audioURL = e.target.getAttribute("data-audio-url");
+        // 이전 오디오가 재생 중이라면 중지합니다.
+        if (currentSound) {
+          currentSound.stop();
+        }
+
+        // 새로운 오디오를 생성하고 재생합니다.
+        currentSound = new Howl({
+          src: [audioURL],
+          html5: true,
+        });
+        currentSound.play();
+      }
+    });
 
     sendMessage(chatBoxBody);
     setFlagEnter(false);
