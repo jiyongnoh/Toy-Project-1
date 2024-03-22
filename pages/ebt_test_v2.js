@@ -56,8 +56,6 @@ export default function Test() {
   const [flagEnter, setFlagEnter] = useState(true);
   const [emotion, setEmotion] = useState("중립");
 
-  let sound = null;
-
   // const handleClovaVoice = async (text) => {
   //   const response = await axios.post(
   //     `/api/speech`,
@@ -92,7 +90,7 @@ export default function Test() {
     const audioBlob = new Blob([response.data], { type: "audio/mp3" });
     const audioUrl = URL.createObjectURL(audioBlob);
     // const audio = new Audio(audioUrl);
-    // console.log(audio);
+    console.log(audioUrl);
     return audioUrl;
   };
 
@@ -165,11 +163,13 @@ export default function Test() {
       sound_button.className = "sound";
       sound_button.textContent = "Play";
       sound_button.addEventListener("click", () => {
-        sound = new Howl({
-          src: [audioURL],
+        const sound = new Howl({
+          src: [`${audioURL}`],
           html5: true, // 이 옵션은 모바일 장치에서 더 나은 호환성을 위해 사용됩니다.
         });
+        console.log(audioURL);
         sound.play();
+        sound_button.remove();
       });
 
       response.appendChild(sound_button);
