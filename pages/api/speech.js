@@ -7,7 +7,7 @@ import fs from "fs";
 import path from "path";
 
 export default async function post(req, res) {
-  console.log(req.method);
+  // console.log(req.method);
   if (req.method !== "POST") {
     res.setHeader("Allow", ["POST"]);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
@@ -43,7 +43,7 @@ export default async function post(req, res) {
 
     response.data.pipe(writer);
 
-    writer.on("finish", () => res.status(200).send("File saved successfully"));
+    // writer.on("finish", () => res.status(200).send("File saved successfully"));
   } catch (error) {
     // console.error(error);
     res.status(500).json({ message: "Next.js Serverlss(speech) Error" });

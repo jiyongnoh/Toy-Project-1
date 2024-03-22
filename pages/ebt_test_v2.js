@@ -58,30 +58,56 @@ export default function Test() {
 
   let sound = null;
 
+  // const handleClovaVoice = async (text) => {
+  //   const response = await axios.post(
+  //     `/api/speech`,
+  //     { text },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+
+  //   if (response.ok) {
+  //     // console.log(response);
+  //   }
+  // };
+
   const handleClovaVoice = async (text) => {
     const response = await axios.post(
-      `/api/speech`,
-      { text },
+      `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
       {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+        speaker: "nara",
+        volume: "0",
+        speed: "0",
+        pitch: "0",
+        text,
+        format: "mp3",
+      },
+      { responseType: "arraybuffer" }
     );
 
-    if (response.ok) {
-      // console.log(response);
-    }
+    console.log(response.data);
+    const audioBlob = new Blob([response.data], { type: "audio/mp3" });
+    const audioUrl = URL.createObjectURL(audioBlob);
+    // const audio = new Audio(audioUrl);
+    // console.log(audio);
+    return audioUrl;
   };
 
   const handleGptCompletion = async (input) => {
     try {
-      const response = await axios.post(`/api/openAI`, input, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      // console.log(response);
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_pupu`,
+        { EBTData: input },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
       return response.data;
     } catch (err) {
       console.log("Next.js 내부 API 호출 실패");
@@ -124,22 +150,8 @@ export default function Test() {
     try {
       const data = await handleGptCompletion({ messageArr, pUid: "njy95" });
 
-      // console.log(data);
-      // const data = await fetch(
-      //   `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_pupu`,
-      //   {
-      //     method: "POST",
-      //     headers: {
-      //       accept: "application.json",
-      //       "Content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({ messageArr, pUid: "njy95" }),
-      //   }
-      // )
-      //   .then((res) => res.json())
-      //   .then((data) => data);
-
-      handleClovaVoice(data.message);
+      // Audio URL 생성
+      const audioURL = await handleClovaVoice(data.message);
 
       // handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
@@ -154,7 +166,7 @@ export default function Test() {
       sound_button.textContent = "Play";
       sound_button.addEventListener("click", () => {
         sound = new Howl({
-          src: [`/tts1.mp3?${Date.now()}`],
+          src: [audioURL],
           html5: true, // 이 옵션은 모바일 장치에서 더 나은 호환성을 위해 사용됩니다.
         });
         sound.play();
