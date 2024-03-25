@@ -251,6 +251,10 @@ export default function Test() {
         currentSound.play();
       }
     });
+
+    return () => {
+      messageArr.length = 0;
+    };
   }, []);
 
   // NoReq 관련 처리
