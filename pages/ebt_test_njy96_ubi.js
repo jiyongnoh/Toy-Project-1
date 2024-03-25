@@ -49,7 +49,7 @@ const handleClovaVoice = async (text) => {
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
     {
-      speaker: "nara",
+      speaker: "nara_call",
       volume: "0",
       speed: "0",
       pitch: "0",
