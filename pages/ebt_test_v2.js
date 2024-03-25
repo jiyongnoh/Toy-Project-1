@@ -96,7 +96,7 @@ export default function Test() {
     // console.log(audioUrl);
     return audioUrl;
   };
-
+  // 푸푸 API 호출
   const handleGptCompletion = async (input) => {
     try {
       const response = await axios.post(
@@ -111,7 +111,7 @@ export default function Test() {
       // console.log(response);
       return response.data;
     } catch (err) {
-      console.log("Next.js 내부 API 호출 실패");
+      console.log("푸푸 API 호출 실패");
       console.error(err);
       return {
         message: "Serverless Error",
