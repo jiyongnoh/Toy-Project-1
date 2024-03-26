@@ -5,90 +5,9 @@ import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
 import { Howl } from "howler";
 import axios from "axios";
+import { emotionAPI, handleClovaVoice, handleGptCompletion } from "@/fetchAPI";
 
 const messageArr = [];
-
-// 감정 분석 API 호출 함수
-const emotionAPI = async (messageArr) => {
-  // 로딩 중 애니메이션
-  window.dotsGoingUp = true;
-  var dots = window.setInterval(() => {
-    var wait = document.getElementById("loading");
-    if (wait === null) return;
-    else if (window.dotsGoingUp) wait.innerHTML += ".";
-    else {
-      wait.innerHTML = wait.innerHTML?.substring(1, wait.innerHTML.length);
-      if (wait.innerHTML.length < 2) window.dotsGoingUp = true;
-    }
-    if (wait.innerHTML.length > 3) window.dotsGoingUp = false;
-  }, 250);
-
-  // 감정 분석 API 호출
-  try {
-    const result = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/openAI/emotion`,
-      {
-        method: "POST",
-        headers: {
-          accept: "application.json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ messageArr }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => data);
-    return result.message + parseInt(Math.random() * 10);
-  } catch (err) {
-    console.error(err);
-    return "부정" + parseInt(Math.random() * 10);
-  }
-};
-// Clova Voice API 호출 함수
-const handleClovaVoice = async (text) => {
-  const response = await axios.post(
-    `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
-    {
-      speaker: "nminyoung",
-      volume: "0",
-      speed: "0",
-      pitch: "0",
-      text,
-      format: "mp3",
-    },
-    { responseType: "arraybuffer" }
-  );
-
-  // console.log(response.data);
-  const audioBlob = new Blob([response.data], { type: "audio/mp3" });
-  const audioUrl = URL.createObjectURL(audioBlob);
-  // const audio = new Audio(audioUrl);
-  // console.log(audioUrl);
-  return audioUrl;
-};
-// 아바타 API 호출 함수
-const handleGptCompletion = async (input, path) => {
-  try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_URL}${path}`,
-      { EBTData: input },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    // console.log(response);
-    return response.data;
-  } catch (err) {
-    console.log("라라 API 호출 실패");
-    console.error(err);
-    return {
-      message: "Serverless Error",
-      emotion: 0,
-    };
-  }
-};
 
 // Test 페이지
 export default function Test() {

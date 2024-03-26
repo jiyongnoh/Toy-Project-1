@@ -58,11 +58,11 @@ export default function Nav() {
           <NavLi>
             <NavBtn onClick={logoutHandler}>LogOut</NavBtn>
           </NavLi>
-          <NavLi>
+          {/* <NavLi>
             <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
               <NavBtn>Clova Voice Test</NavBtn>
             </Link>
-          </NavLi>
+          </NavLi> */}
           <NavLi>
             <Link
               href="/ebt_test_njy96_lala_Test"
