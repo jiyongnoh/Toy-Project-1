@@ -4,8 +4,8 @@ import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
 import { emotionAPI, handleClovaVoice, handleGptCompletion } from "@/fetchAPI";
-import ChatBubble from "@/component/ChatBubble";
-import LoadingAnimation from "@/component/LoadingAnimation";
+import ChatBubble from "@/component/Chat_Component/ChatBubble";
+import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 
 // Test 페이지
 export default function Test() {
