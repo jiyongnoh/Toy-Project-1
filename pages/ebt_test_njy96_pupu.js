@@ -346,6 +346,7 @@ export default function Test() {
 
     return () => {
       messageArr.length = 0;
+      currentSound = null;
     };
   }, []);
 

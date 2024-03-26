@@ -63,6 +63,14 @@ export default function Nav() {
               <NavBtn>Clova Voice Test</NavBtn>
             </Link>
           </NavLi>
+          <NavLi>
+            <Link
+              href="/ebt_test_njy96_lala_Test"
+              style={{ textDecoration: "none" }}
+            >
+              <NavBtn>Lala Test</NavBtn>
+            </Link>
+          </NavLi>
           {/* <NavLi>
             <Link href="/mypage" style={{ textDecoration: "none" }}>
               <StyledButton>MyPage</StyledButton>

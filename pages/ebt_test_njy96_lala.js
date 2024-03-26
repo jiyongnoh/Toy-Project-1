@@ -141,16 +141,21 @@ export default function Test() {
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
 
-      // 응답 채팅 생성
-      const response = document.createElement("div");
-      response.className = "response";
-      response.textContent = data.message;
-
       // 사운드 버튼 생성
       const sound_button = document.createElement("button");
       sound_button.className = "sound";
       sound_button.textContent = "Play";
       sound_button.setAttribute("data-audio-url", audioURL); // 상위 이벤트 식별 속성
+
+      // 응답 채팅 생성
+      const response = document.createElement("div");
+      // response.className = "response";
+      // response.textContent = data.message;
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      dataMsgArr.forEach((msg, index) => {
+        if (!msg) return;
+        response.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
+      });
 
       // 응답 채팅에 사운드 버튼 할당
       response.appendChild(sound_button);
@@ -254,6 +259,7 @@ export default function Test() {
 
     return () => {
       messageArr.length = 0;
+      currentSound = null;
     };
   }, []);
 
