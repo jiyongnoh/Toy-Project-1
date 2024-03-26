@@ -6,4 +6,16 @@ const log = atom({
   default: false,
 });
 
-export { log };
+// 아바타 전역 상태 (라라, 푸푸, 우비, 소예)
+const avarta = atom({
+  key: "avarta",
+  default: "default",
+});
+
+// 계정 전역 상태
+const uid = atom({
+  key: "uid",
+  default: "default",
+});
+
+export { log, avarta, uid };

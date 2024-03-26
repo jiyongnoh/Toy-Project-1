@@ -44,11 +44,11 @@ const StyledBubble = styled.div`
 
 const AudioContanier = styled.div`
   display: flex;
-  flex-direction: ${(props) => (props.message.length < 44 ? "row" : "column")};
+  flex-direction: ${(props) => (props.message.length < 30 ? "row" : "column")};
   justify-content: ${(props) =>
-    props.message.length < 44 ? "flex-start" : "center"};
+    props.message.length < 30 ? "flex-start" : "center"};
   align-items: ${(props) =>
-    props.message.length < 44 ? "center" : "flex-start"};
+    props.message.length < 30 ? "center" : "flex-start"};
 `;
 
 export default ChatBubble;
