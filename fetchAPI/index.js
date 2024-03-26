@@ -88,19 +88,6 @@ export const loginAPI_OAuth_AccessToken = async (url, post) => {
 };
 // 감정 분석 API 호출 함수
 export const emotionAPI = async (messageArr) => {
-  // 로딩 중 애니메이션
-  window.dotsGoingUp = true;
-  var dots = window.setInterval(() => {
-    var wait = document.getElementById("loading");
-    if (wait === null) return;
-    else if (window.dotsGoingUp) wait.innerHTML += ".";
-    else {
-      wait.innerHTML = wait.innerHTML?.substring(1, wait.innerHTML.length);
-      if (wait.innerHTML.length < 2) window.dotsGoingUp = true;
-    }
-    if (wait.innerHTML.length > 3) window.dotsGoingUp = false;
-  }, 250);
-
   // 감정 분석 API 호출
   try {
     const result = await fetch(
@@ -154,15 +141,16 @@ export const handleGptCompletion = async (input, path) => {
         headers: {
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       }
     );
     // console.log(response);
     return response.data;
   } catch (err) {
-    console.log("라라 API 호출 실패");
+    console.log("Gpt API 호출 실패");
     console.error(err);
     return {
-      message: "Serverless Error",
+      message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
       emotion: 0,
     };
   }
