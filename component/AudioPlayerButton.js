@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 // 스타일드 컴포넌트를 사용하여 버튼 스타일 정의
 const Button = styled.button`
-  width: fit-content;
-  height: fit-content;
+  width: 24px;
+  height: 24px;
+  padding: 0;
   background-color: transparent;
   border: none;
   cursor: pointer;
