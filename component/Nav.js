@@ -3,7 +3,7 @@ import { StyledButton } from "../styled-component/common";
 import Link from "next/link";
 
 import { useRecoilState } from "recoil";
-import { log } from "../store/state";
+import { log, avarta } from "../store/state";
 // Router
 import { useRouter } from "next/router";
 // SweetAlert2
@@ -12,6 +12,7 @@ import { useEffect } from "react";
 
 export default function Nav() {
   const [login, setLogin] = useRecoilState(log);
+  const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const router = useRouter();
 
   // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
@@ -64,11 +65,8 @@ export default function Nav() {
             </Link>
           </NavLi> */}
           <NavLi>
-            <Link
-              href="/ebt_test_njy96_lala_Test"
-              style={{ textDecoration: "none" }}
-            >
-              <NavBtn>Lala Test</NavBtn>
+            <Link href="/test_all" style={{ textDecoration: "none" }}>
+              <NavBtn>Test</NavBtn>
             </Link>
           </NavLi>
           {/* <NavLi>

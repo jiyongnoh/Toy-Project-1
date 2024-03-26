@@ -64,7 +64,7 @@ export default function Live2DViewerTest({ emotion, avarta }) {
         app.destroy(true, true);
       };
     });
-  }, [emotion]);
+  }, [emotion, avarta]);
 
   return <canvas ref={canvasRef}></canvas>;
 }

@@ -6,16 +6,53 @@ import { useEffect, useState } from "react";
 import { emotionAPI, handleClovaVoice, handleGptCompletion } from "@/fetchAPI";
 import ChatBubble from "@/component/Chat_Component/ChatBubble";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
+// 아바타 관련 전역 변수
+import { useRecoilState } from "recoil";
+import { avarta } from "../store/state";
+import CharacterSelector from "@/component/CharacterSelector";
 
-// Test 페이지
+const avartaAI_info = {
+  pupu: {
+    name: "pupu",
+    path: "/openAI/consulting_emotion_pupu",
+    headerTitle: "공감친구 - 푸푸",
+    placehold: "나는 공감친구 푸푸야. 같이 놀자!",
+  },
+  ubi: {
+    name: "ubi",
+    path: "/openAI/consulting_emotion_ubi",
+    headerTitle: "학습친구 - 우비",
+    placehold: "나는 학습친구 우비야. 같이 공부하자!",
+  },
+  lala: {
+    name: "lala",
+    path: "/openAI/consulting_emotion_lala",
+    headerTitle: "정서멘토 - 라라",
+    placehold: "나는 정서멘토 라라야. 우리 얘기하자!",
+  },
+  soyes: {
+    name: "soyes",
+    path: "/openAI/consulting_emotion_soyes",
+    headerTitle: "전문상담사 - 소예",
+    placehold: "나는 소예라고해!. 네 고민을 말해줘!",
+  },
+  default: {
+    name: "lala",
+    path: "/openAI/consulting_emotion_lala",
+    headerTitle: "정서멘토 - 라라",
+    placehold: "나는 정서멘토 라라야. 우리 얘기하자!",
+  },
+};
+
+// Renewel Test 페이지
 export default function Test() {
   const [chat, setChat] = useState("");
   const [flagEnter, setFlagEnter] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [emotion, setEmotion] = useState("중립");
   const [messageArr, setMessageArr] = useState([]);
-
-  const avartaPath = "/openAI/consulting_emotion_lala"; // 라라 API Path
+  const [avartaAI, setAvartaAI] = useRecoilState(avarta);
+  const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
 
   const sendMessage = async () => {
     const message = chat;
@@ -34,7 +71,7 @@ export default function Test() {
 
       const data = await handleGptCompletion(
         { messageArr: tmpMsgArr, pUid: "njy96" },
-        avartaPath
+        path
       );
 
       // Audio URL 생성
@@ -54,12 +91,17 @@ export default function Test() {
     chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
   };
 
-  // Sound 재생 이벤트 등록
+  // messageArr 언마운트 처리
   useEffect(() => {
     return () => {
       messageArr.length = 0;
     };
   }, []);
+
+  // messageArr 언마운트 처리. avartaAI
+  useEffect(() => {
+    setMessageArr([]);
+  }, [avartaAI]);
 
   // Chat 관련 처리
   useEffect(() => {
@@ -70,16 +112,16 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
+  // 스크롤 바텀 효과. 채팅 시 발동
   useEffect(() => {
     const chatBox = document.querySelector(".chat-box");
     const chatBoxBody = chatBox.querySelector(".chat-box-body");
     scrollToBottom(chatBoxBody);
   }, [isPending]);
 
-  const start_ment = `정서 멘토 - 라라`;
-
   return (
     <MainContainer>
+      <CharacterSelector isPending={isPending} />
       <FlexContainer
         justify="center"
         align="center"
@@ -91,9 +133,9 @@ export default function Test() {
           <img src="src/soyesKids_Logo.png" alt="soyes_logo" />
         </div>
         <ChatBox className="chat-box">
-          <ChatBoxHeader>SOYES KIDS</ChatBoxHeader>
+          <ChatBoxHeader>{headerTitle}</ChatBoxHeader>
           <ChatBoxBody className="chat-box-body">
-            <ChatBubble message={start_ment} />
+            <ChatBubble message={headerTitle} />
             {messageArr.map((el, index) => (
               <ChatBubble
                 key={index}
@@ -106,8 +148,7 @@ export default function Test() {
             {isPending ? <LoadingAnimation /> : null}
           </ChatBoxBody>
 
-          <Live2DViewerTest emotion={emotion} avarta="lala" />
-
+          <Live2DViewerTest emotion={emotion} avarta={name} />
           <ChatBoxFooter>
             <ChatBoxFooterInput
               value={chat}
@@ -118,7 +159,7 @@ export default function Test() {
                 if (e.key === "Enter" && chat !== "" && !isPending)
                   setFlagEnter(true);
               }}
-              placeholder="고민을 말해줘!"
+              placeholder={placehold}
             />
             <ChatBoxFooterButton
               onClick={() => {
@@ -133,6 +174,7 @@ export default function Test() {
             </ChatBoxFooterButton>
           </ChatBoxFooter>
         </ChatBox>
+
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
         </div>
