@@ -71,8 +71,13 @@ export default function Nav() {
             </Link>
           </NavLi> */}
           <NavLi>
+            <Link href="/test_pt" style={{ textDecoration: "none" }}>
+              <NavBtn>PT Test</NavBtn>
+            </Link>
+          </NavLi>
+          <NavLi>
             <Link href="/test_all" style={{ textDecoration: "none" }}>
-              <NavBtn>Test</NavBtn>
+              <NavBtn>Consulting</NavBtn>
             </Link>
           </NavLi>
           {/* <NavLi>
