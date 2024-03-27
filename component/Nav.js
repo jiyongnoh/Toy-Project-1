@@ -46,6 +46,7 @@ export default function Nav() {
           localStorage.removeItem("log");
           localStorage.removeItem("id");
           localStorage.removeItem("avarta");
+
           router.push("/");
         });
       }

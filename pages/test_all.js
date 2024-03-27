@@ -70,7 +70,7 @@ export default function Test() {
       tmpMsgArr.forEach((el) => delete el.audioURL);
 
       const data = await handleGptCompletion(
-        { messageArr: tmpMsgArr, pUid: "njy96" },
+        { messageArr: tmpMsgArr, pUid: localStorage.getItem("id") || "dummy" },
         path
       );
 

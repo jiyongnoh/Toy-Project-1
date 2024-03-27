@@ -71,11 +71,7 @@ export default function Login() {
       }).then(() => {
         setLogin(true);
         localStorage.setItem("log", true);
-        if (check) {
-          localStorage.setItem("id", id);
-        } else if (localStorage.getItem("id") && !check) {
-          localStorage.removeItem("id");
-        }
+        localStorage.setItem("id", id);
         // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
         router.push("/");
       });
