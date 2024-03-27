@@ -22,7 +22,8 @@ const CharacterSelector = ({ isPending }) => {
       return;
     }
     setAvartaAI(e.target.value);
-    localStorage.setItem("avarta", e.target.value); //
+    localStorage.setItem("avarta", e.target.value);
+    setIsOpen(!isOpen);
   };
 
   return (
