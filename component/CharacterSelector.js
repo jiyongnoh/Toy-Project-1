@@ -7,6 +7,7 @@ import { css } from "styled-components";
 const CharacterSelector = ({ isPending }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
+
   const avartaArr = [
     { name: "푸푸", path: "pupu" },
     { name: "우비", path: "ubi" },
@@ -21,17 +22,18 @@ const CharacterSelector = ({ isPending }) => {
       return;
     }
     setAvartaAI(e.target.value);
+    localStorage.setItem("avarta", e.target.value); //
   };
 
   return (
     <CharacterSelectorContainer>
-      <NavBtn onClick={toggleMenu}>Character</NavBtn>
+      <NavBtn onClick={toggleMenu}>Avarta</NavBtn>
       <ButtonsContainer>
         {avartaArr.map((character, index) => (
           <NavBtn
             value={character.path}
             key={character.name}
-            isHidden={!isOpen}
+            hidden={!isOpen}
             style={{
               transitionDelay: `${isOpen ? index * 100 : (3 - index) * 100}ms`,
             }}
@@ -50,9 +52,16 @@ export default CharacterSelector;
 import styled from "styled-components";
 
 const CharacterSelectorContainer = styled.div`
-  position: fixed;
-  top: 20vh;
-  left: 28vw;
+  position: absolute;
+  top: 4rem;
+  right: 2rem;
+
+  @media (max-width: 768px) {
+    top: 2rem;
+    right: 37%;
+  }
+
+  z-index: 1;
 `;
 
 const ButtonsContainer = styled.div`
@@ -82,7 +91,7 @@ const NavBtn = styled.button`
   }
 
   ${(props) =>
-    props.isHidden &&
+    props.hidden &&
     css`
       visibility: hidden;
       opacity: 0;

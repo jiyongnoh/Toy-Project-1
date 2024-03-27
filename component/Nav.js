@@ -20,6 +20,9 @@ export default function Nav() {
     if (localStorage.getItem("log")) {
       setLogin(true);
     }
+    if (localStorage.getItem("avarta")) {
+      setAvartaAI(localStorage.getItem("avarta"));
+    }
   }, []);
 
   // 로그 아웃 핸들러
@@ -38,9 +41,11 @@ export default function Nav() {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          setLogin(false);
+          setLogin(false); // 전역 log 변수 초기화
+          setAvartaAI("default"); // 전역 avarta 변수 초기화
           localStorage.removeItem("log");
           localStorage.removeItem("id");
+          localStorage.removeItem("avarta");
           router.push("/");
         });
       }
@@ -135,8 +140,8 @@ const NavContainer = styled.div`
   justify-content: end;
   height: 4rem;
 
-  @media (max-width: 500px) {
-    height: 20%;
+  @media (max-width: 768px) {
+    height: 5%;
   }
   z-index: 1;
 `;
@@ -148,7 +153,7 @@ const NavUl = styled.ul`
   padding: 2rem;
   gap: 0.5rem;
 
-  @media (max-width: 500px) {
+  @media (max-width: 768px) {
     flex-direction: column;
     justify-content: start;
     padding: 0;
@@ -185,7 +190,7 @@ const NavBtn = styled.button`
     color: white;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 768px) {
     font-size: 10px;
     margin: 2px;
     padding: 7px 10px;

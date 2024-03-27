@@ -135,7 +135,7 @@ export default function Test() {
         <ChatBox className="chat-box">
           <ChatBoxHeader>{headerTitle}</ChatBoxHeader>
           <ChatBoxBody className="chat-box-body">
-            <ChatBubble message={headerTitle} />
+            <ChatBubble message={headerTitle} role="assistant" />
             {messageArr.map((el, index) => (
               <ChatBubble
                 key={index}
@@ -204,10 +204,11 @@ const MainContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  @media (max-width: 768px) {
+    overflow: hidden;
+  }
+
+  position: relative;
 `;
 
 const ChatBox = styled.div`
@@ -221,6 +222,10 @@ const ChatBox = styled.div`
   overflow: hidden;
   max-height: calc(100vh - 150px);
   height: calc(100vh - 150px);
+
+  @media (max-width: 768px) {
+    height: 100%;
+  }
 `;
 
 const ChatBoxHeader = styled.div`
