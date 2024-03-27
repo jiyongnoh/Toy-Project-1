@@ -385,10 +385,9 @@ const MainContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
+  @media (max-width: 768px) {
+    overflow: hidden;
+  }
 `;
 
 const MyPageSpan = styled.span`
