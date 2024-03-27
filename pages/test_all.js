@@ -3,7 +3,12 @@ import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
-import { emotionAPI, handleClovaVoice, handleGptCompletion } from "@/fetchAPI";
+import {
+  emotionAPI,
+  handleClovaVoice,
+  handleGptCompletion,
+  handleClearCookies,
+} from "@/fetchAPI";
 import ChatBubble from "@/component/Chat_Component/ChatBubble";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 // 아바타 관련 전역 변수
@@ -27,8 +32,8 @@ const avartaAI_info = {
   lala: {
     name: "lala",
     path: "/openAI/consulting_emotion_lala",
-    headerTitle: "정서멘토 - 라라",
-    placehold: "나는 정서멘토 라라야. 우리 얘기하자!",
+    headerTitle: "정서멘토 - 엘라",
+    placehold: "나는 정서멘토 엘라야. 우리 얘기하자!",
   },
   soyes: {
     name: "soyes",
@@ -95,6 +100,7 @@ export default function Test() {
   useEffect(() => {
     return () => {
       messageArr.length = 0;
+      handleClearCookies("/openAI/clear_cookies"); // Cookies Clear (session ID 초기화)
     };
   }, []);
 

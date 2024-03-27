@@ -11,7 +11,7 @@ const CharacterSelector = ({ isPending }) => {
   const avartaArr = [
     { name: "푸푸", path: "pupu" },
     { name: "우비", path: "ubi" },
-    { name: "라라", path: "lala" },
+    { name: "엘라", path: "lala" },
     { name: "소예", path: "soyes" },
   ];
   const toggleMenu = () => setIsOpen(!isOpen);

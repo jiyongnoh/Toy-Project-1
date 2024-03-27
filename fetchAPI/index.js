@@ -155,3 +155,23 @@ export const handleGptCompletion = async (input, path) => {
     };
   }
 };
+// ClearCookies API 호출 함수
+export const handleClearCookies = async (path) => {
+  try {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}${path}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
+    // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log("Gpt API 호출 실패");
+    console.error(err);
+    return {
+      message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
+      emotion: 0,
+    };
+  }
+};
