@@ -165,6 +165,7 @@ export default function Test() {
               onClick={() => {
                 if (chat !== "" && !isPending) setFlagEnter(true);
               }}
+              isPending={isPending}
             >
               {isPending ? (
                 <span class="material-symbols-outlined">block</span>
@@ -268,20 +269,20 @@ const ChatBoxFooterInput = styled.input`
 const ChatBoxFooterButton = styled.button`
   margin-left: 8px;
   padding: 5px 12px;
-  background-color: #0084ff;
+  background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0084ff")};
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
+  cursor: ${(props) => (props.isPending ? "" : "pointer")};
 
   &:hover {
-    background-color: #0073e6;
+    background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
   }
 
   &:active {
-    background-color: #005bbf;
+    background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
   }
   display: flex;
   transition: 0.2s;

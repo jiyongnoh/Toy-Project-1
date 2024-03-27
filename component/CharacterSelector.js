@@ -84,7 +84,7 @@ const NavBtn = styled.button`
   display: inline-block;
   font-size: 16px;
   cursor: pointer;
-  transition: all 0.5s ease;
+  transition: 0.3s;
 
   &:hover {
     background-color: rgba(0, 42, 255, 0.5);
