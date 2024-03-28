@@ -2,12 +2,13 @@
 import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   emotionAPI,
   handleClovaVoice,
   handleGptCompletion,
   handleClearCookies,
+  handleConsultLogSave,
 } from "@/fetchAPI";
 import ChatBubble from "@/component/Chat_Component/ChatBubble";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
@@ -48,6 +49,14 @@ const avartaAI_info = {
     placehold: "나는 정서멘토 라라야. 우리 얘기하자!",
   },
 };
+const unMount_api_info = {
+  consultLog: {
+    path: "/openAI/consulting_emotion_log",
+  },
+  clearCookie: {
+    path: "/openAI/clear_cookies",
+  },
+};
 
 // Renewel Test 페이지
 export default function Test() {
@@ -58,6 +67,10 @@ export default function Test() {
   const [messageArr, setMessageArr] = useState([]);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
+
+  // 언마운트 시점에 사용할 messageArr 변수값 유지
+  const latestMessageArr = useRef(messageArr);
+  latestMessageArr.current = messageArr;
 
   const sendMessage = async () => {
     const message = chat;
@@ -99,8 +112,26 @@ export default function Test() {
   // messageArr 언마운트 처리
   useEffect(() => {
     return () => {
-      messageArr.length = 0;
-      handleClearCookies("/openAI/clear_cookies"); // Cookies Clear (session ID 초기화)
+      // audioURL 제거
+      const tmpMsgArr = [
+        ...JSON.parse(JSON.stringify(latestMessageArr.current)),
+      ];
+      tmpMsgArr.forEach((el) => delete el.audioURL);
+      handleConsultLogSave(
+        {
+          messageArr: tmpMsgArr,
+          avarta: name,
+          pUid: localStorage.getItem("id") || "dummy",
+        },
+        unMount_api_info.consultLog.path
+      );
+
+      // Cookies Clear (session ID 초기화)
+      // handleClearCookies(unMount_api_info.clearCookie.path);
+
+      // 상담 내역 초기화 => 언마운트 시점에 자동으로 진행되기에 주석처리
+      // setMessageArr([]);
+      // messageArr.length = 0;
     };
   }, []);
 

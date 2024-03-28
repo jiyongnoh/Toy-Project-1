@@ -8,6 +8,7 @@ import {
   handleClovaVoice,
   handleGptCompletion,
   handleClearCookies,
+  handleConsultLogSave,
 } from "@/fetchAPI";
 import ChatBubble from "@/component/Chat_Component/ChatBubble";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
