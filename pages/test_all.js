@@ -45,8 +45,8 @@ const avartaAI_info = {
   default: {
     name: "lala",
     path: "/openAI/consulting_emotion_lala",
-    headerTitle: "정서멘토 - 라라",
-    placehold: "나는 정서멘토 라라야. 우리 얘기하자!",
+    headerTitle: "정서멘토 - 엘라",
+    placehold: "나는 정서멘토 엘라야. 우리 얘기하자!",
   },
 };
 const unMount_api_info = {
