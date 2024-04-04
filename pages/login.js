@@ -76,7 +76,7 @@ export default function Login() {
         localStorage.setItem(
           "log",
           JSON.stringify({
-            expires: new Date().setMinutes(new Date().getMinutes() + 5),
+            expires: new Date().setHours(new Date().getHours() + 1),
           })
         );
         localStorage.setItem("id", id);
@@ -114,7 +114,7 @@ export default function Login() {
             localStorage.setItem(
               "log",
               JSON.stringify({
-                expires: new Date().setMinutes(new Date().getMinutes() + 5),
+                expires: new Date().setHours(new Date().getHours() + 1),
               })
             );
             localStorage.setItem("id", data.data.id);
@@ -157,7 +157,7 @@ export default function Login() {
             localStorage.setItem(
               "log",
               JSON.stringify({
-                expires: new Date().setMinutes(new Date().getMinutes() + 5),
+                expires: new Date().setHours(new Date().getHours() + 1),
               })
             );
             localStorage.setItem("id", data.data.id);
