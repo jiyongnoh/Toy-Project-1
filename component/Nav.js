@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 // SweetAlert2
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import { logoutAPI } from "@/fetchAPI";
 
 export default function Nav() {
   const [login, setLogin] = useRecoilState(log);
@@ -26,7 +27,7 @@ export default function Nav() {
   }, []);
 
   // 로그 아웃 핸들러
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     Swal.fire({
       title: "Do you want to LogOut?",
       showDenyButton: true,
@@ -34,6 +35,9 @@ export default function Nav() {
       denyButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
+        // 로그아웃 API 호출 (비동기)
+        logoutAPI(`${process.env.NEXT_PUBLIC_URL}`);
+        // 페이지 이동 (비동기)
         Swal.fire({
           icon: "success",
           title: "LogOut Success!",
@@ -98,7 +102,7 @@ export default function Nav() {
               <NavBtn>Login</NavBtn>
             </Link>
           </NavLi>
-          <NavLi>
+          {/* <NavLi>
             <Link
               href="/ebt_test_njy96_pupu"
               style={{ textDecoration: "none" }}
@@ -126,7 +130,7 @@ export default function Nav() {
             >
               <NavBtn>전문상담사 - 소예</NavBtn>
             </Link>
-          </NavLi>
+          </NavLi> */}
         </NavUl>
       )}
     </NavContainer>

@@ -10,6 +10,7 @@ import {
 } from "../styled-component/common";
 import {
   loginAPI,
+  logoutAPI,
   loginAPI_OAuth_URL,
   loginAPI_OAuth_AccessToken,
 } from "@/fetchAPI";
