@@ -19,7 +19,24 @@ export default function Nav() {
   // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
   useEffect(() => {
     if (localStorage.getItem("log")) {
-      setLogin(true);
+      const loginSession = JSON.parse(localStorage.getItem("log"));
+      console.log(loginSession);
+      if (new Date(loginSession.expires) > new Date()) setLogin(true);
+      else {
+        Swal.fire({
+          icon: "error",
+          title: "Login session expires",
+          text: "Main Page로 이동합니다",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          setLogin(false);
+          localStorage.removeItem("log");
+          localStorage.removeItem("id");
+          localStorage.removeItem("avarta");
+          router.push("/");
+        });
+      }
     }
     if (localStorage.getItem("avarta")) {
       setAvartaAI(localStorage.getItem("avarta"));

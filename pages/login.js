@@ -73,7 +73,12 @@ export default function Login() {
         timer: 1500,
       }).then(() => {
         setLogin(true);
-        localStorage.setItem("log", true);
+        localStorage.setItem(
+          "log",
+          JSON.stringify({
+            expires: new Date().setMinutes(new Date().getMinutes() + 5),
+          })
+        );
         localStorage.setItem("id", id);
         // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
         router.push("/");
@@ -106,8 +111,13 @@ export default function Login() {
             timer: 1500,
           }).then(() => {
             setLogin(true);
-            localStorage.setItem("log", true);
-            localStorage.setItem("id", data.id);
+            localStorage.setItem(
+              "log",
+              JSON.stringify({
+                expires: new Date().setMinutes(new Date().getMinutes() + 5),
+              })
+            );
+            localStorage.setItem("id", data.data.id);
 
             // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
             router.push("/");
@@ -135,7 +145,7 @@ export default function Login() {
         console.log(res);
 
         if (res.status === 200) {
-          const data = await res.json();
+          const data = await res.json(); // Json Parsing
           Swal.fire({
             icon: "success",
             title: "KAKAO Login Success!",
@@ -144,8 +154,13 @@ export default function Login() {
             timer: 1500,
           }).then(() => {
             setLogin(true);
-            localStorage.setItem("log", true);
-            localStorage.setItem("id", data.id);
+            localStorage.setItem(
+              "log",
+              JSON.stringify({
+                expires: new Date().setMinutes(new Date().getMinutes() + 5),
+              })
+            );
+            localStorage.setItem("id", data.data.id);
 
             // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
             router.push("/");
