@@ -55,8 +55,10 @@ export default function Login() {
     }
 
     const flag = await loginAPI(process.env.NEXT_PUBLIC_URL, {
-      id,
-      pwd,
+      LoginData: {
+        pUid: id,
+        passWard: pwd,
+      },
     });
 
     // console.log(flag);
@@ -88,13 +90,13 @@ export default function Login() {
     // console.log(code);
     if (code) {
       try {
-        const data = await loginAPI_OAuth_AccessToken(
+        const res = await loginAPI_OAuth_AccessToken(
           `${process.env.NEXT_PUBLIC_URL}/login/oauth_token/google`,
           { code }
         );
-        console.log(data);
 
-        if (data.id) {
+        if (res.status === 200) {
+          const data = await res.json(); // Json Parsing
           Swal.fire({
             icon: "success",
             title: "Google Login Success!",
@@ -125,13 +127,14 @@ export default function Login() {
     // console.log(code);
     if (code) {
       try {
-        const data = await loginAPI_OAuth_AccessToken(
+        const res = await loginAPI_OAuth_AccessToken(
           `${process.env.NEXT_PUBLIC_URL}/login/oauth_token/kakao`,
           { code }
         );
-        console.log(data);
+        console.log(res);
 
-        if (data.id) {
+        if (res.status === 200) {
+          const data = await res.json();
           Swal.fire({
             icon: "success",
             title: "KAKAO Login Success!",
