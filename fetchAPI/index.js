@@ -14,7 +14,7 @@ export const loginAPI = async (url, post) => {
       body: JSON.stringify(post),
     });
 
-    console.log(res);
+    // console.log(res);
 
     return res.status === 200 ? true : false;
   } catch (err) {
@@ -23,6 +23,7 @@ export const loginAPI = async (url, post) => {
     return false;
   }
 };
+
 export const logoutAPI = async (url) => {
   // console.log(url, post);
   try {
@@ -173,6 +174,7 @@ export const handleGptCompletion = async (input, path) => {
     console.log("Gpt API 호출 실패");
     console.error(err);
     return {
+      status: err.response.status,
       message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
       emotion: 0,
     };
@@ -201,7 +203,7 @@ export const handleClearCookies = async (path) => {
 // ConsultLogSave API 호출 함수
 export const handleConsultLogSave = async (input, path) => {
   console.log("ConsultLogSave 호출");
-  console.log(input, path);
+  //console.log(input, path);
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}${path}`,

@@ -14,8 +14,10 @@ import ChatBubble from "@/component/Chat_Component/ChatBubble";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 // 아바타 관련 전역 변수
 import { useRecoilState } from "recoil";
-import { avarta } from "../store/state";
+import { log, avarta } from "../store/state";
 import CharacterSelector from "@/component/CharacterSelector";
+import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 const avartaAI_info = {
   pupu: {
@@ -65,9 +67,11 @@ export default function Test() {
   const [isPending, setIsPending] = useState(false);
   const [emotion, setEmotion] = useState("중립");
   const [messageArr, setMessageArr] = useState([]);
+  const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
 
+  const router = useRouter();
   // 언마운트 시점에 사용할 messageArr 변수값 유지
   const latestMessageArr = useRef(messageArr);
   latestMessageArr.current = messageArr;
@@ -92,6 +96,23 @@ export default function Test() {
         path
       );
 
+      // 로그인 권한 만료
+      if (data.status === 401) {
+        Swal.fire({
+          icon: "warning",
+          title: "Login Session Expired!",
+          text: "Login Page로 이동합니다",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          setLogin(false);
+          localStorage.removeItem("log");
+          localStorage.removeItem("id");
+          localStorage.removeItem("avarta");
+          router.push("/login");
+        });
+        return;
+      }
       // Audio URL 생성
       const audioURL = await handleClovaVoice(data.message);
 
