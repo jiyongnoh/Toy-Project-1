@@ -221,6 +221,7 @@ export const handleConsultLogSave = async (input, path) => {
     console.log("Gpt API 호출 실패");
     console.error(err);
     return {
+      status: err.response.status,
       message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
       emotion: 0,
     };

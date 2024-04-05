@@ -142,7 +142,7 @@ export default function Test() {
         {
           messageArr: tmpMsgArr,
           avarta: name,
-          pUid: localStorage.getItem("id") || "dummy",
+          pUid: localStorage.getItem("id"),
         },
         unMount_api_info.consultLog.path
       );
