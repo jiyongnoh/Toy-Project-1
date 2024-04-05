@@ -30,6 +30,7 @@ export default function Nav() {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
+          logoutAPI(`${process.env.NEXT_PUBLIC_URL}`);
           setLogin(false);
           localStorage.removeItem("log");
           localStorage.removeItem("id");
