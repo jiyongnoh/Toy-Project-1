@@ -26,6 +26,12 @@ import { useSearchParams } from "next/navigation";
 import GoogleOAuthBtn from "@/component/googleOAuthBtn";
 import KakaoOAuthBtn from "@/component/kakaoOAuthBtn";
 
+// 만료시간 설정 함수
+const expireSetHourFunc = (hour) => {
+  const today = new Date();
+  return today.setHours(today.getHours() + hour);
+};
+
 // Login 페이지
 export default function Login() {
   const [id, setId] = useState("");
@@ -42,9 +48,9 @@ export default function Login() {
   const code = searchParams.get("code");
   const type = searchParams.get("type"); // 리디렉트 URI에 포함된 플랫폼 query
 
+  // Guest 로그인
   const submitHandler = async (e) => {
     e.preventDefault();
-
     if (!id || !pwd) {
       Swal.fire({
         icon: "error",
@@ -54,16 +60,13 @@ export default function Login() {
       });
       return;
     }
-
     const flag = await loginAPI(process.env.NEXT_PUBLIC_URL, {
       LoginData: {
         pUid: id,
         passWard: pwd,
       },
     });
-
     // console.log(flag);
-
     if (flag) {
       Swal.fire({
         icon: "success",
@@ -76,7 +79,7 @@ export default function Login() {
         localStorage.setItem(
           "log",
           JSON.stringify({
-            expires: new Date().setHours(new Date().getHours() + 1),
+            expires: expireSetHourFunc(1),
           })
         );
         localStorage.setItem("id", id);
@@ -91,7 +94,7 @@ export default function Login() {
       });
     }
   };
-
+  // Google 로그인
   const oauthGoogleHandler = async () => {
     // console.log(code);
     if (code) {
@@ -114,7 +117,7 @@ export default function Login() {
             localStorage.setItem(
               "log",
               JSON.stringify({
-                expires: new Date().setHours(new Date().getHours() + 1),
+                expires: expireSetHourFunc(1),
               })
             );
             localStorage.setItem("id", data.data.id);
@@ -134,6 +137,7 @@ export default function Login() {
       }
     }
   };
+  // Kakao 로그인
   const oauthKakaoHandler = async () => {
     // console.log(code);
     if (code) {
@@ -157,7 +161,7 @@ export default function Login() {
             localStorage.setItem(
               "log",
               JSON.stringify({
-                expires: new Date().setHours(new Date().getHours() + 1),
+                expires: expireSetHourFunc(1),
               })
             );
             localStorage.setItem("id", data.data.id);
