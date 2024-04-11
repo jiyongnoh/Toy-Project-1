@@ -48,7 +48,7 @@ export const logoutAPI = async (url) => {
 export const signupAPI = async (url, post) => {
   // console.log(url, post);
   try {
-    const res = await fetch(`${url}/signup`, {
+    const res = await fetch(`${url}/signup/ai`, {
       method: "POST",
       // content-type을 명시하지 않으면 json 파일인지 인식하지 못함
       headers: {
@@ -56,9 +56,11 @@ export const signupAPI = async (url, post) => {
         // Authorization: document.cookies.accessToken,
       },
       body: JSON.stringify(post),
-    }).then((res) => res.json());
+    });
+
     // console.log(res);
-    return res.data === "Success" ? true : false;
+
+    return res.ok;
   } catch (err) {
     // 에러시 false 반환
     console.log(err);

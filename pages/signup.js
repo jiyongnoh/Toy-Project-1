@@ -14,9 +14,9 @@ import Swal from "sweetalert2";
 
 // SignUp 페이지
 export default function Signup() {
-  const [vrNum, setVrNum] = useState("");
   const [id, setId] = useState("");
   const [pwd, setPwd] = useState("");
+  const [email, setEmail] = useState("");
   const [check, setCheck] = useState(false);
 
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function Signup() {
   const signupHandler = async (e) => {
     e.preventDefault();
 
-    if (!id || !pwd || !vrNum || !check) {
+    if (!id || !pwd) {
       Swal.fire({
         icon: "error",
         title: "Input is empty!",
@@ -38,13 +38,27 @@ export default function Signup() {
       return;
     }
 
+    if (!check) {
+      Swal.fire({
+        icon: "error",
+        title: "약관 동의 Check!",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return;
+    }
+
     const flag = await signupAPI(process.env.NEXT_PUBLIC_URL, {
-      id,
-      pwd,
-      vrNum,
+      SignUpData: {
+        pUid: id,
+        passWard: pwd,
+        Email: email,
+        // name : name,
+        // phoneNumber : phoneNumber
+      },
     });
 
-    console.log(flag);
+    // console.log(flag);
 
     if (flag) {
       Swal.fire({
@@ -96,15 +110,15 @@ export default function Signup() {
                 }}
               />
             </InputContainer>
-            {/* Number Input */}
+            {/* PWD Input */}
             <InputContainer>
               <StyledInput
-                id="number"
-                placeholder="Serial Number"
-                type="text"
-                value={vrNum}
+                id="email"
+                placeholder="Email"
+                type="email"
+                value={email}
                 onChange={(e) => {
-                  setVrNum(e.target.value);
+                  setEmail(e.target.value);
                 }}
               />
             </InputContainer>
@@ -118,7 +132,7 @@ export default function Signup() {
                   setCheck(e.target.checked);
                 }}
               />
-              <label for="check">약관 동의?</label>
+              <label for="check">약관 동의 - 필수</label>
             </CheckboxContainer>
 
             {/* Button Container*/}
@@ -145,6 +159,12 @@ export default function Signup() {
 
 const SignUpPageContainer = styled.main`
   background-image: url("/src/img.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  width: 100vw;
+  height: 100vh;
 `;
 
 const FormContainer = styled.form`
