@@ -9,9 +9,12 @@ const GoogleOAuthBtn = ({ setUrl }) => {
       oauthType: e.target.value,
     });
 
-    console.log(directUrl);
-    // url state 변경
-    setUrl(directUrl);
+    // console.log(directUrl);
+    if (directUrl) {
+      setUrl(directUrl);
+    } else {
+      setUrl(window.location.href + "?code=response_fail");
+    }
   };
 
   return (

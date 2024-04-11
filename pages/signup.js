@@ -23,6 +23,7 @@ export default function Signup() {
 
   const minlengthStd = 8;
   const maxlengthStd = 15;
+  const regex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글 및 한글 자모를 포함하는 정규 표현식
 
   // useEffect(() => {
   //   console.log(check);
@@ -34,6 +35,16 @@ export default function Signup() {
       Swal.fire({
         icon: "error",
         title: "Input is empty!",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return false;
+    }
+
+    if (regex.test(id) || regex.test(pwd)) {
+      Swal.fire({
+        icon: "error",
+        title: "한글 쓰지마!!",
         showConfirmButton: false,
         timer: 1000,
       });
