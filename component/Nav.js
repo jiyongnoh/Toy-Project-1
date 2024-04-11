@@ -120,11 +120,11 @@ export default function Nav() {
               <NavBtn>Login</NavBtn>
             </Link>
           </NavLi>
-          {/* <NavLi>
+          <NavLi>
             <Link href="/signup" style={{ textDecoration: "none" }}>
               <NavBtn>SignUp</NavBtn>
             </Link>
-          </NavLi> */}
+          </NavLi>
           {/* <NavLi>
             <Link
               href="/ebt_test_njy96_pupu"

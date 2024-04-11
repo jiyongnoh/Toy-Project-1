@@ -21,13 +21,15 @@ export default function Signup() {
 
   const router = useRouter();
 
+  const minlengthStd = 8;
+  const maxlengthStd = 15;
+
   // useEffect(() => {
   //   console.log(check);
   // }, [check]);
 
-  const signupHandler = async (e) => {
-    e.preventDefault();
-
+  // 회원가입 형식 체크 메서드
+  const formCheck = () => {
     if (!id || !pwd) {
       Swal.fire({
         icon: "error",
@@ -35,7 +37,47 @@ export default function Signup() {
         showConfirmButton: false,
         timer: 1000,
       });
-      return;
+      return false;
+    }
+
+    if (id.length < minlengthStd) {
+      Swal.fire({
+        icon: "error",
+        title: `ID 길이 ${minlengthStd}글자 이상!`,
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return false;
+    }
+
+    if (id.length > maxlengthStd) {
+      Swal.fire({
+        icon: "error",
+        title: `ID 길이 ${maxlengthStd}글자 이하!`,
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return false;
+    }
+
+    if (pwd.length < minlengthStd) {
+      Swal.fire({
+        icon: "error",
+        title: `Password 길이 ${minlengthStd}글자 이상!`,
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return false;
+    }
+
+    if (pwd.length > maxlengthStd) {
+      Swal.fire({
+        icon: "error",
+        title: `Password 길이 ${maxlengthStd}글자 이하!`,
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return false;
     }
 
     if (!check) {
@@ -45,8 +87,17 @@ export default function Signup() {
         showConfirmButton: false,
         timer: 1000,
       });
-      return;
+      return false;
     }
+
+    return true;
+  };
+
+  const signupHandler = async (e) => {
+    e.preventDefault();
+
+    // 회원가입 형식 체크
+    if (!formCheck()) return;
 
     const flag = await signupAPI(process.env.NEXT_PUBLIC_URL, {
       SignUpData: {
