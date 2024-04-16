@@ -37,12 +37,10 @@ export const handleReviewCreate = async (input) => {
     // console.log(response);
     return response;
   } catch (err) {
-    console.log("Gpt API 호출 실패");
+    console.log("ReviewCreate API 호출 실패");
     console.error(err);
     return {
-      status: err.response.status,
-      message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
-      emotion: 0,
+      status: 400,
     };
   }
 };
@@ -59,5 +57,30 @@ export const handleReviewDelete = async (uri) => {
     return response;
   } catch (err) {
     console.error(err);
+  }
+};
+// UPDATE
+export const handleReviewUpdate = async (input) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/review/update`,
+      { ReviewData: input },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+    // console.log(response);
+    return response;
+  } catch (err) {
+    console.log("Gpt API 호출 실패");
+    console.error(err);
+    return {
+      status: err.response.status,
+      message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
+      emotion: 0,
+    };
   }
 };

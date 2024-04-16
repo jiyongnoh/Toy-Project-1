@@ -1,51 +1,138 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Swal from "sweetalert2";
 
-function Review({ review, onDelete }) {
+function Review({ review, onDelete, onUpdate }) {
   const pUid = localStorage.getItem("id");
+  const [uContent, setUContent] = useState("");
+  const [updateMode, setUpdateMode] = useState(false);
+
   return (
     <ReviewContainer>
-      <Header>
-        <ProfileImage
-          src={review.profile_img_url}
-          alt={`${review.uid}'s profile`}
+      {updateMode ? (
+        <UpdateTextArea
+          value={uContent}
+          onChange={(e) => {
+            setUContent(e.target.value);
+          }}
         />
-        <AuthorInfo>
-          <h4>{review.uid}</h4>
-          <p>{review.date.split("T")[0]}</p>
-        </AuthorInfo>
-        <Content>
-          <p>{review.content}</p>
-        </Content>
-        {pUid === review.uid ? (
-          <DeleteButton
-            onClick={() => {
-              Swal.fire({
-                title: "Do you want to Delete?",
-                showDenyButton: true,
-                confirmButtonText: "Yes",
-                denyButtonText: `No`,
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  // DELETE
-                  Swal.fire({
-                    icon: "success",
-                    title: "Delete Success!",
-                    text: "Review Reloading...",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  }).then(() => {
-                    onDelete(review.entry_id);
-                  });
-                }
-              });
-            }}
-          >
-            Delete
-          </DeleteButton>
-        ) : null}
-      </Header>
+      ) : (
+        <Header>
+          <ProfileImage
+            src={review.profile_img_url}
+            alt={`${review.uid}'s profile`}
+          />
+          <AuthorInfo>
+            <h4>{review.uid}</h4>
+            <p>{review.date.split("T")[0]}</p>
+          </AuthorInfo>
+          <Content>
+            <p>{review.content}</p>
+          </Content>
+        </Header>
+      )}
+      {pUid === review.uid ? (
+        updateMode ? (
+          <ButtonContainer>
+            <Button
+              onClick={() => {
+                Swal.fire({
+                  title: "Update Content Submit?",
+                  showDenyButton: true,
+                  confirmButtonText: "Yes",
+                  denyButtonText: `No`,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    onUpdate({
+                      entry_id: review.entry_id,
+                      content: uContent,
+                    }).then((res) => {
+                      if (res) {
+                        Swal.fire({
+                          icon: "success",
+                          title: "Update Success!",
+                          text: "Review Reloading...",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        }).then(() => {
+                          window.location.reload(true);
+                        });
+                      } else {
+                        Swal.fire({
+                          icon: "error",
+                          title: "Update Fail!",
+                          text: "Review Reloading...",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        }).then(() => {
+                          window.location.reload(true);
+                        });
+                      }
+                    });
+                  }
+                });
+              }}
+            >
+              제출
+            </Button>
+            <Button
+              onClick={() => {
+                setUpdateMode(false);
+              }}
+            >
+              취소
+            </Button>
+          </ButtonContainer>
+        ) : (
+          <ButtonContainer>
+            <Button
+              onClick={() => {
+                Swal.fire({
+                  title: "Modify Mode Convert?",
+                  showDenyButton: true,
+                  confirmButtonText: "Yes",
+                  denyButtonText: `No`,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    console.log("Update Mode");
+                    setUpdateMode(true);
+                  }
+                });
+              }}
+            >
+              수정
+            </Button>
+            <Button
+              onClick={() => {
+                Swal.fire({
+                  title: "Do you want to Delete?",
+                  showDenyButton: true,
+                  confirmButtonText: "Yes",
+                  denyButtonText: `No`,
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    onDelete(review.entry_id).then((res) => {
+                      if (res) {
+                        Swal.fire({
+                          icon: "success",
+                          title: "Delete Success!",
+                          text: "Review Reloading...",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        }).then(() => {
+                          window.location.reload(true);
+                        });
+                      }
+                    });
+                  }
+                });
+              }}
+            >
+              삭제
+            </Button>
+          </ButtonContainer>
+        )
+      ) : null}
     </ReviewContainer>
   );
 }
@@ -65,6 +152,11 @@ const Header = styled.div`
   align-items: center;
   margin-bottom: 15px;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    gap: 0.1rem;
+    margin-bottom: 0;
+  }
 `;
 
 const ProfileImage = styled.img`
@@ -73,6 +165,10 @@ const ProfileImage = styled.img`
   border-radius: 50%;
   margin-right: 15px;
   border: 2px solid #e0e0e0; // 이미지 테두리에도 연한 회색 사용
+
+  @media (max-width: 768px) {
+    margin-right: 0.2rem;
+  }
 `;
 
 const AuthorInfo = styled.div`
@@ -105,10 +201,22 @@ const Content = styled.div`
 
   @media (max-width: 768px) {
     width: 11rem;
+    font-size: 0.75rem;
   }
 `;
 
-const DeleteButton = styled.button`
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 0.3rem;
+  @media (max-width: 768px) {
+    gap: 0.1rem;
+  }
+`;
+
+const Button = styled.button`
   padding: 5px 10px;
   background-color: #ff4d4f; // 붉은 색 계열의 배경
   color: white;
@@ -124,6 +232,28 @@ const DeleteButton = styled.button`
 
   &:focus {
     outline: none;
+  }
+
+  @media (max-width: 768px) {
+    padding: 5px 7px;
+    font-size: 0.55rem;
+  }
+`;
+
+const UpdateTextArea = styled.textarea`
+  width: 34rem;
+  height: 5.1rem;
+
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  background-color: rgba(0, 0, 0, 0.2); // 어두운 테마에 맞춰 배경색 지정
+  color: #e0e0e0; // 입력 텍스트 색상
+  resize: none;
+
+  @media (max-width: 768px) {
+    width: 20.5rem;
   }
 `;
 

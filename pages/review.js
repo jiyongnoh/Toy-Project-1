@@ -16,6 +16,7 @@ import {
   handleReviewGet,
   handleReviewCreate,
   handleReviewDelete,
+  handleReviewUpdate,
 } from "@/fetchAPI/reviewAPI";
 
 const default_review = [
@@ -75,14 +76,22 @@ export default function Test() {
 
   // Create 핸들러
   const onSubmit = async (formData) => {
-    await handleReviewCreate(formData).then((res) => console.log(res));
-    window.location.reload(true);
+    const res = await handleReviewCreate(formData);
+    return res.status === 200;
   };
 
   // Delete 핸들러
   const onDelete = async (key) => {
-    await handleReviewDelete(`${process.env.NEXT_PUBLIC_URL}/review/${key}`);
-    window.location.reload(true);
+    const res = await handleReviewDelete(
+      `${process.env.NEXT_PUBLIC_URL}/review/${key}`
+    );
+    return res.status === 200;
+  };
+
+  // Update 핸들러
+  const onUpdate = async (updateData) => {
+    const res = await handleReviewUpdate(updateData);
+    return res.status === 200;
   };
 
   useEffect(() => {
@@ -120,7 +129,12 @@ export default function Test() {
           {isPending
             ? null
             : reviews.map((review, index) => (
-                <Review key={index} review={review} onDelete={onDelete} />
+                <Review
+                  key={index}
+                  review={review}
+                  onDelete={onDelete}
+                  onUpdate={onUpdate}
+                />
               ))}
           {/* 무한 스크롤 갱신 로딩바 */}
           {isPending ? <LoadingAnimation /> : null}

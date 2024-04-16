@@ -39,20 +39,22 @@ function ReviewForm({ onSubmit }) {
         denyButtonText: `No`,
       }).then((result) => {
         if (result.isConfirmed) {
-          // 페이지 이동 (비동기)
-          Swal.fire({
-            icon: "success",
-            title: "Submit Success!",
-            text: "Review Reloading...",
-            showConfirmButton: false,
-            timer: 1500,
-          }).then(() => {
-            // CREATE
-            onSubmit({
-              pUid: localStorage.getItem("id"),
-              profile_img_url: "https://placehold.co/600x400",
-              content,
-            });
+          onSubmit({
+            pUid: localStorage.getItem("id"),
+            profile_img_url: "https://placehold.co/600x400",
+            content,
+          }).then((res) => {
+            if (res) {
+              Swal.fire({
+                icon: "success",
+                title: "Submit Success!",
+                text: "Review Reloading...",
+                showConfirmButton: false,
+                timer: 1500,
+              }).then(() => {
+                window.location.reload(true);
+              });
+            }
           });
         }
       });
