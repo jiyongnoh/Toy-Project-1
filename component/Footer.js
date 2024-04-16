@@ -61,6 +61,10 @@ const InfoText = styled.p`
   font-size: 14px;
   line-height: 1.5;
   margin: 5px 0;
+
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+  }
 `;
 
 const SocialMediaLinks = styled.div`
@@ -75,6 +79,10 @@ const SocialLink = styled.a`
 
   &:hover {
     color: #999;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
   }
 `;
 

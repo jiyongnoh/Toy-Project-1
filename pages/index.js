@@ -23,7 +23,9 @@ export default function Home() {
     <PageContainer>
       <Section>
         {/* 첫 번째 섹션 내용 */}
-        <MainContainer />
+        <MainContainer>
+          <Title>AI Avartar Project</Title>
+        </MainContainer>
       </Section>
       <Section style={{ backgroundColor: "lightgreen" }}>
         {/* 두 번째 섹션 내용 */}
@@ -81,6 +83,10 @@ const MainContainer = styled.div`
 
   scroll-snap-align: start;
   height: 100vh;
+
+  @media (max-width: 768px) {
+    background-image: url("/src/soyes_mobile.jpg");
+  }
 `;
 
 const SubContainer = styled.div`
@@ -95,6 +101,10 @@ const SubContainer = styled.div`
 
   scroll-snap-align: start;
   height: 100vh;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -104,7 +114,12 @@ const ContentWrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 4rem;
-  color: #ffffff;
+  color: #000000;
   animation: ${fadeIn} 1.5s ease;
   margin-bottom: 0.5rem;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    color: #ffffff;
+  }
 `;
