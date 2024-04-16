@@ -67,21 +67,21 @@ export default function Test() {
     const fullHeight = document.documentElement.offsetHeight;
 
     // 스크롤이 바닥에 도달했는지 확인 (여유분을 두어 조금 더 일찍 호출)
-    if (scrollTop + windowHeight + 20 >= fullHeight && !isPending && hasMore) {
+    if (scrollTop + windowHeight + 50 >= fullHeight && !isPending && hasMore) {
       // 추가로 가져올 리뷰 데이터 요청 API 메서드 호출
       setPage(page + 1);
     }
   }, [isPending, hasMore, page]);
 
   // Create 핸들러
-  const onSubmit = (formData) => {
-    handleReviewCreate(formData).then((res) => console.log(res));
+  const onSubmit = async (formData) => {
+    await handleReviewCreate(formData).then((res) => console.log(res));
     window.location.reload(true);
   };
 
   // Delete 핸들러
-  const onDelete = (key) => {
-    handleReviewDelete(`${process.env.NEXT_PUBLIC_URL}/review/${key}`);
+  const onDelete = async (key) => {
+    await handleReviewDelete(`${process.env.NEXT_PUBLIC_URL}/review/${key}`);
     window.location.reload(true);
   };
 

@@ -12,15 +12,15 @@ function ReviewForm({ onSubmit }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Min Text Limit
-    if (content.length < 10) {
-      Swal.fire({
-        icon: "error",
-        title: "글자 수 최소 제한 20자",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return;
-    }
+    // if (content.length < 10) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: "글자 수 최소 제한 20자",
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    //   return;
+    // }
     // Max Text Limit
     if (content.length > 300) {
       Swal.fire({
