@@ -1,7 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
+import { FlexContainer } from "../../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
+import { Howl } from "howler";
+import axios from "axios";
 
 const messageArr = [];
 
@@ -50,10 +53,72 @@ const handleSpeak = (text) => {
 
 // Test 페이지
 export default function Test() {
-  const [chat, setChat] = useState("");
-  const [flagEnter, setFlagEnter] = useState(false);
+  const [chat, setChat] = useState("안녕");
+  const [flagEnter, setFlagEnter] = useState(true);
   const [emotion, setEmotion] = useState("중립");
-  const [audioUrl, setAudioUrl] = useState("");
+
+  let currentSound = null;
+
+  // const handleClovaVoice = async (text) => {
+  //   const response = await axios.post(
+  //     `/api/speech`,
+  //     { text },
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
+
+  //   if (response.ok) {
+  //     // console.log(response);
+  //   }
+  // };
+
+  const handleClovaVoice = async (text) => {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
+      {
+        speaker: "nara",
+        volume: "0",
+        speed: "0",
+        pitch: "0",
+        text,
+        format: "mp3",
+      },
+      { responseType: "arraybuffer" }
+    );
+
+    // console.log(response.data);
+    const audioBlob = new Blob([response.data], { type: "audio/mp3" });
+    const audioUrl = URL.createObjectURL(audioBlob);
+    // const audio = new Audio(audioUrl);
+    // console.log(audioUrl);
+    return audioUrl;
+  };
+  // 푸푸 API 호출
+  const handleGptCompletion = async (input) => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_pupu`,
+        { EBTData: input },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      // console.log(response);
+      return response.data;
+    } catch (err) {
+      console.log("푸푸 API 호출 실패");
+      console.error(err);
+      return {
+        message: "Serverless Error",
+        emotion: 0,
+      };
+    }
+  };
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -84,28 +149,31 @@ export default function Test() {
 
     // Chat Compleation Request
     try {
-      const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`,
-        {
-          method: "POST",
-          headers: {
-            accept: "application.json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ messageArr, pUid: "njy95" }),
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => data);
+      const data = await handleGptCompletion({ messageArr, pUid: "njy95" });
 
-      handleSpeak(data.message); // TTS 음성
+      // Audio URL 생성
+      const audioURL = await handleClovaVoice(data.message);
+
+      // handleSpeak(data.message); // TTS 음성
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
-      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
-      dataMsgArr.forEach((msg) => {
-        chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
-      });
-      // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+
+      // 응답 채팅 생성
+      const response = document.createElement("div");
+      response.className = "response";
+      response.textContent = data.message;
+
+      // 사운드 버튼 생성
+      const sound_button = document.createElement("button");
+      sound_button.className = "sound";
+      sound_button.textContent = "Play";
+      sound_button.setAttribute("data-audio-url", audioURL); // 상위 이벤트 식별 속성
+
+      // 응답 채팅에 사운드 버튼 할당
+      response.appendChild(sound_button);
+
+      chatBoxBody.appendChild(response); // AI 답변 채팅 추가
+      //chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
       scrollToBottom(chatBoxBody);
     } catch (error) {
       console.log(error);
@@ -124,20 +192,33 @@ export default function Test() {
     const chatBox = document.querySelector(".chat-box");
     const chatBoxBody = chatBox.querySelector(".chat-box-body");
 
+    // 사운드 재생 이벤트 추가
+    chatBoxBody.addEventListener("click", function (e) {
+      // 클릭된 요소가 'Play' 버튼인지 확인
+      if (e.target && e.target.classList.contains("sound")) {
+        // 'Play' 버튼에 저장된 오디오 URL을 가져옵니다.
+
+        const audioURL = e.target.getAttribute("data-audio-url");
+        // 이전 오디오가 재생 중이라면 중지합니다.
+        if (currentSound) {
+          currentSound.stop();
+        }
+
+        // 새로운 오디오를 생성하고 재생합니다.
+        currentSound = new Howl({
+          src: [audioURL],
+          html5: true,
+        });
+        currentSound.play();
+      }
+    });
+
     sendMessage(chatBoxBody);
     setFlagEnter(false);
     setChat("");
   }, [flagEnter]);
 
-  useEffect(() => {
-    if (audioUrl) {
-      document.getElementById("playButton").click();
-    }
-  }, [audioUrl]);
-
-  const start_ment = `정서행동검사 - 학교생활 진행`;
-  const start_ment2 = `6가지 문항 모두 0점을 획득한 아동 (총 0점)`;
-  const start_ment3 = `검사 결과: 양호`;
+  const start_ment = `Prompt Module Test`;
 
   return (
     <MainContainer>
@@ -155,8 +236,6 @@ export default function Test() {
           <div class="chat-box-header">SOYES KIDS</div>
           <div class="chat-box-body">
             <div class="response">{start_ment}</div>
-            <div class="response">{start_ment2}</div>
-            <div class="response">{start_ment3}</div>
           </div>
 
           <Live2DViewerTest emotion={emotion} />
@@ -184,15 +263,6 @@ export default function Test() {
         </div>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
-          <button
-            id="playButton"
-            onClick={() => {
-              const audio = new Audio(audioUrl);
-              audio.play().catch((e) => console.error(e));
-            }}
-          >
-            asdf
-          </button>
         </div>
       </FlexContainer>
     </MainContainer>

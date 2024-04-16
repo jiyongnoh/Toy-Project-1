@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 
 function Review({ review, onDelete, onUpdate }) {
   const pUid = localStorage.getItem("id");
-  const [uContent, setUContent] = useState("");
+  const [uContent, setUContent] = useState(review.content);
   const [updateMode, setUpdateMode] = useState(false);
 
   return (
@@ -36,6 +36,16 @@ function Review({ review, onDelete, onUpdate }) {
           <ButtonContainer>
             <Button
               onClick={() => {
+                if (!uContent) {
+                  Swal.fire({
+                    icon: "error",
+                    title: "내용을 입력하세요!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  return;
+                }
+
                 Swal.fire({
                   title: "Update Content Submit?",
                   showDenyButton: true,
@@ -78,6 +88,7 @@ function Review({ review, onDelete, onUpdate }) {
             <Button
               onClick={() => {
                 setUpdateMode(false);
+                setUContent(review.content);
               }}
             >
               취소

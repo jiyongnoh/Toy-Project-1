@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
+import { FlexContainer } from "../../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
 import { Howl } from "howler";
@@ -49,7 +49,7 @@ const handleClovaVoice = async (text) => {
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
     {
-      speaker: "nyejin",
+      speaker: "nminyoung",
       volume: "0",
       speed: "0",
       pitch: "0",
@@ -81,7 +81,7 @@ const handleGptCompletion = async (input, path) => {
     // console.log(response);
     return response.data;
   } catch (err) {
-    console.log("소예 API 호출 실패");
+    console.log("라라 API 호출 실패");
     console.error(err);
     return {
       message: "Serverless Error",
@@ -98,7 +98,7 @@ export default function Test() {
   const [noReqCnt, setNoReqCnt] = useState(0);
 
   let currentSound = null; // Sound 제어 변수
-  const avartaPath = "/openAI/consulting_emotion_soyes"; // 소예 API Path
+  const avartaPath = "/openAI/consulting_emotion_lala"; // 라라 API Path
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -141,16 +141,21 @@ export default function Test() {
       messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
       document.getElementById("loading").remove(); // 로딩창 제거
 
-      // 응답 채팅 생성
-      const response = document.createElement("div");
-      response.className = "response";
-      response.textContent = data.message;
-
       // 사운드 버튼 생성
       const sound_button = document.createElement("button");
       sound_button.className = "sound";
       sound_button.textContent = "Play";
       sound_button.setAttribute("data-audio-url", audioURL); // 상위 이벤트 식별 속성
+
+      // 응답 채팅 생성
+      const response = document.createElement("div");
+      // response.className = "response";
+      // response.textContent = data.message;
+      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      dataMsgArr.forEach((msg, index) => {
+        if (!msg) return;
+        response.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
+      });
 
       // 응답 채팅에 사운드 버튼 할당
       response.appendChild(sound_button);
@@ -251,6 +256,7 @@ export default function Test() {
         currentSound.play();
       }
     });
+
     return () => {
       messageArr.length = 0;
       currentSound = null;
@@ -285,9 +291,9 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `Persona: 소예 (아동 전문 심리 상담사)`;
+  const start_ment = `Persona: 라라 (정서 멘토)`;
   const start_ment2 = `정서행동검사 - 11분야 모두 진행`;
-  const start_ment3 = `삽입 프롬프트: 소예 페르소나 + 아동 정보 + 정서행동 결과 11종`;
+  const start_ment3 = `삽입 프롬프트: 라라 페르소나 + 아동 정보 + 정서행동 결과 11종`;
   const start_ment4 = `감지 텍스트(분석): "학교생활",
   "친구관계",
   "가족관계",
@@ -300,6 +306,8 @@ export default function Test() {
   "분노",
   "자기인식"`;
   const start_ment5 = `분석 세션: 정서검사 11가지 분야 중 키워드에 감지된 검사 결과를 분석합니다 (세션당 1회만 진행)`;
+  const start_ment6 = `감지 텍스트(인지): "학교인지", "가족인지", "친구인지", "그외인지"`;
+  const start_ment7 = `인지행동 솔루션 : 4번 이내에 정답을 맞추면 세션 종료. 이전까진 정답 유도`;
 
   return (
     <MainContainer>
@@ -321,9 +329,11 @@ export default function Test() {
             <div class="ment">{start_ment3}</div>
             <div class="ment">{start_ment4}</div>
             <div class="ment">{start_ment5}</div>
+            <div class="ment">{start_ment6}</div>
+            <div class="ment">{start_ment7}</div>
           </div>
 
-          <Live2DViewerTest emotion={emotion} avarta="soyes" />
+          <Live2DViewerTest emotion={emotion} avarta="lala" />
 
           <div class="chat-box-footer">
             <input

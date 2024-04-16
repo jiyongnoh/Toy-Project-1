@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
+import { FlexContainer } from "../../styled-component/common";
 import Live2DViewerTest from "@/component/Live2DViewerTest";
 import { useEffect, useState } from "react";
 import { Howl } from "howler";
@@ -49,7 +49,7 @@ const handleClovaVoice = async (text) => {
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
     {
-      speaker: "nara",
+      speaker: "nara_call",
       volume: "0",
       speed: "0",
       pitch: "0",
@@ -66,7 +66,7 @@ const handleClovaVoice = async (text) => {
   // console.log(audioUrl);
   return audioUrl;
 };
-// 푸푸 API 호출 함수
+// 아바타 API 호출 함수
 const handleGptCompletion = async (input, path) => {
   try {
     const response = await axios.post(
@@ -81,7 +81,7 @@ const handleGptCompletion = async (input, path) => {
     // console.log(response);
     return response.data;
   } catch (err) {
-    console.log("푸푸 API 호출 실패");
+    console.log("우비 API 호출 실패");
     console.error(err);
     return {
       message: "Serverless Error",
@@ -98,7 +98,7 @@ export default function Test() {
   const [noReqCnt, setNoReqCnt] = useState(0);
 
   let currentSound = null; // Sound 제어 변수
-  const avartaPath = "/openAI/consulting_emotion_pupu"; // 푸푸 API Path
+  const avartaPath = "/openAI/consulting_emotion_ubi"; // 우비 API Path
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
@@ -164,6 +164,7 @@ export default function Test() {
       chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
     }
   };
+
   //   const message = chat;
   //   messageArr.push({ role: "user", content: message }); // 내가 쓴 메세지 저장
 
@@ -343,7 +344,6 @@ export default function Test() {
         currentSound.play();
       }
     });
-
     return () => {
       messageArr.length = 0;
       currentSound = null;
@@ -378,10 +378,10 @@ export default function Test() {
     setChat("");
   }, [flagEnter]);
 
-  const start_ment = `Persona: 푸푸 (9살 남자 초등학생)`;
-  const start_ment2 = `성격검사 결과 프롬프트 삽입`;
-  const start_ment3 = `삽입 프롬프트: 푸푸 페르소나 + 아동 정보 + 성격검사 결과 + 솔루션(명상)`;
-  const start_ment4 = `솔루션(명상) : User가 불안해하거나 초조함을 느낄 경우 음악/그림 명상 컨텐츠를 추천합니다`;
+  const start_ment = `Persona: 우비 (10살 남자 초등학생)`;
+  const start_ment2 = `성격검사 결과 삽입`;
+  const start_ment3 = `삽입 프롬프트: 우비 페르소나 + 아동 정보 + 성격검사 결과 + 솔루션(학습)`;
+  const start_ment4 = `솔루션(학습) : 공부 관련 고민이 있는 User에게 비상학습을 추천합니다`;
 
   return (
     <MainContainer>
@@ -404,7 +404,7 @@ export default function Test() {
             <div class="ment">{start_ment4}</div>
           </div>
 
-          <Live2DViewerTest emotion={emotion} avarta="pupu" />
+          <Live2DViewerTest emotion={emotion} avarta="ubi" />
 
           <div class="chat-box-footer">
             <input
@@ -476,12 +476,3 @@ const Live2DContainer = styled.div`
   top: 50%;
   left: 36%;
 `;
-
-// TTS 함수. 브라우저 내장 객체라 따로 import 필요 없음 (Regercy)
-// const handleSpeak = (text) => {
-//   const speech = new SpeechSynthesisUtterance(text);
-//   window.speechSynthesis.speak(speech);
-// };
-
-// Regercy sendMessage
-// const sendMessage = async (chatBoxBody) => {
