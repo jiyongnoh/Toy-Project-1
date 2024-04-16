@@ -1,69 +1,71 @@
 import styled, { keyframes } from "styled-components";
-// import { FlexContainer } from "../styled-component/common";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import { useRecoilValue } from "recoil";
 import { log } from "../store/state";
-
 import Live2DViewerMain from "@/component/Live2DViewerMain";
-
-// import dynamic from "next/dynamic";
-// const Live2DViewer = dynamic(() => import("../component/Live2DViewer"), {
-//   loading: () => <p>Loading...</p>,
-//   ssr: true, // 이 옵션은 서버 사이드 렌더링을 비활성화합니다.
-// });
+import Footer from "@/component/Footer";
 
 // Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const login = useRecoilValue(log);
 
-  // 1초 뒤에 로딩 상태 true로 변경. 최초 1번만 실행
   useEffect(() => {
-    if (!login) {
-      setTimeout(() => {
-        setLoading(true);
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
-    }
+    const timer = setTimeout(() => {
+      setLoading(!login);
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, [login]);
 
   return (
-    <MainContainer>
-      <MainBtnContainer>
-        <Live2DViewerMain />
-        {/* {loading ? (
-          <Link href="/login" style={{ textDecoration: "none" }}>
-            <MainButton>Login</MainButton>
-          </Link>
-        ) : null} */}
-      </MainBtnContainer>
-    </MainContainer>
+    <PageContainer>
+      <Section>
+        {/* 첫 번째 섹션 내용 */}
+        <MainContainer />
+      </Section>
+      <Section style={{ backgroundColor: "lightgreen" }}>
+        {/* 두 번째 섹션 내용 */}
+        <SubContainer>
+          <Title>AI Avartar Soyes</Title>
+          <Live2DViewerMain avartar="mao" />
+        </SubContainer>
+      </Section>
+      <Section style={{ backgroundColor: "lightcoral" }}>
+        {/* 세 번째 섹션 내용 */}
+        <SubContainer>
+          <Title>AI Avartar Pupu</Title>
+          <Live2DViewerMain avartar="shizuku" />
+        </SubContainer>
+      </Section>
+      <FooterSection>
+        <Footer />
+      </FooterSection>
+    </PageContainer>
   );
 }
 
-// styled-component의 animation 설정 방법 (keyframes 메서드 사용)
-const FadeInSpan = keyframes`
-  0% {
-    opacity: 0;
-    font-size: 1rem;
-  }
-  100% {
-    opacity: 1;
-    font-size: 3rem;
-  }
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 `;
-const FadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+
+const PageContainer = styled.div`
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-behavior: smooth;
+`;
+
+const Section = styled.div`
+  scroll-snap-align: start;
+  height: 100vh;
+  width: 100%;
+`;
+
+const FooterSection = styled(Section)`
+  height: max-content;
 `;
 
 const MainContainer = styled.div`
@@ -71,64 +73,38 @@ const MainContainer = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   width: 100%;
-  padding-top: 61.5%; // 16:9 비율
-
-  // 화면 맞춤 설정
-  @media (max-width: 1490px) {
-    height: 100vh;
-  }
-`;
-
-const MainBtnContainer = styled.div`
-  position: absolute;
-  top: 12%;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+
+  scroll-snap-align: start;
+  height: 100vh;
 `;
 
-const HomeSpan = styled.span`
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-  // 애니메이션 인스턴스는 문자열 리터럴과 동일하게 $ + {} 사용
-  animation: ${FadeInSpan} 0.6s linear alternate;
+const SubContainer = styled.div`
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  transition: 0.5s;
+  scroll-snap-align: start;
+  height: 100vh;
 `;
 
-const MainButton = styled.button`
-  background-color: rgba(0, 150, 255, 0.5); // 투명 처리
-  backdrop-filter: blur(10px); // 불투명 필터
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
-  color: white;
-
-  border: none;
-  border-radius: 15px;
-
-  margin: 4px 2px;
-  padding: 13px 23px;
-
+const ContentWrapper = styled.div`
   text-align: center;
-  text-decoration: none;
+  animation: ${fadeIn} 1s ease;
+`;
 
-  display: inline-block;
-  font-size: 1.2rem;
-  cursor: pointer;
-
-  &:hover {
-    padding: 1rem 1.8rem;
-    background-color: rgba(0, 42, 255, 0.5);
-  }
-
-  animation: ${FadeIn} 1s linear alternate;
-
-  transition: 0.5s;
+const Title = styled.h1`
+  font-size: 4rem;
+  color: #ffffff;
+  animation: ${fadeIn} 1.5s ease;
+  margin-bottom: 0.5rem;
 `;

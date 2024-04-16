@@ -9,36 +9,43 @@ async function cubismModelCall(model) {
   const result = await PIXI.live2d.Live2DModel.from(model);
   return result;
 }
-
 const cubism2Model_shizuku =
   "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/shizuku/shizuku.model.json";
+const cubism2Model_haru =
+  "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/haru/haru_greeter_t03.model3.json";
 const cubism2Model_Mao =
   "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Mao/Mao.model3.json";
+const cubism2Model_Hiyori =
+  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Hiyori/Hiyori.model3.json";
+const cubism2Model_Wanko =
+  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Wanko/Wanko.model3.json";
 
-export default function Live2DViewerMain() {
+const model_class = {
+  shizuku: {
+    avarta_model: cubism2Model_shizuku,
+    scale: 0.3,
+  },
+  mao: {
+    avarta_model: cubism2Model_Mao,
+    scale: 0.065,
+  },
+  haru: { avarta_model: cubism2Model_haru, scale: 0.12 },
+  Hiyori: { avarta_model: cubism2Model_Hiyori, scale: 0.057 },
+  Wanko: { avarta_model: cubism2Model_Wanko, scale: 0.37 },
+};
+
+export default function Live2DViewerMain({ avartar }) {
   const canvasRef = useRef(null);
-  // console.log(emotion);
-
   useEffect(() => {
-    let width, height, scale;
-
-    if (window.innerWidth < 500) {
-      width = 160;
-      height = 250;
-      scale = 0.03;
-    } else {
-      width = 370;
-      height = 630;
-      scale = 0.07;
-    }
-
+    const { avarta_model, scale } = model_class[avartar];
+    console.log(avartar);
     const app = new PIXI.Application({
       view: canvasRef.current,
-      width: width, // 캔버스 너비
-      height: height, // 캔버스 높이
+      width: window.innerWidth < 500 ? 160 : 370, // 캔버스 너비
+      height: window.innerWidth < 500 ? 250 : 630, // 캔버스 높이
       transparent: true,
     });
-    cubismModelCall(cubism2Model_Mao).then((model) => {
+    cubismModelCall(avarta_model).then((model) => {
       app.stage.addChild(model);
       model.scale.set(scale);
 
@@ -56,7 +63,3 @@ export default function Live2DViewerMain() {
 
   return <canvas ref={canvasRef}></canvas>;
 }
-
-const Canvas = styled.canvas`
-  background-color: #ffffff;
-`;
