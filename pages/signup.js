@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled from "styled-components";
 
 import { useEffect, useState } from "react";
@@ -11,6 +12,8 @@ import { useRouter } from "next/router";
 import { signupAPI } from "@/fetchAPI";
 // SweetAlert2
 import Swal from "sweetalert2";
+import { useRecoilState } from "recoil";
+import { log } from "../store/state";
 
 // SignUp 페이지
 export default function Signup() {
@@ -18,6 +21,7 @@ export default function Signup() {
   const [pwd, setPwd] = useState("");
   const [email, setEmail] = useState("");
   const [check, setCheck] = useState(false);
+  const [login, setLogin] = useRecoilState(log);
 
   const router = useRouter();
 
@@ -25,9 +29,13 @@ export default function Signup() {
   const maxlengthStd = 15;
   const regex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글 및 한글 자모를 포함하는 정규 표현식
 
-  // useEffect(() => {
-  //   console.log(check);
-  // }, [check]);
+  useEffect(() => {
+    const loginSession = JSON.parse(localStorage.getItem("log"));
+    if (loginSession) {
+      router.replace("/");
+      return;
+    }
+  }, [login]);
 
   // 회원가입 형식 체크 메서드
   const formCheck = () => {

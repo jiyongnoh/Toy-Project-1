@@ -184,16 +184,20 @@ export default function Login() {
 
   // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
   useEffect(() => {
-    if (localStorage.getItem("id")) {
-      setId(localStorage.getItem("id"));
-      setCheck(true);
-    }
     // 카카오 SDK 초기화
     if (window.Kakao && !window.Kakao.isInitialized()) {
       // Kakao.init을 이용하여 JavaScript Key를 사용하여 초기화합니다.
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
     }
   }, []);
+
+  useEffect(() => {
+    const loginSession = JSON.parse(localStorage.getItem("log"));
+    if (loginSession) {
+      router.replace("/");
+      return;
+    }
+  }, [login]);
 
   // url 이동
   useEffect(() => {

@@ -11,6 +11,7 @@ import { log } from "../store/state";
 import Review from "@/component/Review_Component/Review";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 import ReviewForm from "@/component/Review_Component/ReviewForm";
+import Swal from "sweetalert2";
 
 import {
   handleReviewGet,
@@ -18,6 +19,7 @@ import {
   handleReviewDelete,
   handleReviewUpdate,
 } from "@/fetchAPI/reviewAPI";
+import { useRouter } from "next/router";
 
 const default_review = [
   {
@@ -60,6 +62,8 @@ export default function Test() {
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+
+  const router = useRouter();
 
   const handleScroll = useCallback(() => {
     // 문서 높이, 뷰포트 높이, 스크롤 위치를 계산
@@ -106,6 +110,15 @@ export default function Test() {
       });
   }, [page]);
 
+  // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
+  useEffect(() => {
+    const loginSession = JSON.parse(localStorage.getItem("log"));
+    if (!loginSession) {
+      router.replace("/login");
+    }
+  }, [login]);
+
+  // 무한스크롤 useCallback 함수 관련 이벤트 추가
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     // 컴포넌트 언마운트 시 이벤트 리스너 제거

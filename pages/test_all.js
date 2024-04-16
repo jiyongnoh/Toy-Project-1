@@ -72,6 +72,7 @@ export default function Test() {
   const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
 
   const router = useRouter();
+
   // 언마운트 시점에 사용할 messageArr 변수값 유지
   const latestMessageArr = useRef(messageArr);
   latestMessageArr.current = messageArr;
@@ -138,6 +139,7 @@ export default function Test() {
         ...JSON.parse(JSON.stringify(latestMessageArr.current)),
       ];
       tmpMsgArr.forEach((el) => delete el.audioURL);
+      // 상담 내역 저장 API 호출
       handleConsultLogSave(
         {
           messageArr: tmpMsgArr,
@@ -155,6 +157,14 @@ export default function Test() {
       // messageArr.length = 0;
     };
   }, []);
+
+  // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
+  useEffect(() => {
+    const loginSession = JSON.parse(localStorage.getItem("log"));
+    if (!loginSession) {
+      router.replace("/login");
+    }
+  }, [login]);
 
   // messageArr 언마운트 처리. avartaAI
   useEffect(() => {

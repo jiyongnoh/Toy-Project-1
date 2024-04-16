@@ -15,6 +15,7 @@ import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 // 아바타 관련 전역 변수
 import { useRecoilState } from "recoil";
 import { avarta } from "../store/state";
+import { useRouter } from "next/router";
 
 const avartaAI_info = {
   pupu: {
@@ -58,6 +59,8 @@ export default function Test() {
   const [messageArr, setMessageArr] = useState([]);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
+
+  const router = useRouter();
 
   const sendMessage = async () => {
     const message = chat;
