@@ -114,8 +114,20 @@ export default function Test() {
           setTimeout(() => {
             setReviews([...reviews, ...data.reviewData]);
             setIsPending(false);
-          }, 1000);
+          }, 1500);
         }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Loading Fail",
+          text: "ㅠㅠ",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          setIsPending(false);
+        });
       });
   }, [page]);
 

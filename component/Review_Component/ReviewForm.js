@@ -37,27 +37,39 @@ function ReviewForm({ onSubmit }) {
         showDenyButton: true,
         confirmButtonText: "Yes",
         denyButtonText: `No`,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          onSubmit({
-            pUid: localStorage.getItem("id"),
-            profile_img_url: "https://placehold.co/600x400",
-            content,
-          }).then((res) => {
-            if (res) {
-              Swal.fire({
-                icon: "success",
-                title: "Submit Success!",
-                text: "Review Reloading...",
-                showConfirmButton: false,
-                timer: 1500,
-              }).then(() => {
-                window.location.reload(true);
-              });
-            }
-          });
-        }
-      });
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            onSubmit({
+              pUid: localStorage.getItem("id"),
+              profile_img_url: "https://placehold.co/600x400",
+              content,
+            }).then((res) => {
+              if (res.ok) {
+                Swal.fire({
+                  icon: "success",
+                  title: "Submit Success!",
+                  text: "Review Reloading...",
+                  showConfirmButton: false,
+                  timer: 1500,
+                }).then(() => {
+                  window.location.reload(true);
+                });
+              } else {
+                Swal.fire({
+                  icon: "error",
+                  title: "Submit Fail",
+                  text: "ㅠㅠ",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 

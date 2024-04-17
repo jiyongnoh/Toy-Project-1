@@ -1,19 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from "styled-components";
-import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
-import { useRecoilValue } from "recoil";
-import { log } from "../store/state";
+import { useEffect, useState } from "react";
 import Live2DViewerMain from "@/component/Live2DViewerMain";
 import Footer from "@/component/Footer";
-import ScrollIndicator from "@/component/ScrollIndicator";
+import ScrollDownIndicator from "@/component/ScrollDownIndicator";
+import ScrollUpIndicator from "@/component/ScrollUpIndicator";
 
 // Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [mobile, setMobile] = useState(false);
-  const [showScroll, setShowScroll] = useState(true);
-  const login = useRecoilValue(log);
 
   useEffect(() => {
     // Loading (1 sec)
@@ -31,18 +27,22 @@ export default function Home() {
         {/* 첫 번째 섹션 내용 */}
         <MainContainer>
           {mobile && loading && <Title>AI Avartar Project</Title>}
+          {!mobile && loading && <ScrollDownIndicator />}
         </MainContainer>
       </Section>
       <Section style={{ backgroundColor: "lightgreen" }}>
         {/* 두 번째 섹션 내용 */}
         <SubContainer>
+          {!mobile && <ScrollUpIndicator />}
           <Title>AI Avartar Soyes</Title>
           <Live2DViewerMain avartar="mao" />
+          {!mobile && <ScrollDownIndicator />}
         </SubContainer>
       </Section>
       <Section style={{ backgroundColor: "lightcoral" }}>
         {/* 세 번째 섹션 내용 */}
         <SubContainer>
+          {!mobile && <ScrollUpIndicator />}
           <Title>AI Avartar Pupu</Title>
           <Live2DViewerMain avartar="shizuku" />
         </SubContainer>
@@ -51,7 +51,6 @@ export default function Home() {
       <FooterSection>
         <Footer />
       </FooterSection>
-      {showScroll && <ScrollIndicator />}
     </PageContainer>
   );
 }
@@ -85,10 +84,11 @@ const MainContainer = styled.div`
   background-repeat: no-repeat;
   width: 100%;
   height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
-
+  flex-direction: column;
   scroll-snap-align: start;
   height: 100vh;
 
@@ -108,13 +108,13 @@ const SubContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 2rem;
 
   scroll-snap-align: start;
   height: 100vh;
 
   @media (max-width: 768px) {
-    flex-direction: column;
     gap: 0;
   }
 `;
