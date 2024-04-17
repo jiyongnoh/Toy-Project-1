@@ -6,6 +6,7 @@ function Review({ review, onDelete, onUpdate }) {
   const pUid = localStorage.getItem("id");
   const [uContent, setUContent] = useState(review.content);
   const [updateMode, setUpdateMode] = useState(false);
+  const dateFlag = review.created_at !== review.updated_at;
 
   return (
     <ReviewContainer>
@@ -24,7 +25,12 @@ function Review({ review, onDelete, onUpdate }) {
           />
           <AuthorInfo>
             <h4>{review.uid}</h4>
-            <p>{review.date.split("T")[0]}</p>
+            <p>
+              {dateFlag
+                ? review.created_at.split("T")[0]
+                : review.updated_at.split("T")[0]}
+            </p>
+            {dateFlag && <p>(수정)</p>}
           </AuthorInfo>
           <Content>
             <p>{review.content}</p>

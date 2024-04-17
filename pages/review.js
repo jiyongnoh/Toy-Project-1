@@ -61,7 +61,7 @@ export default function Test() {
   const [login, setLogin] = useRecoilState(log);
   const [reviews, setReviews] = useState([]);
   const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(true); // 무한 스크롤 트리거 state
 
   const router = useRouter();
 
@@ -105,11 +105,12 @@ export default function Test() {
     handleReviewGet(`${process.env.NEXT_PUBLIC_URL}/review?page=${page}`)
       .then((res) => res.data)
       .then((data) => {
+        // READ API 반환 Data가 없을 경우
         if (data.reviewData.length === 0) {
+          // 무한 스크롤 조절 state => false
           setHasMore(false);
           setIsPending(false);
-        } // 무한스크롤 트리거 막기
-        else {
+        } else {
           setTimeout(() => {
             setReviews([...reviews, ...data.reviewData]);
             setIsPending(false);
