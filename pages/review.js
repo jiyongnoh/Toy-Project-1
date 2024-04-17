@@ -72,8 +72,9 @@ export default function Test() {
     const fullHeight = document.documentElement.offsetHeight;
 
     // 스크롤이 바닥에 도달했는지 확인 (여유분을 두어 조금 더 일찍 호출)
-    if (scrollTop + windowHeight + 50 >= fullHeight && !isPending && hasMore) {
+    if (scrollTop + windowHeight >= fullHeight && !isPending && hasMore) {
       // 추가로 가져올 리뷰 데이터 요청 API 메서드 호출
+      setIsPending(true);
       setPage(page + 1);
     }
   }, [isPending, hasMore, page]);
@@ -104,9 +105,16 @@ export default function Test() {
     handleReviewGet(`${process.env.NEXT_PUBLIC_URL}/review?page=${page}`)
       .then((res) => res.data)
       .then((data) => {
-        if (data.reviewData.length === 0) setHasMore(false); // 무한스크롤 트리거 막기
-        setReviews([...reviews, ...data.reviewData]);
-        setIsPending(false); // 대기 중 해제
+        if (data.reviewData.length === 0) {
+          setHasMore(false);
+          setIsPending(false);
+        } // 무한스크롤 트리거 막기
+        else {
+          setTimeout(() => {
+            setReviews([...reviews, ...data.reviewData]);
+            setIsPending(false);
+          }, 1000);
+        }
       });
   }, [page]);
 
@@ -139,18 +147,16 @@ export default function Test() {
           {/* 리뷰 입력 폼 */}
           <ReviewForm onSubmit={onSubmit} />
           {/* 리뷰 데이터 */}
-          {isPending
-            ? null
-            : reviews.map((review, index) => (
-                <Review
-                  key={index}
-                  review={review}
-                  onDelete={onDelete}
-                  onUpdate={onUpdate}
-                />
-              ))}
+          {reviews.map((review, index) => (
+            <Review
+              key={index}
+              review={review}
+              onDelete={onDelete}
+              onUpdate={onUpdate}
+            />
+          ))}
           {/* 무한 스크롤 갱신 로딩바 */}
-          {isPending ? <LoadingAnimation /> : null}
+          {isPending && <LoadingAnimation />}
         </ReviewContainer>
       </FlexContainer>
     </MainContainer>

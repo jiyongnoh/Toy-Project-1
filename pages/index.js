@@ -16,9 +16,11 @@ export default function Home() {
   const login = useRecoilValue(log);
 
   useEffect(() => {
+    // Loading (1 sec)
     const timer = setTimeout(() => {
       setLoading(true);
     }, 1000);
+    // 모바일 width 확인
     if (window.innerWidth < 768) setMobile(true);
     return () => clearTimeout(timer);
   }, []);
