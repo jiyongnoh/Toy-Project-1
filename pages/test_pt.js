@@ -113,13 +113,13 @@ export default function Test() {
   }, [avartaAI]);
 
   // Chat 관련 처리
-  useEffect(() => {
-    if (!flagEnter) return; // 공백 Enter 체크
+  // useEffect(() => {
+  //   if (!flagEnter) return; // 공백 Enter 체크
 
-    sendMessage();
-    setFlagEnter(false);
-    setChat("");
-  }, [flagEnter]);
+  //   sendMessage();
+  //   setFlagEnter(false);
+  //   setChat("");
+  // }, [flagEnter]);
 
   // 스크롤 바텀 효과. 채팅 시 발동
   useEffect(() => {
@@ -157,7 +157,7 @@ export default function Test() {
           </PTBoxBody>
 
           <Live2DViewerTest emotion={emotion} avarta={name} />
-          <PTBoxFooter>
+          {/* <PTBoxFooter>
             <PTBoxFooterInput
               value={chat}
               onChange={(e) => {
@@ -181,7 +181,7 @@ export default function Test() {
                 <span class="material-symbols-outlined">send</span>
               )}
             </PTBoxFooterButton>
-          </PTBoxFooter>
+          </PTBoxFooter> */}
         </PTBox>
 
         <div class="codingnexus">

@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+
 import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
 import Live2DViewerMain from "@/component/Live2DViewerMain";
 import Footer from "@/component/Footer";
 import ScrollDownIndicator from "@/component/ScrollDownIndicator";
 import ScrollUpIndicator from "@/component/ScrollUpIndicator";
+import { motion } from "framer-motion";
 
 // Home 페이지
 export default function Home() {
@@ -91,9 +93,12 @@ const MainContainer = styled.div`
   flex-direction: column;
   scroll-snap-align: start;
   height: 100vh;
+  gap: 3rem;
 
+  z-index: -1;
   @media (max-width: 768px) {
     background-image: url("/src/soyes_mobile.jpg");
+    justify-content: center;
   }
 `;
 
