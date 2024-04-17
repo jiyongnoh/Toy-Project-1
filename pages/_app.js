@@ -2,9 +2,12 @@
 import "@/styles/globals.css";
 import Head from "next/head";
 import Nav from "@/component/Nav";
+import Page from "@/component/Motion_Paging/Page";
+import { AnimatePresence } from "framer-motion";
+
 import { RecoilRoot } from "recoil";
 
-export default function App({ Component, pageProps }) {
+export default function App({ Component, pageProps, router }) {
   return (
     <>
       <Head>
@@ -18,8 +21,12 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
       <RecoilRoot>
-        <Nav />
-        <Component {...pageProps} />
+        <AnimatePresence mode="wait">
+          <Page key={router.route}>
+            <Nav />
+            <Component {...pageProps} />
+          </Page>
+        </AnimatePresence>
       </RecoilRoot>
       <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
       <script src="https://cdn.jsdelivr.net/gh/dylanNew/live2d/webgl/Live2D/lib/live2d.min.js"></script>

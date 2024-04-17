@@ -17,11 +17,12 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 /* Add a background color to the chat screen */
+
 body {
   font-family: "Roboto", sans-serif;
-  background-image: url(https://cdn.imweb.me/thumbnail/20230116/b370691ea9823.png);
-  background-size: cover;
-  background-position: center center;
+  background-color: #282c34; /* 어두운 회색 */
+  margin: 0;
+  padding: 0;
 }
 
 .logo-container {

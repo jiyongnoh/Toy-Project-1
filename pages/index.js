@@ -87,7 +87,7 @@ const MainContainer = styled.div`
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   flex-direction: column;
   scroll-snap-align: start;
   height: 100vh;

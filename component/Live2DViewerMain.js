@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useRef, useEffect, useState } from "react";
-import styled from "styled-components";
-// import * as PIXI from "pixi.js";
-// import { Live2DModel } from "pixi-live2d-display";
+import { motion } from "framer-motion";
 
 async function cubismModelCall(model) {
   const result = await PIXI.live2d.Live2DModel.from(model);
@@ -36,6 +34,8 @@ const model_class = {
 
 export default function Live2DViewerMain({ avartar }) {
   const canvasRef = useRef(null);
+  const constraintsRef = useRef(null);
+
   useEffect(() => {
     const { avarta_model, scale } = model_class[avartar];
     const app = new PIXI.Application({
@@ -61,5 +61,11 @@ export default function Live2DViewerMain({ avartar }) {
     });
   }, []);
 
-  return <canvas ref={canvasRef}></canvas>;
+  return (
+    <motion.div ref={constraintsRef}>
+      <motion.div drag dragConstraints={constraintsRef}>
+        <canvas ref={canvasRef}></canvas>
+      </motion.div>
+    </motion.div>
+  );
 }
