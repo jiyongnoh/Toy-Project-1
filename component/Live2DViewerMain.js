@@ -38,11 +38,11 @@ export default function Live2DViewerMain({ avartar }) {
   const canvasRef = useRef(null);
   useEffect(() => {
     const { avarta_model, scale } = model_class[avartar];
-    console.log(avartar);
     const app = new PIXI.Application({
       view: canvasRef.current,
-      width: window.innerWidth < 500 ? 160 : 370, // 캔버스 너비
-      height: window.innerWidth < 500 ? 250 : 630, // 캔버스 높이
+      // width: window.innerWidth < 768 ? 160 : 370,
+      width: 370, // 캔버스 너비
+      height: 630, // 캔버스 높이
       transparent: true,
     });
     cubismModelCall(avarta_model).then((model) => {

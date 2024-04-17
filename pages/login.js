@@ -23,8 +23,8 @@ import { log, oauthType } from "../store/state";
 // SweetAlert2
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
-import GoogleOAuthBtn from "@/component/googleOAuthBtn";
-import KakaoOAuthBtn from "@/component/kakaoOAuthBtn";
+import GoogleOAuthBtn from "@/component/Login_Componet/googleOAuthBtn";
+import KakaoOAuthBtn from "@/component/Login_Componet/kakaoOAuthBtn";
 
 // 만료시간 설정 함수
 const expireSetHourFunc = (hour) => {
