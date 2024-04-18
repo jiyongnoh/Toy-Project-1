@@ -284,6 +284,7 @@ export default function Test() {
   const [select, setSelect] = useState("2"); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
   const [resultType, setResultType] = useState("");
+  const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const { name } = avartaAI_info[avartaAI];
@@ -310,9 +311,7 @@ export default function Test() {
         pUid: localStorage.getItem("id") || "dummy",
       });
 
-      console.log(data);
-
-      setIsPending(false); // 로딩 off
+      setIsPending(false);
       setMessageArr([
         ...messageArr,
         { role: "assistant", content: data.message },
@@ -347,6 +346,7 @@ export default function Test() {
     if (next) {
       const { value, done } = ptSessionRef.current.next(select);
       // console.log(done);
+      // 검사 문항 진행
       if (!done) {
         const question_message = {
           role: "assistant",
@@ -360,23 +360,36 @@ export default function Test() {
         };
         setMessageArr([...messageArr, question_message, selection_message]);
         setNext(false);
-      } else if (value) {
+      }
+      // 검사 문항 종료 - 결과 및 AI 분석 요청
+      else if (value) {
         const { result, type } = value;
-        setMessageArr([
-          ...messageArr,
-          {
-            role: "assistant",
-            content: result,
-          },
-        ]);
-        setResultType(type);
-        setNext(false);
         setIsPending(true);
+        setTimeout(() => {
+          setMessageArr([
+            ...messageArr,
+            {
+              role: "assistant",
+              content: result,
+            },
+          ]);
+          setResultType(type);
+          setNext(false);
+          setResultTrigger(true);
+          setBottom(true);
+        }, 1500);
       } else return;
 
       setBottom(true);
     }
   }, [next]);
+
+  useEffect(() => {
+    if (resultTrigger) {
+      console.log("AI PT 분석 API 호출");
+      requetAnalysis();
+    }
+  }, [resultTrigger]);
 
   // 스크롤 바텀
   useEffect(() => {
@@ -385,13 +398,6 @@ export default function Test() {
       setBottom(false);
     }
   }, [bottom]);
-
-  useEffect(() => {
-    if (isPending) {
-      console.log("AI PT 분석 API 호출");
-      requetAnalysis();
-    }
-  }, [isPending]);
 
   return (
     <MainContainer>

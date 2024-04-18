@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import SelectCard from "./SelectCard";
+import { motion } from "framer-motion";
 
 const TestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
   const selectHandler = (value) => {
@@ -15,18 +16,34 @@ const TestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
           <StyledBubble role={role}>
             {role === "user" ? (
               <CardContainer>
-                <SelectCard
-                  selectHandler={setSelect && selectHandler}
-                  value="1"
-                  message={message[0]}
-                  imgURL={imgURL[0]}
-                />
-                <SelectCard
-                  selectHandler={setSelect && selectHandler}
-                  value="2"
-                  message={message[1]}
-                  imgURL={imgURL[1]}
-                />
+                <motion.div
+                  whileHover={{
+                    scale: 1.1,
+                    transition: { duration: 1 },
+                  }}
+                  whileTap={{ scale: 1.0 }}
+                >
+                  <SelectCard
+                    selectHandler={setSelect && selectHandler}
+                    value="1"
+                    message={message[0]}
+                    imgURL={imgURL[0]}
+                  />
+                </motion.div>
+                <motion.div
+                  whileHover={{
+                    scale: 1.1,
+                    transition: { duration: 1 },
+                  }}
+                  whileTap={{ scale: 1.0 }}
+                >
+                  <SelectCard
+                    selectHandler={setSelect && selectHandler}
+                    value="2"
+                    message={message[1]}
+                    imgURL={imgURL[1]}
+                  />
+                </motion.div>
               </CardContainer>
             ) : (
               <SelectCard message={message} imgURL={imgURL} />
