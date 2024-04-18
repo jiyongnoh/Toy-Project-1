@@ -14,6 +14,8 @@ import { useRecoilState } from "recoil";
 import { avarta } from "../store/state";
 import { useRouter } from "next/router";
 
+import { motion } from "framer-motion";
+
 const avartaAI_info = {
   pupu: {
     name: "pupu",
@@ -408,14 +410,34 @@ export default function Test() {
           <PTBoxBody ref={chatBoxBody}>
             <TestBubble message={"성격검사 시작합니다!"} role="assistant" />
             {messageArr.map((el, index) => (
-              <TestBubble
-                key={index}
-                message={el.content}
-                role={el.role}
-                imgURL={el.imgURL}
-                setSelect={index === messageArr.length - 1 && setSelect}
-                setNext={index === messageArr.length - 1 && setNext}
-              />
+              <div key={index}>
+                {el.imgURL ? (
+                  <div key={index}>
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.7 }}
+                    >
+                      <TestBubble
+                        message={el.content}
+                        role={el.role}
+                        imgURL={el.imgURL}
+                        setSelect={index === messageArr.length - 1 && setSelect}
+                        setNext={index === messageArr.length - 1 && setNext}
+                      />
+                    </motion.div>
+                  </div>
+                ) : (
+                  <TestBubble
+                    message={el.content}
+                    role={el.role}
+                    imgURL={el.imgURL}
+                    setSelect={index === messageArr.length - 1 && setSelect}
+                    setNext={index === messageArr.length - 1 && setNext}
+                  />
+                )}
+              </div>
             ))}
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
