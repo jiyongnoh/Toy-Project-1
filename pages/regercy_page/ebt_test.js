@@ -1,6 +1,6 @@
 import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../../styled-component/common";
-import Live2DViewerTest from "@/component/Live2DViewerTest";
+import Live2DViewerTest from "@/component/Live2D_Component/Live2DViewerTest";
 import { useEffect, useState } from "react";
 
 const messageArr = [];

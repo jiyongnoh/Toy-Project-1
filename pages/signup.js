@@ -180,7 +180,7 @@ export default function Signup() {
                 }}
               />
             </InputContainer>
-            {/* PWD Input */}
+            {/* Email Input */}
             <InputContainer>
               <StyledInput
                 id="email"
@@ -195,14 +195,15 @@ export default function Signup() {
 
             {/* 약관 체크박스 */}
             <CheckboxContainer>
-              <input
+              <StyledInput
                 type="checkbox"
                 id="check"
+                checked={check}
                 onClick={(e) => {
                   setCheck(e.target.checked);
                 }}
               />
-              <label for="check">약관 동의 - 필수</label>
+              <CheckLabel for="check">Agree Check</CheckLabel>
             </CheckboxContainer>
 
             {/* Button Container*/}
@@ -264,7 +265,9 @@ const CheckboxContainer = styled.div`
   justify-content: center;
   gap: 0.5rem;
 `;
-
+const CheckLabel = styled.label`
+  color: white;
+`;
 const H1 = styled.h1`
   color: white;
 `;
