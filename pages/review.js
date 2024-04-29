@@ -99,6 +99,7 @@ export default function Test() {
     return res.status === 200;
   };
 
+  // Read useEffect
   useEffect(() => {
     console.log("page: " + page);
     // Read

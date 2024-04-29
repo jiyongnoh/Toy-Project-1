@@ -14,17 +14,6 @@ const bounceUp = keyframes`
   }
 `;
 
-// 스크롤 업 인디케이터 스타일
-const ScrollUpComponent = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  top: "2%";
-  animation: ${bounceUp} 2s infinite;
-  font-size: 1rem;
-  color: #fff;
-  user-select: none;
-`;
 const ScrollUpIndicator = () => {
   return (
     <ScrollUpComponent>
@@ -36,5 +25,19 @@ const ScrollUpIndicator = () => {
     </ScrollUpComponent>
   );
 };
+
+// 스크롤 업 인디케이터 스타일
+const ScrollUpComponent = styled.div`
+  display: flex;
+  justify-content: center;
+
+  position: relative;
+  top: "2%";
+
+  animation: ${bounceUp} 2s infinite;
+  font-size: 1rem;
+  color: #fff;
+  user-select: none;
+`;
 
 export default ScrollUpIndicator;

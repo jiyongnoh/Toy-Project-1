@@ -45,7 +45,7 @@ function ReviewForm({ onSubmit }) {
               profile_img_url: "https://placehold.co/600x400",
               content,
             }).then((res) => {
-              if (res.ok) {
+              if (res) {
                 Swal.fire({
                   icon: "success",
                   title: "Submit Success!",
