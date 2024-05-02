@@ -1,25 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import { useRef, useEffect, useState } from "react";
-// import styled from "styled-components";
-// import * as PIXI from "pixi.js";
-// import { Live2DModel } from "pixi-live2d-display";
+import {
+  cubism2Model_shizuku,
+  cubism2Model_haru,
+  cubism2Model_Mao,
+  cubism2Model_Hiyori,
+  cubism2Model_Wanko,
+} from "./Live2DModel";
 
 async function cubismModelCall(model) {
   const result = await PIXI.live2d.Live2DModel.from(model);
   return result;
 }
-
-const cubism2Model_shizuku =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/shizuku/shizuku.model.json";
-const cubism2Model_haru =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/haru/haru_greeter_t03.model3.json";
-const cubism2Model_Mao =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Mao/Mao.model3.json";
-const cubism2Model_Hiyori =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Hiyori/Hiyori.model3.json";
-const cubism2Model_Wanko =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Wanko/Wanko.model3.json";
 
 const model_class = {
   pupu: {

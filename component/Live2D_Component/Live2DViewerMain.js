@@ -2,22 +2,18 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import {
+  cubism2Model_shizuku,
+  cubism2Model_haru,
+  cubism2Model_Mao,
+  cubism2Model_Hiyori,
+  cubism2Model_Wanko,
+} from "./Live2DModel";
 
 async function cubismModelCall(model) {
-  console.log(PIXI.live2d);
   const result = await PIXI.live2d.Live2DModel.from(model);
   return result;
 }
-const cubism2Model_shizuku =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/shizuku/shizuku.model.json";
-const cubism2Model_haru =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/haru/haru_greeter_t03.model3.json";
-const cubism2Model_Mao =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Mao/Mao.model3.json";
-const cubism2Model_Hiyori =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Hiyori/Hiyori.model3.json";
-const cubism2Model_Wanko =
-  "https://cdn.jsdelivr.net/gh/jiyongnoh/CubismWebSamples/Samples/Resources/Wanko/Wanko.model3.json";
 
 const model_class = {
   shizuku: {
@@ -46,6 +42,7 @@ export default function Live2DViewerMain({ avartar }) {
       height: 630, // 캔버스 높이
       transparent: true,
     });
+    console.log(app);
     cubismModelCall(avarta_model).then((model) => {
       app.stage.addChild(model);
       model.scale.set(scale);

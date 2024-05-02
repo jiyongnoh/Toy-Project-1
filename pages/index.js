@@ -3,7 +3,6 @@
 import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
 import Live2DViewerMain from "@/component/Live2D_Component/Live2DViewerMain";
-import Live2DViewerMain2 from "@/component/Live2D_Component/Live2DViewerMain2";
 import Footer from "@/component/Footer";
 import ScrollDownIndicator from "@/component/ScrollDownIndicator";
 import ScrollUpIndicator from "@/component/ScrollUpIndicator";
