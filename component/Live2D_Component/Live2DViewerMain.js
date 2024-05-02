@@ -25,7 +25,7 @@ const model_class = {
     scale: 0.065,
   },
   haru: { avarta_model: cubism2Model_haru, scale: 0.12 },
-  Hiyori: { avarta_model: cubism2Model_Hiyori, scale: 0.057 },
+  Hiyori: { avarta_model: cubism2Model_Hiyori, scale: 0.127 },
   Wanko: { avarta_model: cubism2Model_Wanko, scale: 0.37 },
 };
 
