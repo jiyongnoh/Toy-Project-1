@@ -2,6 +2,7 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+
 import * as PIXI from "pixi.js";
 import dynamic from "next/dynamic";
 const PixiLive2DDisplay = dynamic(() => import("pixi-live2d-display"), {
@@ -53,29 +54,11 @@ export default function Live2DViewerMain2({ avartar }) {
     });
 
     import("pixi-live2d-display").then((module) => {
+      console.log(module);
       const { Live2DModel } = module;
 
-      cubismModelCall(avarta_model, Live2DModel, app).then((model) => {
-        app.stage.addChild(model);
-        model.scale.set(scale);
-
-        // 클릭 이벤트
-        model.on("click", () => {
-          // 랜덤한 표정 및 동작 발생
-          model.motion("TapBody", parseInt(Math.random() * 10) % 6);
-          model.expression(parseInt(Math.random() * 10) % 8);
-        });
-      });
-
-      // const model = new Live2DModel(app, avarta_model);
-      // app.stage.addChild(model); // 모델을 스테이지에 추가
-      // model.scale.set(scale);
-
-      // model.on("click", () => {
-      //   // 랜덤한 표정 및 동작 발생
-      //   model.motion("TapBody", parseInt(Math.random() * 10) % 6);
-      //   model.expression(parseInt(Math.random() * 10) % 8);
-      // });
+      const model = new Live2DModel(app, avarta_model);
+      app.stage.addChild(model);
     });
 
     return () => {
