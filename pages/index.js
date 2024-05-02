@@ -2,7 +2,8 @@
 
 import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
-import Live2DViewerMain from "@/component/Live2D_Component/Live2DViewerMain";
+// import Live2DViewerMain from "@/component/Live2D_Component/Live2DViewerMain";
+import Live2DViewerMain2 from "@/component/Live2D_Component/Live2DViewerMain2";
 import Footer from "@/component/Footer";
 import ScrollDownIndicator from "@/component/ScrollDownIndicator";
 import ScrollUpIndicator from "@/component/ScrollUpIndicator";
@@ -37,7 +38,7 @@ export default function Home() {
         <SubContainer>
           {!mobile && <ScrollUpIndicator />}
           <Title>AI Avartar Soyes</Title>
-          <Live2DViewerMain avartar="mao" />
+          <Live2DViewerMain2 avartar="mao" />
           {!mobile && <ScrollDownIndicator />}
         </SubContainer>
       </Section>
@@ -46,7 +47,7 @@ export default function Home() {
         <SubContainer>
           {!mobile && <ScrollUpIndicator />}
           <Title>AI Avartar Pupu</Title>
-          <Live2DViewerMain avartar="shizuku" />
+          <Live2DViewerMain2 avartar="shizuku" />
         </SubContainer>
       </Section>
       {/* Footer 섹션 내용 */}

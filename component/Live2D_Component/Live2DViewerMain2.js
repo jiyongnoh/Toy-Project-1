@@ -2,6 +2,11 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import * as PIXI from "pixi.js";
+import dynamic from "next/dynamic";
+const PixiLive2DDisplay = dynamic(() => import("pixi-live2d-display"), {
+  ssr: false, // 서버 사이드 렌더링 비활성화
+});
 
 async function cubismModelCall(model) {
   console.log(PIXI.live2d);
@@ -33,7 +38,7 @@ const model_class = {
   Wanko: { avarta_model: cubism2Model_Wanko, scale: 0.37 },
 };
 
-export default function Live2DViewerMain({ avartar }) {
+export default function Live2DViewerMain2({ avartar }) {
   const canvasRef = useRef(null);
   const constraintsRef = useRef(null);
 
@@ -46,11 +51,14 @@ export default function Live2DViewerMain({ avartar }) {
       height: 630, // 캔버스 높이
       transparent: true,
     });
-    cubismModelCall(avarta_model).then((model) => {
-      app.stage.addChild(model);
+
+    import("pixi-live2d-display").then((module) => {
+      const { Live2DModel } = module;
+      console.log(Live2DModel);
+      const model = new Live2DModel(app, avarta_model);
+      app.stage.addChild(model); // 모델을 스테이지에 추가
       model.scale.set(scale);
 
-      // 클릭 이벤트
       model.on("click", () => {
         // 랜덤한 표정 및 동작 발생
         model.motion("TapBody", parseInt(Math.random() * 10) % 6);
@@ -58,6 +66,17 @@ export default function Live2DViewerMain({ avartar }) {
       });
     });
 
+    // cubismModelCall(avarta_model).then((model) => {
+    //   app.stage.addChild(model);
+    //   model.scale.set(scale);
+
+    //   // 클릭 이벤트
+    //   model.on("click", () => {
+    //     // 랜덤한 표정 및 동작 발생
+    //     model.motion("TapBody", parseInt(Math.random() * 10) % 6);
+    //     model.expression(parseInt(Math.random() * 10) % 8);
+    //   });
+    // });
     return () => {
       app.destroy(true, true);
     };
