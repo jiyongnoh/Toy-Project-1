@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 async function cubismModelCall(model) {
+  console.log(PIXI.live2d);
   const result = await PIXI.live2d.Live2DModel.from(model);
   return result;
 }
