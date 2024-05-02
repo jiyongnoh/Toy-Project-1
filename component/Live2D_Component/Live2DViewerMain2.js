@@ -8,10 +8,11 @@ const PixiLive2DDisplay = dynamic(() => import("pixi-live2d-display"), {
   ssr: false, // 서버 사이드 렌더링 비활성화
 });
 
-async function cubismModelCall(model, Live2DModel) {
-  const result = await new Live2DModel.from(model);
+async function cubismModelCall(model, Live2DModel, app) {
+  const result = await new Live2DModel(app, model);
   return result;
 }
+
 const cubism2Model_shizuku =
   "https://cdn.jsdelivr.net/gh/jiyongnoh/pixi-live2d-display/test/assets/shizuku/shizuku.model.json";
 const cubism2Model_haru =
@@ -54,7 +55,7 @@ export default function Live2DViewerMain2({ avartar }) {
     import("pixi-live2d-display").then((module) => {
       const { Live2DModel } = module;
 
-      cubismModelCall(avarta_model, Live2DModel).then((model) => {
+      cubismModelCall(avarta_model, Live2DModel, app).then((model) => {
         app.stage.addChild(model);
         model.scale.set(scale);
 
