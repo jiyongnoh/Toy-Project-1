@@ -8,9 +8,8 @@ const PixiLive2DDisplay = dynamic(() => import("pixi-live2d-display"), {
   ssr: false, // 서버 사이드 렌더링 비활성화
 });
 
-async function cubismModelCall(model) {
-  console.log(PIXI.live2d);
-  const result = await PIXI.live2d.Live2DModel.from(model);
+async function cubismModelCall(model, Live2DModel) {
+  const result = await new Live2DModel.from(model);
   return result;
 }
 const cubism2Model_shizuku =
@@ -54,29 +53,30 @@ export default function Live2DViewerMain2({ avartar }) {
 
     import("pixi-live2d-display").then((module) => {
       const { Live2DModel } = module;
-      console.log(Live2DModel);
-      const model = new Live2DModel(app, avarta_model);
-      app.stage.addChild(model); // 모델을 스테이지에 추가
-      model.scale.set(scale);
 
-      model.on("click", () => {
-        // 랜덤한 표정 및 동작 발생
-        model.motion("TapBody", parseInt(Math.random() * 10) % 6);
-        model.expression(parseInt(Math.random() * 10) % 8);
+      cubismModelCall(avarta_model, Live2DModel).then((model) => {
+        app.stage.addChild(model);
+        model.scale.set(scale);
+
+        // 클릭 이벤트
+        model.on("click", () => {
+          // 랜덤한 표정 및 동작 발생
+          model.motion("TapBody", parseInt(Math.random() * 10) % 6);
+          model.expression(parseInt(Math.random() * 10) % 8);
+        });
       });
+
+      // const model = new Live2DModel(app, avarta_model);
+      // app.stage.addChild(model); // 모델을 스테이지에 추가
+      // model.scale.set(scale);
+
+      // model.on("click", () => {
+      //   // 랜덤한 표정 및 동작 발생
+      //   model.motion("TapBody", parseInt(Math.random() * 10) % 6);
+      //   model.expression(parseInt(Math.random() * 10) % 8);
+      // });
     });
 
-    // cubismModelCall(avarta_model).then((model) => {
-    //   app.stage.addChild(model);
-    //   model.scale.set(scale);
-
-    //   // 클릭 이벤트
-    //   model.on("click", () => {
-    //     // 랜덤한 표정 및 동작 발생
-    //     model.motion("TapBody", parseInt(Math.random() * 10) % 6);
-    //     model.expression(parseInt(Math.random() * 10) % 8);
-    //   });
-    // });
     return () => {
       app.destroy(true, true);
     };
