@@ -77,7 +77,7 @@ export default function Payment() {
               console.log(res);
             }}
           >
-            2000
+            Test
           </StyledButton>
           <StyledButton
             color="black"
