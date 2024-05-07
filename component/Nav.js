@@ -107,6 +107,11 @@ export default function Nav() {
               <NavBtn>Review</NavBtn>
             </Link>
           </NavLi>
+          <NavLi>
+            <Link href="/payment" style={{ textDecoration: "none" }}>
+              <NavBtn>Shop</NavBtn>
+            </Link>
+          </NavLi>
           {/* <NavLi>
             <Link href="/mypage" style={{ textDecoration: "none" }}>
               <StyledButton>MyPage</StyledButton>
