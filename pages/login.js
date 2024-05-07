@@ -187,6 +187,7 @@ export default function Login() {
     // 카카오 SDK 초기화
     if (window.Kakao && !window.Kakao.isInitialized()) {
       // Kakao.init을 이용하여 JavaScript Key를 사용하여 초기화합니다.
+      console.log(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
     }
   }, []);
