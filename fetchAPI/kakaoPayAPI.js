@@ -1,28 +1,27 @@
 import axios from "axios";
 
 // READ
-export const handlePayReady = async (data) => {
+export const handleKakaoPayReady = async (input) => {
   try {
     const response = await axios.post(
-      `https://open-api.kakaopay.com/online/v1/payment/ready`,
+      `${process.env.NEXT_PUBLIC_URL}/kakaopay/ready`,
+      { readyData: input },
       {
         headers: {
-          Authorization: `SECRET_KEY ${process.env.NEXT_PUBLIC_KAKAO_PAY_SERCERT_KEY}`,
           "Content-Type": "application/json",
         },
-        // withCredentials: true,
-      },
-      data
+        withCredentials: true,
+      }
     );
-    console.log(response);
-    return response;
+    // console.log(response.data.data);
+    return response.data.data;
   } catch (err) {
     console.log("handlePayReady 호출 실패");
     console.error(err);
   }
 };
 // CREATE
-export const handlePayCreate = async (input) => {
+export const handleKakaoPayCreate = async (input) => {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}/review`,
@@ -45,7 +44,7 @@ export const handlePayCreate = async (input) => {
   }
 };
 // DELETE
-export const handlePayDelete = async () => {
+export const handleKakaoPayDelete = async () => {
   try {
     const response = await axios.delete(`${process.env.NEXT_PUBLIC_URL}`, {
       headers: {
@@ -60,7 +59,7 @@ export const handlePayDelete = async () => {
   }
 };
 // UPDATE
-export const handlePayUpdate = async (input) => {
+export const handleKakaoPayUpdate = async (input) => {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}/review/update`,

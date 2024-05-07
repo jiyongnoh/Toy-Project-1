@@ -18,7 +18,7 @@ import { log, oauthType } from "../store/state";
 import Swal from "sweetalert2";
 import { useSearchParams } from "next/navigation";
 
-import { handlePayReady } from "@/fetchAPI/payAPI";
+import { handleKakaoPayReady } from "@/fetchAPI/kakaoPayAPI";
 
 // Login 페이지
 export default function Payment() {
@@ -61,7 +61,7 @@ export default function Payment() {
             color="black"
             onClick={async (e) => {
               e.preventDefault();
-              let res = await handlePayReady({
+              let data = await handleKakaoPayReady({
                 cid: "TC0ONETIME",
                 partner_order_id: "partner_order_id",
                 partner_user_id: "partner_user_id",
@@ -70,14 +70,14 @@ export default function Payment() {
                 total_amount: "2200",
                 vat_amount: "200",
                 tax_free_amount: "0",
-                approval_url: "https://developers.kakao.com/success",
-                fail_url: "https://developers.kakao.com/fail",
-                cancel_url: "https://developers.kakao.com/cancel",
+                approval_url: `${process.env.NEXT_PUBLIC_INNER_URL}`,
+                fail_url: `${process.env.NEXT_PUBLIC_INNER_URL}`,
+                cancel_url: `${process.env.NEXT_PUBLIC_INNER_URL}`,
               });
-              console.log(res);
+              console.log(data);
             }}
           >
-            Test
+            Day
           </StyledButton>
           <StyledButton
             color="black"
@@ -87,7 +87,7 @@ export default function Payment() {
               console.log(e.target.value);
             }}
           >
-            3000
+            Month
           </StyledButton>
           <StyledButton
             value={4000}
@@ -97,7 +97,7 @@ export default function Payment() {
               console.log(e.target.value);
             }}
           >
-            4000
+            Year
           </StyledButton>
         </FormContainer>
       </FlexContainer>
