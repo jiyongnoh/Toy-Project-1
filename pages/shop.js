@@ -72,6 +72,7 @@ export default function Shop() {
     }
   }, [pg_token]);
 
+  // 카카오페이 결제 준비 이벤트 핸들러
   const handleOpenModal = async (e) => {
     e.preventDefault();
     // 카카오페이 결제 준비 API 호출 후, 받은 URL로 모달 띄우기
