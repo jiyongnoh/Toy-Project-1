@@ -1,10 +1,9 @@
 export const payInfo = {
   "1daypass": {
-    partner_order_id: "1",
-    item_name: "일일 이용권",
+    partner_order_id: "1", // Plan_Info Table - PK
+    item_name: "일일 이용권", // 결제 화면에 보이는 결제명
     quantity: "1",
     total_amount: "2000",
-    vat_amount: "200",
     tax_free_amount: "0",
   },
   "1monthpass": {
@@ -12,7 +11,6 @@ export const payInfo = {
     item_name: "1개월 이용권",
     quantity: "1",
     total_amount: "5000",
-    vat_amount: "200",
     tax_free_amount: "0",
   },
   "1yearpass": {
@@ -20,7 +18,6 @@ export const payInfo = {
     item_name: "1년 이용권",
     quantity: "1",
     total_amount: "50000",
-    vat_amount: "200",
     tax_free_amount: "0",
   },
 };

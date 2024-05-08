@@ -36,6 +36,7 @@ export default function Shop() {
   useEffect(() => {
     if (!pg_token) return;
     else {
+      // KakaoPay 승인 API 호출
       handleKakaoPayApprove({
         cid: process.env.NEXT_PUBLIC_KAKAO_PAY_CID,
         tid: localStorage.getItem("tid"),
@@ -44,6 +45,7 @@ export default function Shop() {
         partner_user_id: localStorage.getItem("id"),
         pg_token,
       }).then((res) => {
+        // 승인 성공
         if (res.status === 200) {
           Swal.fire({
             icon: "success",
@@ -54,9 +56,11 @@ export default function Shop() {
           }).then(() => {
             localStorage.removeItem("tid");
             localStorage.removeItem("payClass");
-            router.push("/");
+            router.push("/"); // 메인 화면으로 라우팅
           });
-        } else {
+        }
+        // 승인 실패
+        else {
           Swal.fire({
             icon: "error",
             title: "Pay Fail!",
@@ -65,7 +69,7 @@ export default function Shop() {
           }).then(() => {
             localStorage.removeItem("tid");
             localStorage.removeItem("payClass");
-            router.push("/shop");
+            router.push("/shop"); // pg_token 삭제를 위한 라우팅
           });
         }
       });
@@ -81,6 +85,7 @@ export default function Shop() {
       localStorage.setItem("payClass", payClass);
       let input = payInfo[payClass];
 
+      // KakaoPay 준비 API 호출
       const data = await handleKakaoPayReady({
         ...input,
         cid: process.env.NEXT_PUBLIC_KAKAO_PAY_CID,
