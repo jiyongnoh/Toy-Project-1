@@ -384,6 +384,7 @@ export default function Test() {
     }
   }, [next]);
 
+  // 성격검사 AI 분석 트리거
   useEffect(() => {
     if (resultTrigger) {
       console.log("AI PT 분석 API 호출");
@@ -448,42 +449,7 @@ export default function Test() {
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
           </PTBoxBody>
-
-          {/* <Live2DViewerTest emotion={emotion} avarta={name} /> */}
-          {/* <PTBoxFooter>
-            <PTBoxFooterInput
-              value={chat}
-              onChange={(e) => {
-                setChat(e.target.value);
-              }}
-              onKeyPress={(e) => {
-                if (e.key === "Enter" && chat !== "" && !isPending)
-                  setFlagEnter(true);
-              }}
-              placeholder={placehold}
-            />
-            <PTBoxFooterButton
-              onClick={() => {
-                if (chat !== "" && !isPending) setFlagEnter(true);
-              }}
-              isPending={isPending}
-            >
-              {isPending ? (
-                <span class="material-symbols-outlined">block</span>
-              ) : (
-                <span class="material-symbols-outlined">send</span>
-              )}
-            </PTBoxFooterButton>
-          </PTBoxFooter> */}
         </PTBox>
-        <button
-          onClick={() => {
-            setSelect("1");
-            setNext(true);
-          }}
-        >
-          select
-        </button>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
         </div>
