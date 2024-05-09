@@ -32,10 +32,9 @@ export default function Shop() {
   const searchParams = useSearchParams();
   const pg_token = searchParams.get("pg_token");
 
-  // pg_token 반환 시 발동
+  // pg_token 반환 시 발동 - KakaoPay 승인
   useEffect(() => {
-    if (!pg_token) return;
-    else {
+    if (pg_token) {
       // KakaoPay 승인 API 호출
       handleKakaoPayApprove({
         cid: process.env.NEXT_PUBLIC_KAKAO_PAY_CID,
@@ -76,7 +75,7 @@ export default function Shop() {
     }
   }, [pg_token]);
 
-  // 카카오페이 결제 준비 이벤트 핸들러
+  // KakaoPay 결제준비 이벤트 핸들러
   const handleOpenModal = async (e) => {
     e.preventDefault();
     // 카카오페이 결제 준비 API 호출 후, 받은 URL로 모달 띄우기

@@ -134,20 +134,24 @@ export default function Test() {
   // messageArr 언마운트 처리
   useEffect(() => {
     return () => {
-      // audioURL 제거
-      const tmpMsgArr = [
-        ...JSON.parse(JSON.stringify(latestMessageArr.current)),
-      ];
-      tmpMsgArr.forEach((el) => delete el.audioURL);
-      // 상담 내역 저장 API 호출
-      handleConsultLogSave(
-        {
-          messageArr: tmpMsgArr,
-          avarta: name,
-          pUid: localStorage.getItem("id"),
-        },
-        unMount_api_info.consultLog.path
-      );
+      // 로그인 세션이 존재할 경우 - 상담 내역 저장
+      const loginSession = JSON.parse(localStorage.getItem("log"));
+      if (loginSession) {
+        // audioURL 제거
+        const tmpMsgArr = [
+          ...JSON.parse(JSON.stringify(latestMessageArr.current)),
+        ];
+        tmpMsgArr.forEach((el) => delete el.audioURL);
+        // 상담 내역 저장 API 호출
+        handleConsultLogSave(
+          {
+            messageArr: tmpMsgArr,
+            avarta: name,
+            pUid: localStorage.getItem("id"),
+          },
+          unMount_api_info.consultLog.path
+        );
+      }
 
       // Cookies Clear (session ID 초기화)
       // handleClearCookies(unMount_api_info.clearCookie.path);
