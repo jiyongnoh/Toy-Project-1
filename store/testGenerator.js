@@ -225,7 +225,6 @@ export function* psychologicalAsesssment() {
 
   return { result: `당신의 성격 유형은 ${type} 입니다.`, type };
 }
-
 // 정서행동 검사 - 학교생활
 export function* ebtSchool() {
   let ebtScore = [],
@@ -346,7 +345,6 @@ export function* ebtSchool() {
     ebtScore,
   };
 }
-
 // 정서행동 검사 - 친구관계
 export function* ebtFriend() {
   let ebtScore = [],
@@ -498,7 +496,6 @@ export function* ebtFriend() {
     ebtScore,
   };
 }
-
 // 정서행동 검사 - 가족관계
 export function* ebtFamily() {
   let ebtScore = [],

@@ -60,7 +60,7 @@ export default function Test() {
     }
   };
 
-  // 성격 검사 분석 요청 API 호출 메서드
+  // EBT 분석 요청 API 호출 메서드
   const requetAnalysis = async () => {
     try {
       // messageArr 파싱
@@ -80,7 +80,6 @@ export default function Test() {
         });
       // 감정 분석 API 호출 이후 state 갱신
       const data = await handleEbtAnalsys({
-        // resultText: resultType,
         messageArr: parseMessageArr,
         type: ebtClassMap[localStorage.getItem("EBTClass") || "School"].type,
         score: scoreArr,
@@ -102,6 +101,7 @@ export default function Test() {
   };
   // 페이지 초기설정 - EBT 첫 문항 제시
   useEffect(() => {
+    // 정서행동 검사 제너레이터 생성
     ebtSessionRef.current =
       ebtClassMap[localStorage.getItem("EBTClass") || "School"].generator();
 
@@ -129,6 +129,7 @@ export default function Test() {
       }
     }, 1000);
     return () => {
+      // 페이지 언마운트 시 로컬 스토리지의 EBTClass 값 삭제
       localStorage.removeItem("EBTClass");
     };
   }, []);
@@ -137,8 +138,7 @@ export default function Test() {
   useEffect(() => {
     if (next) {
       const { value, done } = ebtSessionRef.current.next(select);
-      // console.log(done);
-      // 검사 문항 진행
+      // 검사 진행 중
       if (!done) {
         const question_message = {
           role: "assistant",
@@ -154,7 +154,7 @@ export default function Test() {
         setMessageArr([...messageArr, question_message, selection_message]);
         setNext(false);
       }
-      // 검사 문항 종료 - 결과 및 AI 분석 요청
+      // 검사 종료 - 결과 및 AI 분석 요청
       else if (value) {
         const { result, ebtScore } = value;
         setIsPending(true);
@@ -168,12 +168,12 @@ export default function Test() {
           ]);
           setScoreArr([...ebtScore]);
           setNext(false);
-          setResultTrigger(true);
+          setResultTrigger(true); // 결과 분석 요청 트리거
           setBottom(true);
         }, 1500);
       } else return;
 
-      setBottom(true);
+      setBottom(true); // 스크롤 바텀 트리거
     }
   }, [next]);
 

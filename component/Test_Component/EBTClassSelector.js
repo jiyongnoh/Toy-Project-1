@@ -10,16 +10,16 @@ const EBTClassSelector = ({ isProceeding }) => {
   const EBTArr = [{ name: "School" }, { name: "Friend" }, { name: "Family" }];
 
   const toggleMenu = () => setIsOpen(!isOpen);
-  // 아바타 변경 핸들러
+  // EBT Class 변경 핸들러
   const ebtChangeHandler = (e) => {
+    // 검사 도중 변경 불가능
     if (isProceeding) {
       alert("검사 진행 중엔 바꿀 수 없어!");
       return;
     }
+    // 로컬 스토리지에 EBTClass값 저장 후 리로드
     localStorage.setItem("EBTClass", e.target.value);
     router.reload();
-    // window.location.reload(true);
-    // setIsOpen(!isOpen);
   };
 
   return (
