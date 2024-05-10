@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import SelectCard from "./SelectCard";
+import PTSelectCard from "./PTSelectCard";
 import { motion } from "framer-motion";
 
-const TestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
+const PTestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
   const selectHandler = (value) => {
     setSelect(value);
     setNext(true);
@@ -23,11 +23,12 @@ const TestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
                   }}
                   whileTap={{ scale: 1.0 }}
                 >
-                  <SelectCard
+                  <PTSelectCard
                     selectHandler={setSelect && selectHandler}
                     value="1"
                     message={message[0]}
                     imgURL={imgURL[0]}
+                    role={role}
                   />
                 </motion.div>
                 <motion.div
@@ -37,16 +38,19 @@ const TestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
                   }}
                   whileTap={{ scale: 1.0 }}
                 >
-                  <SelectCard
+                  <PTSelectCard
                     selectHandler={setSelect && selectHandler}
                     value="2"
                     message={message[1]}
                     imgURL={imgURL[1]}
+                    role={role}
                   />
                 </motion.div>
               </CardContainer>
             ) : (
-              <SelectCard message={message} imgURL={imgURL} />
+              <CardContainer>
+                <PTSelectCard message={message} imgURL={imgURL} />
+              </CardContainer>
             )}
           </StyledBubble>
         </ImgContanier>
@@ -90,6 +94,7 @@ const ImgContanier = styled.div`
 `;
 
 const CardContainer = styled.div`
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,4 +102,4 @@ const CardContainer = styled.div`
   gap: 1rem;
 `;
 
-export default TestBubble;
+export default PTestBubble;

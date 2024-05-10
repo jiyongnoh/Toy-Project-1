@@ -1,34 +1,58 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+"use client";
 import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
 import { useEffect, useState, useRef } from "react";
 
-import { handlePtAnalsys } from "@/fetchAPI/testAPI";
+import { handleEbtAnalsys } from "@/fetchAPI/testAPI";
 
-import PTestBubble from "@/component/Test_Component/PTestBubble";
-
+import EBTestBubble from "@/component/Test_Component/EBTestBubble";
+import EBTClassSelector from "@/component/Test_Component/EBTClassSelector";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
+
 import { useRouter } from "next/router";
 
 import { motion } from "framer-motion";
-import { psychologicalAsesssment } from "@/store/testGenerator";
+import { ebtSchool, ebtFriend, ebtFamily } from "@/store/testGenerator";
+
+const ebtClassMap = {
+  School: {
+    type: "School",
+    name: "학교생활",
+    generator: ebtSchool,
+  },
+  Friend: {
+    type: "Friend",
+    name: "친구관계",
+    generator: ebtFriend,
+  },
+  Family: {
+    type: "Family",
+    name: "가족관계",
+    generator: ebtFamily,
+  },
+  default: {
+    type: "School",
+    name: "학교생활",
+    generator: ebtSchool,
+  },
+};
 
 // Renewel Test 페이지
 export default function Test() {
   const [isPending, setIsPending] = useState(false);
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
-  const [select, setSelect] = useState("2"); // 유저 문항 선택지 1 || 2
+  const [select, setSelect] = useState(-1); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
-  const [resultType, setResultType] = useState("");
+  const [isProceeding, setIsProceeding] = useState(true);
+  const [scoreArr, setScoreArr] = useState([]);
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
 
   const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
-  const ptSessionRef = useRef(null);
+  const ebtSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
-
-  if (!ptSessionRef.current) ptSessionRef.current = psychologicalAsesssment();
 
   const scrollToBottom_useRef = (chatBoxBody) => {
     if (chatBoxBody.current) {
@@ -39,9 +63,27 @@ export default function Test() {
   // 성격 검사 분석 요청 API 호출 메서드
   const requetAnalysis = async () => {
     try {
+      // messageArr 파싱
+      let parseMessageArr = messageArr
+        .filter((el, index) => index !== 0)
+        .map((el, index) => {
+          // user인 경우
+          if (el.role === "user") {
+            return {
+              role: el.role,
+              content:
+                el.content[el.score.indexOf(scoreArr[Math.floor(index / 2)])], // 선택한 점수의 index와 일치하는 답변 선택
+            };
+          }
+          // assistant인 경우
+          else return { role: el.role, content: el.content };
+        });
       // 감정 분석 API 호출 이후 state 갱신
-      const data = await handlePtAnalsys({
-        resultText: resultType,
+      const data = await handleEbtAnalsys({
+        // resultText: resultType,
+        messageArr: parseMessageArr,
+        type: ebtClassMap[localStorage.getItem("EBTClass") || "School"].type,
+        score: scoreArr,
         pUid: localStorage.getItem("id") || "dummy",
       });
 
@@ -49,55 +91,72 @@ export default function Test() {
       setMessageArr([
         ...messageArr,
         { role: "assistant", content: data.message },
+        // { role: "end", content: "다음 검사 진행하기" },
       ]);
+      setIsProceeding(false);
+      setResultTrigger(false);
       setBottom(true);
     } catch (error) {
       console.log(error);
     }
   };
-  // 페이지 초기설정 - 성격검사 첫 문항 제시
+  // 페이지 초기설정 - EBT 첫 문항 제시
   useEffect(() => {
+    ebtSessionRef.current =
+      ebtClassMap[localStorage.getItem("EBTClass") || "School"].generator();
+
     setTimeout(() => {
-      const { value, done } = ptSessionRef.current.next(select);
+      const { value, done } = ebtSessionRef.current.next(select);
       if (!done) {
+        const start_message = {
+          role: "assistant",
+          content: `정서행동 검사 - [${
+            ebtClassMap[localStorage.getItem("EBTClass") || "School"].name
+          }] 시작합니다!`,
+        };
         const question_message = {
           role: "assistant",
-          content: value.question,
-          imgURL: value.question_imgURL,
+          content: value.question.content,
+          imgURL: value.question.imgURL,
         };
         const selection_message = {
           role: "user",
-          content: value.selection,
-          imgURL: value.selection_imgURL,
+          content: value.selection.content,
+          score: value.selection.score,
+          imgURL: value.selection.imgURL,
         };
-        setMessageArr([...messageArr, question_message, selection_message]);
+        setMessageArr([start_message, question_message, selection_message]);
       }
     }, 1000);
+    return () => {
+      localStorage.removeItem("EBTClass");
+    };
   }, []);
 
   // 심리 검사 다음 문항 진행
   useEffect(() => {
     if (next) {
-      const { value, done } = ptSessionRef.current.next(select);
+      const { value, done } = ebtSessionRef.current.next(select);
       // console.log(done);
       // 검사 문항 진행
       if (!done) {
         const question_message = {
           role: "assistant",
-          content: value.question,
-          imgURL: value.question_imgURL,
+          content: value.question.content,
+          imgURL: value.question.imgURL,
         };
         const selection_message = {
           role: "user",
-          content: value.selection,
-          imgURL: value.selection_imgURL,
+          content: value.selection.content,
+          score: value.selection.score,
+          imgURL: value.selection.imgURL,
         };
         setMessageArr([...messageArr, question_message, selection_message]);
         setNext(false);
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
-        const { result, type } = value;
+        const { result, ebtScore } = value;
         setIsPending(true);
         setTimeout(() => {
           setMessageArr([
@@ -107,7 +166,7 @@ export default function Test() {
               content: result,
             },
           ]);
-          setResultType(type);
+          setScoreArr([...ebtScore]);
           setNext(false);
           setResultTrigger(true);
           setBottom(true);
@@ -121,7 +180,7 @@ export default function Test() {
   // 성격검사 AI 분석 트리거
   useEffect(() => {
     if (resultTrigger) {
-      console.log("AI PT 분석 API 호출");
+      console.log("AI EBT 분석 API 호출");
       requetAnalysis();
     }
   }, [resultTrigger]);
@@ -136,6 +195,7 @@ export default function Test() {
 
   return (
     <MainContainer>
+      <EBTClassSelector isProceeding={isProceeding} />
       <FlexContainer
         justify="center"
         align="center"
@@ -146,42 +206,32 @@ export default function Test() {
         <div class="logo-container">
           <img src="src/soyesKids_Logo.png" alt="soyes_logo" />
         </div>
-        <PTBox>
-          <PTBoxHeader>성격 검사</PTBoxHeader>
-          <PTBoxBody ref={chatBoxBody}>
-            <PTestBubble message={"성격검사 시작합니다!"} role="assistant" />
+        <EBTBox>
+          <EBTBoxHeader>정서행동 검사</EBTBoxHeader>
+          <EBTBoxBody ref={chatBoxBody}>
             {messageArr.map((el, index) => (
               <div key={index}>
-                {el.imgURL ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.7 }}
-                  >
-                    <PTestBubble
-                      message={el.content}
-                      role={el.role}
-                      imgURL={el.imgURL}
-                      setSelect={index === messageArr.length - 1 && setSelect}
-                      setNext={index === messageArr.length - 1 && setNext}
-                    />
-                  </motion.div>
-                ) : (
-                  <PTestBubble
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.7 }}
+                >
+                  <EBTestBubble
                     message={el.content}
+                    score={el.score}
                     role={el.role}
                     imgURL={el.imgURL}
                     setSelect={index === messageArr.length - 1 && setSelect}
                     setNext={index === messageArr.length - 1 && setNext}
                   />
-                )}
+                </motion.div>
               </div>
             ))}
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
-          </PTBoxBody>
-        </PTBox>
+          </EBTBoxBody>
+        </EBTBox>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
         </div>
@@ -218,7 +268,7 @@ const MainContainer = styled.div`
   position: relative;
 `;
 
-const PTBox = styled.div`
+const EBTBox = styled.div`
   position: relative;
   margin: 0 auto;
   width: 600px;
@@ -234,7 +284,7 @@ const PTBox = styled.div`
   overflow: hidden;
 `;
 
-const PTBoxHeader = styled.div`
+const EBTBoxHeader = styled.div`
   background-color: #0084ff;
   color: #ffffff;
   padding: 16px;
@@ -245,7 +295,7 @@ const PTBoxHeader = styled.div`
   height: 9%;
 `;
 
-const PTBoxBody = styled.div`
+const EBTBoxBody = styled.div`
   padding: 6px;
   height: 91%;
   overflow-y: auto;
@@ -255,43 +305,3 @@ const PTBoxBody = styled.div`
   flex-direction: column;
   width: auto;
 `;
-
-// const PTBoxFooter = styled.div`
-//   bottom: 0;
-//   display: flex;
-//   align-items: center;
-//   background-color: #ffffff;
-//   border-top: 1px solid #e6e6e6;
-//   padding: 8px 16px;
-// `;
-
-// const PTBoxFooterInput = styled.input`
-//   flex: 1;
-//   padding: 8px;
-//   border: 1px solid #e6e6e6;
-//   border-radius: 8px;
-//   font-size: 16px;
-//   outline: none;
-// `;
-
-// const PTBoxFooterButton = styled.button`
-//   margin-left: 8px;
-//   padding: 5px 12px;
-//   background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0084ff")};
-//   color: #ffffff;
-//   font-size: 16px;
-//   font-weight: bold;
-//   border: none;
-//   border-radius: 8px;
-//   cursor: ${(props) => (props.isPending ? "" : "pointer")};
-
-//   &:hover {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-
-//   &:active {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-//   display: flex;
-//   transition: 0.2s;
-// `;
