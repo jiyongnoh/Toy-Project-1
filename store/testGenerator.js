@@ -338,7 +338,7 @@ export function* ebtSchool() {
   // 학교생활 점수 총합
   scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
   // 학교생활 결과 계산
-  const result = scoreSum > 7.6 ? "경고" : scoreSum > 6.5 ? "주의" : "양호";
+  const result = scoreSum >= 7.6 ? "경고" : scoreSum >= 6.5 ? "주의" : "양호";
 
   return {
     result: `너의 학교생활 만족도와 적응 수준은 ${result} 단계야.`,
@@ -489,7 +489,7 @@ export function* ebtFriend() {
   // 학교생활 점수 총합
   scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
   // 학교생활 결과 계산
-  const result = scoreSum > 9.6 ? "경고" : scoreSum > 8.2 ? "주의" : "양호";
+  const result = scoreSum >= 9.6 ? "경고" : scoreSum >= 8.2 ? "주의" : "양호";
 
   return {
     result: `너의 친구관계 만족도와 적응 수준은 ${result} 단계야.`,
@@ -629,7 +629,7 @@ export function* ebtFamily() {
   // 학교생활 점수 총합
   scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
   // 학교생활 결과 계산
-  const result = scoreSum > 8 ? "경고" : scoreSum > 7 ? "주의" : "양호";
+  const result = scoreSum >= 8 ? "경고" : scoreSum >= 7 ? "주의" : "양호";
 
   return {
     result: `너의 가족관계 만족도와 적응 수준은 ${result} 단계야.`,
@@ -695,7 +695,7 @@ export function* ebtMood() {
   // 점수 총합
   scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
   // 결과 계산
-  const result = scoreSum > 5 ? "경고" : scoreSum > 4 ? "주의" : "양호";
+  const result = scoreSum >= 5 ? "경고" : scoreSum >= 4 ? "주의" : "양호";
 
   return {
     result: `너의 기분 만족도와 적응 수준은 ${result} 단계야.`,
