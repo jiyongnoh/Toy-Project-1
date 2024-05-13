@@ -3,7 +3,15 @@ import styled from "styled-components";
 import EBTSelectRow from "./EBTSelectRow";
 import { motion } from "framer-motion";
 
-const EBTestBubble = ({ message, role, imgURL, setSelect, setNext, score }) => {
+const EBTestBubble = ({
+  message,
+  role,
+  imgURL,
+  setSelect,
+  setNext,
+  score,
+  selected,
+}) => {
   const selectHandler = (value) => {
     setSelect(value);
     setNext(true);
@@ -30,6 +38,7 @@ const EBTestBubble = ({ message, role, imgURL, setSelect, setNext, score }) => {
                     message={message[index]}
                     imgURL={imgURL[index]}
                     role={role}
+                    selected={selected === score[index] ? true : false}
                   />
                 </motion.div>
               ))}

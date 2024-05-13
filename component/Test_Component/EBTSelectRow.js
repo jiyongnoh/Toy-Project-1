@@ -8,12 +8,14 @@ const EBTSelectRow = ({
   value,
   type,
   role,
+  selected,
 }) => {
   return (
     <CardContainer
       onClick={selectHandler ? () => selectHandler(value) : null}
       type={type}
       role={role}
+      selected={selected}
     >
       <img
         width={role === "assistant" ? "160px" : "16rem"}
@@ -34,6 +36,10 @@ const CardContainer = styled.div`
 
   border: ${(props) => (props.role === "user" ? "1px solid gray" : null)};
   border-radius: 10px;
+  background-color: ${(props) =>
+    props.role === "user" && props.selected ? "yellow" : null};
+  font-weight: ${(props) =>
+    props.role === "user" && props.selected ? "bold" : null};
 
   width: 100%;
   height: 100%;

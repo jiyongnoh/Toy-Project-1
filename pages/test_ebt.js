@@ -151,21 +151,36 @@ export default function Test() {
           score: value.selection.score,
           imgURL: value.selection.imgURL,
         };
-        setMessageArr([...messageArr, question_message, selection_message]);
+
+        // 선택 문항 갱신
+        let updateMsgArr = [...messageArr];
+        updateMsgArr[updateMsgArr.length - 1] = {
+          ...updateMsgArr[updateMsgArr.length - 1],
+          selected: select,
+        };
+
+        setMessageArr([...updateMsgArr, question_message, selection_message]);
         setNext(false);
       }
       // 검사 종료 - 결과 및 AI 분석 요청
       else if (value) {
         const { result, ebtScore } = value;
         setIsPending(true);
+        // 선택 문항 갱신
+        let updateMsgArr = [...messageArr];
+        updateMsgArr[updateMsgArr.length - 1] = {
+          ...updateMsgArr[updateMsgArr.length - 1],
+          selected: select,
+        };
+        setMessageArr([
+          ...updateMsgArr,
+          {
+            role: "assistant",
+            content: result,
+          },
+        ]);
+
         setTimeout(() => {
-          setMessageArr([
-            ...messageArr,
-            {
-              role: "assistant",
-              content: result,
-            },
-          ]);
           setScoreArr([...ebtScore]);
           setNext(false);
           setResultTrigger(true); // 결과 분석 요청 트리거
@@ -224,6 +239,7 @@ export default function Test() {
                     imgURL={el.imgURL}
                     setSelect={index === messageArr.length - 1 && setSelect}
                     setNext={index === messageArr.length - 1 && setNext}
+                    selected={el.selected}
                   />
                 </motion.div>
               </div>
