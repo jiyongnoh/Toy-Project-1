@@ -636,3 +636,69 @@ export function* ebtFamily() {
     ebtScore,
   };
 }
+// 정서행동 검사 - 기분
+export function* ebtMood() {
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "평소 너의 기분은 어때?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["안 좋아", "그냥 그래", "좋아"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content: "마음이 편안하거나 기쁠 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content: "마음이 불편하거나 속상할 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result = scoreSum > 5 ? "경고" : scoreSum > 4 ? "주의" : "양호";
+
+  return {
+    result: `너의 기분 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}

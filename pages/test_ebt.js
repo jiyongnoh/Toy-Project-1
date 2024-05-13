@@ -13,7 +13,12 @@ import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 import { useRouter } from "next/router";
 
 import { motion } from "framer-motion";
-import { ebtSchool, ebtFriend, ebtFamily } from "@/store/testGenerator";
+import {
+  ebtSchool,
+  ebtFriend,
+  ebtFamily,
+  ebtMood,
+} from "@/store/testGenerator";
 
 const ebtClassMap = {
   School: {
@@ -31,10 +36,10 @@ const ebtClassMap = {
     name: "가족관계",
     generator: ebtFamily,
   },
-  default: {
-    type: "School",
-    name: "학교생활",
-    generator: ebtSchool,
+  Mood: {
+    type: "Mood",
+    name: "기분",
+    generator: ebtMood,
   },
 };
 
@@ -44,7 +49,7 @@ export default function Test() {
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
   const [select, setSelect] = useState(-1); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
-  const [isProceeding, setIsProceeding] = useState(true);
+  const [isProceeding, setIsProceeding] = useState(false);
   const [scoreArr, setScoreArr] = useState([]);
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
@@ -210,7 +215,7 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <EBTClassSelector isProceeding={isProceeding} />
+      <EBTClassSelector isProceeding={isProceeding} EBTArr={ebtClassMap} />
       <FlexContainer
         justify="center"
         align="center"

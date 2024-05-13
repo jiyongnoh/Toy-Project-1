@@ -4,10 +4,9 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 
 // EBTClassSelector 컴포넌트
-const EBTClassSelector = ({ isProceeding }) => {
+const EBTClassSelector = ({ isProceeding, EBTArr }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const EBTArr = [{ name: "School" }, { name: "Friend" }, { name: "Family" }];
 
   const toggleMenu = () => setIsOpen(!isOpen);
   // EBT Class 변경 핸들러
@@ -26,9 +25,9 @@ const EBTClassSelector = ({ isProceeding }) => {
     <EBTSelectorContainer>
       <NavBtn onClick={toggleMenu}>EBT</NavBtn>
       <ButtonsContainer>
-        {EBTArr.map((ebt, index) => (
+        {Object.values(EBTArr).map((ebt, index) => (
           <NavBtn
-            value={ebt.name}
+            value={ebt.type}
             key={ebt.name}
             hidden={!isOpen}
             style={{
