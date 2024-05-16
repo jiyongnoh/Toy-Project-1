@@ -76,6 +76,7 @@ export default function Test() {
   // 언마운트 시점에 사용할 messageArr 변수값 유지
   const latestMessageArr = useRef(messageArr);
   latestMessageArr.current = messageArr;
+  const testType = "School";
 
   const sendMessage = async () => {
     const message = chat;
@@ -93,7 +94,11 @@ export default function Test() {
       tmpMsgArr.forEach((el) => delete el.audioURL);
 
       const data = await handleGptCompletion(
-        { messageArr: tmpMsgArr, pUid: localStorage.getItem("id") || "dummy" },
+        {
+          messageArr: tmpMsgArr,
+          pUid: localStorage.getItem("id") || "dummy",
+          type: testType,
+        },
         path
       );
 
