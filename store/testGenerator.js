@@ -225,6 +225,40 @@ export function* psychologicalAsesssment() {
 
   return { result: `당신의 성격 유형은 ${type} 입니다.`, type };
 }
+
+// 정서행동 검사 ClassMap
+export const ebtClassMap = {
+  School: {
+    type: "School",
+    name: "학교생활",
+    generator: ebtSchool,
+  },
+  Friend: {
+    type: "Friend",
+    name: "친구관계",
+    generator: ebtFriend,
+  },
+  Family: {
+    type: "Family",
+    name: "가족관계",
+    generator: ebtFamily,
+  },
+  Mood: {
+    type: "Mood",
+    name: "기분",
+    generator: ebtMood,
+  },
+  Unrest: {
+    type: "Unrest",
+    name: "불안",
+    generator: ebtUnrest,
+  },
+  Sad: {
+    type: "Sad",
+    name: "우울",
+    generator: ebtSad,
+  },
+};
 // 정서행동 검사 - 학교생활
 export function* ebtSchool() {
   let ebtScore = [],
@@ -699,6 +733,258 @@ export function* ebtMood() {
 
   return {
     result: `너의 기분 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}
+// 정서행동 검사 - 불안
+export function* ebtUnrest() {
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "무서움을 잘 타거나 자주 깜짝깜짝 놀라니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content: "어둠이나 귀신, 거미, 개와 같이 무서워하는 게 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 없어", "몇 가지 있어", "많이 있어"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content: "새로운 곳에 가거나 처음 해보는 일을 할 때 어떠니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["긴장이 돼", "괜찮아", "신나"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  const answer4 = yield {
+    question: {
+      content:
+        "처음 본 사람을 만나면 얼굴이 빨개지거나 말이 잘 안 나오고 긴장돼?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer4);
+
+  const answer5 = yield {
+    question: {
+      content: "무언가 안 좋은 일이 일어날까 봐 걱정을 자주 하니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer5);
+
+  const answer6 = yield {
+    question: {
+      content: "부모님과 떨어지는 게 힘들어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["괜찮아", "힘들 때도~", "많이 힘들어"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer6);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result = scoreSum >= 10 ? "경고" : scoreSum >= 9 ? "주의" : "양호";
+
+  return {
+    result: `너의 불안 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}
+// 정서행동 검사 - 우울
+export function* ebtSad() {
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "좋아하거나 관심 가지고 있는 게 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 없어", "조금 있어", "많이 있어"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content: "슬픈 기분이 들거나 울 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content: "활기차고 기분이 좋을 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  const answer4 = yield {
+    question: {
+      content: "기운이 없고 피곤해서 아무것도 하기 싫을 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer4);
+
+  const answer5 = yield {
+    question: {
+      content: "아무도 나에게 관심이 없는 것 같고 외로울 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer5);
+
+  const answer6 = yield {
+    question: {
+      content: "너무 많이 먹거나 너무 적게 먹을 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer6);
+
+  const answer7 = yield {
+    question: {
+      content: "너무 많이 자거나 너무 적게 잘 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer7);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result = scoreSum >= 10 ? "경고" : scoreSum >= 9 ? "주의" : "양호";
+
+  return {
+    result: `너의 우울 만족도와 적응 수준은 ${result} 단계야.`,
     ebtScore,
   };
 }

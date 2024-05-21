@@ -13,35 +13,7 @@ import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 import { useRouter } from "next/router";
 
 import { motion } from "framer-motion";
-import {
-  ebtSchool,
-  ebtFriend,
-  ebtFamily,
-  ebtMood,
-} from "@/store/testGenerator";
-
-const ebtClassMap = {
-  School: {
-    type: "School",
-    name: "학교생활",
-    generator: ebtSchool,
-  },
-  Friend: {
-    type: "Friend",
-    name: "친구관계",
-    generator: ebtFriend,
-  },
-  Family: {
-    type: "Family",
-    name: "가족관계",
-    generator: ebtFamily,
-  },
-  Mood: {
-    type: "Mood",
-    name: "기분",
-    generator: ebtMood,
-  },
-};
+import { ebtClassMap } from "@/store/testGenerator";
 
 // Renewel Test 페이지
 export default function Test() {
