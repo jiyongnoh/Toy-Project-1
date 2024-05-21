@@ -10,7 +10,7 @@ import EBTestBubble from "@/component/Test_Component/EBTestBubble";
 import EBTClassSelector from "@/component/Test_Component/EBTClassSelector";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 import { motion } from "framer-motion";
 import { ebtClassMap } from "@/store/testGenerator";
