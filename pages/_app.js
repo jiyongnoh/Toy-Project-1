@@ -4,11 +4,15 @@ import Head from "next/head";
 import Nav from "@/component/Nav";
 import Page from "@/component/Motion_Paging/Page";
 import { AnimatePresence } from "framer-motion";
-import Script from "next/script";
+import { SessionProvider } from "next-auth/react";
 
 import { RecoilRoot } from "recoil";
 
-export default function App({ Component, pageProps, router }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+  router,
+}) {
   return (
     <>
       <Head>
@@ -22,12 +26,14 @@ export default function App({ Component, pageProps, router }) {
         />
       </Head>
       <RecoilRoot>
-        <AnimatePresence mode="wait">
-          <Page key={router.route}>
-            <Nav />
-            <Component {...pageProps} />
-          </Page>
-        </AnimatePresence>
+        <SessionProvider session={session}>
+          <AnimatePresence mode="wait">
+            <Page key={router.route}>
+              <Nav />
+              <Component {...pageProps} />
+            </Page>
+          </AnimatePresence>
+        </SessionProvider>
       </RecoilRoot>
       <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>

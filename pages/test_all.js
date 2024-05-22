@@ -19,6 +19,8 @@ import CharacterSelector from "@/component/CharacterSelector";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
+import VideoModal from "@/component/Chat_Component/VideoModal";
+
 const avartaAI_info = {
   pupu: {
     name: "pupu",
@@ -70,6 +72,19 @@ export default function Test() {
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [videoId, setVideoId] = useState("");
+
+  const openModal = () => {
+    setVideoId("nKCY3qz30N8"); // 재생할 유튜브 동영상 ID입니다.
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setVideoId("");
+  };
 
   const router = useRouter();
 
@@ -255,6 +270,15 @@ export default function Test() {
 
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
+        </div>
+
+        <div>
+          <button onClick={openModal}>동영상 재생</button>
+          <VideoModal
+            isOpen={modalIsOpen}
+            onRequestClose={closeModal}
+            videoId={videoId}
+          />
         </div>
       </FlexContainer>
     </MainContainer>
