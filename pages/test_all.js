@@ -19,7 +19,7 @@ import CharacterSelector from "@/component/CharacterSelector";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 
-import VideoModal from "@/component/Chat_Component/VideoModal";
+// import VideoModal from "@/component/Chat_Component/VideoModal";
 
 const avartaAI_info = {
   pupu: {
@@ -61,6 +61,10 @@ const unMount_api_info = {
     path: "/openAI/clear_cookies",
   },
 };
+const mediVideo = {
+  candle: { type: "candle", url: "nKCY3qz30N8" },
+  breath: { type: "breath", url: "tNao3xp5yjM" },
+};
 
 // Renewel Test 페이지
 export default function Test() {
@@ -71,27 +75,16 @@ export default function Test() {
   const [messageArr, setMessageArr] = useState([]);
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
-  const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
-
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [videoId, setVideoId] = useState("");
+  const [testType, setTestType] = useState("School");
 
-  const openModal = () => {
-    setVideoId("nKCY3qz30N8"); // 재생할 유튜브 동영상 ID입니다.
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-    setVideoId("");
-  };
+  const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
 
   const router = useRouter();
 
   // 언마운트 시점에 사용할 messageArr 변수값 유지
   const latestMessageArr = useRef(messageArr);
   latestMessageArr.current = messageArr;
-  const testType = "School";
 
   const sendMessage = async () => {
     const message = chat;
@@ -106,7 +99,10 @@ export default function Test() {
 
       // messageArr 깊은 복사 후 audioURL 속성 삭제
       const tmpMsgArr = [...JSON.parse(JSON.stringify(messageArr))];
-      tmpMsgArr.forEach((el) => delete el.audioURL);
+      tmpMsgArr.forEach((el) => {
+        delete el.audioURL;
+        delete el.media;
+      });
 
       const data = await handleGptCompletion(
         {
@@ -136,11 +132,24 @@ export default function Test() {
       }
       // Audio URL 생성
       const audioURL = await handleClovaVoice(data.message);
+      const media = data.message.match(/추천/) !== null; // main
+      // const media = messageArr.length; // test
+      const candle = data.message.match(/촛불/) !== null;
+      const breath = data.message.match(/호흡/) !== null;
 
       setIsPending(false); // 로딩 off
       setMessageArr([
         ...messageArr,
-        { role: "assistant", content: data.message, audioURL },
+        {
+          role: "assistant",
+          content: data.message,
+          audioURL,
+          media: media
+            ? candle
+              ? mediVideo["candle"]
+              : mediVideo["breath"]
+            : null,
+        },
       ]);
     } catch (error) {
       console.log(error);
@@ -234,6 +243,20 @@ export default function Test() {
                 message={el.content}
                 role={el.role}
                 audioURL={el.audioURL}
+                media={
+                  el.media
+                    ? {
+                        videoInfo: el.media,
+                        modalIsOpen,
+                        closeModal: () => {
+                          setModalIsOpen(false);
+                        },
+                        openModal: () => {
+                          setModalIsOpen(true);
+                        },
+                      }
+                    : null
+                }
               />
             ))}
             {/* 로딩바 */}
@@ -272,14 +295,14 @@ export default function Test() {
           <a>Created by SoyesKids</a>
         </div>
 
-        <div>
+        {/* <div>
           <button onClick={openModal}>동영상 재생</button>
           <VideoModal
             isOpen={modalIsOpen}
             onRequestClose={closeModal}
             videoId={videoId}
           />
-        </div>
+        </div> */}
       </FlexContainer>
     </MainContainer>
   );

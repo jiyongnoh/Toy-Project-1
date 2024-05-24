@@ -1,16 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 
-// 스타일드 컴포넌트를 사용하여 버튼 스타일 정의
-const Button = styled.button`
-  width: 24px;
-  height: 24px;
-  padding: 0;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-`;
-
 const AudioPlayerButton = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(new Audio(src));
@@ -19,11 +9,6 @@ const AudioPlayerButton = ({ src }) => {
   audioRef.current.addEventListener("ended", () => {
     setIsPlaying(!isPlaying);
   });
-
-  // 재생 및 정지 기능
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
 
   // 음성 재생 상태 변화에 따른 처리
   useEffect(() => {
@@ -41,7 +26,11 @@ const AudioPlayerButton = ({ src }) => {
   }, [isPlaying]);
 
   return (
-    <Button onClick={togglePlayPause}>
+    <Button
+      onClick={() => {
+        setIsPlaying(!isPlaying);
+      }}
+    >
       {isPlaying ? (
         <span class="material-symbols-outlined">stop_circle</span>
       ) : (
@@ -50,5 +39,14 @@ const AudioPlayerButton = ({ src }) => {
     </Button>
   );
 };
+
+const Button = styled.button`
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+`;
 
 export default AudioPlayerButton;

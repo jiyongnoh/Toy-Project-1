@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { useSession } from "next-auth/react";
+import styled from "styled-components";
+
+// import { useSession } from "next-auth/react";
 
 const VideoModal = ({ isOpen, onRequestClose, videoId }) => {
-  const { data: session } = useSession();
   const [videoUrl, setVideoUrl] = useState("");
+  // const { data: session } = useSession();
   //   useEffect(() => {
   //     if (session && videoId) {
   //       fetch(
@@ -35,7 +37,7 @@ const VideoModal = ({ isOpen, onRequestClose, videoId }) => {
       fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/youtube/${videoId}`)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data) {
             setVideoUrl(data.player.embedHtml);
           } else {
@@ -49,28 +51,39 @@ const VideoModal = ({ isOpen, onRequestClose, videoId }) => {
   }, [videoId]);
 
   return (
-    <Modal
+    <StyledModal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       contentLabel="Video Modal"
       ariaHideApp={false}
-      style={{
-        content: {
-          top: "50%",
-          left: "50%",
-          right: "auto",
-          bottom: "auto",
-          marginRight: "-50%",
-          transform: "translate(-50%, -50%)",
-          width: "80%",
-          maxWidth: "640px",
-          height: "auto",
-        },
-      }}
     >
-      <div dangerouslySetInnerHTML={{ __html: videoUrl }} />
-    </Modal>
+      <ModalContent dangerouslySetInnerHTML={{ __html: videoUrl }} />
+    </StyledModal>
   );
 };
+
+const StyledModal = styled(Modal)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 640px;
+  height: auto;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  outline: none;
+`;
+
+const ModalContent = styled.div`
+  iframe {
+    width: 100%;
+    height: 360px;
+  }
+`;
 
 export default VideoModal;
