@@ -32,6 +32,14 @@ export default function Shop() {
   const searchParams = useSearchParams();
   const pg_token = searchParams.get("pg_token");
 
+  // 페이지 언마운트 설정
+  useEffect(() => {
+    return () => {
+      localStorage.removeItem("tid");
+      localStorage.removeItem("payClass");
+    };
+  }, []);
+
   // pg_token 반환 시 발동 - KakaoPay 승인
   useEffect(() => {
     if (pg_token) {
