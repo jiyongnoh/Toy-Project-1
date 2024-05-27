@@ -70,6 +70,6 @@ export const StyledInput = styled.input`
   }
 
   &::placeholder {
-    color: wheat;
+    color: white;
   }
 `;

@@ -248,7 +248,7 @@ export default function Login() {
             />
           </InputContainer>
 
-          <CheckboxContainer>
+          {/* <CheckboxContainer>
             <input
               color="black"
               type="checkbox"
@@ -259,7 +259,7 @@ export default function Login() {
               }}
             />
             <label for="check">ID Remeber</label>
-          </CheckboxContainer>
+          </CheckboxContainer> */}
 
           <BtnContainer>
             <Link href="/login">
