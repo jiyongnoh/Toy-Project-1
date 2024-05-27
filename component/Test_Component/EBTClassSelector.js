@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "styled-components";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 
 // EBTClassSelector 컴포넌트
-const EBTClassSelector = ({ isProceeding, EBTArr }) => {
+const EBTClassSelector = ({ isProceeding, EBTArr, ebtType }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -28,11 +28,10 @@ const EBTClassSelector = ({ isProceeding, EBTArr }) => {
         {Object.values(EBTArr).map((ebt, index) => (
           <NavBtn
             value={ebt.type}
+            selected={ebtType === ebt.type}
             key={ebt.name}
             hidden={!isOpen}
-            style={{
-              transitionDelay: `${isOpen ? index * 100 : (3 - index) * 100}ms`,
-            }}
+            transitionDelay={`${isOpen ? index * 100 : (3 - index) * 100}ms`}
             onClick={ebtChangeHandler}
           >
             {ebt.name}
@@ -53,6 +52,10 @@ const EBTSelectorContainer = styled.div`
     right: 37%;
   }
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   z-index: 1;
 `;
 
@@ -63,7 +66,8 @@ const ButtonsContainer = styled.div`
 `;
 
 const NavBtn = styled.button`
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) =>
+    props.selected ? "rgba(0, 42, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"};
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: white;
@@ -77,9 +81,11 @@ const NavBtn = styled.button`
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
+  transition-delay: ${(props) => props.transitionDelay};
 
   &:hover {
     background-color: rgba(0, 42, 255, 0.5);
+    transition-delay: 0ms;
   }
 
   ${(props) =>

@@ -25,6 +25,7 @@ export default function Test() {
   const [scoreArr, setScoreArr] = useState([]);
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
+  const [ebtType, setEbtType] = useState("");
 
   // const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
@@ -81,7 +82,7 @@ export default function Test() {
     // 정서행동 검사 제너레이터 생성
     ebtSessionRef.current =
       ebtClassMap[localStorage.getItem("EBTClass") || "School"].generator();
-
+    setEbtType(localStorage.getItem("EBTClass") || "School");
     setTimeout(() => {
       const { value, done } = ebtSessionRef.current.next(select);
       if (!done) {
@@ -187,7 +188,11 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <EBTClassSelector isProceeding={isProceeding} EBTArr={ebtClassMap} />
+      <EBTClassSelector
+        isProceeding={isProceeding}
+        EBTArr={ebtClassMap}
+        ebtType={ebtType}
+      />
       <FlexContainer
         justify="center"
         align="center"

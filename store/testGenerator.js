@@ -258,6 +258,31 @@ export const ebtClassMap = {
     name: "우울",
     generator: ebtSad,
   },
+  Health: {
+    type: "Health",
+    name: "신체증상",
+    generator: ebtHealth,
+  },
+  Attention: {
+    type: "Attention",
+    name: "주의집중",
+    generator: ebtAttention,
+  },
+  Movement: {
+    type: "Movement",
+    name: "과잉행동",
+    generator: ebtMovement,
+  },
+  Angry: {
+    type: "Angry",
+    name: "분노/공격성",
+    generator: ebtAngry,
+  },
+  Self: {
+    type: "Self",
+    name: "자기인식",
+    generator: ebtSelf,
+  },
 };
 // 정서행동 검사 - 학교생활
 export function* ebtSchool() {
@@ -856,6 +881,10 @@ export function* ebtUnrest() {
 }
 // 정서행동 검사 - 우울
 export function* ebtSad() {
+  let ebtClass = "우울";
+  let danger_score = 10,
+    caution_score = 9;
+
   let ebtScore = [],
     scoreSum = 0;
 
@@ -981,10 +1010,650 @@ export function* ebtSad() {
   // 점수 총합
   scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
   // 결과 계산
-  const result = scoreSum >= 10 ? "경고" : scoreSum >= 9 ? "주의" : "양호";
+  const result =
+    scoreSum >= danger_score
+      ? "경고"
+      : scoreSum >= caution_score
+      ? "주의"
+      : "양호";
 
   return {
-    result: `너의 우울 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}
+// 정서행동 검사 - 신체증상
+export function* ebtHealth() {
+  let ebtClass = "신체증상";
+  let danger_score = 7,
+    caution_score = 6;
+
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "너는 네 몸이 튼튼한 것 같니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["아니", "그냥 그래", "응 튼튼해"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content: "머리가 아플 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content: "배가 아프거나 속이 불편할 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  const answer4 = yield {
+    question: {
+      content: "피곤하거나 쉽게 지칠 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer4);
+
+  const answer5 = yield {
+    question: {
+      content: "여기저기 아픈 편이니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer5);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result =
+    scoreSum >= danger_score
+      ? "경고"
+      : scoreSum >= caution_score
+      ? "주의"
+      : "양호";
+
+  return {
+    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}
+// 정서행동 검사 - 주의집중
+export function* ebtAttention() {
+  let ebtClass = "주의집중";
+  let danger_score = 11,
+    caution_score = 9;
+
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "숙제 같은 걸 할 때 뭔가 빼 먹거나 실수할 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content:
+        "수업을 듣거나, 긴 글을 읽거나, 대화를 할 때 잘 집중하지 못하고 딴 생각을 할 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content:
+        "숙제를 끝내야 하는데 한참 동안 딴짓을 해서 오래 걸리거나 다 끝내지 못할 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  const answer4 = yield {
+    question: {
+      content: "숙제를 하거나 긴 글을 읽는 것처럼 머리를 많이 쓰는 일은 어때?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["괜찮아", "조금 싫어", "너무 싫어"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer4);
+
+  const answer5 = yield {
+    question: {
+      content: "연필이나 실내화 가방 같이 챙겨야 할 물건을 자주 잃어버리니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer5);
+
+  const answer6 = yield {
+    question: {
+      content:
+        "뭔가에 집중하다가도 주변에서 어떤 소리가 들리거나 하면 주의가 자주 흐트러지니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer6);
+
+  const answer7 = yield {
+    question: {
+      content: "기억해야 할 것을 자주 깜빡해?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer7);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result =
+    scoreSum >= danger_score
+      ? "경고"
+      : scoreSum >= caution_score
+      ? "주의"
+      : "양호";
+
+  return {
+    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}
+// 정서행동 검사 - 과잉행동
+export function* ebtMovement() {
+  let ebtClass = "과잉행동";
+  let danger_score = 8,
+    caution_score = 7;
+
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "손발을 가만두지 못하고 자주 꼼지락거리니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content:
+        "수업시간 같이 가만히 앉아 있어야 할 때 허락 받지 않고 자리에서 벗어날 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content: "심하게 뛰어다니거나 위험하게 어딘가를 기어오를 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  const answer4 = yield {
+    question: {
+      content: "차분히 앉아서 조용하게 놀기 어려울 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer4);
+
+  const answer5 = yield {
+    question: {
+      content: "말이 많고 시끄러운 편이니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer5);
+
+  const answer6 = yield {
+    question: {
+      content: "네 차례가 올 때까지 기다리지 못할 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer6);
+
+  const answer7 = yield {
+    question: {
+      content:
+        "다른 사람이 이야기 나누고 있거나 무언가 하고 있을 때 자주 방해하거나 끼어드니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer7);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result =
+    scoreSum >= danger_score
+      ? "경고"
+      : scoreSum >= caution_score
+      ? "주의"
+      : "양호";
+
+  return {
+    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}
+// 정서행동 검사 - 분노/공격성
+export function* ebtAngry() {
+  let ebtClass = "분노/공격성";
+  let danger_score = 8,
+    caution_score = 7;
+
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "짜증나거나 신경질 날 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content: "화가 나서 큰 소리를 지를 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content: "화가 나서 물건을 던지거나 부술 때가 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  const answer4 = yield {
+    question: {
+      content: "친구를 못살게 굴 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer4);
+
+  const answer5 = yield {
+    question: {
+      content: "형제자매와 자주 다투니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer5);
+
+  const answer6 = yield {
+    question: {
+      content: "부모님이나 선생님 말씀을 안 듣고 네 마음대로 할 때가 있어?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["거의 안 그래", "가끔 그래", "자주 그래"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer6);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result =
+    scoreSum >= danger_score
+      ? "경고"
+      : scoreSum >= caution_score
+      ? "주의"
+      : "양호";
+
+  return {
+    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    ebtScore,
+  };
+}
+// 정서행동 검사 - 자기인식
+export function* ebtSelf() {
+  let ebtClass = "자기인식";
+  let danger_score = 7.1,
+    caution_score = 5.9;
+
+  let ebtScore = [],
+    scoreSum = 0;
+
+  const answer1 = yield {
+    question: {
+      content: "너는 네가 착하고 좋은 사람이라고 느껴져?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["아니", "그냥 그래", "진짜 그래"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer1);
+
+  const answer2 = yield {
+    question: {
+      content: "네가 사랑받는 소중한 사람이라고 느껴져?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["아니", "그냥 그래", "진짜 그래"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer2);
+
+  const answer3 = yield {
+    question: {
+      content: "네가 할 일을 항상 잘 해낼 수 있니?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["아니", "그냥 그래", "진짜 그래"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer3);
+
+  const answer4 = yield {
+    question: {
+      content: "네가 부족한 점이 많다고 생각해?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["아니", "약간 있어", "진짜 많아"],
+      score: [0, 1, 2],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer4);
+
+  const answer5 = yield {
+    question: {
+      content: "네 외모는 어떤 거 같아?",
+      imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+    },
+    selection: {
+      content: ["별로야", "그냥 그래", "좋아"],
+      score: [2, 1, 0],
+      imgURL: [
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+        "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
+      ],
+    },
+  };
+  ebtScore.push(answer5);
+
+  // 점수 총합
+  scoreSum = ebtScore.reduce((acc, cur) => acc + cur);
+  // 결과 계산
+  const result =
+    scoreSum >= danger_score
+      ? "경고"
+      : scoreSum >= caution_score
+      ? "주의"
+      : "양호";
+
+  return {
+    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
     ebtScore,
   };
 }
