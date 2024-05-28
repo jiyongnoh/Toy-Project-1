@@ -25,7 +25,6 @@ const DropdownButton = styled.button`
   transition: 0.5s;
 
   &:hover {
-    padding: 15px 25px;
     background-color: rgba(0, 42, 255, 0.5);
     color: white;
   }
@@ -51,15 +50,17 @@ const DropdownContent = styled.div`
   border-radius: 15px;
   margin-top: 5px;
   z-index: 1;
+
+  width: 100%;
 `;
 
 const Option = styled.div`
   color: black;
-  padding: 12px 16px;
-  text-align: left;
-  border-radius: 10px;
+  padding: 10px 12px;
+  text-align: center;
+  border-radius: 15px;
   cursor: pointer;
-
+  width: 100%;
   &:hover {
     background-color: rgba(0, 42, 255, 0.5);
     color: white;

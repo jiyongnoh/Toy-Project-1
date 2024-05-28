@@ -32,7 +32,6 @@ export default function Home() {
       <Section>
         {/* 첫 번째 섹션 내용 */}
         <MainContainer>
-          <h1>{t("greeting")}</h1>
           {mobile && loading && <Title>AI Avartar Project</Title>}
           {!mobile && loading && <ScrollDownIndicator />}
         </MainContainer>
