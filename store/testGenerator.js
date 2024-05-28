@@ -39,7 +39,7 @@ export function* psychologicalAsesssment() {
       "오늘 처음 유치원에 가는 날이야. 반에 들어가니 친구들이 많이 와 있어. 나는 어떻게 할까?”",
     selection: [
       "1. 빈자리에서 선생님을 기다릴 거야",
-      "2: 새 친구에게 말을 건네 볼 거야",
+      "2. 새 친구에게 말을 건네 볼 거야",
     ],
     question_imgURL: "/src/PT_IMG/tegami_yomu_woman_hagaki.png",
     selection_imgURL: [

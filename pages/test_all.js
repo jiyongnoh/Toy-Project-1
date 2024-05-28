@@ -15,7 +15,7 @@ import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 // 아바타 관련 전역 변수
 import { useRecoilState } from "recoil";
 import { log, avarta } from "../store/state";
-import CharacterSelector from "@/component/CharacterSelector";
+import CharacterSelector from "@/component/Chat_Component/CharacterSelector";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import { avarta } from "../store/state";
+import { avarta } from "../../store/state";
 import { css } from "styled-components";
 
 // CharacterSelector 컴포넌트

@@ -1,18 +1,16 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import "@/styles/globals.css";
 import Head from "next/head";
-import Nav from "@/component/Nav";
+import Nav from "@/component/Home_Component/Nav";
 import Page from "@/component/Motion_Paging/Page";
 import { AnimatePresence } from "framer-motion";
 import { SessionProvider } from "next-auth/react";
 
 import { RecoilRoot } from "recoil";
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-  router,
-}) {
+import { appWithTranslation } from "next-i18next";
+
+function App({ Component, pageProps: { session, ...pageProps }, router }) {
   return (
     <>
       <Head>
@@ -50,3 +48,5 @@ export default function App({
     </>
   );
 }
+
+export default appWithTranslation(App);

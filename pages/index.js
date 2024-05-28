@@ -3,15 +3,19 @@
 import styled, { keyframes } from "styled-components";
 import { useEffect, useState } from "react";
 import Live2DViewerMain from "@/component/Live2D_Component/Live2DViewerMain";
-import Footer from "@/component/Footer";
-import ScrollDownIndicator from "@/component/ScrollDownIndicator";
-import ScrollUpIndicator from "@/component/ScrollUpIndicator";
-import { motion } from "framer-motion";
+import Footer from "@/component/Home_Component/Footer";
+import ScrollDownIndicator from "@/component/Home_Component/ScrollDownIndicator";
+import ScrollUpIndicator from "@/component/Home_Component/ScrollUpIndicator";
+// import { motion } from "framer-motion";
+
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [mobile, setMobile] = useState(false);
+  const { t } = useTranslation("common");
 
   useEffect(() => {
     // Loading (1 sec)
@@ -28,6 +32,7 @@ export default function Home() {
       <Section>
         {/* 첫 번째 섹션 내용 */}
         <MainContainer>
+          <h1>{t("greeting")}</h1>
           {mobile && loading && <Title>AI Avartar Project</Title>}
           {!mobile && loading && <ScrollDownIndicator />}
         </MainContainer>
@@ -55,6 +60,14 @@ export default function Home() {
       </FooterSection>
     </PageContainer>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }
 
 const fadeIn = keyframes`

@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { StyledButton } from "../styled-component/common";
+// import { StyledButton } from "../../styled-component/common";
 import Link from "next/link";
-
+import LanguageSwitcher from "./LanguageSwitcher";
 import { useRecoilState } from "recoil";
-import { log, avarta } from "../store/state";
+import { log, avarta } from "../../store/state";
 // Router
 import { useRouter } from "next/router";
 // SweetAlert2
@@ -122,6 +122,7 @@ export default function Nav() {
               <StyledButton>MyPage</StyledButton>
             </Link>
           </NavLi> */}
+          <LanguageSwitcher />
         </NavUl>
       ) : (
         <NavUl>
@@ -169,6 +170,7 @@ export default function Nav() {
               <NavBtn>전문상담사 - 소예</NavBtn>
             </Link>
           </NavLi> */}
+          <LanguageSwitcher />
         </NavUl>
       )}
     </NavContainer>

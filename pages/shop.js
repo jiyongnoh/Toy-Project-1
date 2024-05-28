@@ -24,6 +24,9 @@ import {
 
 import { payInfo } from "@/store/payInfo";
 
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 // Login 페이지
 export default function Shop() {
   // NextJs는 useNavigate 대신 useRouter를 사용한다
@@ -31,6 +34,7 @@ export default function Shop() {
   // 권한 code Params 찾기
   const searchParams = useSearchParams();
   const pg_token = searchParams.get("pg_token");
+  const { t } = useTranslation("common");
 
   // 페이지 언마운트 설정
   useEffect(() => {
@@ -125,26 +129,34 @@ export default function Shop() {
             color="black"
             onClick={handleOpenModal}
           >
-            Day
+            {t("pay_day")}
           </StyledButton>
           <StyledButton
             color="black"
             value="1monthpass"
             onClick={handleOpenModal}
           >
-            Month
+            {t("pay_month")}
           </StyledButton>
           <StyledButton
             value="1yearpass"
             color="black"
             onClick={handleOpenModal}
           >
-            Year
+            {t("pay_year")}
           </StyledButton>
         </FormContainer>
       </FlexContainer>
     </ShopPageContainer>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common"])),
+    },
+  };
 }
 
 const ShopPageContainer = styled.main`
