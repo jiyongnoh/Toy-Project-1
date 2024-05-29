@@ -90,11 +90,6 @@ export default function Nav() {
           <NavLi>
             <NavBtn onClick={logoutHandler}>{t("logout")}</NavBtn>
           </NavLi>
-          {/* <NavLi>
-            <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
-              <NavBtn>Clova Voice Test</NavBtn>
-            </Link>
-          </NavLi> */}
           <NavLi>
             <Link href="/test_ebt" style={{ textDecoration: "none" }}>
               <NavBtn>{t("ebt")}</NavBtn>

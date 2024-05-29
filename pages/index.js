@@ -61,10 +61,11 @@ export default function Home() {
   );
 }
 
+// Translation 파일 적용
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "nav"])),
+      ...(await serverSideTranslations(locale, ["common", "nav"])), // 파일 다중 적용 가능
     },
   };
 }
