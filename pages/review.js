@@ -21,39 +21,8 @@ import {
 } from "@/fetchAPI/reviewAPI";
 import { useRouter } from "next/router";
 
-const default_review = [
-  {
-    profile_img_url: "https://placehold.co/600x400",
-    uid: "노지용",
-    date: "2024/04/15",
-    content:
-      "default_review_contentadasdasdasdasdasdasddasdadsasdasdfasfasdasdasfafasdasd",
-  },
-  {
-    profile_img_url: "https://placehold.co/600x400",
-    uid: "노지용",
-    date: "2024/04/15",
-    content: "default_review_content",
-  },
-  {
-    profile_img_url: "https://placehold.co/600x400",
-    uid: "노지용",
-    date: "2024/04/15",
-    content: "default_review_content",
-  },
-  {
-    profile_img_url: "https://placehold.co/600x400",
-    uid: "노지용",
-    date: "2024/04/15",
-    content: "default_review_content",
-  },
-  {
-    profile_img_url: "https://placehold.co/600x400",
-    uid: "노지용",
-    date: "2024/04/15",
-    content: "default_review_content",
-  },
-];
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // Renewel Test 페이지
 export default function Test() {
@@ -175,6 +144,14 @@ export default function Test() {
       </FlexContainer>
     </MainContainer>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["review", "nav"])),
+    },
+  };
 }
 
 const MainContainer = styled.div`

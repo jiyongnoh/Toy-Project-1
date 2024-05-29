@@ -15,7 +15,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [mobile, setMobile] = useState(false);
-  const { t } = useTranslation("common");
+  // const { t } = useTranslation("nav");
 
   useEffect(() => {
     // Loading (1 sec)
@@ -64,7 +64,7 @@ export default function Home() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(locale, ["common", "nav"])),
     },
   };
 }

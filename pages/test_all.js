@@ -3,6 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { FlexContainer } from "../styled-component/common";
 import Live2DViewerTest from "@/component/Live2D_Component/Live2DViewerTest";
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import {
   emotionAPI,
   handleClovaVoice,
@@ -18,6 +19,9 @@ import { log, avarta } from "../store/state";
 import CharacterSelector from "@/component/Chat_Component/CharacterSelector";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
+
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // import VideoModal from "@/component/Chat_Component/VideoModal";
 
@@ -222,7 +226,6 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <CharacterSelector isPending={isPending} />
       <FlexContainer
         justify="center"
         align="center"
@@ -230,10 +233,15 @@ export default function Test() {
         width="100vw"
         height="100%"
       >
-        <div class="logo-container">
-          <img src="src/soyesKids_Logo.png" alt="soyes_logo" />
-        </div>
+        <Image
+          src="/src/soyesKids_Logo.png"
+          alt={"soyes_logo"}
+          width={529}
+          height={93}
+        />
+
         <ChatBox className="chat-box">
+          <CharacterSelector isPending={isPending} />
           <ChatBoxHeader>{headerTitle}</ChatBoxHeader>
           <ChatBoxBody className="chat-box-body">
             <ChatBubble message={headerTitle} role="assistant" />
@@ -308,6 +316,14 @@ export default function Test() {
   );
 }
 
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["consult", "nav"])),
+    },
+  };
+}
+
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
 const FadeInSpan = keyframes`
   0% {
@@ -346,7 +362,7 @@ const ChatBox = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   max-height: calc(100vh - 150px);
-  height: calc(100vh - 150px);
+  height: calc(100vh - 140px);
 
   @media (max-width: 768px) {
     height: 100%;

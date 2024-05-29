@@ -26,6 +26,9 @@ import { useSearchParams } from "next/navigation";
 import GoogleOAuthBtn from "@/component/Login_Componet/googleOAuthBtn";
 import KakaoOAuthBtn from "@/component/Login_Componet/kakaoOAuthBtn";
 
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 // 만료시간 설정 함수
 const expireSetHourFunc = (hour) => {
   const today = new Date();
@@ -284,6 +287,14 @@ export default function Login() {
       </FlexContainer>
     </LoginPageContainer>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["login", "nav"])),
+    },
+  };
 }
 
 const LoginPageContainer = styled.main`

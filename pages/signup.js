@@ -15,6 +15,9 @@ import Swal from "sweetalert2";
 import { useRecoilState } from "recoil";
 import { log } from "../store/state";
 
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 // SignUp 페이지
 export default function Signup() {
   const [id, setId] = useState("");
@@ -226,6 +229,14 @@ export default function Signup() {
       </SignUpPageContainer>
     </>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["signup", "nav"])),
+    },
+  };
 }
 
 const SignUpPageContainer = styled.main`

@@ -54,9 +54,8 @@ import styled from "styled-components";
 
 const CharacterSelectorContainer = styled.div`
   position: absolute;
-  top: 4rem;
-  right: 2rem;
-
+  top: 0.2rem;
+  right: 0.2rem;
   @media (max-width: 768px) {
     top: 2rem;
     right: 37%;

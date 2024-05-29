@@ -11,10 +11,13 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { logoutAPI } from "@/fetchAPI";
 
+import { useTranslation } from "next-i18next";
+
 export default function Nav() {
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const router = useRouter();
+  const { t } = useTranslation("nav");
 
   // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
   useEffect(() => {
@@ -81,11 +84,11 @@ export default function Nav() {
         <NavUl>
           <NavLi>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <NavBtn>Main</NavBtn>
+              <NavBtn>{t("main")}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
-            <NavBtn onClick={logoutHandler}>LogOut</NavBtn>
+            <NavBtn onClick={logoutHandler}>{t("logout")}</NavBtn>
           </NavLi>
           {/* <NavLi>
             <Link href="/ebt_test_v2" style={{ textDecoration: "none" }}>
@@ -94,27 +97,27 @@ export default function Nav() {
           </NavLi> */}
           <NavLi>
             <Link href="/test_ebt" style={{ textDecoration: "none" }}>
-              <NavBtn>EBT Test</NavBtn>
+              <NavBtn>{t("ebt")}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/test_pt" style={{ textDecoration: "none" }}>
-              <NavBtn>PT Test</NavBtn>
+              <NavBtn>{t("pt")}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/test_all" style={{ textDecoration: "none" }}>
-              <NavBtn>Consulting</NavBtn>
+              <NavBtn>{t("consult")}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/review" style={{ textDecoration: "none" }}>
-              <NavBtn>Review</NavBtn>
+              <NavBtn>{t("review")}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/shop" style={{ textDecoration: "none" }}>
-              <NavBtn>Shop</NavBtn>
+              <NavBtn>{t("shop")}</NavBtn>
             </Link>
           </NavLi>
           {/* <NavLi>
@@ -128,17 +131,17 @@ export default function Nav() {
         <NavUl>
           <NavLi>
             <Link href="/" style={{ textDecoration: "none" }}>
-              <NavBtn>Main</NavBtn>
+              <NavBtn>{t("main")}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/login" style={{ textDecoration: "none" }}>
-              <NavBtn>Login</NavBtn>
+              <NavBtn>{t("login")}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
             <Link href="/signup" style={{ textDecoration: "none" }}>
-              <NavBtn>SignUp</NavBtn>
+              <NavBtn>{t("signup")}</NavBtn>
             </Link>
           </NavLi>
           {/* <NavLi>

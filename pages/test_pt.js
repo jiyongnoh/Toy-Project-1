@@ -6,12 +6,15 @@ import { useEffect, useState, useRef } from "react";
 import { handlePtAnalsys } from "@/fetchAPI/testAPI";
 
 import PTestBubble from "@/component/Test_Component/PTestBubble";
-
+import Image from "next/image";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 import { useRouter } from "next/router";
 
 import { motion } from "framer-motion";
 import { psychologicalAsesssment } from "@/store/testGenerator";
+
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // Renewel Test 페이지
 export default function Test() {
@@ -143,9 +146,12 @@ export default function Test() {
         width="100vw"
         height="100%"
       >
-        <div class="logo-container">
-          <img src="src/soyesKids_Logo.png" alt="soyes_logo" />
-        </div>
+        <Image
+          src="/src/soyesKids_Logo.png"
+          alt={"soyes_logo"}
+          width={529}
+          height={93}
+        />
         <PTBox>
           <PTBoxHeader>성격 검사</PTBoxHeader>
           <PTBoxBody ref={chatBoxBody}>
@@ -188,6 +194,14 @@ export default function Test() {
       </FlexContainer>
     </MainContainer>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["pt", "nav"])),
+    },
+  };
 }
 
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)

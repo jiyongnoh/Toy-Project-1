@@ -5,7 +5,7 @@ import { FlexContainer } from "../styled-component/common";
 import { useEffect, useState, useRef } from "react";
 
 import { handleEbtAnalsys } from "@/fetchAPI/testAPI";
-
+import Image from "next/image";
 import EBTestBubble from "@/component/Test_Component/EBTestBubble";
 import EBTClassSelector from "@/component/Test_Component/EBTClassSelector";
 import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
@@ -14,6 +14,9 @@ import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
 
 import { motion } from "framer-motion";
 import { ebtClassMap } from "@/store/testGenerator";
+
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 // Renewel Test 페이지
 export default function Test() {
@@ -188,11 +191,6 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <EBTClassSelector
-        isProceeding={isProceeding}
-        EBTArr={ebtClassMap}
-        ebtType={ebtType}
-      />
       <FlexContainer
         justify="center"
         align="center"
@@ -200,10 +198,18 @@ export default function Test() {
         width="100vw"
         height="100%"
       >
-        <div class="logo-container">
-          <img src="src/soyesKids_Logo.png" alt="soyes_logo" />
-        </div>
+        <Image
+          src="/src/soyesKids_Logo.png"
+          alt={"soyes_logo"}
+          width={529}
+          height={93}
+        />
         <EBTBox>
+          <EBTClassSelector
+            isProceeding={isProceeding}
+            EBTArr={ebtClassMap}
+            ebtType={ebtType}
+          />
           <EBTBoxHeader>정서행동 검사</EBTBoxHeader>
           <EBTBoxBody ref={chatBoxBody}>
             {messageArr.map((el, index) => (
@@ -236,6 +242,14 @@ export default function Test() {
       </FlexContainer>
     </MainContainer>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["ebt", "nav"])),
+    },
+  };
 }
 
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)

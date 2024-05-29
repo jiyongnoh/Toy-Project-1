@@ -3,11 +3,7 @@
 import styled from "styled-components";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import {
-  FlexContainer,
-  StyledButton,
-  StyledInput,
-} from "../styled-component/common";
+import { FlexContainer, StyledButton } from "../styled-component/common";
 
 // Router
 import { useRouter } from "next/router";
@@ -34,7 +30,7 @@ export default function Shop() {
   // 권한 code Params 찾기
   const searchParams = useSearchParams();
   const pg_token = searchParams.get("pg_token");
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("shop");
 
   // 페이지 언마운트 설정
   useEffect(() => {
@@ -154,7 +150,7 @@ export default function Shop() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common"])),
+      ...(await serverSideTranslations(locale, ["shop", "nav"])),
     },
   };
 }
@@ -185,24 +181,24 @@ const FormContainer = styled.form`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 `;
 
-const InputContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: baseline;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-`;
-
 const H1 = styled.h1`
   color: black;
 `;
 
-const BtnContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-`;
+// const InputContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: baseline;
+// `;
+
+// const CheckboxContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   gap: 0.5rem;
+// `;
+
+// const BtnContainer = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   gap: 0.5rem;
+// `;

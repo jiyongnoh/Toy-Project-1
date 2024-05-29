@@ -44,12 +44,12 @@ const EBTClassSelector = ({ isProceeding, EBTArr, ebtType }) => {
 
 const EBTSelectorContainer = styled.div`
   position: absolute;
-  top: 4rem;
-  right: 2rem;
+  top: 0.5rem;
+  right: -1rem;
 
   @media (max-width: 768px) {
-    top: 2rem;
-    right: 37%;
+    width: fit-content;
+    left: 0;
   }
 
   display: flex;
@@ -73,7 +73,7 @@ const NavBtn = styled.button`
   color: white;
   border: none;
   border-radius: 15px;
-  margin: 4px 2px;
+  margin: 2px 2px;
   padding: 13px 23px;
   text-align: center;
   text-decoration: none;

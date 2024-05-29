@@ -3,13 +3,39 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
+const LanguageSwitcher = () => {
+  const router = useRouter();
+  const { locales, locale, pathname, query, asPath } = router;
+  const [show, setShow] = useState(false);
+
+  const changeLanguage = (newLocale) => {
+    setShow(false);
+    router.push({ pathname, query }, asPath, { locale: newLocale });
+  };
+
+  return (
+    <Dropdown>
+      <DropdownButton onMouseEnter={() => setShow(true)}>
+        {locale === "ko" ? "한국어" : "English"}
+      </DropdownButton>
+      <DropdownContent show={show} onMouseLeave={() => setShow(false)}>
+        {locales.map((loc) => (
+          <Option key={loc} onClick={() => changeLanguage(loc)}>
+            {loc === "ko" ? "한국어" : "English"}
+          </Option>
+        ))}
+      </DropdownContent>
+    </Dropdown>
+  );
+};
+
 const Dropdown = styled.div`
   position: relative;
   display: inline-block;
 `;
 
 const DropdownButton = styled.button`
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: white;
@@ -44,9 +70,11 @@ const DropdownButton = styled.button`
 const DropdownContent = styled.div`
   display: ${(props) => (props.show ? "block" : "none")};
   position: absolute;
+
   background-color: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
   border-radius: 15px;
   margin-top: 5px;
   z-index: 1;
@@ -67,30 +95,4 @@ const Option = styled.div`
   }
 `;
 
-const CustomDropdown = () => {
-  const router = useRouter();
-  const { locales, locale, pathname, query, asPath } = router;
-  const [show, setShow] = useState(false);
-
-  const changeLanguage = (newLocale) => {
-    setShow(false);
-    router.push({ pathname, query }, asPath, { locale: newLocale });
-  };
-
-  return (
-    <Dropdown>
-      <DropdownButton onClick={() => setShow(!show)}>
-        {locale === "ko" ? "Korean" : "English"}
-      </DropdownButton>
-      <DropdownContent show={show}>
-        {locales.map((loc) => (
-          <Option key={loc} onClick={() => changeLanguage(loc)}>
-            {loc === "ko" ? "Korean" : "English"}
-          </Option>
-        ))}
-      </DropdownContent>
-    </Dropdown>
-  );
-};
-
-export default CustomDropdown;
+export default LanguageSwitcher;
