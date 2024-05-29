@@ -4,14 +4,16 @@
     "eslint:recommended", // ESLint의 기본 추천 규칙
     "plugin:react/recommended", // React 관련 추천 규칙
     "plugin:@typescript-eslint/recommended", // TypeScript 관련 추천 규칙
-    "next/core-web-vitals" // Next.js의 Core Web Vitals 관련 규칙
+    "next/core-web-vitals", // Next.js의 Core Web Vitals 관련 규칙
+    "plugin:prettier/recommended" // 추가
   ],
   // TypeScript를 파싱하기 위한 파서 설정
   "parser": "@typescript-eslint/parser",
   // 사용되는 플러그인 목록
   "plugins": [
     "react", // React 관련 플러그인
-    "@typescript-eslint" // TypeScript 관련 플러그인
+    "@typescript-eslint", // TypeScript 관련 플러그인
+    "prettier" // 추가
   ],
   // 코드가 실행되는 환경 설정
   "env": {
@@ -28,6 +30,7 @@
   // 사용자 정의 규칙 설정
   "rules": {
     "react/prop-types": "off", // prop-types 사용 안 함
-    "@typescript-eslint/explicit-module-boundary-types": "off" // 명시적 모듈 경계 타입 사용 안 함
+    "@typescript-eslint/explicit-module-boundary-types": "off", // 명시적 모듈 경계 타입 사용 안 함
+    "prettier/prettier": "error" // 추가
   }
 }

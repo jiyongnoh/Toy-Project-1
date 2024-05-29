@@ -1,7 +1,7 @@
 // components/CustomDropdown.js
-import React, { useState } from "react";
-import { useRouter } from "next/router";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
 const LanguageSwitcher = () => {
   const router = useRouter();
@@ -16,12 +16,12 @@ const LanguageSwitcher = () => {
   return (
     <Dropdown>
       <DropdownButton onMouseEnter={() => setShow(true)}>
-        {locale === "ko" ? "한국어" : "English"}
+        {locale === 'ko' ? '한국어' : 'English'}
       </DropdownButton>
       <DropdownContent show={show} onMouseLeave={() => setShow(false)}>
         {locales.map((loc) => (
           <Option key={loc} onClick={() => changeLanguage(loc)}>
-            {loc === "ko" ? "한국어" : "English"}
+            {loc === 'ko' ? '한국어' : 'English'}
           </Option>
         ))}
       </DropdownContent>
@@ -68,7 +68,7 @@ const DropdownButton = styled.button`
 `;
 
 const DropdownContent = styled.div`
-  display: ${(props) => (props.show ? "block" : "none")};
+  display: ${(props) => (props.show ? 'block' : 'none')};
   position: absolute;
 
   background-color: rgba(255, 255, 255, 0.05);
