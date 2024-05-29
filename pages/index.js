@@ -53,7 +53,7 @@ export default function Home() {
           <Live2DViewerMain avartar="shizuku" />
         </SubContainer>
       </Section>
-      {/* Footer 섹션 내용 */}
+      {/* Footer 섹션  */}
       <FooterSection>
         <Footer />
       </FooterSection>
