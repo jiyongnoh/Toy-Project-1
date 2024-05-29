@@ -1,8 +1,10 @@
-import styled from "styled-components";
-import { loginAPI_OAuth_URL } from "@/fetchAPI";
-
+import styled from 'styled-components';
+import { loginAPI_OAuth_URL } from '@/fetchAPI';
+import { useTranslation } from 'next-i18next';
 // Component usage
 const GoogleOAuthBtn = ({ setUrl }) => {
+  const { t } = useTranslation('login');
+
   const handleLogin = async (e) => {
     e.preventDefault(); // 새로고침 방지
     const directUrl = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
@@ -13,14 +15,14 @@ const GoogleOAuthBtn = ({ setUrl }) => {
     if (directUrl) {
       setUrl(directUrl);
     } else {
-      setUrl(window.location.href + "?code=response_fail");
+      setUrl(window.location.href + '?code=response_fail');
     }
   };
 
   return (
     <GoogleLoginButton value="google" onClick={handleLogin}>
       <GoogleIcon className="google-icon" />
-      Sign in with Google
+      {t('login_googleBtn_title')}
     </GoogleLoginButton>
   );
 };
@@ -64,8 +66,8 @@ const GoogleLoginButton = styled.button`
 `;
 
 const GoogleIcon = styled.img.attrs({
-  src: "/path-to-your-google-icon.png", // The path to your Google icon image file
-  alt: "Google sign-in",
+  src: '/path-to-your-google-icon.png', // The path to your Google icon image file
+  alt: 'Google sign-in',
 })`
   width: 20px;
   height: 20px;

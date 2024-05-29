@@ -1,21 +1,23 @@
-import styled from "styled-components";
-
+import styled from 'styled-components';
+import { useTranslation } from 'next-i18next';
 // Component usage
 const KakaoOAuthBtn = ({ setUrl }) => {
+  const { t } = useTranslation('login');
+
   const handleLogin = (e) => {
     e.preventDefault(); // 새로고침 방지
 
     // Kakao 인증 페이지로 이동
     window.Kakao.Auth.authorize({
       redirectUri: `${process.env.NEXT_PUBLIC_REDIRECT_URI}?type=kakao`, // 로그인 성공 후 리디렉션 될 페이지의 URI
-      prompt: "select_account",
+      prompt: 'select_account',
     });
   };
 
   return (
     <KakaoLoginButton value="google" onClick={handleLogin}>
       <KakaoIcon className="google-icon" />
-      Sign in with Kakao
+      {t('login_kakaoBtn_title')}
     </KakaoLoginButton>
   );
 };
@@ -59,8 +61,8 @@ const KakaoLoginButton = styled.button`
 `;
 
 const KakaoIcon = styled.img.attrs({
-  src: "/kakao_logo.png", // The path to your Google icon image file
-  alt: "Google sign-in",
+  src: '/kakao_logo.png', // The path to your Google icon image file
+  alt: 'Google sign-in',
 })`
   width: 20px;
   height: 20px;
