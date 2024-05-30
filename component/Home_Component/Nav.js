@@ -10,11 +10,12 @@ import { logoutAPI } from '@/fetchAPI';
 import { useTranslation } from 'next-i18next';
 
 export default function Nav() {
-  const [login, setLogin] = useRecoilState(log);
-  const [avartaAI, setAvartaAI] = useRecoilState(avarta);
-  const [showMenu, setShowMenu] = useState(false);
   const router = useRouter();
   const { t } = useTranslation('nav');
+  const currentPath = router.pathname;
+  const [login, setLogin] = useRecoilState(log);
+  const [avartaAI, setAvartaAI] = useRecoilState(avarta);
+  const [showMenu, setShowMenu] = useState(currentPath !== '/' ? true : false);
 
   useEffect(() => {
     const loginSession = localStorage.getItem('log');
@@ -107,7 +108,9 @@ export default function Nav() {
                 {menuItems.map((item) => (
                   <NavLi key={item.href}>
                     <Link href={item.href} passHref>
-                      <NavBtn>{item.label}</NavBtn>
+                      <NavBtn selected={item.href === currentPath}>
+                        {item.label}
+                      </NavBtn>
                     </Link>
                   </NavLi>
                 ))}
@@ -198,7 +201,8 @@ const NavMenuContainer = styled.li`
 `;
 
 const NavBtn = styled.button`
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: ${(props) =>
+    props.selected ? 'rgba(0, 42, 255, 0.5)' : 'rgba(255, 255, 255, 0.05)'};
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
@@ -219,7 +223,7 @@ const NavBtn = styled.button`
   white-space: nowrap;
 
   &:hover {
-    padding: 15px 25px;
+    ${(props) => (props.selected ? null : 'padding: 15px 25px;')}
     background-color: rgba(0, 42, 255, 0.5);
     color: white;
   }
@@ -230,7 +234,7 @@ const NavBtn = styled.button`
     padding: 7px 10px;
 
     &:hover {
-      padding: 7px 10px;
+      ${(props) => (props.selected ? null : 'padding: 7px 10px;')}
       background-color: rgba(0, 42, 255, 0.5);
     }
   }
