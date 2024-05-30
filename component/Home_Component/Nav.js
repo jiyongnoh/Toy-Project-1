@@ -1,16 +1,12 @@
 import styled from 'styled-components';
-// import { StyledButton } from "../../styled-component/common";
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useRecoilState } from 'recoil';
 import { log, avarta } from '../../store/state';
-// Router
 import { useRouter } from 'next/router';
-// SweetAlert2
 import Swal from 'sweetalert2';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { logoutAPI } from '@/fetchAPI';
-
 import { useTranslation } from 'next-i18next';
 
 export default function Nav() {
@@ -20,36 +16,41 @@ export default function Nav() {
   const router = useRouter();
   const { t } = useTranslation('nav');
 
-  // localStorage는 초기 useState 생성 시점에서 호출될 수 없으므로 useEffect 시점에서 호출
   useEffect(() => {
-    if (localStorage.getItem('log')) {
-      const loginSession = JSON.parse(localStorage.getItem('log'));
-      console.log(loginSession);
-      if (new Date(loginSession.expires) > new Date()) setLogin(true);
-      else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Login session expires',
-          text: 'Main Page로 이동합니다',
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => {
-          logoutAPI(`${process.env.NEXT_PUBLIC_URL}`);
-          setLogin(false);
-          localStorage.removeItem('log');
-          localStorage.removeItem('id');
-          localStorage.removeItem('avarta');
-          router.push('/');
-        });
+    const loginSession = localStorage.getItem('log');
+    if (loginSession) {
+      const parsedSession = JSON.parse(loginSession);
+      if (new Date(parsedSession.expires) > new Date()) {
+        setLogin(true);
+      } else {
+        handleSessionExpired();
       }
     }
-    if (localStorage.getItem('avarta')) {
-      setAvartaAI(localStorage.getItem('avarta'));
+    const avarta = localStorage.getItem('avarta');
+    if (avarta) {
+      setAvartaAI(avarta);
     }
   }, []);
 
-  // 로그 아웃 핸들러
-  const logoutHandler = async () => {
+  // useCallback 적용. 불필요한 리렌더링 제거
+  const handleSessionExpired = useCallback(() => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Login session expires',
+      text: 'Main Page로 이동합니다',
+      showConfirmButton: false,
+      timer: 1500,
+    }).then(() => {
+      logoutAPI(`${process.env.NEXT_PUBLIC_URL}`);
+      setLogin(false);
+      localStorage.removeItem('log');
+      localStorage.removeItem('id');
+      localStorage.removeItem('avarta');
+      router.push('/');
+    });
+  }, [router, setLogin, setAvartaAI]);
+
+  const logoutHandler = useCallback(() => {
     Swal.fire({
       title: 'Do you want to LogOut?',
       showDenyButton: true,
@@ -57,9 +58,7 @@ export default function Nav() {
       denyButtonText: `No`,
     }).then((result) => {
       if (result.isConfirmed) {
-        // 로그아웃 API 호출 (비동기)
         logoutAPI(`${process.env.NEXT_PUBLIC_URL}`);
-        // 페이지 이동 (비동기)
         Swal.fire({
           icon: 'success',
           title: 'LogOut Success!',
@@ -67,24 +66,35 @@ export default function Nav() {
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
-          setLogin(false); // 전역 log 변수 초기화
-          setAvartaAI('default'); // 전역 avarta 변수 초기화
+          setLogin(false);
+          setAvartaAI('default');
           localStorage.removeItem('log');
           localStorage.removeItem('id');
           localStorage.removeItem('avarta');
-
           router.push('/');
         });
       }
     });
-  };
+  }, [router, setLogin, setAvartaAI]);
+
+  // useMemo 적용
+  const menuItems = useMemo(
+    () => [
+      { href: '/test_ebt', label: t('ebt') },
+      { href: '/test_pt', label: t('pt') },
+      { href: '/test_all', label: t('consult') },
+      { href: '/review', label: t('review') },
+      { href: '/shop', label: t('shop') },
+    ],
+    [t]
+  );
 
   return (
-    <NavContainer height="4rem" justify="end">
+    <NavContainer>
       {login ? (
         <NavUl>
           <NavLi>
-            <Link href="/" style={{ textDecoration: 'none' }}>
+            <Link href="/" passHref>
               <NavBtn>{t('main')}</NavBtn>
             </Link>
           </NavLi>
@@ -94,39 +104,16 @@ export default function Nav() {
             </NavBtn>
             {showMenu && (
               <NavMenuContainer>
-                <NavLi>
-                  <Link href="/test_ebt" style={{ textDecoration: 'none' }}>
-                    <NavBtn>{t('ebt')}</NavBtn>
-                  </Link>
-                </NavLi>
-                <NavLi>
-                  <Link href="/test_pt" style={{ textDecoration: 'none' }}>
-                    <NavBtn>{t('pt')}</NavBtn>
-                  </Link>
-                </NavLi>
-                <NavLi>
-                  <Link href="/test_all" style={{ textDecoration: 'none' }}>
-                    <NavBtn>{t('consult')}</NavBtn>
-                  </Link>
-                </NavLi>
-                <NavLi>
-                  <Link href="/review" style={{ textDecoration: 'none' }}>
-                    <NavBtn>{t('review')}</NavBtn>
-                  </Link>
-                </NavLi>
-                <NavLi>
-                  <Link href="/shop" style={{ textDecoration: 'none' }}>
-                    <NavBtn>{t('shop')}</NavBtn>
-                  </Link>
-                </NavLi>
+                {menuItems.map((item) => (
+                  <NavLi key={item.href}>
+                    <Link href={item.href} passHref>
+                      <NavBtn>{item.label}</NavBtn>
+                    </Link>
+                  </NavLi>
+                ))}
               </NavMenuContainer>
             )}
           </NavListContainer>
-          {/* <NavLi>
-            <Link href="/mypage" style={{ textDecoration: "none" }}>
-              <StyledButton>MyPage</StyledButton>
-            </Link>
-          </NavLi> */}
           <NavLi>
             <NavBtn onClick={logoutHandler}>{t('logout')}</NavBtn>
           </NavLi>
@@ -135,49 +122,20 @@ export default function Nav() {
       ) : (
         <NavUl>
           <NavLi>
-            <Link href="/" style={{ textDecoration: 'none' }}>
+            <Link href="/" passHref>
               <NavBtn>{t('main')}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
-            <Link href="/login" style={{ textDecoration: 'none' }}>
+            <Link href="/login" passHref>
               <NavBtn>{t('login')}</NavBtn>
             </Link>
           </NavLi>
           <NavLi>
-            <Link href="/signup" style={{ textDecoration: 'none' }}>
+            <Link href="/signup" passHref>
               <NavBtn>{t('signup')}</NavBtn>
             </Link>
           </NavLi>
-          {/* <NavLi>
-            <Link
-              href="/ebt_test_njy96_pupu"
-              style={{ textDecoration: "none" }}
-            >
-              <NavBtn>공감친구 모델 - 푸푸</NavBtn>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link href="/ebt_test_njy96_ubi" style={{ textDecoration: "none" }}>
-              <NavBtn>공부친구 모델 - 우비</NavBtn>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link
-              href="/ebt_test_njy96_lala"
-              style={{ textDecoration: "none" }}
-            >
-              <NavBtn>정서멘토 모델 - 라라</NavBtn>
-            </Link>
-          </NavLi>
-          <NavLi>
-            <Link
-              href="/ebt_test_njy96_soyes"
-              style={{ textDecoration: "none" }}
-            >
-              <NavBtn>전문상담사 - 소예</NavBtn>
-            </Link>
-          </NavLi> */}
           <LanguageSwitcher />
         </NavUl>
       )}
@@ -185,23 +143,22 @@ export default function Nav() {
   );
 }
 
-const NavContainer = styled.div`
+const NavContainer = styled.div.attrs({
+  height: '4rem',
+  justify: 'end',
+})`
   width: 100vw;
-
-  background-color: #5818a8;
   background-color: rgba(255, 255, 255, 0.01);
-
   position: fixed;
   top: 0;
-
   display: flex;
   justify-content: end;
   height: 4rem;
+  z-index: 1;
 
   @media (max-width: 768px) {
     height: 5%;
   }
-  z-index: 1;
 `;
 
 const NavUl = styled.ul`
@@ -227,11 +184,9 @@ const NavLi = styled.li`
 const NavListContainer = styled.div`
   width: 100%;
   position: relative;
-
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   z-index: 1;
 `;
 
@@ -244,10 +199,10 @@ const NavMenuContainer = styled.li`
 
 const NavBtn = styled.button`
   background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px); // 불투명 필터
+  backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-  color: ${(props) => (props.color ? props.color : 'white')};
+  color: white;
 
   border: none;
   border-radius: 15px;
@@ -259,9 +214,9 @@ const NavBtn = styled.button`
   text-decoration: none;
 
   display: inline-block;
-  font-size: ${(props) => (props.fontSize ? props.fontSize : '16px')};
+  font-size: 16px;
 
-  white-space: nowrap; // 텍스트 줄바꿈 방지
+  white-space: nowrap;
 
   &:hover {
     padding: 15px 25px;
