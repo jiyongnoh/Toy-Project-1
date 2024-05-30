@@ -15,13 +15,13 @@ const LanguageSwitcher = () => {
 
   return (
     <Dropdown>
-      <DropdownButton onMouseEnter={() => setShow(true)}>
-        {locale === 'ko' ? '한국어' : 'English'}
+      <DropdownButton onClick={() => setShow(!show)}>
+        {locale === 'ko' ? 'Korean' : 'English'}
       </DropdownButton>
-      <DropdownContent show={show} onMouseLeave={() => setShow(false)}>
+      <DropdownContent show={show}>
         {locales.map((loc) => (
           <Option key={loc} onClick={() => changeLanguage(loc)}>
-            {loc === 'ko' ? '한국어' : 'English'}
+            {loc === 'ko' ? 'Korean' : 'English'}
           </Option>
         ))}
       </DropdownContent>
@@ -71,27 +71,35 @@ const DropdownContent = styled.div`
   display: ${(props) => (props.show ? 'block' : 'none')};
   position: absolute;
 
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-
+  margin-top: 4px;
   border-radius: 15px;
-  margin-top: 5px;
   z-index: 1;
-
+  padding: 5px;
   width: 100%;
 `;
 
 const Option = styled.div`
-  color: black;
+  color: white;
   padding: 10px 12px;
   text-align: center;
   border-radius: 15px;
   cursor: pointer;
   width: 100%;
+  margin-top: 3px;
+
   &:hover {
-    background-color: rgba(0, 42, 255, 0.5);
-    color: white;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+  }
+  transition: 0.3s;
+
+  @media (max-width: 768px) {
+    font-size: 10px;
+    margin: 2px;
+    padding: 7px 10px;
   }
 `;
 
