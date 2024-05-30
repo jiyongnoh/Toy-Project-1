@@ -88,9 +88,6 @@ export default function Nav() {
               <NavBtn>{t('main')}</NavBtn>
             </Link>
           </NavLi>
-          <NavLi>
-            <NavBtn onClick={logoutHandler}>{t('logout')}</NavBtn>
-          </NavLi>
           <NavListContainer>
             <NavBtn onClick={() => setShowMenu(!showMenu)}>
               {showMenu ? '▲' : '▼'}
@@ -130,6 +127,9 @@ export default function Nav() {
               <StyledButton>MyPage</StyledButton>
             </Link>
           </NavLi> */}
+          <NavLi>
+            <NavBtn onClick={logoutHandler}>{t('logout')}</NavBtn>
+          </NavLi>
           <LanguageSwitcher />
         </NavUl>
       ) : (
@@ -222,7 +222,6 @@ const NavUl = styled.ul`
 const NavLi = styled.li`
   width: 100%;
   display: flex;
-  justify-content: center;
 `;
 
 const NavListContainer = styled.div`
@@ -232,7 +231,6 @@ const NavListContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 
   z-index: 1;
 `;
