@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-sync-scripts */
-import "@/styles/globals.css";
-import Head from "next/head";
-import Nav from "@/component/Home_Component/Nav";
-import Page from "@/component/Motion_Paging/Page";
-import { AnimatePresence } from "framer-motion";
-import { SessionProvider } from "next-auth/react";
+import '@/styles/globals.css';
+import Head from 'next/head';
+import Nav from '@/component/Home_Component/Nav';
+import Page from '@/component/Motion_Paging/Page'; // 모든 페이지 이동 시 적용되는 페이지 애니메이션
+import { AnimatePresence } from 'framer-motion';
+import { SessionProvider } from 'next-auth/react';
 
-import { RecoilRoot } from "recoil";
+import { RecoilRoot } from 'recoil';
 
-import { appWithTranslation } from "next-i18next";
+import { appWithTranslation } from 'next-i18next';
 
 function App({ Component, pageProps: { session, ...pageProps }, router }) {
   return (
@@ -26,7 +26,9 @@ function App({ Component, pageProps: { session, ...pageProps }, router }) {
       <RecoilRoot>
         <SessionProvider session={session}>
           <AnimatePresence mode="wait">
-            <Page key={router.route}>
+            {/* <Nav />
+            <Component {...pageProps} /> */}
+            <Page key={router.asPath}>
               <Nav />
               <Component {...pageProps} />
             </Page>

@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { pageVariants, pageTransition } from "./animations";
+import { motion } from 'framer-motion';
+import { pageVariants, pageTransition } from './animations';
 
 const Page = ({ children }) => {
   return (
