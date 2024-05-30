@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { css } from "styled-components";
-import styled from "styled-components";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from 'react';
+import { css } from 'styled-components';
+import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 // EBTClassSelector 컴포넌트
 const EBTClassSelector = ({ isProceeding, EBTArr, ebtType }) => {
@@ -13,11 +13,11 @@ const EBTClassSelector = ({ isProceeding, EBTArr, ebtType }) => {
   const ebtChangeHandler = (e) => {
     // 검사 도중 변경 불가능
     if (isProceeding) {
-      alert("검사 진행 중엔 바꿀 수 없어!");
+      alert('검사 진행 중엔 바꿀 수 없어!');
       return;
     }
     // 로컬 스토리지에 EBTClass값 저장 후 리로드
-    localStorage.setItem("EBTClass", e.target.value);
+    localStorage.setItem('EBTClass', e.target.value);
     router.reload();
   };
 
@@ -45,7 +45,7 @@ const EBTClassSelector = ({ isProceeding, EBTArr, ebtType }) => {
 const EBTSelectorContainer = styled.div`
   position: absolute;
   top: 0.5rem;
-  right: -1rem;
+  right: 0;
 
   @media (max-width: 768px) {
     width: fit-content;
@@ -67,7 +67,7 @@ const ButtonsContainer = styled.div`
 
 const NavBtn = styled.button`
   background-color: ${(props) =>
-    props.selected ? "rgba(0, 42, 255, 0.5)" : "rgba(0, 0, 0, 0.5)"};
+    props.selected ? 'rgba(0, 42, 255, 0.5)' : 'rgba(0, 0, 0, 0.5)'};
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: white;
@@ -94,7 +94,11 @@ const NavBtn = styled.button`
       visibility: hidden;
       opacity: 0;
       transform: translateY(-20px);
-      transition: visibility 0s 0.5s, opacity 0.5s ease, transform 0.5s ease;
+      transition:
+        visibility 0s 0.5s,
+        opacity 0.5s ease,
+        transform 0.5s ease;
     `}
 `;
+
 export default EBTClassSelector;

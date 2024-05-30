@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
-import { useEffect, useState, useRef } from "react";
+'use client';
+import styled, { keyframes } from 'styled-components';
+import { FlexContainer } from '../styled-component/common';
+import { useEffect, useState, useRef } from 'react';
 
-import { handleEbtAnalsys } from "@/fetchAPI/testAPI";
-import Image from "next/image";
-import EBTestBubble from "@/component/Test_Component/EBTestBubble";
-import EBTClassSelector from "@/component/Test_Component/EBTClassSelector";
-import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
+import { handleEbtAnalsys } from '@/fetchAPI/testAPI';
+import Image from 'next/image';
+import EBTestBubble from '@/component/Test_Component/EBTestBubble';
+import EBTClassSelector from '@/component/Test_Component/EBTClassSelector';
+import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 
 // import { useRouter } from "next/router";
 
-import { motion } from "framer-motion";
-import { ebtClassMap } from "@/store/testGenerator";
+import { motion } from 'framer-motion';
+import { ebtClassMap } from '@/store/testGenerator';
 
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
 export default function Test() {
@@ -28,7 +28,7 @@ export default function Test() {
   const [scoreArr, setScoreArr] = useState([]);
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
-  const [ebtType, setEbtType] = useState("");
+  const [ebtType, setEbtType] = useState('');
 
   // const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
@@ -49,7 +49,7 @@ export default function Test() {
         .filter((el, index) => index !== 0)
         .map((el, index) => {
           // user인 경우
-          if (el.role === "user") {
+          if (el.role === 'user') {
             return {
               role: el.role,
               content:
@@ -62,15 +62,15 @@ export default function Test() {
       // 감정 분석 API 호출 이후 state 갱신
       const data = await handleEbtAnalsys({
         messageArr: parseMessageArr,
-        type: ebtClassMap[localStorage.getItem("EBTClass") || "School"].type,
+        type: ebtClassMap[localStorage.getItem('EBTClass') || 'School'].type,
         score: scoreArr,
-        pUid: localStorage.getItem("id") || "dummy",
+        pUid: localStorage.getItem('id') || 'dummy',
       });
 
       setIsPending(false);
       setMessageArr([
         ...messageArr,
-        { role: "assistant", content: data.message },
+        { role: 'assistant', content: data.message },
         // { role: "end", content: "다음 검사 진행하기" },
       ]);
       setIsProceeding(false);
@@ -84,24 +84,24 @@ export default function Test() {
   useEffect(() => {
     // 정서행동 검사 제너레이터 생성
     ebtSessionRef.current =
-      ebtClassMap[localStorage.getItem("EBTClass") || "School"].generator();
-    setEbtType(localStorage.getItem("EBTClass") || "School");
+      ebtClassMap[localStorage.getItem('EBTClass') || 'School'].generator();
+    setEbtType(localStorage.getItem('EBTClass') || 'School');
     setTimeout(() => {
       const { value, done } = ebtSessionRef.current.next(select);
       if (!done) {
         const start_message = {
-          role: "assistant",
+          role: 'assistant',
           content: `정서행동 검사 - [${
-            ebtClassMap[localStorage.getItem("EBTClass") || "School"].name
+            ebtClassMap[localStorage.getItem('EBTClass') || 'School'].name
           }] 시작합니다!`,
         };
         const question_message = {
-          role: "assistant",
+          role: 'assistant',
           content: value.question.content,
           imgURL: value.question.imgURL,
         };
         const selection_message = {
-          role: "user",
+          role: 'user',
           content: value.selection.content,
           score: value.selection.score,
           imgURL: value.selection.imgURL,
@@ -111,7 +111,7 @@ export default function Test() {
     }, 1000);
     return () => {
       // 페이지 언마운트 시 로컬 스토리지의 EBTClass 값 삭제
-      localStorage.removeItem("EBTClass");
+      localStorage.removeItem('EBTClass');
     };
   }, []);
 
@@ -122,12 +122,12 @@ export default function Test() {
       // 검사 진행 중
       if (!done) {
         const question_message = {
-          role: "assistant",
+          role: 'assistant',
           content: value.question.content,
           imgURL: value.question.imgURL,
         };
         const selection_message = {
-          role: "user",
+          role: 'user',
           content: value.selection.content,
           score: value.selection.score,
           imgURL: value.selection.imgURL,
@@ -156,7 +156,7 @@ export default function Test() {
         setMessageArr([
           ...updateMsgArr,
           {
-            role: "assistant",
+            role: 'assistant',
             content: result,
           },
         ]);
@@ -176,7 +176,7 @@ export default function Test() {
   // 성격검사 AI 분석 트리거
   useEffect(() => {
     if (resultTrigger) {
-      console.log("AI EBT 분석 API 호출");
+      console.log('AI EBT 분석 API 호출');
       requetAnalysis();
     }
   }, [resultTrigger]);
@@ -200,7 +200,7 @@ export default function Test() {
       >
         <Image
           src="/src/soyesKids_Logo.png"
-          alt={"soyes_logo"}
+          alt={'soyes_logo'}
           width={529}
           height={93}
         />
@@ -247,7 +247,7 @@ export default function Test() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["ebt", "nav"])),
+      ...(await serverSideTranslations(locale, ['ebt', 'nav'])),
     },
   };
 }
@@ -265,7 +265,7 @@ const FadeInSpan = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url("/src/soyesKids_Background_image.png");
+  background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
