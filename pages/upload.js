@@ -94,6 +94,8 @@ export async function getStaticProps({ locale }) {
   };
 }
 
+// 배포용 주석
+
 const BackgroundImage = styled.div`
   background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
