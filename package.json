@@ -32,6 +32,8 @@
     "vercel": "^33.5.2"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^7.11.0",
+    "@typescript-eslint/parser": "^7.11.0",
     "babel-plugin-styled-components": "^2.1.4",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
