@@ -4,13 +4,12 @@ import Head from 'next/head';
 import Nav from '@/component/Home_Component/Nav';
 import Page from '@/component/Motion_Paging/Page'; // 모든 페이지 이동 시 적용되는 페이지 애니메이션
 import { AnimatePresence } from 'framer-motion';
-import { SessionProvider } from 'next-auth/react';
 
 import { RecoilRoot } from 'recoil';
 
 import { appWithTranslation } from 'next-i18next';
 
-function App({ Component, pageProps: { session, ...pageProps }, router }) {
+function App({ Component, pageProps, router }) {
   return (
     <>
       <Head>
@@ -24,16 +23,14 @@ function App({ Component, pageProps: { session, ...pageProps }, router }) {
         />
       </Head>
       <RecoilRoot>
-        <SessionProvider session={session}>
-          <AnimatePresence mode="wait">
-            {/* <Nav />
+        <AnimatePresence mode="wait">
+          {/* <Nav />
             <Component {...pageProps} /> */}
-            <Page key={router.asPath}>
-              <Nav />
-              <Component {...pageProps} />
-            </Page>
-          </AnimatePresence>
-        </SessionProvider>
+          <Page key={router.asPath}>
+            <Nav />
+            <Component {...pageProps} />
+          </Page>
+        </AnimatePresence>
       </RecoilRoot>
       <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/pixi.js@6.5.2/dist/browser/pixi.min.js"></script>
