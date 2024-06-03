@@ -8,11 +8,11 @@
     "plugin:prettier/recommended" // 추가
   ],
   // TypeScript를 파싱하기 위한 파서 설정
-  "parser": "@typescript-eslint/parser",
+  // "parser": "@typescript-eslint/parser",
   // 사용되는 플러그인 목록
   "plugins": [
     "react", // React 관련 플러그인
-    "@typescript-eslint", // TypeScript 관련 플러그인
+    // "@typescript-eslint", // TypeScript 관련 플러그인
     "prettier" // 추가
   ],
   // 코드가 실행되는 환경 설정
