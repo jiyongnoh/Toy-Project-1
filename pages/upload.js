@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Image from 'next/image';
 // comment: 배포용 주석
-// import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
