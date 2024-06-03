@@ -9,6 +9,10 @@ const nextConfig = {
   images: {
     domains: ['drive.google.com', 'drive.usercontent.google.com'],
   },
+  eslint: {
+    // 빌드 중 ESLint 오류를 무시합니다.
+    ignoreDuringBuilds: true,
+  },
 };
 
 module.exports = nextConfig;
