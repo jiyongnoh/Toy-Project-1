@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Swal from "sweetalert2";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Swal from 'sweetalert2';
 
 function Review({ review, onDelete, onUpdate }) {
-  const pUid = localStorage.getItem("id");
+  const pUid = localStorage.getItem('id');
   const [uContent, setUContent] = useState(review.content);
   const [updateMode, setUpdateMode] = useState(false);
   const dateFlag = review.created_at !== review.updated_at;
@@ -27,8 +27,8 @@ function Review({ review, onDelete, onUpdate }) {
             <h4>{review.uid}</h4>
             <p>
               {dateFlag
-                ? review.created_at.split("T")[0]
-                : review.updated_at.split("T")[0]}
+                ? review.created_at.split('T')[0]
+                : review.updated_at.split('T')[0]}
             </p>
             {dateFlag && <p>(수정)</p>}
           </AuthorInfo>
@@ -44,8 +44,8 @@ function Review({ review, onDelete, onUpdate }) {
               onClick={() => {
                 if (!uContent) {
                   Swal.fire({
-                    icon: "error",
-                    title: "내용을 입력하세요!",
+                    icon: 'error',
+                    title: '내용을 입력하세요!',
                     showConfirmButton: false,
                     timer: 1500,
                   });
@@ -53,9 +53,9 @@ function Review({ review, onDelete, onUpdate }) {
                 }
 
                 Swal.fire({
-                  title: "Update Content Submit?",
+                  title: 'Update Content Submit?',
                   showDenyButton: true,
-                  confirmButtonText: "Yes",
+                  confirmButtonText: 'Yes',
                   denyButtonText: `No`,
                 }).then((result) => {
                   if (result.isConfirmed) {
@@ -65,9 +65,9 @@ function Review({ review, onDelete, onUpdate }) {
                     }).then((res) => {
                       if (res) {
                         Swal.fire({
-                          icon: "success",
-                          title: "Update Success!",
-                          text: "Review Reloading...",
+                          icon: 'success',
+                          title: 'Update Success!',
+                          text: 'Review Reloading...',
                           showConfirmButton: false,
                           timer: 1500,
                         }).then(() => {
@@ -75,9 +75,9 @@ function Review({ review, onDelete, onUpdate }) {
                         });
                       } else {
                         Swal.fire({
-                          icon: "error",
-                          title: "Update Fail!",
-                          text: "Review Reloading...",
+                          icon: 'error',
+                          title: 'Update Fail!',
+                          text: 'Review Reloading...',
                           showConfirmButton: false,
                           timer: 1500,
                         }).then(() => {
@@ -105,13 +105,13 @@ function Review({ review, onDelete, onUpdate }) {
             <Button
               onClick={() => {
                 Swal.fire({
-                  title: "Modify Mode Convert?",
+                  title: 'Modify Mode Convert?',
                   showDenyButton: true,
-                  confirmButtonText: "Yes",
+                  confirmButtonText: 'Yes',
                   denyButtonText: `No`,
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    console.log("Update Mode");
+                    console.log('Update Mode');
                     setUpdateMode(true);
                   }
                 });
@@ -122,18 +122,18 @@ function Review({ review, onDelete, onUpdate }) {
             <Button
               onClick={() => {
                 Swal.fire({
-                  title: "Do you want to Delete?",
+                  title: 'Do you want to Delete?',
                   showDenyButton: true,
-                  confirmButtonText: "Yes",
+                  confirmButtonText: 'Yes',
                   denyButtonText: `No`,
                 }).then((result) => {
                   if (result.isConfirmed) {
                     onDelete(review.entry_id).then((res) => {
                       if (res) {
                         Swal.fire({
-                          icon: "success",
-                          title: "Delete Success!",
-                          text: "Review Reloading...",
+                          icon: 'success',
+                          title: 'Delete Success!',
+                          text: 'Review Reloading...',
                           showConfirmButton: false,
                           timer: 1500,
                         }).then(() => {

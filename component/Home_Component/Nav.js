@@ -99,11 +99,11 @@ export default function Nav() {
               <NavBtn>{t('main')}</NavBtn>
             </Link>
           </NavLi>
-          <NavLi>
+          {/* <NavLi>
             <Link href="/upload" passHref>
               <NavBtn>Upload</NavBtn>
             </Link>
-          </NavLi>
+          </NavLi> */}
           <NavListContainer>
             <NavBtn onClick={() => setShowMenu(!showMenu)}>
               {showMenu ? '▲' : '▼'}

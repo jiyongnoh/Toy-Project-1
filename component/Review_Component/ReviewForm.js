@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Swal from "sweetalert2";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Swal from 'sweetalert2';
 
 function ReviewForm({ onSubmit }) {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
 
   const handleChange = (event) => {
     setContent(event.target.value);
@@ -24,8 +24,8 @@ function ReviewForm({ onSubmit }) {
     // Max Text Limit
     if (content.length > 300) {
       Swal.fire({
-        icon: "error",
-        title: "글자 수 제한 300자",
+        icon: 'error',
+        title: '글자 수 제한 300자',
         showConfirmButton: false,
         timer: 1500,
       });
@@ -33,23 +33,23 @@ function ReviewForm({ onSubmit }) {
     }
     if (content) {
       Swal.fire({
-        title: "Do you want to Submit?",
+        title: 'Do you want to Submit?',
         showDenyButton: true,
-        confirmButtonText: "Yes",
+        confirmButtonText: 'Yes',
         denyButtonText: `No`,
       })
         .then((result) => {
           if (result.isConfirmed) {
             onSubmit({
-              pUid: localStorage.getItem("id"),
-              profile_img_url: "https://placehold.co/600x400",
+              pUid: localStorage.getItem('id'),
+              profile_img_url: 'https://placehold.co/600x400',
               content,
             }).then((res) => {
               if (res) {
                 Swal.fire({
-                  icon: "success",
-                  title: "Submit Success!",
-                  text: "Review Reloading...",
+                  icon: 'success',
+                  title: 'Submit Success!',
+                  text: 'Review Reloading...',
                   showConfirmButton: false,
                   timer: 1500,
                 }).then(() => {
@@ -57,9 +57,9 @@ function ReviewForm({ onSubmit }) {
                 });
               } else {
                 Swal.fire({
-                  icon: "error",
-                  title: "Submit Fail",
-                  text: "ㅠㅠ",
+                  icon: 'error',
+                  title: 'Submit Fail',
+                  text: 'ㅠㅠ',
                   showConfirmButton: false,
                   timer: 1500,
                 });

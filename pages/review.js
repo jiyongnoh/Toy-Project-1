@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
+import styled, { keyframes } from 'styled-components';
+import { FlexContainer } from '../styled-component/common';
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from 'react';
 
 // 아바타 관련 전역 변수
-import { useRecoilState } from "recoil";
-import { log } from "../store/state";
+import { useRecoilState } from 'recoil';
+import { log } from '../store/state';
 
-import Review from "@/component/Review_Component/Review";
-import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
-import ReviewForm from "@/component/Review_Component/ReviewForm";
-import Swal from "sweetalert2";
+import Review from '@/component/Review_Component/Review';
+import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+import ReviewForm from '@/component/Review_Component/ReviewForm';
+import Swal from 'sweetalert2';
 
 import {
   handleReviewGet,
   handleReviewCreate,
   handleReviewDelete,
   handleReviewUpdate,
-} from "@/fetchAPI/reviewAPI";
-import { useRouter } from "next/router";
+} from '@/fetchAPI/reviewAPI';
+import { useRouter } from 'next/router';
 
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
 export default function Test() {
@@ -70,7 +70,7 @@ export default function Test() {
 
   // Read useEffect
   useEffect(() => {
-    console.log("page: " + page);
+    console.log('page: ' + page);
     // Read
     handleReviewGet(`${process.env.NEXT_PUBLIC_URL}/review?page=${page}`)
       .then((res) => res.data)
@@ -90,9 +90,9 @@ export default function Test() {
       .catch((err) => {
         console.log(err);
         Swal.fire({
-          icon: "error",
-          title: "Loading Fail",
-          text: "ㅠㅠ",
+          icon: 'error',
+          title: 'Loading Fail',
+          text: 'ㅠㅠ',
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
@@ -103,17 +103,17 @@ export default function Test() {
 
   // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
   useEffect(() => {
-    const loginSession = JSON.parse(localStorage.getItem("log"));
+    const loginSession = JSON.parse(localStorage.getItem('log'));
     if (!loginSession) {
-      router.replace("/login");
+      router.replace('/login');
     }
   }, [login]);
 
   // 무한스크롤 useCallback 함수 관련 이벤트 추가
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
     // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
   return (
@@ -149,13 +149,13 @@ export default function Test() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["review", "nav"])),
+      ...(await serverSideTranslations(locale, ['review', 'nav'])),
     },
   };
 }
 
 const MainContainer = styled.div`
-  background-image: url("/src/img.jpg");
+  background-image: url('/src/img.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
