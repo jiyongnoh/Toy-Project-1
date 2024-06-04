@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import styled, { keyframes } from "styled-components";
-import { useEffect, useState } from "react";
-import Live2DViewerMain from "@/component/Live2D_Component/Live2DViewerMain";
-import Footer from "@/component/Home_Component/Footer";
-import ScrollDownIndicator from "@/component/Home_Component/ScrollDownIndicator";
-import ScrollUpIndicator from "@/component/Home_Component/ScrollUpIndicator";
+import styled, { keyframes } from 'styled-components';
+import { useEffect, useState } from 'react';
+import Live2DViewerMain from '@/component/Live2D_Component/Live2DViewerMain';
+import Footer from '@/component/Home_Component/Footer';
+import ScrollDownIndicator from '@/component/Home_Component/ScrollDownIndicator';
+import ScrollUpIndicator from '@/component/Home_Component/ScrollUpIndicator';
 // import { motion } from "framer-motion";
 
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Home 페이지
 export default function Home() {
@@ -36,7 +36,7 @@ export default function Home() {
           {!mobile && loading && <ScrollDownIndicator />}
         </MainContainer>
       </Section>
-      <Section style={{ backgroundColor: "lightgreen" }}>
+      <Section style={{ backgroundColor: 'lightgreen' }}>
         {/* 두 번째 섹션 내용 */}
         <SubContainer>
           {!mobile && <ScrollUpIndicator />}
@@ -45,7 +45,7 @@ export default function Home() {
           {!mobile && <ScrollDownIndicator />}
         </SubContainer>
       </Section>
-      <Section style={{ backgroundColor: "lightcoral" }}>
+      <Section style={{ backgroundColor: 'lightcoral' }}>
         {/* 세 번째 섹션 내용 */}
         <SubContainer>
           {!mobile && <ScrollUpIndicator />}
@@ -65,7 +65,7 @@ export default function Home() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "nav"])), // 파일 다중 적용 가능
+      ...(await serverSideTranslations(locale, ['common', 'nav'])), // 파일 다중 적용 가능
     },
   };
 }
@@ -93,7 +93,7 @@ const FooterSection = styled(Section)`
 `;
 
 const MainContainer = styled.div`
-  background-image: url("/src/soyesKids_Background_image.png");
+  background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -110,7 +110,7 @@ const MainContainer = styled.div`
 
   z-index: -1;
   @media (max-width: 768px) {
-    background-image: url("/src/soyes_mobile.jpg");
+    background-image: url('/src/soyes_mobile.jpg');
     justify-content: center;
   }
 `;

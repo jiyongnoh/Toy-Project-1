@@ -32,6 +32,7 @@
   "rules": {
     "react/prop-types": "off", // prop-types 사용 안 함
     "@typescript-eslint/explicit-module-boundary-types": "off", // 명시적 모듈 경계 타입 사용 안 함
-    "prettier/prettier": "error" // 추가
+    "prettier/prettier": "off", // Prettier 관련 에러 비활성화
+    "@typescript-eslint/no-unused-vars": "warn" // TypeScript 사용되지 않는 변수 경고
   }
 }

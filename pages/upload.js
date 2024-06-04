@@ -43,6 +43,7 @@ const UploadPage = () => {
             name: file.name,
             mimeType: file.type,
             data: base64Data,
+            pUid: localStorage.getItem('id'),
           },
           {
             headers: {

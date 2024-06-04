@@ -1,10 +1,10 @@
-import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import styled, { keyframes } from 'styled-components';
+import { FlexContainer } from '../styled-component/common';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
-import { useRecoilState } from "recoil";
-import { log } from "../store/state";
+import { useRecoilState } from 'recoil';
+import { log } from '../store/state';
 
 // MyPage 페이지
 export default function MyPage() {
@@ -42,7 +42,7 @@ const FadeInSpan = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url("/src/img.jpg");
+  background-image: url('/src/img.jpg');
 `;
 
 const MyPageSpan = styled.span`
