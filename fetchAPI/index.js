@@ -1,14 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const loginAPI = async (url, post) => {
   // console.log(url, post);
   try {
     const res = await fetch(`${url}/login/ai`, {
-      method: "POST",
-      credentials: "include",
+      method: 'POST',
+      credentials: 'include',
       // content-type을 명시하지 않으면 json 파일인지 인식하지 못함
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // Authorization: document.cookies.accessToken,
       },
       body: JSON.stringify(post),
@@ -28,11 +28,11 @@ export const logoutAPI = async (url) => {
   // console.log(url, post);
   try {
     const res = await fetch(`${url}/login/ai/logout`, {
-      method: "GET",
-      credentials: "include",
+      method: 'GET',
+      credentials: 'include',
       // content-type을 명시하지 않으면 json 파일인지 인식하지 못함
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // Authorization: document.cookies.accessToken,
       },
     });
@@ -49,10 +49,10 @@ export const signupAPI = async (url, post) => {
   // console.log(url, post);
   try {
     const res = await fetch(`${url}/signup/ai`, {
-      method: "POST",
+      method: 'POST',
       // content-type을 명시하지 않으면 json 파일인지 인식하지 못함
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // Authorization: document.cookies.accessToken,
       },
       body: JSON.stringify(post),
@@ -73,11 +73,11 @@ export const loginAPI_OAuth_URL = async (url, post) => {
   // post는 플랫폼 정보
   try {
     const res = await fetch(`${url}/login/oauth_url`, {
-      method: "POST",
-      credentials: "include",
+      method: 'POST',
+      credentials: 'include',
       // content-type을 명시하지 않으면 json 파일인지 인식하지 못함
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // Authorization: document.cookies.accessToken,
       },
       body: JSON.stringify(post),
@@ -95,11 +95,11 @@ export const loginAPI_OAuth_AccessToken = async (url, post) => {
   // console.log(url, post);
   try {
     const res = await fetch(`${url}`, {
-      method: "POST",
-      credentials: "include",
+      method: 'POST',
+      credentials: 'include',
       // content-type을 명시하지 않으면 json 파일인지 인식하지 못함
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // Authorization: document.cookies.accessToken,
       },
       body: JSON.stringify(post),
@@ -119,10 +119,10 @@ export const emotionAPI = async (messageArr) => {
     const result = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/openAI/emotion`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          accept: "application.json",
-          "Content-Type": "application/json",
+          accept: 'application.json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ messageArr }),
       }
@@ -132,7 +132,7 @@ export const emotionAPI = async (messageArr) => {
     return result.message + parseInt(Math.random() * 10);
   } catch (err) {
     console.error(err);
-    return "부정" + parseInt(Math.random() * 10);
+    return '부정' + parseInt(Math.random() * 10);
   }
 };
 // Clova Voice API 호출 함수
@@ -140,18 +140,18 @@ export const handleClovaVoice = async (text) => {
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
     {
-      speaker: "nminyoung",
-      volume: "0",
-      speed: "0",
-      pitch: "0",
+      speaker: 'nminyoung',
+      volume: '0',
+      speed: '0',
+      pitch: '0',
       text,
-      format: "mp3",
+      format: 'mp3',
     },
-    { responseType: "arraybuffer" }
+    { responseType: 'arraybuffer' }
   );
 
   // console.log(response.data);
-  const audioBlob = new Blob([response.data], { type: "audio/mp3" });
+  const audioBlob = new Blob([response.data], { type: 'audio/mp3' });
   const audioUrl = URL.createObjectURL(audioBlob);
   // const audio = new Audio(audioUrl);
   // console.log(audioUrl);
@@ -165,7 +165,7 @@ export const handleGptCompletion = async (input, path) => {
       { EBTData: input },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -173,11 +173,11 @@ export const handleGptCompletion = async (input, path) => {
     // console.log(response);
     return response.data;
   } catch (err) {
-    console.log("Gpt API 호출 실패");
+    console.log('Gpt API 호출 실패');
     console.error(err);
     return {
       status: err.response.status,
-      message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
+      message: '미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?',
       emotion: 0,
     };
   }
@@ -187,24 +187,24 @@ export const handleClearCookies = async (path) => {
   try {
     const response = await axios.get(`${process.env.NEXT_PUBLIC_URL}${path}`, {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       withCredentials: true,
     });
     // console.log(response);
     return response.data;
   } catch (err) {
-    console.log("Gpt API 호출 실패");
+    console.log('Gpt API 호출 실패');
     console.error(err);
     return {
-      message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
+      message: '미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?',
       emotion: 0,
     };
   }
 };
 // ConsultLogSave API 호출 함수
 export const handleConsultLogSave = async (input, path) => {
-  console.log("ConsultLogSave 호출");
+  console.log('ConsultLogSave 호출');
   //console.log(input, path);
   try {
     const response = await axios.post(
@@ -212,7 +212,7 @@ export const handleConsultLogSave = async (input, path) => {
       { EBTData: input },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -220,11 +220,39 @@ export const handleConsultLogSave = async (input, path) => {
     // console.log(response);
     return response.data;
   } catch (err) {
-    console.log("Gpt API 호출 실패");
+    console.log('Gpt API 호출 실패');
     console.error(err);
     return {
       status: err.response.status,
-      message: "미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?",
+      message: '미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?',
+      emotion: 0,
+    };
+  }
+};
+
+// 정서행동 검사 (11종) 결과 반환 API 호출 함수
+export const handleEbtResult = async (input, path) => {
+  console.log('Ebt Result 호출');
+  //console.log(input, path);
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}${path}`,
+      { EBTData: input },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+    // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log('Gpt API 호출 실패');
+    console.error(err);
+    return {
+      status: err.response.status,
+      message: '미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?',
       emotion: 0,
     };
   }

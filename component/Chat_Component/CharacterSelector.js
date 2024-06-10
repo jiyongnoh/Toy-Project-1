@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { useRecoilState } from "recoil";
-import { avarta } from "../../store/state";
-import { css } from "styled-components";
+import React, { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { avarta } from '../../store/state';
+import { css } from 'styled-components';
 
 // CharacterSelector 컴포넌트
 const CharacterSelector = ({ isPending }) => {
@@ -9,20 +9,20 @@ const CharacterSelector = ({ isPending }) => {
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
 
   const avartaArr = [
-    { name: "푸푸", path: "pupu" },
-    { name: "우비", path: "ubi" },
-    { name: "엘라", path: "lala" },
-    { name: "소예", path: "soyes" },
+    { name: '푸푸', path: 'pupu' },
+    { name: '우비', path: 'ubi' },
+    { name: '엘라', path: 'lala' },
+    { name: '소예', path: 'soyes' },
   ];
   const toggleMenu = () => setIsOpen(!isOpen);
   // 아바타 변경 핸들러
   const avartaChangeHandler = (e) => {
     if (isPending) {
-      alert("지금은 바꿀 수 없어!");
+      alert('지금은 바꿀 수 없어!');
       return;
     }
     setAvartaAI(e.target.value);
-    localStorage.setItem("avarta", e.target.value);
+    localStorage.setItem('avarta', e.target.value);
     setIsOpen(!isOpen);
   };
 
@@ -50,7 +50,7 @@ const CharacterSelector = ({ isPending }) => {
 
 export default CharacterSelector;
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const CharacterSelectorContainer = styled.div`
   position: absolute;
@@ -96,6 +96,9 @@ const NavBtn = styled.button`
       visibility: hidden;
       opacity: 0;
       transform: translateY(-20px);
-      transition: visibility 0s 0.5s, opacity 0.5s ease, transform 0.5s ease;
+      transition:
+        visibility 0s 0.5s,
+        opacity 0.5s ease,
+        transform 0.5s ease;
     `}
 `;

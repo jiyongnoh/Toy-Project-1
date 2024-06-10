@@ -3,30 +3,24 @@ import styled from 'styled-components';
 import AudioPlayerButton from './AudioPlayerButton';
 import VideoModal from './VideoModal';
 
-const ChatBubble = ({ message, isMine, role, audioURL, media }) => {
+const InitChatBubble = ({ message, isMine, role, btn, setTestType }) => {
   // console.log(media);
   return (
     <>
-      {audioURL ? (
+      {btn ? (
         <AudioContanier message={message}>
           <StyledBubble isMine={isMine} role={role}>
             <MessageP>
-              {message}
-              {audioURL ? <AudioPlayerButton src={audioURL} /> : null}
+              <button
+                value={message}
+                onClick={(e) => {
+                  setTestType(e.target.value);
+                }}
+              >
+                {message}
+              </button>
             </MessageP>
           </StyledBubble>
-          {media ? (
-            <div>
-              <MediaButton onClick={media.openModal}>
-                {media.videoInfo.type === 'candle' ? '촛불 명상' : '호흡 명상'}
-              </MediaButton>
-              <VideoModal
-                isOpen={media.modalIsOpen}
-                onRequestClose={media.closeModal}
-                videoId={media.videoInfo.url}
-              />
-            </div>
-          ) : null}
         </AudioContanier>
       ) : (
         <StyledBubble isMine={isMine} role={role}>
@@ -85,4 +79,4 @@ const MediaButton = styled.button`
   cursor: pointer;
 `;
 
-export default ChatBubble;
+export default InitChatBubble;

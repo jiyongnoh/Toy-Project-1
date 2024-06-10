@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import EBTSelectRow from "./EBTSelectRow";
-import { motion } from "framer-motion";
+import React from 'react';
+import styled from 'styled-components';
+import EBTSelectRow from './EBTSelectRow';
+import { motion } from 'framer-motion';
 
 const EBTestBubble = ({
   message,
@@ -21,7 +21,7 @@ const EBTestBubble = ({
     <StyledBubble role={role}>
       {imgURL ? (
         <ImgContanier message={message[0]}>
-          {role === "user" ? (
+          {role === 'user' ? (
             <BubbleContainer role={role}>
               {message.map((el, index) => (
                 <motion.div
@@ -43,7 +43,7 @@ const EBTestBubble = ({
                 </motion.div>
               ))}
             </BubbleContainer>
-          ) : role === "assistant" ? (
+          ) : role === 'assistant' ? (
             <EBTSelectRow message={message} imgURL={imgURL} role={role} />
           ) : (
             <button>{message}</button>
@@ -63,10 +63,10 @@ const StyledBubble = styled.div`
   margin: 0.2rem 0.1rem;
 
   word-wrap: break-word;
-  color: ${(props) => (props.role !== "user" ? "white" : "black")};
+  color: ${(props) => (props.role !== 'user' ? 'white' : 'black')};
   background-color: ${(props) =>
-    props.role !== "user" ? "#0b93f6" : "#e5e5ea"};
-  align-self: ${(props) => (props.role === "user" ? "flex-end" : "flex-start")};
+    props.role !== 'user' ? '#0b93f6' : '#e5e5ea'};
+  align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
   white-space: pre-wrap;
 
   display: flex;
