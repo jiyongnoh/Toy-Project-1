@@ -168,6 +168,67 @@ export default function Test() {
     chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
   };
 
+  // 엘라 시작 멘트 관련 메서드
+  const initElla = async () => {
+    // 유저 EBT 결과 조회 (11종)
+    const data = await handleEbtResult(
+      {
+        pUid: `${localStorage.getItem('id')}`,
+      },
+      '/openAI/ebtresult'
+    );
+
+    const { message } = data;
+
+    // 정서행동 검사를 1개라도 실시하지 않은 경우
+    if (!message[0].testStatus) {
+      setInitArr([
+        {
+          role: 'assistant',
+          content:
+            '안녕? 아직 정서행동검사를 모두 실시하지 않았구나? 상담 전에 검사하고 와줄래?',
+        },
+      ]);
+    }
+    // 정서행동 검사를 모두 실시한 경우
+    else {
+      const ebtClassMap = {
+        School: 'School',
+        Friend: 'Friend',
+        Family: 'Family',
+        Mood: 'Mood',
+        Unrest: 'Mood',
+        Sad: 'Mood',
+        Health: 'Health',
+        Attention: 'School',
+        Movement: 'Friend',
+        Angry: 'Mood',
+        Self: 'Self',
+      };
+
+      const ment = {
+        role: 'assistant',
+        content: '안녕? 너의 심리검사 결과를 봤어. 아래의 상담 주제를 추천해',
+      };
+
+      const selectBtnArr = message
+        .map((el) => {
+          return {
+            role: 'assistant',
+            content: `${ebtClassMap[el.ebt_class]}`,
+            btn: true,
+          };
+        })
+        .filter(
+          (item, index, self) =>
+            index === self.findIndex((t) => t.content === item.content)
+        )
+        .filter((item, index) => index <= 2);
+
+      setInitArr([ment, ...selectBtnArr]);
+    }
+  };
+
   // messageArr 언마운트 처리
   useEffect(() => {
     return () => {
@@ -207,48 +268,13 @@ export default function Test() {
     }
   }, [login]);
 
-  // messageArr 언마운트 처리. avartaAI
+  // avarta 변 관련 처리
   useEffect(() => {
-    if (avartaAI === 'lala' || avartaAI === 'default') {
-      handleEbtResult(
-        {
-          pUid: `${localStorage.getItem('id')}`,
-        },
-        '/openAI/ebtresult'
-      ).then((data) => {
-        const { message } = data;
+    // 엘라일 경우
+    if (avartaAI === 'lala' || avartaAI === 'default') initElla();
+    // 그 외
+    else setIsInitPending(false);
 
-        if (!message[0].testStatus) {
-          setInitArr([
-            {
-              role: 'assistant',
-              content:
-                '안녕? 아직 정서행동검사를 모두 실시하지 않았구나? 상담 전에 검사하고 와줄래?',
-            },
-          ]);
-        } else {
-          const ment = {
-            role: 'assistant',
-            content:
-              '안녕? 너의 심리검사 결과를 봤어. 아래의 상담 주제를 추천해',
-          };
-
-          const selectBtnArr = message
-            .filter((el, index) => index < 3)
-            .map((el) => {
-              return {
-                role: 'assistant',
-                content: `${el.ebt_class}`,
-                btn: true,
-              };
-            });
-
-          setTimeout(() => {
-            setInitArr([ment, ...selectBtnArr]);
-          }, 1000);
-        }
-      });
-    }
     setMessageArr([]);
     setInitArr([]);
   }, [avartaAI]);
@@ -309,6 +335,7 @@ export default function Test() {
                 role={el.role}
                 btn={el.btn}
                 setTestType={setTestType}
+                testType={testType}
               />
             ))}
             {messageArr.map((el, index) => (
@@ -354,7 +381,8 @@ export default function Test() {
                   setFlagEnter(true);
               }}
               placeholder={placehold}
-              isPending={isPending || isInitPending}
+              isPending={isPending}
+              isInitPending={isInitPending}
             />
             <ChatBoxFooterButton
               onClick={() => {
@@ -389,6 +417,7 @@ export default function Test() {
   );
 }
 
+// 다국어 지원 관련 getStaticProps 처리
 export async function getStaticProps({ locale }) {
   return {
     props: {
@@ -477,7 +506,26 @@ const ChatBoxFooterInput = styled.input`
   border-radius: 8px;
   font-size: 16px;
   outline: none;
-  pointer-events: ${(props) => (props.isPending ? 'none' : 'auto')};
+  pointer-events: ${(props) =>
+    props.isPending || props.isInitPending ? 'none' : 'auto'};
+  background-color: ${(props) => (props.isInitPending ? '#f0f0f0' : '#ffffff')};
+  transition: background-color 0.3s ease;
+
+  &::placeholder {
+    color: #a9a9a9;
+  }
+
+  ${(props) => props.isInitPending === false && `animation: blink 2s;`}
+
+  @keyframes blink {
+    0%,
+    100% {
+      background-color: #ffffff;
+    }
+    50% {
+      background-color: #0084ff;
+    }
+  }
 `;
 
 const ChatBoxFooterButton = styled.button`
