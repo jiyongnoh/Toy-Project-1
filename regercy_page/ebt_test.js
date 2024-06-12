@@ -1,7 +1,7 @@
-import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../../styled-component/common";
-import Live2DViewerTest from "@/component/Live2D_Component/Live2DViewerTest";
-import { useEffect, useState } from "react";
+import styled, { keyframes } from 'styled-components';
+import { FlexContainer } from '../styled-component/common';
+import Live2DViewerTest from '@/component/Live2D_Component/Live2DViewerTest';
+import { useEffect, useState } from 'react';
 
 const messageArr = [];
 
@@ -10,9 +10,9 @@ async function emotionAPI(messageArr) {
   // 로딩 중 애니메이션
   window.dotsGoingUp = true;
   var dots = window.setInterval(() => {
-    var wait = document.getElementById("loading");
+    var wait = document.getElementById('loading');
     if (wait === null) return;
-    else if (window.dotsGoingUp) wait.innerHTML += ".";
+    else if (window.dotsGoingUp) wait.innerHTML += '.';
     else {
       wait.innerHTML = wait.innerHTML?.substring(1, wait.innerHTML.length);
       if (wait.innerHTML.length < 2) window.dotsGoingUp = true;
@@ -25,10 +25,10 @@ async function emotionAPI(messageArr) {
     const result = await fetch(
       `${process.env.NEXT_PUBLIC_URL}/openAI/emotion`,
       {
-        method: "POST",
+        method: 'POST',
         headers: {
-          accept: "application.json",
-          "Content-Type": "application/json",
+          accept: 'application.json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({ messageArr }),
       }
@@ -38,7 +38,7 @@ async function emotionAPI(messageArr) {
     return result.message + parseInt(Math.random() * 10);
   } catch (err) {
     console.error(err);
-    return "부정" + parseInt(Math.random() * 10);
+    return '부정' + parseInt(Math.random() * 10);
   }
 }
 
@@ -50,14 +50,13 @@ const handleSpeak = (text) => {
 
 // Test 페이지
 export default function Test() {
-  const [chat, setChat] = useState("");
-  const [flagEnter, setFlagEnter] = useState(false);
-  const [emotion, setEmotion] = useState("중립");
-  const [audioUrl, setAudioUrl] = useState("");
+  const [chat, setChat] = useState('안녕');
+  const [flagEnter, setFlagEnter] = useState(true);
+  const [emotion, setEmotion] = useState('중립');
 
   const sendMessage = async (chatBoxBody) => {
     const message = chat;
-    messageArr.push({ role: "user", content: message }); // 내가 쓴 메세지 저장
+    messageArr.push({ role: 'user', content: message }); // 내가 쓴 메세지 저장
 
     // 채팅 내역 추가
     chatBoxBody.innerHTML += `<div class="message">${message}</div>`; // 내 채팅 내역 추가
@@ -65,15 +64,15 @@ export default function Test() {
     scrollToBottom(chatBoxBody);
 
     // 감정 분석 API 호출 이후 state 갱신
-    const res = await emotionAPI([{ role: "user", content: message }]);
+    const res = await emotionAPI([{ role: 'user', content: message }]);
     setEmotion(res);
 
     // 로딩 중 애니메이션
     window.dotsGoingUp = true;
     var dots = window.setInterval(() => {
-      var wait = document.getElementById("loading");
+      var wait = document.getElementById('loading');
       if (wait === null) return;
-      else if (window.dotsGoingUp) wait.innerHTML += ".";
+      else if (window.dotsGoingUp) wait.innerHTML += '.';
       else {
         wait.innerHTML = wait.innerHTML?.substring(1, wait.innerHTML.length);
 
@@ -85,31 +84,56 @@ export default function Test() {
     // Chat Compleation Request
     try {
       const data = await fetch(
-        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v3`,
+        `${process.env.NEXT_PUBLIC_URL}/openAI/consulting_emotion_v2`,
         {
-          method: "POST",
+          method: 'POST',
           headers: {
-            accept: "application.json",
-            "Content-Type": "application/json",
+            accept: 'application.json',
+            'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ messageArr, pUid: "njy95" }),
+          body: JSON.stringify({ messageArr }),
         }
       )
         .then((res) => res.json())
         .then((data) => data);
 
       handleSpeak(data.message); // TTS 음성
-      messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
-      document.getElementById("loading").remove(); // 로딩창 제거
-      const dataMsgArr = data.message.split("\n"); // 줄바꿈 단위로 대화 분리
+      messageArr.push({ role: 'assistant', content: data.message }); // 상담사 응답 메세지 저장
+      document.getElementById('loading').remove(); // 로딩창 제거
+      const dataMsgArr = data.message.split('\n'); // 줄바꿈 단위로 대화 분리
       dataMsgArr.forEach((msg) => {
         chatBoxBody.innerHTML += `<div class="response">${msg}</div>`; // AI 답변 채팅 추가
       });
       // chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
       scrollToBottom(chatBoxBody);
+
+      /* await 없는 코드 */
+      // fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/message`, {
+      //   method: "POST",
+      //   headers: {
+      //     accept: "application.json",
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ messageArr }),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     handleSpeak(data.message); // TTS 음성
+      //     messageArr.push({ role: "assistant", content: data.message }); // 상담사 응답 메세지 저장
+      //     document.getElementById("loading").remove(); // 로딩창 제거
+      //     chatBoxBody.innerHTML += `<div class="response">${data.message}</div>`; // AI 답변 채팅 추가
+      //     scrollToBottom(chatBoxBody);
+
+      //     // console.log(messageArr);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //     document.getElementById("loading").remove();
+      //     chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
+      //   });
     } catch (error) {
       console.log(error);
-      document.getElementById("loading").remove();
+      document.getElementById('loading').remove();
       chatBoxBody.innerHTML += `<div class="response">미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?</div>`;
     }
   };
@@ -121,23 +145,17 @@ export default function Test() {
   useEffect(() => {
     if (!flagEnter) return; // 공백 Enter 체크
 
-    const chatBox = document.querySelector(".chat-box");
-    const chatBoxBody = chatBox.querySelector(".chat-box-body");
+    const chatBox = document.querySelector('.chat-box');
+    const chatBoxBody = chatBox.querySelector('.chat-box-body');
 
     sendMessage(chatBoxBody);
     setFlagEnter(false);
-    setChat("");
+    setChat('');
   }, [flagEnter]);
 
-  useEffect(() => {
-    if (audioUrl) {
-      document.getElementById("playButton").click();
-    }
-  }, [audioUrl]);
-
-  const start_ment = `정서행동검사 - 학교생활 진행`;
-  const start_ment2 = `6가지 문항 모두 0점을 획득한 아동 (총 0점)`;
-  const start_ment3 = `검사 결과: 양호`;
+  const start_ment = `정서행동검사결과 반영 Test입니다`;
+  const start_ment2 = `현재 아동은 정서행동검사(학교 생활) 결과 위험군 답변으로 아래 3개를 선택했습니다`;
+  const start_ment3 = `"담임 선생님은 별로야", "수업에 집중을 잘 못하겠어", "좋아하는 과목이 없어"`;
 
   return (
     <MainContainer>
@@ -168,14 +186,14 @@ export default function Test() {
                 setChat(e.target.value);
               }}
               onKeyPress={(e) => {
-                if (e.key === "Enter" && chat !== "") setFlagEnter(true);
+                if (e.key === 'Enter' && chat !== '') setFlagEnter(true);
               }}
               type="text"
               placeholder="Ask a question..."
             />
             <button
               onClick={() => {
-                if (chat !== "") setFlagEnter(true);
+                if (chat !== '') setFlagEnter(true);
               }}
             >
               Send
@@ -184,15 +202,6 @@ export default function Test() {
         </div>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
-          <button
-            id="playButton"
-            onClick={() => {
-              const audio = new Audio(audioUrl);
-              audio.play().catch((e) => console.error(e));
-            }}
-          >
-            asdf
-          </button>
         </div>
       </FlexContainer>
     </MainContainer>
@@ -212,7 +221,7 @@ const FadeInSpan = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url("/src/soyesKids_Background_image.png");
+  background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
