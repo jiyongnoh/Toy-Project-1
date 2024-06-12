@@ -71,6 +71,28 @@ const mediVideo = {
   candle: { type: 'candle', url: 'nKCY3qz30N8' },
   breath: { type: 'breath', url: 'tNao3xp5yjM' },
 };
+const ebtClassMap = {
+  School: 'School',
+  Friend: 'Friend',
+  Family: 'Family',
+  Mood: 'Mood',
+  Unrest: 'Mood',
+  Sad: 'Mood',
+  Health: 'Health',
+  Attention: 'School',
+  Movement: 'Friend',
+  Angry: 'Mood',
+  Self: 'Self',
+};
+
+const ebtClassMapKorean = {
+  School: '학업/성적',
+  Friend: '대인관계',
+  Family: '가족관계',
+  Mood: '기분',
+  Health: '신체증상',
+  Self: '자기이해',
+};
 
 // Renewel Test 페이지
 export default function Test() {
@@ -192,20 +214,6 @@ export default function Test() {
     }
     // 정서행동 검사를 모두 실시한 경우
     else {
-      const ebtClassMap = {
-        School: 'School',
-        Friend: 'Friend',
-        Family: 'Family',
-        Mood: 'Mood',
-        Unrest: 'Mood',
-        Sad: 'Mood',
-        Health: 'Health',
-        Attention: 'School',
-        Movement: 'Friend',
-        Angry: 'Mood',
-        Self: 'Self',
-      };
-
       const ment = {
         role: 'assistant',
         content: '안녕? 너의 심리검사 결과를 봤어. 아래의 상담 주제를 추천해',
@@ -271,7 +279,14 @@ export default function Test() {
   // avarta 변 관련 처리
   useEffect(() => {
     // 엘라일 경우
-    if (avartaAI === 'lala' || avartaAI === 'default') initElla();
+    if (avartaAI === 'lala' || avartaAI === 'default') {
+      setIsInitPending(true); // 채팅창 비활성화
+      setTestType(''); // 상담 주제 초기화
+      // 엘라 상담 주제 선정 메서드 1초 뒤 호출
+      setTimeout(() => {
+        initElla();
+      }, 1000);
+    }
     // 그 외
     else setIsInitPending(false);
 
@@ -280,10 +295,11 @@ export default function Test() {
   }, [avartaAI]);
 
   useEffect(() => {
+    // 엘라 상담 중, 주제가 선정되었을 경우
     if (testType && (avartaAI === 'lala' || avartaAI === 'default')) {
       const ending_ment = {
         role: 'assistant',
-        content: `${testType} 관련 상담을 진행할게! 반가워 나는 엘라야!`,
+        content: `'${ebtClassMapKorean[testType]}' 관련 상담을 진행할게! 반가워 나는 엘라야!`,
       };
 
       setInitArr([...initArr, ending_ment]);

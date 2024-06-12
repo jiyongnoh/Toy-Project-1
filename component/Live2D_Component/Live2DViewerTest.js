@@ -1,13 +1,14 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-import { useRef, useEffect, useState } from "react";
+'use client';
+import { useRef, useEffect, useState } from 'react';
 import {
   cubism2Model_shizuku,
   cubism2Model_haru,
   cubism2Model_Mao,
   cubism2Model_Hiyori,
   cubism2Model_Wanko,
-} from "./Live2DModel";
+} from './Live2DModel';
 
 async function cubismModelCall(model) {
   const result = await PIXI.live2d.Live2DModel.from(model);
@@ -41,15 +42,15 @@ export default function Live2DViewerTest({ emotion, avarta }) {
       // console.log(emotion);
 
       // 표정 및 모션 처리
-      if (emotion.includes("긍정")) {
+      if (emotion.includes('긍정')) {
         model.expression(3); // 맑눈광 표정
-        model.motion("TapBody", 3);
-      } else if (emotion.includes("부정")) {
+        model.motion('TapBody', 3);
+      } else if (emotion.includes('부정')) {
         model.expression(7); // 불쌍한 표정
-        model.motion("TapBody", 1);
+        model.motion('TapBody', 1);
       } else {
         model.expression(1); // 웃는 표정
-        model.motion("TapBody", 0);
+        model.motion('TapBody', 0);
       }
 
       // clean up 함수. 해당 컴포넌트 언마운트 시 실행

@@ -1,14 +1,15 @@
+/* eslint-disable no-undef */
 /* eslint-disable react-hooks/exhaustive-deps */
-"use client";
-import { useRef, useEffect, useState } from "react";
-import { motion } from "framer-motion";
+'use client';
+import { useRef, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import {
   cubism2Model_shizuku,
   cubism2Model_haru,
   cubism2Model_Mao,
   cubism2Model_Hiyori,
   cubism2Model_Wanko,
-} from "./Live2DModel";
+} from './Live2DModel';
 
 async function cubismModelCall(model) {
   const result = await PIXI.live2d.Live2DModel.from(model);
@@ -48,9 +49,9 @@ export default function Live2DViewerMain({ avartar }) {
       model.scale.set(scale);
 
       // 클릭 이벤트
-      model.on("click", () => {
+      model.on('click', () => {
         // 랜덤한 표정 및 동작 발생
-        model.motion("TapBody", parseInt(Math.random() * 10) % 6);
+        model.motion('TapBody', parseInt(Math.random() * 10) % 6);
         model.expression(parseInt(Math.random() * 10) % 8);
       });
     });

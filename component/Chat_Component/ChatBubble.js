@@ -30,7 +30,7 @@ const ChatBubble = ({ message, isMine, role, audioURL, media }) => {
         </AudioContanier>
       ) : (
         <StyledBubble isMine={isMine} role={role}>
-          <p>{message}</p>
+          <MessageP>{message}</MessageP>
         </StyledBubble>
       )}
     </>
@@ -51,7 +51,7 @@ const StyledBubble = styled.div`
   p {
     margin: 0;
   }
-  text-align: ${(props) => (props.role === 'user' ? 'right' : 'left')};
+  text-align: left;
   margin-left: ${(props) => (props.role === 'user' ? 'auto' : null)};
   white-space: pre-wrap;
   display: flex;
