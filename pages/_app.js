@@ -2,6 +2,7 @@
 import '@/styles/globals.css';
 import Head from 'next/head';
 import Nav from '@/component/Home_Component/Nav';
+import Footer from '@/component/Home_Component/Footer';
 import Page from '@/component/Motion_Paging/Page'; // 모든 페이지 이동 시 적용되는 페이지 애니메이션
 import { AnimatePresence } from 'framer-motion';
 
@@ -29,6 +30,7 @@ function App({ Component, pageProps, router }) {
           <Page key={router.asPath}>
             <Nav />
             <Component {...pageProps} />
+            <Footer />
           </Page>
         </AnimatePresence>
       </RecoilRoot>

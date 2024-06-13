@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
-import Modal from "react-modal";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
+import styled from 'styled-components';
 
 // import { useSession } from "next-auth/react";
 
 const VideoModal = ({ isOpen, onRequestClose, videoId }) => {
-  const [videoUrl, setVideoUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState('');
+  const [isPending, setIsPending] = useState(false);
   // const { data: session } = useSession();
   //   useEffect(() => {
   //     if (session && videoId) {
@@ -34,20 +35,22 @@ const VideoModal = ({ isOpen, onRequestClose, videoId }) => {
 
   useEffect(() => {
     if (videoId) {
+      setIsPending(true);
       fetch(`${process.env.NEXT_PUBLIC_URL}/openAI/youtube/${videoId}`)
         .then((response) => response.json())
         .then((data) => {
           // console.log(data);
           if (data) {
             setVideoUrl(data.player.embedHtml);
+            setIsPending(false);
           } else {
-            console.error("Failed to fetch video data:", data);
+            console.error('Failed to fetch video data:', data);
           }
         })
         .catch((error) => {
-          console.error("Error fetching video:", error);
+          console.error('Error fetching video:', error);
         });
-    }
+    } else setVideoUrl('');
   }, [videoId]);
 
   return (
@@ -57,7 +60,11 @@ const VideoModal = ({ isOpen, onRequestClose, videoId }) => {
       contentLabel="Video Modal"
       ariaHideApp={false}
     >
-      <ModalContent dangerouslySetInnerHTML={{ __html: videoUrl }} />
+      {isPending ? (
+        <div>Loading...</div>
+      ) : (
+        <ModalContent dangerouslySetInnerHTML={{ __html: videoUrl }} />
+      )}
     </StyledModal>
   );
 };
@@ -84,6 +91,7 @@ const ModalContent = styled.div`
     width: 100%;
     height: 360px;
   }
+  min-height: 360px;
 `;
 
 export default VideoModal;

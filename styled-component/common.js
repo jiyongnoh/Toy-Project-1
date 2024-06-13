@@ -1,16 +1,16 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const FlexContainer = styled.div`
   width: ${(props) => props.width};
   height: ${(props) => props.height};
-  display: ${(props) => props.display || "flex"};
-  flex-direction: ${(props) => (props.dir === "col" ? "column" : "row")};
+  display: ${(props) => props.display || 'flex'};
+  flex-direction: ${(props) => (props.dir === 'col' ? 'column' : 'row')};
   flex-wrap: ${(props) => props.wrap};
-  justify-content: ${(props) => props.justify || "center"};
-  align-items: ${(props) => props.align || "center"};
-  gap: ${(props) => props.gap || "1rem"};
-  background-color: ${(props) => props.backColor || "none"};
-  border-radius: ${(props) => props.borderRadius || "none"};
+  justify-content: ${(props) => props.justify || 'center'};
+  align-items: ${(props) => props.align || 'center'};
+  gap: ${(props) => props.gap || '1rem'};
+  background-color: ${(props) => props.backColor || 'none'};
+  border-radius: ${(props) => props.borderRadius || 'none'};
   flex-grow: ${(props) => props.grow};
   border-top: ${(props) => props.borderTop};
   border-bottom: ${(props) => props.borderBottom};
@@ -18,6 +18,7 @@ export const FlexContainer = styled.div`
   overflow: ${(props) => props.overflow};
   top: ${(props) => props.top};
   min-height: ${(props) => props.min};
+  opacity: ${(props) => props.opacity};
 `;
 
 export const StyledButton = styled.button`
@@ -25,7 +26,7 @@ export const StyledButton = styled.button`
   backdrop-filter: blur(10px); // 불투명 필터
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
-  color: ${(props) => (props.color ? props.color : "white")};
+  color: ${(props) => (props.color ? props.color : 'white')};
 
   border: none;
   border-radius: 15px;
@@ -37,7 +38,7 @@ export const StyledButton = styled.button`
   text-decoration: none;
 
   display: inline-block;
-  font-size: ${(props) => (props.fontSize ? props.fontSize : "16px")};
+  font-size: ${(props) => (props.fontSize ? props.fontSize : '16px')};
   cursor: pointer;
 
   &:hover {
@@ -53,7 +54,7 @@ export const StyledInput = styled.input`
   background-color: transparent;
   border: 0.5px solid gray;
 
-  color: ${(props) => (props.color ? props.color : "white")};
+  color: ${(props) => (props.color ? props.color : 'white')};
 
   padding: 13px 18px;
   text-align: left;

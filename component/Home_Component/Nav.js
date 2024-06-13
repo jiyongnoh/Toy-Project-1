@@ -85,6 +85,7 @@ export default function Nav() {
       { href: '/test_pt', label: t('pt') },
       { href: '/test_all', label: t('consult') },
       { href: '/review', label: t('review') },
+      { href: '/meditation_painting', label: t('meditation_painting') },
       { href: '/shop', label: t('shop') },
     ],
     [t]
@@ -102,6 +103,11 @@ export default function Nav() {
           {/* <NavLi>
             <Link href="/upload" passHref>
               <NavBtn>Upload</NavBtn>
+            </Link>
+          </NavLi> */}
+          {/* <NavLi>
+            <Link href="/meditation" passHref>
+              <NavBtn>Meditation</NavBtn>
             </Link>
           </NavLi> */}
           <NavListContainer>
@@ -152,7 +158,6 @@ export default function Nav() {
 }
 
 const NavContainer = styled.div.attrs({
-  height: '4rem',
   justify: 'end',
 })`
   width: 100vw;
@@ -173,7 +178,7 @@ const NavUl = styled.ul`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 2rem;
+  padding-right: 2rem;
   gap: 0.5rem;
 
   @media (max-width: 768px) {

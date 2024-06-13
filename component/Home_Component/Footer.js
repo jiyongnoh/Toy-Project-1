@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Link from "next/link";
+import styled from 'styled-components';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -38,10 +38,10 @@ export default function Footer() {
 }
 
 const FooterContainer = styled.footer`
-  width: 100%;
+  width: 100vw;
   background-color: #303030;
   color: #fff;
-  padding: 20px 0;
+  padding: 1.5rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,7 +49,7 @@ const FooterContainer = styled.footer`
 `;
 
 const FooterInfo = styled.div`
-  padding: 0 20px;
+  padding: 0 2rem;
 `;
 
 const FooterLogo = styled.img`
@@ -68,7 +68,7 @@ const InfoText = styled.p`
 `;
 
 const SocialMediaLinks = styled.div`
-  padding: 0 20px;
+  padding: 0 2rem;
 `;
 
 const SocialLink = styled.a`
