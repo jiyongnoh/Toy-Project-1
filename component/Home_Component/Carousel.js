@@ -5,7 +5,6 @@ import 'slick-carousel/slick/slick-theme.css';
 import Image from 'next/image';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { useMemo } from 'react';
 
 // const SampleNextArrow = (props) => {
 //   const { className, style, onClick } = props;
@@ -51,6 +50,7 @@ const Carousel = () => {
             alt={'soyes_logo'}
             width={990}
             height={500}
+            style={{ maxWidth: '100%', height: 'auto' }}
           />
         </Link>
       </SliderItem>
@@ -61,6 +61,7 @@ const Carousel = () => {
             alt={'soyes_logo'}
             width={990}
             height={500}
+            style={{ maxWidth: '100%', height: 'auto' }}
           />
         </Link>
       </SliderItem>
@@ -71,6 +72,7 @@ const Carousel = () => {
             alt={'soyes_logo'}
             width={990}
             height={500}
+            style={{ maxWidth: '100%', height: 'auto' }}
           />
         </Link>
       </SliderItem>
@@ -81,6 +83,7 @@ const Carousel = () => {
             alt={'soyes_logo'}
             width={990}
             height={500}
+            style={{ maxWidth: '100%', height: 'auto' }}
           />
         </Link>
       </SliderItem>
@@ -91,12 +94,12 @@ const Carousel = () => {
 export default Carousel;
 
 const StyledSlider = styled(Slider)`
+  width: 990px;
+  height: 550px;
   display: flex;
   justify-content: center;
   .slick-list {
     //슬라이드 스크린
-    width: 990px;
-    height: 550px;
     margin: 0 auto;
     overflow-x: hidden;
     background: none;
@@ -128,6 +131,10 @@ const StyledSlider = styled(Slider)`
     background-color: none;
     right: 2%;
     z-index: 1;
+  }
+  @media (max-width: 500px) {
+    width: 412px;
+    height: 200px;
   }
 `;
 

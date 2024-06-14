@@ -76,6 +76,7 @@ export default function Meditation() {
   const [login, setLogin] = useRecoilState(log);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [videoId, setVideoId] = useState('');
+
   const { t } = useTranslation('meditation_painting');
   const router = useRouter();
 
@@ -94,9 +95,7 @@ export default function Meditation() {
 
   // Page Unmount
   useEffect(() => {
-    return () => {
-      console.log('Meditation Page Out');
-    };
+    return () => {};
   }, []);
   // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
   useEffect(() => {
@@ -112,16 +111,15 @@ export default function Meditation() {
         justify="center"
         align="center"
         dir="col"
-        width="30vw"
         height="100%"
         padding="1rem"
-        backColor="white"
       >
         <Image
           src="/src/Carousel_IMG/Carousel_그림명상.png"
           alt={'soyes_logo'}
           width={550}
           height={250}
+          style={{ maxWidth: '100%', height: 'auto' }}
         />
 
         <StyledLabel>
@@ -180,9 +178,10 @@ const MainContainer = styled.div`
   align-items: center;
 `;
 const ContentContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+
   gap: 0.5rem;
   @media (max-width: 768px) {
     overflow: hidden;
@@ -192,8 +191,8 @@ const ContentContainer = styled.div`
 `;
 // 버튼 컴포넌트 정의
 const ImageButton = styled.button`
-  width: 170px; /* 버튼 너비 */
-  height: 180px; /* 버튼 높이 */
+  width: 10rem; /* 버튼 너비 */
+  height: 11rem; /* 버튼 높이 */
   background-image: url(${(props) => props.imageUrl}); /* 이미지 경로 설정 */
   background-size: cover; /* 이미지 크기 조정 */
   background-position: center; /* 이미지 위치 조정 */
@@ -222,6 +221,11 @@ const ImageButton = styled.button`
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.3); /* 배경 어둡게 */
+  }
+
+  @media (max-width: 500px) {
+    width: 7rem;
+    height: 8rem;
   }
 `;
 // 텍스트 오버레이

@@ -10,13 +10,13 @@ import Live2DViewerMain from '@/component/Live2D_Component/Live2DViewerMain';
 import Carousel from '@/component/Home_Component/Carousel';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import TopButton from '@/component/Home_Component/TopButton';
 
 // Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [showTopButton, setShowTopButton] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   // const { t } = useTranslation("nav");
 
   const scrollToTop = () => {
@@ -28,12 +28,11 @@ export default function Home() {
 
   // 스크롤 이벤트 핸들러
   const handleScroll = () => {
-    if (window.scrollY > window.innerHeight) {
+    if (window.scrollY) {
       setShowTopButton(true);
     } else {
       setShowTopButton(false);
     }
-    setScrollY(window.scrollY);
   };
 
   // 스크롤 이벤트 리스너 추가 및 제거
@@ -61,9 +60,7 @@ export default function Home() {
       <CarouselContainer>
         <Carousel />
       </CarouselContainer>
-      <TopButton show={showTopButton} onClick={scrollToTop} scrollY={scrollY}>
-        Top
-      </TopButton>
+      <TopButton />
     </MasterContainer>
 
     // <PageContainer>
@@ -116,7 +113,7 @@ const fadeIn = keyframes`
 const MasterContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: center;
 
   z-index: -1;
   @media (max-width: 768px) {
@@ -162,28 +159,29 @@ const CarouselContainer = styled.div`
   }
 `;
 
-// 스타일링된 버튼 컴포넌트
-const TopButton = styled.button`
-  position: fixed;
-  top: ${(props) => `${props.scrollY + 800}px`};
-  right: 2%;
+// const TopButtonWrap = styled.div`
+//   position: sticky;
+//   bottom: 70px;
+//   float: right;
+// `;
 
-  width: 50px;
-  height: 50px;
+// // 스타일링된 버튼 컴포넌트
+// const TopButton = styled.button`
+//   font-size: 3.8rem;
+//   color: #ffc949 !important;
+//   border: none;
+//   background-color: #007bff;
+//   color: white;
+//   border-radius: 50%;
+//   display: ${({ show }) => (show ? 'block' : 'none')};
+//   cursor: pointer;
+//   z-index: 2;
+//   transition: opacity 0.3s;
 
-  border: none;
-  background-color: #007bff;
-  color: white;
-  border-radius: 50%;
-  display: ${({ show }) => (show ? 'block' : 'none')};
-  cursor: pointer;
-  z-index: 2;
-  transition: opacity 0.3s;
-
-  &:hover {
-    background-color: #0056b3;
-  }
-`;
+//   &:hover {
+//     background-color: #0056b3;
+//   }
+// `;
 
 // const PageContainer = styled.div`
 //   scroll-snap-type: y mandatory;
