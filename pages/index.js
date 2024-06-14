@@ -127,7 +127,7 @@ const MasterContainer = styled.div`
 
 const MainContainer = styled.div`
   width: 100vw;
-  height: 130vh;
+  height: 100vh;
 
   background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
