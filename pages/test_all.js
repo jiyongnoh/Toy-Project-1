@@ -239,6 +239,11 @@ export default function Test() {
 
   // messageArr 언마운트 처리
   useEffect(() => {
+    // 상담 화면에 처음 진입한 경우: 엘라 상담 화면으로 재설정
+    if (!localStorage.getItem('avarta') && avartaAI === 'default') {
+      localStorage.setItem('avarta', 'lala');
+      setAvartaAI('lala');
+    }
     return () => {
       // 로그인 세션이 존재할 경우 - 상담 내역 저장
       const loginSession = JSON.parse(localStorage.getItem('log'));
@@ -259,6 +264,8 @@ export default function Test() {
         );
       }
 
+      setAvartaAI('default');
+      localStorage.removeItem('avarta');
       // Cookies Clear (session ID 초기화)
       // handleClearCookies(unMount_api_info.clearCookie.path);
 
@@ -276,10 +283,12 @@ export default function Test() {
     }
   }, [login]);
 
-  // avarta 변 관련 처리
+  // avartaAI 관련 처리
   useEffect(() => {
+    console.log(avartaAI);
+    if (avartaAI === 'default') return;
     // 엘라일 경우
-    if (avartaAI === 'lala' || avartaAI === 'default') {
+    if (avartaAI === 'lala') {
       setIsInitPending(true); // 채팅창 비활성화
       setTestType(''); // 상담 주제 초기화
       // 엘라 상담 주제 선정 메서드 1초 뒤 호출
