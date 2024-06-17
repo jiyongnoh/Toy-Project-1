@@ -3,9 +3,15 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ContentComponent = ({ title, subtitle, iconPath, linkUrl }) => {
+const ContentComponent = ({
+  title,
+  subtitle,
+  iconPath,
+  linkUrl,
+  backColor,
+}) => {
   return (
-    <Container>
+    <Container backColor={backColor}>
       <Image
         src={iconPath}
         alt="Content_Icon"
@@ -48,7 +54,7 @@ const Container = styled.div`
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: ${(props) => props.backColor || '#FFFBE9'};
   gap: 1rem;
 
   @media (max-width: 768px) {

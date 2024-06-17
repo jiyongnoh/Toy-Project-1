@@ -8,18 +8,21 @@ const contentArr = [
     subtitle: '내마음을 차분하게 해줄 음악을 선택하여 마음을 힐링해 보세요.',
     iconPath: '/src/Content_IMG/Icon_IMG/Icon_음악명상.png',
     linkUrl: '/meditation_painting',
+    backColor: '#FFFBE9',
   },
   {
     title: '그림 명상',
     subtitle: '내마음을 차분하게 해줄 음악을 선택하여 마음을 힐링해 보세요.',
     iconPath: '/src/Content_IMG/Icon_IMG/Icon_그림명상.png',
     linkUrl: '/meditation_painting',
+    backColor: '#F6FCFF',
   },
   {
     title: '요가 명상',
     subtitle: '내마음을 차분하게 해줄 음악을 선택하여 마음을 힐링해 보세요.',
     iconPath: '/src/Content_IMG/Icon_IMG/Icon_요가명상.png',
     linkUrl: '/meditation_painting',
+    backColor: '#FBF9FF',
   },
 ];
 
@@ -34,6 +37,7 @@ const ContentCard = () => {
             subtitle={content.subtitle}
             iconPath={content.iconPath}
             linkUrl={content.linkUrl}
+            backColor={content.backColor}
           />
         );
       })}
