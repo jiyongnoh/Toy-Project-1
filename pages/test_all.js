@@ -137,7 +137,7 @@ export default function Test() {
       const data = await handleGptCompletion(
         {
           messageArr: tmpMsgArr,
-          pUid: localStorage.getItem('id') || 'dummy',
+          pUid: localStorage.getItem('id'),
           type: testType,
         },
         path

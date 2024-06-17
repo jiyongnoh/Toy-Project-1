@@ -28,6 +28,13 @@ import Link from 'next/link';
 //   );
 // };
 
+const slideArr = [
+  { name: '그림명상', imgUrl: '/src/Carousel_IMG/Carousel_그림명상.png' },
+  { name: '요가명상', imgUrl: '/src/Carousel_IMG/Carousel_요가명상.png' },
+  { name: '음악명상', imgUrl: '/src/Carousel_IMG/Carousel_음악명상.png' },
+  { name: '풀밭요가', imgUrl: '/src/Carousel_IMG/Carousel_풀밭요가.png' },
+];
+
 const Carousel = () => {
   const settings = {
     dots: true,
@@ -43,50 +50,21 @@ const Carousel = () => {
 
   return (
     <StyledSlider {...settings}>
-      <SliderItem>
-        <Link href="/meditation_painting" passHref>
-          <Image
-            src="/src/Carousel_IMG/Carousel_그림명상.png"
-            alt={'soyes_logo'}
-            width={990}
-            height={500}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        </Link>
-      </SliderItem>
-      <SliderItem>
-        <Link href="/meditation_painting" passHref>
-          <Image
-            src="/src/Carousel_IMG/Carousel_요가명상.png"
-            alt={'soyes_logo'}
-            width={990}
-            height={500}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        </Link>
-      </SliderItem>
-      <SliderItem>
-        <Link href="/meditation_painting" passHref>
-          <Image
-            src="/src/Carousel_IMG/Carousel_음악명상.png"
-            alt={'soyes_logo'}
-            width={990}
-            height={500}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        </Link>
-      </SliderItem>
-      <SliderItem>
-        <Link href="/meditation_painting" passHref>
-          <Image
-            src="/src/Carousel_IMG/Carousel_풀밭요가.png"
-            alt={'soyes_logo'}
-            width={990}
-            height={500}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        </Link>
-      </SliderItem>
+      {slideArr.map((slide, index) => {
+        return (
+          <SliderItem key={index}>
+            <Link href="/meditation_painting" passHref>
+              <Image
+                src={slide.imgUrl}
+                alt={slide.name}
+                width={990}
+                height={500}
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
+            </Link>
+          </SliderItem>
+        );
+      })}
     </StyledSlider>
   );
 };
@@ -98,6 +76,7 @@ const StyledSlider = styled(Slider)`
   height: 550px;
   display: flex;
   justify-content: center;
+
   .slick-list {
     //슬라이드 스크린
     margin: 0 auto;

@@ -12,6 +12,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import TopButton from '@/component/Home_Component/TopButton';
 import AvartarCard from '@/component/Home_Component/AvartarCard';
+import ContentCard from '@/component/Home_Component/ContentCard';
 
 // Home 페이지
 export default function Home() {
@@ -33,16 +34,15 @@ export default function Home() {
 
   return (
     <MasterContainer>
-      <MainContainer>
+      <IntroContainer>
         {mobile && loading && <Title>AI Avartar Project</Title>}
         {/* {!mobile && loading && <ScrollDownIndicator />} */}
-      </MainContainer>
-      <CarouselContainer>
+      </IntroContainer>
+      <MainContainer>
         <Carousel />
-      </CarouselContainer>
-      <AvatarContainer>
         <AvartarCard />
-      </AvatarContainer>
+        <ContentCard />
+      </MainContainer>
       <TopButton />
     </MasterContainer>
 
@@ -99,13 +99,9 @@ const MasterContainer = styled.div`
   justify-content: center;
 
   z-index: -1;
-  @media (max-width: 768px) {
-    background-image: url('/src/soyes_mobile.jpg');
-    justify-content: center;
-  }
 `;
 
-const MainContainer = styled.div`
+const IntroContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
@@ -125,7 +121,7 @@ const MainContainer = styled.div`
   }
 `;
 
-const CarouselContainer = styled.div`
+const MainContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   background-color: white;
@@ -136,26 +132,28 @@ const CarouselContainer = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media (max-width: 768px) {
-    justify-content: center;
-  }
-`;
-
-const AvatarContainer = styled.div`
-  width: 100vw;
-  min-height: 100vh;
-  background-color: gray;
-  padding: 2rem;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  gap: 1rem;
 
   @media (max-width: 768px) {
     justify-content: center;
   }
 `;
+
+// const AvatarContainer = styled.div`
+//   width: 100vw;
+//   min-height: 100vh;
+//   background-color: gray;
+//   padding: 2rem;
+
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+
+//   @media (max-width: 768px) {
+//     justify-content: center;
+//   }
+// `;
 
 // const TopButtonWrap = styled.div`
 //   position: sticky;

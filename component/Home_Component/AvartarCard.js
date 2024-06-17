@@ -38,20 +38,14 @@ const AvartarCard = () => {
   );
 };
 
-// 스크롤 업 인디케이터 스타일
 const AvartarCardContainer = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
-
-  position: relative;
   gap: 1rem;
-  font-size: 1rem;
-  color: #fff;
-  user-select: none;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-    justify-content: center;
+    gap: 0.3rem;
   }
 `;
 
