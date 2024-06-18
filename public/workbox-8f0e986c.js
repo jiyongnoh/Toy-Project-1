@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-undef */
 define(['exports'], (function (exports) { 'use strict';
 
     // @ts-ignore
