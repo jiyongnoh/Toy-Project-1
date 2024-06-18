@@ -2,7 +2,7 @@
 
 import styled, { keyframes } from 'styled-components';
 import { useEffect, useState } from 'react';
-import Live2DViewerMain from '@/component/Live2D_Component/Live2DViewerMain';
+// import Live2DViewerMain from '@/component/Live2D_Component/Live2DViewerMain';
 // import ScrollDownIndicator from '@/component/Home_Component/ScrollDownIndicator';
 // import ScrollUpIndicator from '@/component/Home_Component/ScrollUpIndicator';
 // import { motion } from "framer-motion";
@@ -12,7 +12,7 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import TopButton from '@/component/Home_Component/TopButton';
 import AvartarCard from '@/component/Home_Component/AvartarCard';
-import ContentCard from '@/component/Home_Component/ContentCard';
+import ContentCard from '@/component/Home_Component/Content/ContentCard';
 
 // Home 페이지
 export default function Home() {

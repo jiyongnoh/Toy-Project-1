@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useRecoilState } from 'recoil';
@@ -16,6 +16,7 @@ export default function Nav() {
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const [showMenu, setShowMenu] = useState(currentPath !== '/' ? true : false);
+  const [showNavbar, setShowNavbar] = useState(false);
 
   useEffect(() => {
     const loginSession = localStorage.getItem('log');
@@ -31,6 +32,18 @@ export default function Nav() {
     if (avarta) {
       setAvartaAI(avarta);
     }
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowNavbar(true);
+      } else {
+        setShowNavbar(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   // useCallback 적용. 불필요한 리렌더링 제거
@@ -92,7 +105,7 @@ export default function Nav() {
   );
 
   return (
-    <NavContainer>
+    <NavContainer show={showNavbar}>
       {login ? (
         <NavUl>
           <NavLi>
@@ -157,17 +170,26 @@ export default function Nav() {
   );
 }
 
-const NavContainer = styled.div.attrs({
-  justify: 'end',
-})`
+const slideDown = keyframes`
+    from {
+        top: -60px;
+    }
+    to {
+        top: 0;
+    }
+`;
+
+const NavContainer = styled.div`
   width: 100vw;
-  background-color: rgba(255, 255, 255, 0.01);
-  position: fixed;
+  background-color: ${(props) =>
+    props.show ? 'gray' : 'rgba(255, 255, 255, 0.01)'};
+  position: ${(props) => (props.show ? 'sticky' : 'fixed')};
   top: 0;
   display: flex;
   justify-content: end;
   height: 4rem;
   z-index: 1;
+  animation: ${(props) => (props.show ? slideDown : 'none')} 0.3s ease-in-out;
 
   @media (max-width: 768px) {
     height: 5%;

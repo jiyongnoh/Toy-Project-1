@@ -3,13 +3,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ContentComponent = ({
-  title,
-  subtitle,
-  iconPath,
-  linkUrl,
-  backColor,
-}) => {
+const ContentBlock = ({ title, subtitle, iconPath, linkUrl, backColor }) => {
   return (
     <Container backColor={backColor}>
       <Image
@@ -104,4 +98,4 @@ const PlayButton = styled.button`
   }
 `;
 
-export default ContentComponent;
+export default ContentBlock;

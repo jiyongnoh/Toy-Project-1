@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ContentComponent from './ContentComponent/ContentComponent';
+import ContentBlock from './ContentBlock';
 
 const contentArr = [
   {
@@ -31,7 +31,7 @@ const ContentCard = () => {
     <ContentCardContainer>
       {contentArr.map((content, index) => {
         return (
-          <ContentComponent
+          <ContentBlock
             key={index}
             title={content.title}
             subtitle={content.subtitle}

@@ -29,10 +29,26 @@ import Link from 'next/link';
 // };
 
 const slideArr = [
-  { name: '그림명상', imgUrl: '/src/Carousel_IMG/Carousel_그림명상.png' },
-  { name: '요가명상', imgUrl: '/src/Carousel_IMG/Carousel_요가명상.png' },
-  { name: '음악명상', imgUrl: '/src/Carousel_IMG/Carousel_음악명상.png' },
-  { name: '풀밭요가', imgUrl: '/src/Carousel_IMG/Carousel_풀밭요가.png' },
+  {
+    name: '그림명상',
+    imgUrl: '/src/Carousel_IMG/Carousel_그림명상.png',
+    pathUrl: '/meditation_painting',
+  },
+  {
+    name: '요가명상',
+    imgUrl: '/src/Carousel_IMG/Carousel_요가명상.png',
+    pathUrl: '/meditation_painting',
+  },
+  {
+    name: '음악명상',
+    imgUrl: '/src/Carousel_IMG/Carousel_음악명상.png',
+    pathUrl: '/meditation_painting',
+  },
+  {
+    name: '풀밭요가',
+    imgUrl: '/src/Carousel_IMG/Carousel_풀밭요가.png',
+    pathUrl: '/meditation_painting',
+  },
 ];
 
 const Carousel = () => {
@@ -53,7 +69,7 @@ const Carousel = () => {
       {slideArr.map((slide, index) => {
         return (
           <SliderItem key={index}>
-            <Link href="/meditation_painting" passHref>
+            <Link href={slide.pathUrl} passHref>
               <Image
                 src={slide.imgUrl}
                 alt={slide.name}
