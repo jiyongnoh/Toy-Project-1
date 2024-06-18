@@ -18,9 +18,11 @@ export default function Nav() {
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const [showMenu, setShowMenu] = useState(currentPath !== '/' ? true : false);
   const [showNavbar, setShowNavbar] = useState(false);
+  const [mobile, setMobile] = useState(false);
 
   useEffect(() => {
     const loginSession = localStorage.getItem('log');
+    // 로그인 세션 만료 처리
     if (loginSession) {
       const parsedSession = JSON.parse(loginSession);
       if (new Date(parsedSession.expires) > new Date()) {
@@ -29,10 +31,13 @@ export default function Nav() {
         handleSessionExpired();
       }
     }
+    // 아바타 확인
     const avarta = localStorage.getItem('avarta');
-    if (avarta) {
-      setAvartaAI(avarta);
-    }
+    if (avarta) setAvartaAI(avarta);
+    // 모바일 확인
+    if (window.innerWidth < 768) setMobile(true);
+
+    // 네비바 스크롤 이벤트
     const handleScroll = () => {
       if (window.scrollY > 400) {
         setShowNavbar(true);
@@ -40,7 +45,6 @@ export default function Nav() {
         setShowNavbar(false);
       }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -113,6 +117,7 @@ export default function Nav() {
           alt={'soyes_logo'}
           width={220}
           height={36}
+          style={{ maxWidth: '100%', height: 'auto' }}
         />
       </Link>
       {login ? (
@@ -132,32 +137,35 @@ export default function Nav() {
               <NavBtn>Meditation</NavBtn>
             </Link>
           </NavLi> */}
-          {menuItems.map((item) => (
-            <NavLi key={item.href}>
-              <Link href={item.href} passHref>
-                <NavBtn selected={item.href === currentPath}>
-                  {item.label}
-                </NavBtn>
-              </Link>
-            </NavLi>
-          ))}
-          {/* <NavListContainer>
-            <NavBtn onClick={() => setShowMenu(!showMenu)}>
-              {showMenu ? '▲' : '▼'}
-            </NavBtn>
-            <NavMenuContainer showMenu={showMenu}>
-              {showMenu &&
-                menuItems.map((item) => (
-                  <NavLi key={item.href}>
-                    <Link href={item.href} passHref>
-                      <NavBtn selected={item.href === currentPath}>
-                        {item.label}
-                      </NavBtn>
-                    </Link>
-                  </NavLi>
-                ))}
-            </NavMenuContainer>
-          </NavListContainer> */}
+          {mobile ? (
+            <NavListContainer>
+              <NavBtn onClick={() => setShowMenu(!showMenu)}>
+                {showMenu ? '▲' : '▼'}
+              </NavBtn>
+              <NavMenuContainer showMenu={showMenu}>
+                {showMenu &&
+                  menuItems.map((item) => (
+                    <NavLiMenu key={item.href}>
+                      <Link href={item.href} passHref>
+                        <NavBtn selected={item.href === currentPath}>
+                          {item.label}
+                        </NavBtn>
+                      </Link>
+                    </NavLiMenu>
+                  ))}
+              </NavMenuContainer>
+            </NavListContainer>
+          ) : (
+            menuItems.map((item) => (
+              <NavLi key={item.href}>
+                <Link href={item.href} passHref>
+                  <NavBtn selected={item.href === currentPath}>
+                    {item.label}
+                  </NavBtn>
+                </Link>
+              </NavLi>
+            ))
+          )}
           <NavLi>
             <NavBtn onClick={logoutHandler}>{t('logout')}</NavBtn>
           </NavLi>
@@ -211,7 +219,9 @@ const NavContainer = styled.div`
   animation: ${(props) => (props.show ? slideDown : 'none')} 0.3s ease-in-out;
 
   @media (max-width: 768px) {
-    height: 5%;
+    height: fit-content;
+    align-items: start;
+    padding: 1rem;
   }
 `;
 
@@ -223,7 +233,7 @@ const NavUl = styled.ul`
 
   @media (max-width: 768px) {
     flex-direction: column;
-    justify-content: start;
+    align-items: flex-end;
     padding: 0;
     gap: 0;
   }
@@ -232,6 +242,17 @@ const NavUl = styled.ul`
 const NavLi = styled.li`
   width: 100%;
   display: flex;
+  @media (max-width: 768px) {
+    justify-content: flex-end;
+  }
+`;
+
+const NavLiMenu = styled.li`
+  width: 100%;
+  display: flex;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const NavListContainer = styled.div`
@@ -241,6 +262,10 @@ const NavListContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    align-items: center;
+  }
 `;
 
 const NavMenuContainer = styled.li`
@@ -248,6 +273,10 @@ const NavMenuContainer = styled.li`
   top: 100%;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const NavBtn = styled.button`

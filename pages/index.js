@@ -17,7 +17,7 @@ import ContentCard from '@/component/Home_Component/Content/ContentCard';
 // Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [mobile, setMobile] = useState(false);
+  // const [mobile, setMobile] = useState(false);
   // const { t } = useTranslation("nav");
   // console.log('Test 주석');
   // 스크롤 이벤트 리스너 추가 및 제거
@@ -27,17 +27,14 @@ export default function Home() {
       setLoading(true);
     }, 1000);
     // 모바일 width 확인
-    if (window.innerWidth < 760) setMobile(true);
+    // if (window.innerWidth < 768) setMobile(true);
 
     return () => {};
   }, []);
 
   return (
     <MasterContainer>
-      <IntroContainer>
-        {mobile && loading && <Title>AI Avartar Project</Title>}
-        {/* {!mobile && loading && <ScrollDownIndicator />} */}
-      </IntroContainer>
+      <IntroContainer />
       <MainContainer>
         <Carousel />
         <AvartarCard />
@@ -116,7 +113,8 @@ const IntroContainer = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    background-image: url('/src/soyes_mobile.jpg');
+    display: none;
+    background-image: url('/src/Background_IMG/Mobile/mobile_background_1.png');
     justify-content: center;
   }
 `;
@@ -135,10 +133,21 @@ const MainContainer = styled.div`
   gap: 1rem;
 
   @media (max-width: 768px) {
+    background-image: url('/src/Background_IMG/Mobile/mobile_background_2.png');
     justify-content: center;
   }
 `;
 
+// const Title = styled.h1`
+//   font-size: 4rem;
+//   color: black;
+//   animation: ${fadeIn} 1.5s ease;
+//   margin-bottom: 0.5rem;
+
+//   @media (max-width: 768px) {
+//     font-size: 2rem;
+//   }
+// `;
 // const AvatarContainer = styled.div`
 //   width: 100vw;
 //   min-height: 100vh;
@@ -222,14 +231,3 @@ const MainContainer = styled.div`
 //   text-align: center;
 //   animation: ${fadeIn} 1s ease;
 // `;
-
-const Title = styled.h1`
-  font-size: 4rem;
-  color: #ffffff;
-  animation: ${fadeIn} 1.5s ease;
-  margin-bottom: 0.5rem;
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-`;

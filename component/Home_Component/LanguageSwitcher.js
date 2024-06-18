@@ -79,6 +79,10 @@ const DropdownContent = styled.div`
   z-index: 1;
   padding: 5px;
   width: 100%;
+
+  @media (max-width: 768px) {
+    margin-top: 0;
+  }
 `;
 
 const Option = styled.div`
@@ -98,8 +102,8 @@ const Option = styled.div`
 
   @media (max-width: 768px) {
     font-size: 10px;
-    margin: 2px;
-    padding: 7px 10px;
+    text-align: center;
+    padding: 0.4rem;
   }
 `;
 

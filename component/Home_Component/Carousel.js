@@ -128,8 +128,8 @@ const StyledSlider = styled(Slider)`
     z-index: 1;
   }
   @media (max-width: 500px) {
-    width: 412px;
-    height: 200px;
+    width: 24rem;
+    height: 12rem;
   }
 `;
 
