@@ -19,7 +19,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [mobile, setMobile] = useState(false);
   // const { t } = useTranslation("nav");
-
+  // console.log('Test 주석');
   // 스크롤 이벤트 리스너 추가 및 제거
   useEffect(() => {
     // Loading (1 sec)
@@ -27,7 +27,7 @@ export default function Home() {
       setLoading(true);
     }, 1000);
     // 모바일 width 확인
-    if (window.innerWidth < 768) setMobile(true);
+    if (window.innerWidth < 760) setMobile(true);
 
     return () => {};
   }, []);
