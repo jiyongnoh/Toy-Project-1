@@ -18,7 +18,7 @@ const meditationVideoContentList = [
   {
     type: 'candle',
     videoId: 'nKCY3qz30N8',
-    imageUrl: '/src/soyes_mobile.jpg',
+    imageUrl: '/src/Background_IMG/Mobile/soyes_mobile.jpg',
     title: '촛불 명상',
   },
   {
@@ -167,15 +167,15 @@ const MainContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
-  @media (max-width: 768px) {
-    overflow: hidden;
-  }
-
   position: relative;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    background-image: url('/src/Background_IMG/Mobile/mobile_background_1.png'); // 배경 이미지
+  }
 `;
 const ContentContainer = styled.div`
   display: grid;
