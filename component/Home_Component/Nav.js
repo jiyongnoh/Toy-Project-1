@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import { logoutAPI } from '@/fetchAPI';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
 
 export default function Nav() {
   const router = useRouter();
@@ -106,13 +107,21 @@ export default function Nav() {
 
   return (
     <NavContainer show={showNavbar}>
+      <Link href="/" passHref>
+        <Image
+          src="/src/soyesKids_Logo.png"
+          alt={'soyes_logo'}
+          width={220}
+          height={36}
+        />
+      </Link>
       {login ? (
         <NavUl>
-          <NavLi>
+          {/* <NavLi>
             <Link href="/" passHref>
               <NavBtn>{t('main')}</NavBtn>
             </Link>
-          </NavLi>
+          </NavLi> */}
           {/* <NavLi>
             <Link href="/upload" passHref>
               <NavBtn>Upload</NavBtn>
@@ -123,13 +132,22 @@ export default function Nav() {
               <NavBtn>Meditation</NavBtn>
             </Link>
           </NavLi> */}
-          <NavListContainer>
+          {menuItems.map((item) => (
+            <NavLi key={item.href}>
+              <Link href={item.href} passHref>
+                <NavBtn selected={item.href === currentPath}>
+                  {item.label}
+                </NavBtn>
+              </Link>
+            </NavLi>
+          ))}
+          {/* <NavListContainer>
             <NavBtn onClick={() => setShowMenu(!showMenu)}>
               {showMenu ? '▲' : '▼'}
             </NavBtn>
-            {showMenu && (
-              <NavMenuContainer>
-                {menuItems.map((item) => (
+            <NavMenuContainer showMenu={showMenu}>
+              {showMenu &&
+                menuItems.map((item) => (
                   <NavLi key={item.href}>
                     <Link href={item.href} passHref>
                       <NavBtn selected={item.href === currentPath}>
@@ -138,9 +156,8 @@ export default function Nav() {
                     </Link>
                   </NavLi>
                 ))}
-              </NavMenuContainer>
-            )}
-          </NavListContainer>
+            </NavMenuContainer>
+          </NavListContainer> */}
           <NavLi>
             <NavBtn onClick={logoutHandler}>{t('logout')}</NavBtn>
           </NavLi>
@@ -148,11 +165,11 @@ export default function Nav() {
         </NavUl>
       ) : (
         <NavUl>
-          <NavLi>
+          {/* <NavLi>
             <Link href="/" passHref>
               <NavBtn>{t('main')}</NavBtn>
             </Link>
-          </NavLi>
+          </NavLi> */}
           <NavLi>
             <Link href="/login" passHref>
               <NavBtn>{t('login')}</NavBtn>
@@ -182,12 +199,14 @@ const slideDown = keyframes`
 const NavContainer = styled.div`
   width: 100vw;
   background-color: ${(props) =>
-    props.show ? 'gray' : 'rgba(255, 255, 255, 0.01)'};
+    props.show ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.01)'};
   position: ${(props) => (props.show ? 'sticky' : 'fixed')};
   top: 0;
   display: flex;
-  justify-content: end;
-  height: 4rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+  height: 6rem;
   z-index: 1;
   animation: ${(props) => (props.show ? slideDown : 'none')} 0.3s ease-in-out;
 
@@ -200,7 +219,6 @@ const NavUl = styled.ul`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding-right: 2rem;
   gap: 0.5rem;
 
   @media (max-width: 768px) {
@@ -234,7 +252,7 @@ const NavMenuContainer = styled.li`
 
 const NavBtn = styled.button`
   background-color: ${(props) =>
-    props.selected ? 'rgba(0, 42, 255, 0.5)' : 'rgba(255, 255, 255, 0.05)'};
+    props.selected ? 'rgba(0, 0, 0, 0.5)' : 'rgba(0, 42, 255, 0.5)'};
   backdrop-filter: blur(10px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 
