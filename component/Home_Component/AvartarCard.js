@@ -20,7 +20,7 @@ const AvartarCard = () => {
     <AvartarCardContainer>
       {avatarArr.map((avatar, index) => {
         return (
-          <Link href="/test_all" key={index}>
+          <Link href="/intro" key={index}>
             <Image
               src={avatar.imgUrl}
               alt={avatar.name}

@@ -14,12 +14,11 @@ import TopButton from '@/component/Home_Component/TopButton';
 import AvartarCard from '@/component/Home_Component/AvartarCard';
 import ContentCard from '@/component/Home_Component/Content/ContentCard';
 import Image from 'next/image';
-import CarouselBanner from '@/component/Home_Component/CarouselBanner';
 
 // Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  // const [mobile, setMobile] = useState(false);
+  const [mobile, setMobile] = useState(false);
   // const { t } = useTranslation("nav");
   // console.log('Test 주석');
   // 스크롤 이벤트 리스너 추가 및 제거
@@ -29,22 +28,23 @@ export default function Home() {
       setLoading(true);
     }, 1000);
     // 모바일 width 확인
-    // if (window.innerWidth < 768) setMobile(true);
+    if (window.innerWidth < 768) setMobile(true);
 
     return () => {};
   }, []);
 
   return (
     <MasterContainer>
-      {/* <IntroContainer /> */}
       <MainContainer>
-        <Image
-          src="/src/Home_IMG/Logo_소예키즈 로고2.png"
-          alt={'soyes_logo'}
-          width={359}
-          height={85}
-          style={{ maxWidth: '100%', height: 'auto' }}
-        />
+        {!mobile && (
+          <Image
+            src="/src/Home_IMG/Logo_소예키즈 로고2.png"
+            alt={'soyes_logo'}
+            width={359}
+            height={85}
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        )}
         <Carousel />
         <h2>AI 상담 캐릭터</h2>
         <AvartarCard />

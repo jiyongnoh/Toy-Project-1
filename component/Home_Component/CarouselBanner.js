@@ -29,6 +29,11 @@ const BannerContainer = styled.div`
   justify-content: center;
   border-radius: 20px;
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    width: 24rem;
+    min-height: 12rem;
+  }
 `;
 
 const RecommendationBadge = styled.div`
@@ -47,6 +52,10 @@ const RecommendationBadge = styled.div`
   font-size: 25px;
   font-weight: 400;
   text-align: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Title = styled.h1`
@@ -56,6 +65,10 @@ const Title = styled.h1`
   margin-top: 2rem;
   font-family: 'Cafe24Ssurround';
   text-shadow: 5px 4px 3px #00000099;
+
+  @media (max-width: 768px) {
+    font-size: 25px;
+  }
 `;
 
 const Subtitle = styled.p`
@@ -68,6 +81,10 @@ const Subtitle = styled.p`
   line-height: 45px;
   text-align: left;
   text-shadow: 2px 2px 3px #000000b2;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
 `;
 
 const ImageContainer = styled.div`

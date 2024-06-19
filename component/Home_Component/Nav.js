@@ -123,6 +123,11 @@ export default function Nav() {
       {login ? (
         <NavUl>
           {/* <NavLi>
+            <Link href="/intro" passHref>
+              <NavBtn>intro</NavBtn>
+            </Link>
+          </NavLi> */}
+          {/* <NavLi>
             <Link href="/" passHref>
               <NavBtn>{t('main')}</NavBtn>
             </Link>

@@ -10,8 +10,8 @@ const ContentBlockWeb = ({ title, subtitle, iconPath, linkUrl, color }) => {
         <Image
           src={iconPath}
           alt="Content_Icon"
-          width={40}
-          height={40}
+          width={60}
+          height={60}
           style={{
             maxWidth: '100%',
             height: 'auto',
@@ -42,11 +42,11 @@ const ContentBlockWeb = ({ title, subtitle, iconPath, linkUrl, color }) => {
 
 const Container = styled.div`
   width: 390px;
-  height: 180px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: 1rem 2rem;
   background-color: #fffbe9;
 
   border: 2px solid #e7e7e7;
@@ -76,7 +76,7 @@ const Title = styled.h2`
   margin: 0;
   color: ${(props) => props.color || 'black'};
   font-family: AppleSDGothicNeoM00;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 600;
   user-select: none;
 
@@ -85,13 +85,14 @@ const Title = styled.h2`
   }
 `;
 
-const Subtitle = styled.p`
+const Subtitle = styled.span`
   margin: 0;
   color: #333333;
   font-family: AppleSDGothicNeoM00;
   font-size: 25px;
   font-weight: 400;
   user-select: none;
+  letter-spacing: -0.1em;
 
   @media (max-width: 768px) {
     font-size: 0.8rem;
@@ -99,6 +100,7 @@ const Subtitle = styled.p`
 `;
 
 const PlayButton = styled.button`
+  visibility: hidden; // 임시로 막아둠
   background: none;
   border: none;
   outline: none;

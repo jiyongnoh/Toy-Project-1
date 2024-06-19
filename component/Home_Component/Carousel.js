@@ -141,6 +141,10 @@ const StyledSlider = styled(Slider)`
     li {
       margin: 0 10px;
 
+      @media (max-width: 768px) {
+        margin: 0 5px;
+      }
+
       &.slick-active button:before {
         display: flex !important;
         justify-content: center;
@@ -149,6 +153,10 @@ const StyledSlider = styled(Slider)`
         opacity: 1;
 
         color: #9051ff; // 활성화된 dot 색상
+
+        @media (max-width: 768px) {
+          font-size: 20px;
+        }
       }
     }
 
@@ -160,6 +168,10 @@ const StyledSlider = styled(Slider)`
       &:hover,
       &:focus {
         color: #5c4db1; // dot의 호버/포커스 색상
+      }
+
+      @media (max-width: 768px) {
+        font-size: 10px;
       }
     }
   }

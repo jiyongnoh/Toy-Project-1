@@ -98,12 +98,12 @@ export default function Meditation() {
     return () => {};
   }, []);
   // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
-  useEffect(() => {
-    const loginSession = JSON.parse(localStorage.getItem('log'));
-    if (!loginSession) {
-      router.replace('/login');
-    }
-  }, [login]);
+  // useEffect(() => {
+  //   const loginSession = JSON.parse(localStorage.getItem('log'));
+  //   if (!loginSession) {
+  //     router.replace('/login');
+  //   }
+  // }, [login]);
 
   return (
     <MainContainer>
