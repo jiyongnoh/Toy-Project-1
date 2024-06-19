@@ -17,7 +17,7 @@ import InitChatBubble from '@/component/Chat_Component/InitChatBubble';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
-import { log, avarta } from '../store/state';
+import { log, avarta, mobile } from '../store/state';
 import CharacterSelector from '@/component/Chat_Component/CharacterSelector';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
@@ -91,7 +91,6 @@ const ebtClassMap = {
   Angry: 'Mood',
   Self: 'Self',
 };
-
 const ebtClassMapKorean = {
   School: '학업/성적',
   Friend: '대인관계',
@@ -110,10 +109,12 @@ export default function Test() {
   const [emotion, setEmotion] = useState('중립');
   const [messageArr, setMessageArr] = useState([]);
   const [initArr, setInitArr] = useState([]); //
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [testType, setTestType] = useState(''); // 상담 주제 6종
+  // 전역 변수
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [testType, setTestType] = useState('');
+  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
 
   const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
 
@@ -192,11 +193,9 @@ export default function Test() {
       console.log(error);
     }
   };
-
   const scrollToBottom = (chatBoxBody) => {
     chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
   };
-
   // 엘라 시작 멘트 관련 메서드
   const initElla = async () => {
     // 유저 EBT 결과 조회 (11종)
@@ -244,7 +243,7 @@ export default function Test() {
     }
   };
 
-  // messageArr 언마운트 처리
+  // 상담 페이지 초기 설정
   useEffect(() => {
     // 상담 화면에 처음 진입한 경우: 엘라 상담 화면으로 재설정
     if (!localStorage.getItem('avarta') && avartaAI === 'default') {
@@ -312,7 +311,7 @@ export default function Test() {
 
   useEffect(() => {
     // 엘라 상담 중, 주제가 선정되었을 경우
-    if (testType && (avartaAI === 'lala' || avartaAI === 'default')) {
+    if (testType && avartaAI === 'lala') {
       const ending_ment = {
         role: 'assistant',
         content: `'${ebtClassMapKorean[testType]}' 관련 상담을 진행할게! 반가워 나는 엘라야!`,
@@ -358,8 +357,8 @@ export default function Test() {
         /> */}
 
         <ChatBox className="chat-box">
-          <CharacterSelector isPending={isPending} />
-          <ChatBoxHeader>{headerTitle}</ChatBoxHeader>
+          {/* <CharacterSelector isPending={isPending} /> */}
+          {/* <ChatBoxHeader>{headerTitle}</ChatBoxHeader> */}
           <ChatBoxBody className="chat-box-body">
             {/* <ChatBubble message={headerTitle} role="assistant" /> */}
             {initArr.map((el, index) => (
@@ -397,8 +396,6 @@ export default function Test() {
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
           </ChatBoxBody>
-
-          <Live2DViewerTest emotion={emotion} avarta={name} />
           <ChatBoxFooter>
             <ChatBoxFooterInput
               value={chat}
@@ -447,6 +444,9 @@ export default function Test() {
           />
         </div> */}
       </FlexContainer>
+      <Live2DViewerContainer>
+        <Live2DViewerTest emotion={emotion} avarta={name} />
+      </Live2DViewerContainer>
     </MainContainer>
   );
 }
@@ -473,11 +473,11 @@ const FadeInSpan = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url('/src/soyesKids_Background_image.png');
+  /* background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
+  background-repeat: no-repeat; */
+  background-color: white;
   width: 100vw;
   height: 100vh;
 
@@ -485,6 +485,16 @@ const MainContainer = styled.div`
 
   @media (max-width: 768px) {
     overflow: hidden;
+  }
+`;
+
+const Live2DViewerContainer = styled.div`
+  position: fixed;
+  top: 25%;
+  right: 15%;
+
+  @media (max-width: 768px) {
+    display: none;
   }
 `;
 
@@ -522,10 +532,14 @@ const ChatBoxHeader = styled.div`
 const ChatBoxBody = styled.div`
   padding: 16px;
   overflow-y: auto;
-  height: calc(100% - 360px);
+  height: 86%;
   display: flex;
   flex-direction: column;
   width: auto;
+
+  @media (max-width: 768px) {
+    height: 86%;
+  }
 `;
 
 const ChatBoxFooter = styled.div`

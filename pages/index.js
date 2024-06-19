@@ -20,7 +20,7 @@ import { mobile } from '@/store/state';
 
 // Home 페이지
 export default function Home() {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
 
   // const { t } = useTranslation("nav");

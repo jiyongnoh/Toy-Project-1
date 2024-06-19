@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
@@ -18,6 +19,7 @@ export default function Nav() {
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const [showMenu, setShowMenu] = useState(currentPath !== '/' ? true : false);
   const [showNavbar, setShowNavbar] = useState(false);
+  // Resize 상태 처리
   const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
   const [windowSize, setWindowSize] = useState({
     width: undefined,
@@ -37,14 +39,14 @@ export default function Nav() {
     // 아바타 확인
     const avarta = localStorage.getItem('avarta');
     if (avarta) setAvartaAI(avarta);
-    // 모바일 확인
+    // Resize 상태 처리 (MobileFlag)
     const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       });
     };
-    // 네비바 스크롤 이벤트
+    // Nav바 스크롤 이벤트
     const handleScroll = () => {
       if (window.scrollY > 400) {
         setShowNavbar(true);
