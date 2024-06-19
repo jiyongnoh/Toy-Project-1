@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useRecoilState } from 'recoil';
-import { log, avarta } from '../../store/state';
+import { log, avarta, mobile } from '../../store/state';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import { useEffect, useState, useCallback, useMemo } from 'react';
@@ -18,8 +18,11 @@ export default function Nav() {
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const [showMenu, setShowMenu] = useState(currentPath !== '/' ? true : false);
   const [showNavbar, setShowNavbar] = useState(false);
-  const [mobile, setMobile] = useState(false);
-
+  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
   useEffect(() => {
     const loginSession = localStorage.getItem('log');
     // 로그인 세션 만료 처리
@@ -35,8 +38,12 @@ export default function Nav() {
     const avarta = localStorage.getItem('avarta');
     if (avarta) setAvartaAI(avarta);
     // 모바일 확인
-    if (window.innerWidth < 768) setMobile(true);
-
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
     // 네비바 스크롤 이벤트
     const handleScroll = () => {
       if (window.scrollY > 400) {
@@ -45,11 +52,20 @@ export default function Nav() {
         setShowNavbar(false);
       }
     };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (window.innerWidth < 768) setMobileFlag(true);
+    else setMobileFlag(false);
+  }, [windowSize]);
 
   // useCallback 적용. 불필요한 리렌더링 제거
   const handleSessionExpired = useCallback(() => {
@@ -142,7 +158,7 @@ export default function Nav() {
               <NavBtn>Meditation</NavBtn>
             </Link>
           </NavLi> */}
-          {mobile ? (
+          {mobileFlag ? (
             <NavListContainer>
               <NavBtn onClick={() => setShowMenu(!showMenu)}>
                 {showMenu ? '▲' : '▼'}

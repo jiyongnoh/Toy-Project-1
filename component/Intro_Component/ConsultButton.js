@@ -64,5 +64,6 @@ const YellowButton = styled.div`
     width: 305px;
     height: 65px;
     font-size: 20px;
+    border: 5px solid white;
   }
 `;

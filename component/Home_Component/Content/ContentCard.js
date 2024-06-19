@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import ContentBlock from './ContentBlock';
 import ContentBlockWeb from './ContentBlockWeb';
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { mobile } from '@/store/state';
 
 const contentArr = [
   {
@@ -32,17 +34,12 @@ const contentArr = [
 ];
 
 const ContentCard = () => {
-  const [mobile, setMobile] = useState(false);
-  useEffect(() => {
-    // 모바일 width 확인
-    if (window.innerWidth < 768) setMobile(true);
+  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
 
-    return () => {};
-  }, []);
   return (
     <ContentCardContainer>
       {contentArr.map((content, index) => {
-        return mobile ? (
+        return mobileFlag ? (
           <ContentBlock
             key={index}
             title={content.title}

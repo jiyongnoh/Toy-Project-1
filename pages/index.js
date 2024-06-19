@@ -15,28 +15,31 @@ import AvartarCard from '@/component/Home_Component/AvartarCard';
 import ContentCard from '@/component/Home_Component/Content/ContentCard';
 import Image from 'next/image';
 
+import { useRecoilState } from 'recoil';
+import { mobile } from '@/store/state';
+
 // Home 페이지
 export default function Home() {
   const [loading, setLoading] = useState(false);
-  const [mobile, setMobile] = useState(false);
+  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
+
   // const { t } = useTranslation("nav");
   // console.log('Test 주석');
   // 스크롤 이벤트 리스너 추가 및 제거
+
   useEffect(() => {
     // Loading (1 sec)
-    const timer = setTimeout(() => {
-      setLoading(true);
-    }, 1000);
+    // const timer = setTimeout(() => {
+    //   setLoading(true);
+    // }, 1000);
     // 모바일 width 확인
-    if (window.innerWidth < 768) setMobile(true);
-
     return () => {};
   }, []);
 
   return (
     <MasterContainer>
       <MainContainer>
-        {!mobile && (
+        {!mobileFlag && (
           <Image
             src="/src/Home_IMG/Logo_소예키즈 로고2.png"
             alt={'soyes_logo'}
@@ -48,7 +51,7 @@ export default function Home() {
         <Carousel />
         <h2>AI 상담 캐릭터</h2>
         <AvartarCard />
-        <ContentCard />
+        <ContentCard mobileFlag={mobileFlag} />
       </MainContainer>
       <TopButton />
     </MasterContainer>

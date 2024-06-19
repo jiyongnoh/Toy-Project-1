@@ -69,6 +69,7 @@ const Button = styled.div`
   @media (max-width: 768px) {
     width: 150px;
     height: 120px;
+    border: 5px solid white;
   }
 `;
 
