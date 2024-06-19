@@ -10,6 +10,7 @@ const avatarArr = [
   { name: 'lala', imgUrl: '/src/AvatarCard_IMG/charc_ella.png' },
   { name: 'pupu', imgUrl: '/src/AvatarCard_IMG/charc_pupu.png' },
   { name: 'ubi', imgUrl: '/src/AvatarCard_IMG/charc_ubi.png' },
+  { name: 'north', imgUrl: '/src/AvatarCard_IMG/charc_north.png' },
 ];
 
 const AvartarCard = () => {

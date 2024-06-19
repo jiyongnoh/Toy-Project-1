@@ -52,6 +52,13 @@ const avartaAI_info = {
     headerTitle: '전문상담사 - 소예',
     placehold: '나는 소예라고해!. 네 고민을 말해줘!',
   },
+  // 북극이는 임시로 소예로 보내기
+  north: {
+    name: 'soyes',
+    path: '/openAI/consulting_emotion_soyes',
+    headerTitle: '전문상담사 - 소예',
+    placehold: '나는 소예라고해!. 네 고민을 말해줘!',
+  },
   default: {
     name: 'lala',
     path: '/openAI/consulting_emotion_lala',
@@ -340,13 +347,15 @@ export default function Test() {
         dir="col"
         width="100vw"
         height="100%"
+        padding="0 1rem"
       >
-        <Image
+        {/* <Image
           src="/src/soyesKids_Logo.png"
           alt={'soyes_logo'}
           width={529}
           height={93}
-        />
+          style={{ maxWidth: '100%', height: 'auto' }}
+        /> */}
 
         <ChatBox className="chat-box">
           <CharacterSelector isPending={isPending} />
@@ -472,21 +481,25 @@ const MainContainer = styled.div`
   width: 100vw;
   height: 100vh;
 
+  position: relative;
+
   @media (max-width: 768px) {
     overflow: hidden;
   }
-
-  position: relative;
 `;
 
 const ChatBox = styled.div`
   position: relative;
   margin: 0 auto;
-  width: 600px;
-  max-width: 100%;
+  margin-top: 6rem;
+
+  width: 100%;
+  max-width: 37rem;
+
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
   overflow: hidden;
   max-height: calc(100vh - 150px);
   height: calc(100vh - 140px);

@@ -218,6 +218,12 @@ const NavContainer = styled.div`
   z-index: 1;
   animation: ${(props) => (props.show ? slideDown : 'none')} 0.3s ease-in-out;
 
+  @media (max-width: 1150px) {
+    height: fit-content;
+    align-items: start;
+    padding: 1rem;
+  }
+
   @media (max-width: 768px) {
     height: fit-content;
     align-items: start;
@@ -231,6 +237,13 @@ const NavUl = styled.ul`
   align-items: center;
   gap: 0.5rem;
 
+  @media (max-width: 1150px) {
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 0;
+    gap: 0;
+  }
+
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: flex-end;
@@ -242,6 +255,11 @@ const NavUl = styled.ul`
 const NavLi = styled.li`
   width: 100%;
   display: flex;
+
+  @media (max-width: 1150px) {
+    justify-content: flex-end;
+  }
+
   @media (max-width: 768px) {
     justify-content: flex-end;
   }
@@ -307,6 +325,17 @@ const NavBtn = styled.button`
     color: white;
   }
 
+  @media (max-width: 1150px) {
+    font-size: 13px;
+    margin: 2px;
+    padding: 10px 15px;
+
+    &:hover {
+      ${(props) => (props.selected ? null : 'padding: 10px 15px;')}
+      background-color: rgba(0, 42, 255, 0.5);
+    }
+  }
+
   @media (max-width: 768px) {
     font-size: 10px;
     margin: 2px;
@@ -320,5 +349,5 @@ const NavBtn = styled.button`
 
   cursor: pointer;
 
-  transition: 0.5s;
+  transition: 0.3s;
 `;

@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled, { keyframes } from "styled-components";
-import { FlexContainer } from "../styled-component/common";
-import { useEffect, useState, useRef } from "react";
+import styled, { keyframes } from 'styled-components';
+import { FlexContainer } from '../styled-component/common';
+import { useEffect, useState, useRef } from 'react';
 
-import { handlePtAnalsys } from "@/fetchAPI/testAPI";
+import { handlePtAnalsys } from '@/fetchAPI/testAPI';
 
-import PTestBubble from "@/component/Test_Component/PTestBubble";
-import Image from "next/image";
-import LoadingAnimation from "@/component/Chat_Component/LoadingAnimation";
-import { useRouter } from "next/router";
+import PTestBubble from '@/component/Test_Component/PTestBubble';
+import Image from 'next/image';
+import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+import { useRouter } from 'next/router';
 
-import { motion } from "framer-motion";
-import { psychologicalAsesssment } from "@/store/testGenerator";
+import { motion } from 'framer-motion';
+import { psychologicalAsesssment } from '@/store/testGenerator';
 
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
 export default function Test() {
   const [isPending, setIsPending] = useState(false);
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
-  const [select, setSelect] = useState("2"); // 유저 문항 선택지 1 || 2
+  const [select, setSelect] = useState('2'); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
-  const [resultType, setResultType] = useState("");
+  const [resultType, setResultType] = useState('');
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
 
@@ -45,13 +45,13 @@ export default function Test() {
       // 감정 분석 API 호출 이후 state 갱신
       const data = await handlePtAnalsys({
         resultText: resultType,
-        pUid: localStorage.getItem("id") || "dummy",
+        pUid: localStorage.getItem('id') || 'dummy',
       });
 
       setIsPending(false);
       setMessageArr([
         ...messageArr,
-        { role: "assistant", content: data.message },
+        { role: 'assistant', content: data.message },
       ]);
       setBottom(true);
     } catch (error) {
@@ -64,12 +64,12 @@ export default function Test() {
       const { value, done } = ptSessionRef.current.next(select);
       if (!done) {
         const question_message = {
-          role: "assistant",
+          role: 'assistant',
           content: value.question,
           imgURL: value.question_imgURL,
         };
         const selection_message = {
-          role: "user",
+          role: 'user',
           content: value.selection,
           imgURL: value.selection_imgURL,
         };
@@ -86,12 +86,12 @@ export default function Test() {
       // 검사 문항 진행
       if (!done) {
         const question_message = {
-          role: "assistant",
+          role: 'assistant',
           content: value.question,
           imgURL: value.question_imgURL,
         };
         const selection_message = {
-          role: "user",
+          role: 'user',
           content: value.selection,
           imgURL: value.selection_imgURL,
         };
@@ -106,7 +106,7 @@ export default function Test() {
           setMessageArr([
             ...messageArr,
             {
-              role: "assistant",
+              role: 'assistant',
               content: result,
             },
           ]);
@@ -124,7 +124,7 @@ export default function Test() {
   // 성격검사 AI 분석 트리거
   useEffect(() => {
     if (resultTrigger) {
-      console.log("AI PT 분석 API 호출");
+      console.log('AI PT 분석 API 호출');
       requetAnalysis();
     }
   }, [resultTrigger]);
@@ -145,17 +145,18 @@ export default function Test() {
         dir="col"
         width="100vw"
         height="100%"
+        padding="0 1rem"
       >
-        <Image
+        {/* <Image
           src="/src/soyesKids_Logo.png"
           alt={"soyes_logo"}
           width={529}
           height={93}
-        />
+        /> */}
         <PTBox>
           <PTBoxHeader>성격 검사</PTBoxHeader>
           <PTBoxBody ref={chatBoxBody}>
-            <PTestBubble message={"성격검사 시작합니다!"} role="assistant" />
+            <PTestBubble message={'성격검사 시작합니다!'} role="assistant" />
             {messageArr.map((el, index) => (
               <div key={index}>
                 {el.imgURL ? (
@@ -199,7 +200,7 @@ export default function Test() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["pt", "nav"])),
+      ...(await serverSideTranslations(locale, ['pt', 'nav'])),
     },
   };
 }
@@ -217,7 +218,7 @@ const FadeInSpan = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url("/src/soyesKids_Background_image.png");
+  background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -235,8 +236,11 @@ const MainContainer = styled.div`
 const PTBox = styled.div`
   position: relative;
   margin: 0 auto;
-  width: 600px;
-  max-width: 100%;
+  margin-top: 6rem;
+
+  width: 100%;
+  max-width: 37rem;
+
   height: 100%;
   /* height: calc(100vh - 150px); */
   /* max-height: calc(100vh - 150px); */

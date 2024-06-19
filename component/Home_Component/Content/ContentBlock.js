@@ -39,8 +39,8 @@ const ContentBlock = ({ title, subtitle, iconPath, linkUrl, backColor }) => {
 };
 
 const Container = styled.div`
-  width: 990px;
-  height: 250px;
+  width: 390px;
+  height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,7 +66,7 @@ const TextContainer = styled.div`
 const Title = styled.h2`
   margin: 0;
   color: #9c6ef3;
-  font-size: 2.5rem;
+  font-size: 2rem;
   user-select: none;
 
   @media (max-width: 768px) {
@@ -77,7 +77,7 @@ const Title = styled.h2`
 const Subtitle = styled.p`
   margin: 0;
   color: #333;
-  font-size: 1.65rem;
+  font-size: 2rem;
   font-weight: bold;
   user-select: none;
 

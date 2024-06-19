@@ -197,13 +197,14 @@ export default function Test() {
         dir="col"
         width="100vw"
         height="100%"
+        padding="0 1rem"
       >
-        <Image
+        {/* <Image
           src="/src/soyesKids_Logo.png"
           alt={'soyes_logo'}
           width={529}
           height={93}
-        />
+        /> */}
         <EBTBox>
           <EBTClassSelector
             isProceeding={isProceeding}
@@ -283,8 +284,11 @@ const MainContainer = styled.div`
 const EBTBox = styled.div`
   position: relative;
   margin: 0 auto;
-  width: 600px;
-  max-width: 100%;
+  margin-top: 6rem;
+
+  width: 100%;
+  max-width: 37rem;
+
   height: 100%;
   /* height: calc(100vh - 150px); */
   /* max-height: calc(100vh - 150px); */
