@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 // PT 결과 분석 API 호출 함수
 export const handlePtAnalsys = async (input) => {
@@ -8,7 +8,7 @@ export const handlePtAnalsys = async (input) => {
       { PTDataSend: input },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -16,10 +16,10 @@ export const handlePtAnalsys = async (input) => {
     console.log(response);
     return response.data;
   } catch (err) {
-    console.log("PT 결과 분석 API 호출 실패");
+    console.log('PT 결과 분석 API 호출 실패');
     console.error(err);
     return {
-      message: "PT 결과 분석 API 호출 실패",
+      message: '해당 서비스는 로그인 후 사용 가능합니다!',
       emotion: 0,
     };
   }
@@ -33,7 +33,7 @@ export const handleEbtAnalsys = async (input) => {
       { EBTData: input },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -41,10 +41,10 @@ export const handleEbtAnalsys = async (input) => {
     console.log(response);
     return response.data;
   } catch (err) {
-    console.log("EBT 결과 분석 API 호출 실패");
+    console.log('EBT 결과 분석 API 호출 실패');
     console.error(err);
     return {
-      message: "EBT 결과 분석 API 호출 실패",
+      message: 'EBT 결과 분석 API 호출 실패',
       emotion: 0,
     };
   }

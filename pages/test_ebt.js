@@ -5,14 +5,11 @@ import { FlexContainer } from '../styled-component/common';
 import { useEffect, useState, useRef } from 'react';
 
 import { handleEbtAnalsys } from '@/fetchAPI/testAPI';
-import Image from 'next/image';
 import EBTestBubble from '@/component/Test_Component/EBTestBubble';
 import EBTClassSelector from '@/component/Test_Component/EBTClassSelector';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 
 // import { useRouter } from "next/router";
-
-import { motion } from 'framer-motion';
 import { ebtClassMap } from '@/store/testGenerator';
 
 import { useTranslation } from 'next-i18next';
@@ -35,10 +32,18 @@ export default function Test() {
   const ebtSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
 
-  const scrollToBottom_useRef = (chatBoxBody) => {
-    if (chatBoxBody.current) {
-      chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
-    }
+  const scrollToBottom_useRef = () => {
+    const ebtBoxBody = chatBoxBody.current;
+    if (ebtBoxBody.scrollHeight > 800)
+      window.scrollTo({
+        top: ebtBoxBody.scrollHeight, // 세로 스크롤 위치
+        left: 0, // 가로 스크롤 위치
+        behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
+      });
+
+    // if (chatBoxBody.current) {
+    //   chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
+    // }
   };
 
   // EBT 분석 요청 API 호출 메서드
@@ -91,9 +96,9 @@ export default function Test() {
       if (!done) {
         const start_message = {
           role: 'assistant',
-          content: `정서행동 검사 - [${
+          content: `정서행동 검사 - ${
             ebtClassMap[localStorage.getItem('EBTClass') || 'School'].name
-          }] 시작합니다!`,
+          } 시작합니다!`,
         };
         const question_message = {
           role: 'assistant',
@@ -184,7 +189,7 @@ export default function Test() {
   // 스크롤 바텀
   useEffect(() => {
     if (bottom) {
-      scrollToBottom_useRef(chatBoxBody);
+      scrollToBottom_useRef();
       setBottom(false);
     }
   }, [bottom]);
@@ -211,26 +216,19 @@ export default function Test() {
             EBTArr={ebtClassMap}
             ebtType={ebtType}
           />
-          <EBTBoxHeader>정서행동 검사</EBTBoxHeader>
+          {/* <EBTBoxHeader>정서행동 검사</EBTBoxHeader> */}
           <EBTBoxBody ref={chatBoxBody}>
             {messageArr.map((el, index) => (
               <div key={index}>
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.7 }}
-                >
-                  <EBTestBubble
-                    message={el.content}
-                    score={el.score}
-                    role={el.role}
-                    imgURL={el.imgURL}
-                    setSelect={index === messageArr.length - 1 && setSelect}
-                    setNext={index === messageArr.length - 1 && setNext}
-                    selected={el.selected}
-                  />
-                </motion.div>
+                <EBTestBubble
+                  message={el.content}
+                  score={el.score}
+                  role={el.role}
+                  imgURL={el.imgURL}
+                  setSelect={index === messageArr.length - 1 && setSelect}
+                  setNext={index === messageArr.length - 1 && setNext}
+                  selected={el.selected}
+                />
               </div>
             ))}
             {/* 로딩바 */}
@@ -266,39 +264,81 @@ const FadeInSpan = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url('/src/soyesKids_Background_image.png');
+  /* background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
+  background-repeat: no-repeat; */
+  background-color: #fdf6ff;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
+
+  position: relative;
 
   @media (max-width: 768px) {
     overflow: hidden;
   }
-
-  position: relative;
 `;
+
+// const MainContainer = styled.div`
+//   background-image: url('/src/soyesKids_Background_image.png');
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+
+//   width: 100vw;
+//   height: 100vh;
+
+//   @media (max-width: 768px) {
+//     overflow: hidden;
+//   }
+
+//   position: relative;
+// `;
 
 const EBTBox = styled.div`
-  position: relative;
-  margin: 0 auto;
-  margin-top: 6rem;
+  /* background-image: ${(props) =>
+    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
 
-  width: 100%;
-  max-width: 37rem;
+  width: 100vw;
+  background: inherit;
+  /* position: relative; */
+  /* margin: 0 auto; */
+  margin-top: 6rem;
+  padding: 0 5rem;
+  border-radius: 8px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 
   height: 100%;
-  /* height: calc(100vh - 150px); */
-  /* max-height: calc(100vh - 150px); */
 
-  background-color: #ffffff;
-  border-radius: 8px;
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  @media (max-width: 768px) {
+    height: 100%;
+    max-width: 37rem;
+    padding: 0;
+  }
 `;
+
+// const EBTBox = styled.div`
+//   position: relative;
+//   margin: 0 auto;
+//   margin-top: 6rem;
+
+//   width: 100%;
+//   max-width: 37rem;
+
+//   height: 100%;
+//   /* height: calc(100vh - 150px); */
+//   /* max-height: calc(100vh - 150px); */
+
+//   background-color: #ffffff;
+//   border-radius: 8px;
+
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   overflow: hidden;
+// `;
 
 const EBTBoxHeader = styled.div`
   background-color: #0084ff;
@@ -312,12 +352,35 @@ const EBTBoxHeader = styled.div`
 `;
 
 const EBTBoxBody = styled.div`
-  padding: 6px;
-  height: 91%;
+  /* background-image: ${(props) =>
+    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  width: 100vw;
+  background: inherit;
+  padding: 1rem;
   overflow-y: auto;
-  /* height: calc(100% - 360px); */
+  min-height: 75vh;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   width: auto;
+
+  @media (max-width: 768px) {
+    height: 86%;
+    min-height: 70vh;
+  }
 `;
+
+// const EBTBoxBody = styled.div`
+//   padding: 6px;
+//   height: 91%;
+//   overflow-y: auto;
+//   /* height: calc(100% - 360px); */
+
+//   display: flex;
+//   flex-direction: column;
+//   width: auto;
+// `;

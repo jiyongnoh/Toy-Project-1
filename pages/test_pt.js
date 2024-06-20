@@ -33,10 +33,17 @@ export default function Test() {
 
   if (!ptSessionRef.current) ptSessionRef.current = psychologicalAsesssment();
 
-  const scrollToBottom_useRef = (chatBoxBody) => {
-    if (chatBoxBody.current) {
-      chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
-    }
+  const scrollToBottom_useRef = () => {
+    const ptBoxBody = chatBoxBody.current;
+    if (ptBoxBody.scrollHeight > 800)
+      window.scrollTo({
+        top: ptBoxBody.scrollHeight, // 세로 스크롤 위치
+        left: 0, // 가로 스크롤 위치
+        behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
+      });
+    // if (chatBoxBody.current) {
+    //   chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
+    // }
   };
 
   // 성격 검사 분석 요청 API 호출 메서드
@@ -132,7 +139,7 @@ export default function Test() {
   // 스크롤 바텀
   useEffect(() => {
     if (bottom) {
-      scrollToBottom_useRef(chatBoxBody);
+      scrollToBottom_useRef();
       setBottom(false);
     }
   }, [bottom]);
@@ -143,7 +150,7 @@ export default function Test() {
         justify="center"
         align="center"
         dir="col"
-        width="100vw"
+        width="100%"
         height="100%"
         padding="0 1rem"
       >
@@ -153,32 +160,24 @@ export default function Test() {
           width={529}
           height={93}
         /> */}
-        <PTBox>
-          <PTBoxHeader>성격 검사</PTBoxHeader>
-          <PTBoxBody ref={chatBoxBody}>
+        <PTBox ref={chatBoxBody}>
+          {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
+          <PTBoxBody>
             <PTestBubble message={'성격검사 시작합니다!'} role="assistant" />
             {messageArr.map((el, index) => (
               <div key={index}>
                 {el.imgURL ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.7 }}
-                  >
-                    <PTestBubble
-                      message={el.content}
-                      role={el.role}
-                      imgURL={el.imgURL}
-                      setSelect={index === messageArr.length - 1 && setSelect}
-                      setNext={index === messageArr.length - 1 && setNext}
-                    />
-                  </motion.div>
-                ) : (
                   <PTestBubble
                     message={el.content}
                     role={el.role}
                     imgURL={el.imgURL}
+                    setSelect={index === messageArr.length - 1 && setSelect}
+                    setNext={index === messageArr.length - 1 && setNext}
+                  />
+                ) : (
+                  <PTestBubble
+                    message={el.content}
+                    role={el.role}
                     setSelect={index === messageArr.length - 1 && setSelect}
                     setNext={index === messageArr.length - 1 && setNext}
                   />
@@ -206,51 +205,90 @@ export async function getStaticProps({ locale }) {
 }
 
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
-const FadeInSpan = keyframes`
-  0% {
-    opacity: 0;
-    font-size: 1rem;
-  }
-  100% {
-    opacity: 1;
-    font-size: 3rem;
-  }
-`;
 
 const MainContainer = styled.div`
-  background-image: url('/src/soyesKids_Background_image.png');
+  /* background-image: url('/src/soyesKids_Background_image.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
-
-  width: 100vw;
-  height: 100vh;
+  background-repeat: no-repeat; */
+  background-color: #fdf6ff;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
 
   @media (max-width: 768px) {
     overflow: hidden;
   }
-
-  position: relative;
 `;
+
+// const MainContainer = styled.div`
+//   /* background-image: url('/src/soyesKids_Background_image.png');
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat; */
+
+//   background-color: #fdf6ff;
+
+//   width: 100vw;
+//   height: 100vh;
+
+//   @media (max-width: 768px) {
+//     overflow: hidden;
+//   }
+
+//   position: relative;
+// `;
 
 const PTBox = styled.div`
-  position: relative;
-  margin: 0 auto;
-  margin-top: 6rem;
+  /* background-image: ${(props) =>
+    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
 
-  width: 100%;
-  max-width: 37rem;
+  /* 화면 좁히기 가능 */
+  width: 100vw;
+  background: inherit;
+  /* position: relative; */
+  /* margin: 0 auto; */
+  margin-top: 6rem;
+  padding: 0 5rem;
+  border-radius: 8px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 
   height: 100%;
-  /* height: calc(100vh - 150px); */
-  /* max-height: calc(100vh - 150px); */
 
-  background-color: #ffffff;
-  border-radius: 8px;
+  /* 채팅 중앙정렬 가능 */
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: 100%;
+    max-width: 37rem;
+    padding: 0;
+  }
 `;
+
+// const PTBox = styled.div`
+//   position: relative;
+//   margin: 0 auto;
+//   margin-top: 6rem;
+
+//   width: 100%;
+//   max-width: 37rem;
+
+//   height: 100%;
+//   /* height: calc(100vh - 150px); */
+//   /* max-height: calc(100vh - 150px); */
+
+//   background-color: #ffffff;
+//   border-radius: 8px;
+
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+//   overflow: hidden;
+// `;
 
 const PTBoxHeader = styled.div`
   background-color: #0084ff;
@@ -264,15 +302,40 @@ const PTBoxHeader = styled.div`
 `;
 
 const PTBoxBody = styled.div`
-  padding: 6px;
-  height: 91%;
+  /* background-image: ${(props) =>
+    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  width: 100vw;
+  background: inherit;
+  padding: 1rem;
   overflow-y: auto;
-  /* height: calc(100% - 360px); */
+  min-height: 75vh;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
   width: auto;
+
+  gap: 0.4rem;
+
+  @media (max-width: 768px) {
+    height: 86%;
+    min-height: 70vh;
+  }
 `;
+
+// const PTBoxBody = styled.div`
+//   padding: 6px;
+//   height: 91%;
+//   overflow-y: auto;
+//   /* height: calc(100% - 360px); */
+
+//   display: flex;
+//   flex-direction: column;
+//   width: auto;
+// `;
 
 // const PTBoxFooter = styled.div`
 //   bottom: 0;

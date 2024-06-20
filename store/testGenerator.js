@@ -38,10 +38,10 @@ export function* psychologicalAsesssment() {
     question:
       '오늘 처음 유치원에 가는 날이야. 반에 들어가니 친구들이 많이 와 있어. 나는 어떻게 할까?”',
     selection: [
-      '1. 빈자리에서 선생님을 기다릴 거야',
-      '2. 새 친구에게 말을 건네 볼 거야',
+      '빈자리에서 선생님을 기다릴 거야',
+      '새 친구에게 말을 건네 볼 거야',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -54,10 +54,10 @@ export function* psychologicalAsesssment() {
     question:
       '오늘은 종이접기를 하는 날이야. 풀잎반에서는 선생님께서 종이접기를 가르쳐 주시고, 꽃잎반에서는 내 마음대로 종이접기를 할 수 있어. 나는 어떤 반으로 갈까?',
     selection: [
-      '1: 풀잎반에서 선생님께서 가르쳐 주시는 대로 종이접기를 할 거야',
-      '2: 꽃잎반에서 내 마음대로 종이접기를 할 거야',
+      '풀잎반에서 선생님께서 가르쳐 주시는 대로 종이접기를 할 거야',
+      '꽃잎반에서 내 마음대로 종이접기를 할 거야',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -70,10 +70,10 @@ export function* psychologicalAsesssment() {
     question:
       '선생님께서 신발정리를 도와줄 친구가 한 명 필요하다고 하셔. 나는 어떻게 할까?',
     selection: [
-      '1: 칭찬 받고 싶어서 내가 한다고 할 거야',
-      '2: 하고 싶지 않아서 가만히 있을 거야',
+      '칭찬 받고 싶어서 내가 한다고 할 거야',
+      '하고 싶지 않아서 가만히 있을 거야',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -86,10 +86,10 @@ export function* psychologicalAsesssment() {
     question:
       '점토놀이를 하는데 짝꿍이 갑자기 슬픈 표정을 하더니 울기 시작해. 나는 어떻게 할까?',
     selection: [
-      '1: 무슨 일인지 물어보고 위로해 줄 거야',
-      '2: 그만 울고 점토놀이를 하자고 할 거야',
+      '무슨 일인지 물어보고 위로해 줄 거야',
+      '그만 울고 점토놀이를 하자고 할 거야',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -102,10 +102,10 @@ export function* psychologicalAsesssment() {
     question:
       '주말에 맛집에 갔는데 너무 맛있어서 친구에게 알려주고 싶어. 나라면 어떻게 할까?',
     selection: [
-      '1: 정말 맛있었다고 신나게 말해 줄 거야',
-      '2: 어떤 게 맛있었는지 하나씩 천천히 말해 줄 거야',
+      '정말 맛있었다고 신나게 말해 줄 거야',
+      '어떤 게 맛있었는지 하나씩 천천히 말해 줄 거야',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -118,10 +118,10 @@ export function* psychologicalAsesssment() {
     question:
       '친구는 역할놀이를 하자고 하고 나는 블록놀이를 하고 싶어. 나는 어떻게 할까?',
     selection: [
-      '1: 친구가 하고 싶은 역할놀이를 할 거야.',
-      '2: 내가 하고 싶은 블록놀이를 할 거야',
+      '친구가 하고 싶은 역할놀이를 할 거야.',
+      '내가 하고 싶은 블록놀이를 할 거야',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -133,10 +133,10 @@ export function* psychologicalAsesssment() {
   const answer7 = yield {
     question: '키즈카페에 놀러 왔어. 어떤 놀이기구를 먼저 탈까?',
     selection: [
-      '1: 전에 탔던 놀이기구를 먼저 탈래',
-      '2: 새로운 놀이기구를 먼저 탈래',
+      '전에 탔던 놀이기구를 먼저 탈래',
+      '새로운 놀이기구를 먼저 탈래',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -149,10 +149,10 @@ export function* psychologicalAsesssment() {
     question:
       '소풍을 왔어. 처음 보는 친구들이 재밌는 장난감을 갖고 놀고 있어. 나는 어떻게 할까?',
     selection: [
-      '1: 처음 보는 친구들이라 가까이 가지 않을래',
-      '2: 처음 보는 친구들한테 가서 물어볼래',
+      '처음 보는 친구들이라 가까이 가지 않을래',
+      '처음 보는 친구들한테 가서 물어볼래',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -165,10 +165,10 @@ export function* psychologicalAsesssment() {
     question:
       '놀이터에서 무서운 개를 만난 적이 있어. 친구들이 다시 그 놀이터에 가자고 해. 나라면 어떻게 할까?',
     selection: [
-      '1: 개가 나타날 수 있으니 안 갈래',
-      '2: 개가 나타나지 않을 거라 생각하고 갈래',
+      '개가 나타날 수 있으니 안 갈래',
+      '개가 나타나지 않을 거라 생각하고 갈래',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -180,8 +180,8 @@ export function* psychologicalAsesssment() {
   const answer10 = yield {
     question:
       '엄마가 읽으라고 한 책을 다 읽고 이제 자유롭게 놀 수 있어. 무얼 하고 놀까?',
-    selection: ['1: 혼자 하고 싶은 걸 할 래', '2: 친구들이랑 같이 놀래'],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    selection: ['혼자 하고 싶은 걸 할 래', '친구들이랑 같이 놀래'],
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -193,8 +193,8 @@ export function* psychologicalAsesssment() {
   const answer11 = yield {
     question:
       'TV에서 한 아이가 강아지가 많이 아파서 울기 시작해. 나는 어떨 거 같아?',
-    selection: ['1: 나도 눈물이 날 거 같아', '2: 어떻게 되는지 계속 볼 래'],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    selection: ['나도 눈물이 날 거 같아', '어떻게 되는지 계속 볼 래'],
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -207,10 +207,10 @@ export function* psychologicalAsesssment() {
     question:
       '마트에 너무 갖고 싶은 장난감이 있는데 어제 다른 장남감을 샀어. 어떻게 하면 좋을까?',
     selection: [
-      '1: 너무 갖고 싶어서 또 사 달라고 할래',
-      '2: 너무 갖고 싶지만 어제 샀으니 안 사도 돼',
+      '너무 갖고 싶어서 또 사 달라고 할래',
+      '너무 갖고 싶지만 어제 샀으니 안 사도 돼',
     ],
-    question_imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+    question_imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     selection_imgURL: [
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
       '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
@@ -292,15 +292,15 @@ export function* ebtSchool() {
   const answer1 = yield {
     question: {
       content: '학교생활 하는 건 어때?',
-      imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+      imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     },
     selection: {
       content: ['별로야', '그냥 그래', '좋아'],
       score: [2, 1, 0],
       imgURL: [
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+        '/src/EBT_IMG/Icon/EBT_Bad_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Normal_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Good_Icon_IMG.png',
       ],
     },
   };
@@ -309,15 +309,15 @@ export function* ebtSchool() {
   const answer2 = yield {
     question: {
       content: '담임 선생님은 어떠셔?',
-      imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+      imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     },
     selection: {
       content: ['별로야', '그냥 그래', '좋아'],
       score: [2, 1, 0],
       imgURL: [
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+        '/src/EBT_IMG/Icon/EBT_Bad_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Normal_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Good_Icon_IMG.png',
       ],
     },
   };
@@ -326,7 +326,7 @@ export function* ebtSchool() {
   const answer3 = yield {
     question: {
       content: '숙제는 잘 해 가?',
-      imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+      imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     },
     selection: {
       content: [
@@ -336,9 +336,9 @@ export function* ebtSchool() {
       ],
       score: [2, 1, 0],
       imgURL: [
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+        '/src/EBT_IMG/Icon/EBT_Bad_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Normal_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Good_Icon_IMG.png',
       ],
     },
   };
@@ -347,15 +347,15 @@ export function* ebtSchool() {
   const answer4 = yield {
     question: {
       content: '수업에 집중하는 건 어때?',
-      imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+      imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     },
     selection: {
       content: ['못하겠어', '그냥 그래', '잘할 수 있어'],
       score: [2, 1, 0],
       imgURL: [
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+        '/src/EBT_IMG/Icon/EBT_Bad_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Normal_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Good_Icon_IMG.png',
       ],
     },
   };
@@ -364,15 +364,15 @@ export function* ebtSchool() {
   const answer5 = yield {
     question: {
       content: '좋아하는 과목이 있어?',
-      imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+      imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     },
     selection: {
       content: ['없어', '1~2 과목', '많아'],
       score: [2, 1, 0],
       imgURL: [
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+        '/src/EBT_IMG/Icon/EBT_Bad_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Normal_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Good_Icon_IMG.png',
       ],
     },
   };
@@ -381,15 +381,15 @@ export function* ebtSchool() {
   const answer6 = yield {
     question: {
       content: '공부 잘 하는 편이야?',
-      imgURL: '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+      imgURL: '/src/PT_IMG/Test/PT_Question_IMG_1.png',
     },
     selection: {
       content: ['아니 못해', '보통이야', '응 잘해'],
       score: [2, 1, 0],
       imgURL: [
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
-        '/src/PT_IMG/tegami_yomu_woman_hagaki.png',
+        '/src/EBT_IMG/Icon/EBT_Bad_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Normal_Icon_IMG.png',
+        '/src/EBT_IMG/Icon/EBT_Good_Icon_IMG.png',
       ],
     },
   };
