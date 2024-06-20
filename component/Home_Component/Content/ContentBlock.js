@@ -24,7 +24,9 @@ const ContentBlock = ({
         }}
       />
       <TextContainer>
-        <Title color={color}>{title}</Title>
+        <StyledLink href={linkUrl}>
+          <Title color={color}>{title}</Title>
+        </StyledLink>
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
       <PlayButton>
@@ -44,6 +46,9 @@ const ContentBlock = ({
     </Container>
   );
 };
+const StyledLink = styled(Link)`
+  text-decoration: none;
+`;
 
 const Container = styled.div`
   width: 435px;
@@ -79,8 +84,14 @@ const Title = styled.h2`
   font-family: AppleSDGothicNeoM00;
   letter-spacing: -0.1rem;
   font-weight: 600;
+  transition: 0.3s;
+
+  &:hover {
+    opacity: 0.7;
+  }
 
   user-select: none;
+
   @media (max-width: 768px) {
     font-size: 1.2rem;
   }
