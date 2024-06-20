@@ -149,8 +149,9 @@ export default function Test() {
     try {
       messageArr.push({ role: 'user', content: message }); // 내 채팅 추가.
       setIsPending(true); // 로딩 on
-      // 감정 분석 API 호출 이후 state 갱신
-      const res = await emotionAPI([{ role: 'user', content: message }]);
+      // 감정 분석 API 호출 이후 state 갱신 (임시로 막아둠)
+      const res = '긍정';
+      // const res = await emotionAPI([{ role: 'user', content: message }]);
       setEmotion(res);
 
       // Chat Compleation Request
@@ -188,8 +189,9 @@ export default function Test() {
         });
         return;
       }
-      // Audio URL 생성
-      const audioURL = await handleClovaVoice(data.message);
+      // Audio URL 생성 (임시로 막아둠)
+      const audioURL = '';
+      // const audioURL = await handleClovaVoice(data.message);
       const media = data.message.match(/추천/) !== null; // main
       // const media = messageArr.length; // test
       const candle = data.message.match(/촛불/) !== null;
@@ -216,11 +218,12 @@ export default function Test() {
 
   const scrollToBottom = () => {
     const chatBoxBody = chatBoxRef.current;
-    window.scrollTo({
-      top: chatBoxBody.scrollHeight, // 세로 스크롤 위치
-      left: 0, // 가로 스크롤 위치
-      behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
-    });
+    if (chatBoxBody.scrollHeight > 900)
+      window.scrollTo({
+        top: chatBoxBody.scrollHeight, // 세로 스크롤 위치
+        left: 0, // 가로 스크롤 위치
+        behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
+      });
   };
   // 엘라 시작 멘트 관련 메서드
   const initElla = async () => {
