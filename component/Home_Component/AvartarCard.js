@@ -40,13 +40,15 @@ const AvartarCard = () => {
 };
 
 const AvartarCardContainer = styled.div`
+  width: 100%;
   position: relative;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 6rem;
 
   @media (max-width: 768px) {
     gap: 0.3rem;
+    padding: 0 1rem;
   }
 `;
 

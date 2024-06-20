@@ -14,24 +14,26 @@ const CarouselBanner = ({ ment, backgroundUrl }) => {
 const BannerContainer = styled.div`
   position: relative;
   width: 100%;
-  height: 100%;
-  min-height: 380px;
+  height: auto;
+  min-height: 527px;
 
-  background: ${(props) =>
-      props.backgroundUrl
-        ? `url(${props.backgroundUrl})`
-        : 'url(/src/Carousel_IMG/Banner_Background_IMG_요가명상.png)'}
-    no-repeat bottom center;
+  background-image: ${(props) =>
+    props.backgroundUrl
+      ? `url(${props.backgroundUrl})`
+      : 'url(/src/Carousel_IMG/Banner_Background_IMG_요가명상.png)'};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
+
   overflow: hidden;
 
   @media (max-width: 768px) {
-    width: 24rem;
+    width: 26rem;
     min-height: 12rem;
   }
 `;

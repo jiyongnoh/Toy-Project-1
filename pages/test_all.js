@@ -18,7 +18,7 @@ import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
 import { log, avarta, mobile } from '../store/state';
-import CharacterSelector from '@/component/Chat_Component/CharacterSelector';
+// import CharacterSelector from '@/component/Chat_Component/CharacterSelector';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 
@@ -31,39 +31,57 @@ const avartaAI_info = {
   pupu: {
     name: 'pupu',
     path: '/openAI/consulting_emotion_pupu',
-    headerTitle: '공감친구 - 푸푸',
+    headerTitle: '공감친구 푸푸',
     placehold: '나는 공감친구 푸푸야. 같이 놀자!',
+    iconUrl: '/src/Consult_IMG/Icon/Consult_Pupu_Icon_IMG.png',
+    backgroundImgUrl:
+      '/src/Consult_IMG/Background/Consult_Pupu_Background_IMG.png',
   },
   ubi: {
     name: 'ubi',
     path: '/openAI/consulting_emotion_ubi',
-    headerTitle: '학습친구 - 우비',
+    headerTitle: '학습친구 우비',
     placehold: '나는 학습친구 우비야. 같이 공부하자!',
+    iconUrl: '/src/Consult_IMG/Icon/Consult_Ubi_Icon_IMG.png',
+    backgroundImgUrl:
+      '/src/Consult_IMG/Background/Consult_Ubi_Background_IMG.png',
   },
   lala: {
     name: 'lala',
     path: '/openAI/consulting_emotion_lala',
-    headerTitle: '정서멘토 - 엘라',
+    headerTitle: '정서멘토 엘라',
     placehold: '나는 정서멘토 엘라야. 우리 얘기하자!',
+    iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
+    backgroundImgUrl:
+      '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
   },
   soyes: {
     name: 'soyes',
     path: '/openAI/consulting_emotion_soyes',
-    headerTitle: '전문상담사 - 소예',
+    headerTitle: '심리상담 소예',
     placehold: '나는 소예라고해!. 네 고민을 말해줘!',
+    iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
+    backgroundImgUrl:
+      '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
   },
   // 북극이는 임시로 소예로 보내기
   north: {
     name: 'soyes',
     path: '/openAI/consulting_emotion_soyes',
-    headerTitle: '전문상담사 - 소예',
+    headerTitle: '심리상담 소예',
     placehold: '나는 소예라고해!. 네 고민을 말해줘!',
+    iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
+    backgroundImgUrl:
+      '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
   },
   default: {
     name: 'lala',
     path: '/openAI/consulting_emotion_lala',
-    headerTitle: '정서멘토 - 엘라',
+    headerTitle: '정서멘토 엘라',
     placehold: '나는 정서멘토 엘라야. 우리 얘기하자!',
+    iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
+    backgroundImgUrl:
+      '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
   },
 };
 const unMount_api_info = {
@@ -115,6 +133,8 @@ export default function Test() {
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
+  // chatBoxRef
+  const chatBoxRef = useRef(null); // Reference for the chat container
 
   const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
 
@@ -193,8 +213,14 @@ export default function Test() {
       console.log(error);
     }
   };
-  const scrollToBottom = (chatBoxBody) => {
-    chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
+
+  const scrollToBottom = () => {
+    const chatBoxBody = chatBoxRef.current;
+    window.scrollTo({
+      top: chatBoxBody.scrollHeight, // 세로 스크롤 위치
+      left: 0, // 가로 스크롤 위치
+      behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
+    });
   };
   // 엘라 시작 멘트 관련 메서드
   const initElla = async () => {
@@ -291,7 +317,6 @@ export default function Test() {
 
   // avartaAI 관련 처리
   useEffect(() => {
-    console.log(avartaAI);
     if (avartaAI === 'default') return;
     // 엘라일 경우
     if (avartaAI === 'lala') {
@@ -332,21 +357,25 @@ export default function Test() {
   }, [flagEnter]);
 
   // 스크롤 바텀 효과. 채팅 시 발동
+  // useEffect(() => {
+  //   const chatBoxBody = document.querySelector('.chat-box-body');
+  //   chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
+  // }, [isPending, isInitPending]);
+
   useEffect(() => {
-    const chatBox = document.querySelector('.chat-box');
-    const chatBoxBody = chatBox.querySelector('.chat-box-body');
-    scrollToBottom(chatBoxBody);
-  }, [isPending, isInitPending]);
+    scrollToBottom();
+  }, [isPending]);
 
   return (
-    <MainContainer>
+    <MainContainer className="main-container">
       <FlexContainer
+        className="flex-container"
         justify="center"
         align="center"
         dir="col"
         width="100vw"
         height="100%"
-        padding="0 1rem"
+        padding={mobileFlag ? '0' : '0 1rem'}
       >
         {/* <Image
           src="/src/soyesKids_Logo.png"
@@ -356,7 +385,11 @@ export default function Test() {
           style={{ maxWidth: '100%', height: 'auto' }}
         /> */}
 
-        <ChatBox className="chat-box">
+        <ChatBox
+          className="chat-box"
+          ref={chatBoxRef}
+          backgroundImgUrl={avartaAI_info[avartaAI].backgroundImgUrl}
+        >
           {/* <CharacterSelector isPending={isPending} /> */}
           {/* <ChatBoxHeader>{headerTitle}</ChatBoxHeader> */}
           <ChatBoxBody className="chat-box-body">
@@ -366,6 +399,8 @@ export default function Test() {
                 key={index}
                 message={el.content}
                 role={el.role}
+                iconUrl={avartaAI_info[avartaAI].iconUrl}
+                headerTitle={avartaAI_info[avartaAI].headerTitle}
                 btn={el.btn}
                 setTestType={setTestType}
                 testType={testType}
@@ -376,6 +411,8 @@ export default function Test() {
                 key={index}
                 message={el.content}
                 role={el.role}
+                iconUrl={avartaAI_info[avartaAI].iconUrl}
+                headerTitle={avartaAI_info[avartaAI].headerTitle}
                 audioURL={el.audioURL}
                 media={
                   el.media
@@ -411,7 +448,7 @@ export default function Test() {
                 )
                   setFlagEnter(true);
               }}
-              placeholder={placehold}
+              // placeholder={placehold}
               isPending={isPending}
               isInitPending={isInitPending}
             />
@@ -422,11 +459,22 @@ export default function Test() {
               }}
               isPending={isPending || isInitPending}
             >
-              {isPending || isInitPending ? (
+              <Image
+                src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
+                alt={'send_icon'}
+                width={72}
+                height={57}
+              />
+              {/* {isPending || isInitPending ? (
                 <span class="material-symbols-outlined">block</span>
               ) : (
-                <span class="material-symbols-outlined">send</span>
-              )}
+                <Image
+                  src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
+                  alt={'send_icon'}
+                  width={72}
+                  height={57}
+                />
+              )} */}
             </ChatBoxFooterButton>
           </ChatBoxFooter>
         </ChatBox>
@@ -477,9 +525,10 @@ const MainContainer = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; */
-  background-color: white;
+  background-color: #fdf6ff;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
 
   position: relative;
 
@@ -489,6 +538,7 @@ const MainContainer = styled.div`
 `;
 
 const Live2DViewerContainer = styled.div`
+  display: none; // 임시로 막아두기
   position: fixed;
   top: 25%;
   right: 15%;
@@ -499,40 +549,54 @@ const Live2DViewerContainer = styled.div`
 `;
 
 const ChatBox = styled.div`
-  position: relative;
-  margin: 0 auto;
+  /* background-image: ${(props) =>
+    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+
+  width: 100vw;
+  background: inherit;
+  /* position: relative; */
+  /* margin: 0 auto; */
   margin-top: 6rem;
-
-  width: 100%;
-  max-width: 37rem;
-
-  background-color: #ffffff;
+  padding: 0 5rem;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 
-  overflow: hidden;
-  max-height: calc(100vh - 150px);
-  height: calc(100vh - 140px);
+  min-height: 80vh;
+  height: 100%;
 
   @media (max-width: 768px) {
     height: 100%;
+    max-width: 37rem;
+    padding: 0;
   }
 `;
 
-const ChatBoxHeader = styled.div`
-  background-color: #0084ff;
-  color: #ffffff;
-  padding: 16px;
-  font-size: 20px;
-  font-weight: bold;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-`;
+// const ChatBoxHeader = styled.div`
+//   background-color: #0084ff;
+//   color: #ffffff;
+//   padding: 16px;
+//   font-size: 20px;
+//   font-weight: bold;
+//   border-top-left-radius: 8px;
+//   border-top-right-radius: 8px;
+// `;
 
 const ChatBoxBody = styled.div`
-  padding: 16px;
+  /* background-image: ${(props) =>
+    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  width: 100vw;
+  background: inherit;
+  padding: 1rem;
   overflow-y: auto;
-  height: 86%;
+  min-height: 80vh;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
   width: auto;
@@ -543,24 +607,24 @@ const ChatBoxBody = styled.div`
 `;
 
 const ChatBoxFooter = styled.div`
+  margin-top: 1rem;
   bottom: 0;
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  border-top: 1px solid #e6e6e6;
   padding: 8px 16px;
 `;
 
 const ChatBoxFooterInput = styled.input`
-  flex: 1;
-  padding: 8px;
+  width: 100%;
+  padding: 2rem;
   border: 1px solid #e6e6e6;
-  border-radius: 8px;
-  font-size: 16px;
+  border-radius: 3.5rem;
+  font-size: 1.2rem;
   outline: none;
   pointer-events: ${(props) =>
     props.isPending || props.isInitPending ? 'none' : 'auto'};
-  background-color: ${(props) => (props.isInitPending ? '#f0f0f0' : '#ffffff')};
+  background-color: ${(props) =>
+    props.isPending || props.isInitPending ? '#f0f0f0' : '#ffffff'};
   transition: background-color 0.3s ease;
 
   &::placeholder {
@@ -578,12 +642,17 @@ const ChatBoxFooterInput = styled.input`
       background-color: #0084ff;
     }
   }
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+  }
 `;
 
 const ChatBoxFooterButton = styled.button`
+  background: inherit;
   margin-left: 8px;
   padding: 5px 12px;
-  background-color: ${(props) => (props.isPending ? '#e5e5ea' : '#0084ff')};
   color: #ffffff;
   font-size: 16px;
   font-weight: bold;
@@ -592,11 +661,11 @@ const ChatBoxFooterButton = styled.button`
   cursor: ${(props) => (props.isPending ? '' : 'pointer')};
 
   &:hover {
-    background-color: ${(props) => (props.isPending ? '#e5e5ea' : '#0073e6')};
+    opacity: 0.7;
   }
 
   &:active {
-    background-color: ${(props) => (props.isPending ? '#e5e5ea' : '#0073e6')};
+    background-color: ${(props) => (props.isPending ? '#e5e5ea' : '#B88CD5')};
   }
   display: flex;
   transition: 0.2s;

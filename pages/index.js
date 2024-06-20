@@ -39,7 +39,7 @@ export default function Home() {
   return (
     <MasterContainer>
       <MainContainer>
-        {!mobileFlag && (
+        {/* {!mobileFlag && (
           <Image
             src="/src/Home_IMG/Logo_소예키즈 로고2.png"
             alt={'soyes_logo'}
@@ -47,13 +47,13 @@ export default function Home() {
             height={85}
             style={{ maxWidth: '100%', height: 'auto' }}
           />
-        )}
+        )} */}
         <Carousel />
-        <h2>AI 상담 캐릭터</h2>
+        <AvartarTitle>AI 상담 캐릭터</AvartarTitle>
         <AvartarCard />
         <ContentCard mobileFlag={mobileFlag} />
       </MainContainer>
-      <TopButton />
+      {/* <TopButton /> */}
     </MasterContainer>
 
     // <PageContainer>
@@ -136,12 +136,11 @@ const MainContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   background-color: white;
-  padding: 2rem;
 
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
 
   gap: 1rem;
 
@@ -149,6 +148,11 @@ const MainContainer = styled.div`
     background-image: url('/src/Background_IMG/Mobile/mobile_background_2.png');
     justify-content: center;
   }
+`;
+
+const AvartarTitle = styled.h2`
+  font-family: AppleSDGothicNeoB00;
+  font-weight: 600;
 `;
 
 // const Title = styled.h1`

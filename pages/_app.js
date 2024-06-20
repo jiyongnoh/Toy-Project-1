@@ -27,13 +27,14 @@ function App({ Component, pageProps, router }) {
       </Head>
       <RecoilRoot>
         <AnimatePresence mode="wait">
-          {/* <Nav />
-            <Component {...pageProps} /> */}
-          <Page key={router.asPath}>
+          <Nav />
+          <Component {...pageProps} />
+          <Footer />
+          {/* <Page key={router.asPath}>
             <Nav />
             <Component {...pageProps} />
             <Footer />
-          </Page>
+          </Page> */}
         </AnimatePresence>
       </RecoilRoot>
       <script src="https://cubism.live2d.com/sdk-web/cubismcore/live2dcubismcore.min.js"></script>

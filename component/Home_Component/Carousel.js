@@ -113,8 +113,8 @@ const Carousel = () => {
 export default Carousel;
 
 const StyledSlider = styled(Slider)`
-  width: 1200px;
-  height: 380px;
+  width: 1920px;
+  height: auto;
   display: flex;
   justify-content: center;
 
@@ -193,8 +193,7 @@ const StyledSlider = styled(Slider)`
     z-index: 1;
   } */
   @media (max-width: 768px) {
-    width: 24rem;
-    height: 12rem;
+    width: 26rem;
   }
 `;
 

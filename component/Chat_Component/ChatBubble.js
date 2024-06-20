@@ -4,22 +4,25 @@ import AudioPlayerButton from './AudioPlayerButton';
 import VideoModal from './VideoModal';
 import Image from 'next/image';
 
-const ChatBubble = ({ message, isMine, role, audioURL, media }) => {
+const ChatBubble = ({
+  message,
+  isMine,
+  role,
+  audioURL,
+  media,
+  iconUrl,
+  headerTitle,
+}) => {
   // console.log(media);
   return (
     <BubbleContainer role={role}>
       {role !== 'user' ? (
-        <Image
-          src="/src/Consult_IMG/Consult_Soyes_Icon_IMG.png"
-          alt={'soyes_logo'}
-          width={45}
-          height={45}
-        />
+        <Image src={iconUrl} alt={'avartar_icon'} width={45} height={45} />
       ) : null}
 
       {audioURL ? (
         <AudioContanier message={message}>
-          {role !== 'user' ? <AvartarTitle>심리상담 소예</AvartarTitle> : null}
+          {role !== 'user' ? <AvartarTitle>{headerTitle}</AvartarTitle> : null}
           <StyledBubble isMine={isMine} role={role}>
             <MessageP>
               {message}
@@ -57,44 +60,61 @@ const BubbleContainer = styled.div`
 // Styled Components
 const StyledBubble = styled.div`
   max-width: 100%;
-  padding: 10px;
-  border-radius: 10px;
+  padding: 1rem;
+  border-radius: 1rem;
   margin: 0.2rem 0.1rem;
   word-wrap: break-word;
+
   color: ${(props) => (props.role === 'assistant' ? 'black' : 'black')};
   background-color: ${(props) =>
     props.role === 'assistant' ? 'white' : '#e5e5ea'};
   align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
+
   p {
     margin: 0;
   }
+
   border: ${(props) => (props.btn ? '0' : '3px solid #ececec')};
   text-align: left;
   margin-left: ${(props) => (props.role === 'user' ? 'auto' : null)};
   white-space: pre-wrap;
+
   display: flex;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
 `;
 
 const MessageP = styled.p`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  font-family: AppleSDGothicNeoM00;
+
+  font-size: 1.5rem;
+  font-weight: 400;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const AvartarTitle = styled.span`
+  font-size: 1.2rem;
   margin-left: 0.2rem;
-  font-size: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const AudioContanier = styled.div`
   display: flex;
-  flex-direction: ${(props) => (props.message.length < 30 ? 'row' : 'column')};
-  justify-content: ${(props) =>
-    props.message.length < 30 ? 'flex-start' : 'center'};
-  align-items: ${(props) =>
-    props.message.length < 30 ? 'center' : 'flex-start'};
+  flex-direction: column;
+  /* ${(props) => (props.message.length < 30 ? 'row' : 'column')}; */
+  justify-content: center;
+  /* ${(props) => (props.message.length < 30 ? 'flex-start' : 'center')}; */
+  align-items: flex-start;
+  /* ${(props) => (props.message.length < 30 ? 'center' : 'flex-start')}; */
 `;
 
 const MediaButton = styled.button`

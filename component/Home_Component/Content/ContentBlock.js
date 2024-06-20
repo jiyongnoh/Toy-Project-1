@@ -3,21 +3,28 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const ContentBlock = ({ title, subtitle, iconPath, linkUrl, backColor }) => {
+const ContentBlock = ({
+  title,
+  subtitle,
+  iconPath,
+  linkUrl,
+  backColor,
+  color,
+}) => {
   return (
     <Container backColor={backColor}>
       <Image
         src={iconPath}
         alt="Content_Icon"
-        width={84}
-        height={84}
+        width={62}
+        height={62}
         style={{
           maxWidth: '100%',
           height: 'auto',
         }}
       />
       <TextContainer>
-        <Title>{title}</Title>
+        <Title color={color}>{title}</Title>
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
       <PlayButton>
@@ -39,17 +46,19 @@ const ContentBlock = ({ title, subtitle, iconPath, linkUrl, backColor }) => {
 };
 
 const Container = styled.div`
-  width: 390px;
-  height: 180px;
+  width: 435px;
+  height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
 
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  padding: 20px;
-  background-color: ${(props) => props.backColor || '#FFFBE9'};
-  gap: 1rem;
+  border-radius: 1.5rem;
+  padding: 2.5rem;
+  background-color: #fffbe9;
+  /* ${(props) => props.backColor || '#FFFBE9'} */
+  gap: 3rem;
+
+  border: 2.11px solid #e7e7e7;
 
   @media (max-width: 768px) {
     width: 400px;
@@ -65,10 +74,13 @@ const TextContainer = styled.div`
 
 const Title = styled.h2`
   margin: 0;
-  color: #9c6ef3;
-  font-size: 2rem;
-  user-select: none;
+  color: ${(props) => props.color || '#9c6ef3'};
+  font-size: 1.8rem;
+  font-family: AppleSDGothicNeoM00;
+  letter-spacing: -0.1rem;
+  font-weight: 600;
 
+  user-select: none;
   @media (max-width: 768px) {
     font-size: 1.2rem;
   }
@@ -76,17 +88,22 @@ const Title = styled.h2`
 
 const Subtitle = styled.p`
   margin: 0;
+  margin-top: 0.5rem;
   color: #333;
-  font-size: 2rem;
-  font-weight: bold;
-  user-select: none;
+  font-size: 1.3rem;
+  font-weight: 400;
 
+  font-family: AppleSDGothicNeoM00;
+  letter-spacing: -0.1rem;
+
+  user-select: none;
   @media (max-width: 768px) {
     font-size: 1rem;
   }
 `;
 
 const PlayButton = styled.button`
+  display: none;
   background: none;
   border: none;
   outline: none;
@@ -95,6 +112,11 @@ const PlayButton = styled.button`
   color: #bbb;
   &:hover {
     color: #888;
+  }
+
+  @media (max-width: 768px) {
+    display: flex;
+    font-size: 1rem;
   }
 `;
 

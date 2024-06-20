@@ -20,17 +20,14 @@ const InitChatBubble = ({
   btn,
   setTestType,
   testType,
+  iconUrl,
+  headerTitle,
 }) => {
   // console.log(media);
   return (
     <BubbleContainer role={role}>
       {!btn && role !== 'user' ? (
-        <Image
-          src="/src/Consult_IMG/Consult_Soyes_Icon_IMG.png"
-          alt={'soyes_logo'}
-          width={45}
-          height={45}
-        />
+        <Image src={iconUrl} alt={'avartar_icon'} width={45} height={45} />
       ) : null}
       {btn ? (
         <InitContanier message={message}>
@@ -47,7 +44,7 @@ const InitChatBubble = ({
         </InitContanier>
       ) : (
         <InitContanier message={message}>
-          {role !== 'user' ? <AvartarTitle>심리상담 소예</AvartarTitle> : null}
+          {role !== 'user' ? <AvartarTitle>{headerTitle}</AvartarTitle> : null}
           <StyledBubble isMine={isMine} role={role}>
             <MessageP>{message}</MessageP>
           </StyledBubble>
@@ -101,11 +98,23 @@ const MessageP = styled.p`
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  font-family: AppleSDGothicNeoM00;
+
+  font-size: 1.5rem;
+  font-weight: 400;
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 const AvartarTitle = styled.span`
+  font-size: 1.2rem;
   margin-left: 0.2rem;
-  font-size: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const InitButton = styled.button`

@@ -39,23 +39,15 @@ const ContentCard = () => {
   return (
     <ContentCardContainer>
       {contentArr.map((content, index) => {
-        return mobileFlag ? (
+        return (
           <ContentBlock
             key={index}
             title={content.title}
             subtitle={content.subtitle}
             iconPath={content.iconPath}
             linkUrl={content.linkUrl}
-            backColor={content.backColor}
-          />
-        ) : (
-          <ContentBlockWeb
-            key={index}
-            title={content.title}
-            subtitle={content.subtitle}
-            iconPath={content.iconPath}
-            linkUrl={content.linkUrl}
             color={content.color}
+            backColor={content.backColor}
           />
         );
       })}
@@ -67,7 +59,8 @@ const ContentCardContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 5.5rem;
+  margin-bottom: 2rem;
 
   @media (max-width: 768px) {
     gap: 0.3rem;

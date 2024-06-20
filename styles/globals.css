@@ -28,6 +28,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 /* Add a background color to the chat screen */
 
+html,
 body {
   font-family: 'Roboto', sans-serif;
   background-color: #282c34; /* 어두운 회색 */
