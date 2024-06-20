@@ -567,7 +567,6 @@ const ChatBox = styled.div`
   border-radius: 8px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 
-  min-height: 80vh;
   height: 100%;
 
   @media (max-width: 768px) {
@@ -597,7 +596,7 @@ const ChatBoxBody = styled.div`
   background: inherit;
   padding: 1rem;
   overflow-y: auto;
-  min-height: 80vh;
+  min-height: 75vh;
   height: 100%;
 
   display: flex;
@@ -606,6 +605,7 @@ const ChatBoxBody = styled.div`
 
   @media (max-width: 768px) {
     height: 86%;
+    min-height: 70vh;
   }
 `;
 
