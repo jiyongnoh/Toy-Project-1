@@ -75,7 +75,8 @@ export default function Login() {
           })
         );
         localStorage.setItem('id', id);
-        router.push('/');
+        // router.push('/');
+        router.back(); // Guset 로그인 시 뒤로가기 발동
       });
     } else {
       Swal.fire({

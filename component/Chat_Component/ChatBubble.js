@@ -43,9 +43,12 @@ const ChatBubble = ({
           ) : null}
         </AudioContanier>
       ) : (
-        <StyledBubble isMine={isMine} role={role}>
-          <MessageP>{message}</MessageP>
-        </StyledBubble>
+        <TextContanier>
+          {role !== 'user' ? <AvartarTitle>{headerTitle}</AvartarTitle> : null}
+          <StyledBubble isMine={isMine} role={role}>
+            <MessageP>{message}</MessageP>
+          </StyledBubble>
+        </TextContanier>
       )}
     </BubbleContainer>
   );
@@ -127,6 +130,14 @@ const MediaButton = styled.button`
   color: white;
   background-color: #a374db;
   cursor: pointer;
+`;
+
+const TextContanier = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 export default ChatBubble;

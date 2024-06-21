@@ -119,7 +119,7 @@ export default function Nav() {
     () => [
       { href: '/test_ebt', label: t('ebt') },
       { href: '/test_pt', label: t('pt') },
-      { href: '/test_all', label: t('consult') },
+      { href: '/avartar_list', label: t('consult') },
       { href: '/review', label: t('review') },
       { href: '/meditation_painting', label: t('meditation_painting') },
       { href: '/shop', label: t('shop') },
@@ -231,7 +231,8 @@ const NavContainer = styled.div`
   width: 100vw;
   background-color: ${(props) =>
     props.show ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0.01)'};
-  position: ${(props) => (props.show ? 'sticky' : 'fixed')};
+  position: fixed;
+  /* ${(props) => (props.show ? 'sticky' : 'fixed')}; */
   top: 0;
   display: flex;
   justify-content: space-between;
@@ -239,7 +240,8 @@ const NavContainer = styled.div`
   padding: 0 3rem;
   height: 6rem;
   z-index: 1;
-  animation: ${(props) => (props.show ? slideDown : 'none')} 0.3s ease-in-out;
+  /* animation: ${(props) =>
+    props.show ? slideDown : 'none'} 0.3s ease-in-out; */
 
   @media (max-width: 1150px) {
     height: fit-content;
