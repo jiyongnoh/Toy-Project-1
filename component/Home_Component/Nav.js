@@ -17,7 +17,7 @@ export default function Nav() {
   const currentPath = router.pathname;
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
-  const [showMenu, setShowMenu] = useState(currentPath !== '/' ? true : false);
+  const [showMenu, setShowMenu] = useState(false); // currentPath !== '/' ? true : false
   const [showNavbar, setShowNavbar] = useState(false);
   // Resize 상태 처리
   const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
