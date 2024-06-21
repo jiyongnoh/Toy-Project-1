@@ -36,6 +36,7 @@ const avartaAI_info = {
     iconUrl: '/src/Consult_IMG/Icon/Consult_Pupu_Icon_IMG.png',
     backgroundImgUrl:
       '/src/Consult_IMG/Background/Consult_Pupu_Background_IMG.png',
+    backColor: '#FEFFF6',
   },
   ubi: {
     name: 'ubi',
@@ -45,6 +46,7 @@ const avartaAI_info = {
     iconUrl: '/src/Consult_IMG/Icon/Consult_Ubi_Icon_IMG.png',
     backgroundImgUrl:
       '/src/Consult_IMG/Background/Consult_Ubi_Background_IMG.png',
+    backColor: '#F6FFF9',
   },
   lala: {
     name: 'lala',
@@ -54,6 +56,7 @@ const avartaAI_info = {
     iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
     backgroundImgUrl:
       '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
+    backColor: '#FFF6F9',
   },
   soyes: {
     name: 'soyes',
@@ -63,6 +66,7 @@ const avartaAI_info = {
     iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
     backgroundImgUrl:
       '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
+    backColor: '#FDF6FF',
   },
   // 북극이는 임시로 소예로 보내기
   north: {
@@ -73,6 +77,7 @@ const avartaAI_info = {
     iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
     backgroundImgUrl:
       '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
+    backColor: '#FDF6FF',
   },
   default: {
     name: 'lala',
@@ -82,6 +87,7 @@ const avartaAI_info = {
     iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
     backgroundImgUrl:
       '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
+    backColor: '#FFF6F9',
   },
 };
 const unMount_api_info = {
@@ -370,7 +376,10 @@ export default function Test() {
   }, [isPending]);
 
   return (
-    <MainContainer className="main-container">
+    <MainContainer
+      className="main-container"
+      backColor={avartaAI_info[avartaAI].backColor}
+    >
       <FlexContainer
         className="flex-container"
         justify="center"
@@ -528,7 +537,8 @@ const MainContainer = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; */
-  background-color: #fdf6ff;
+
+  background-color: ${(props) => props.backColor || '#fdf6ff'};
   width: 100vw;
   min-height: 100vh;
   height: 100%;
