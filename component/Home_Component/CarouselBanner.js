@@ -61,12 +61,12 @@ const RecommendationBadge = styled.div`
 `;
 
 const Title = styled.h1`
-  color: #fff8f8;
+  color: #4e4e4e;
   font-size: 60px;
   margin: 0;
   margin-top: 2rem;
   font-family: 'Cafe24Ssurround';
-  text-shadow: 5px 4px 3px #00000099;
+  /* text-shadow: 5px 4px 3px #00000099; */
 
   @media (max-width: 768px) {
     font-size: 25px;
@@ -74,7 +74,7 @@ const Title = styled.h1`
 `;
 
 const Subtitle = styled.p`
-  color: #ffffff;
+  color: #4e4e4e;
   font-size: 18px;
   margin: 10px 0 0 0;
   font-family: 'AppleSDGothicNeoM00';
@@ -82,7 +82,7 @@ const Subtitle = styled.p`
   font-weight: 400;
   line-height: 45px;
   text-align: left;
-  text-shadow: 2px 2px 3px #000000b2;
+  /* text-shadow: 2px 2px 3px #000000b2; */
 
   @media (max-width: 768px) {
     font-size: 15px;

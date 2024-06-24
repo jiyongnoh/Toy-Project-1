@@ -3,16 +3,22 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import TestButton from './TestButton';
 import ConsultButton from './ConsultButton';
+import AvartarLogo from './AvartarLogo';
 
 const IntroBlock = ({ avartar }) => {
   return (
     <IntroAvatarContainer>
-      <Image
+      {/* <Image
         src={avartar.iconImgUrl}
         alt={avartar.name}
         width={547}
         height={499}
         style={{ maxWidth: '100%', height: 'auto' }}
+      /> */}
+      <AvartarLogo
+        iconImgUrl={avartar.iconImgUrl}
+        name={avartar.name}
+        backImgUrl={avartar.logoBackImgUrl}
       />
       <Container>
         <ButtonContainer>

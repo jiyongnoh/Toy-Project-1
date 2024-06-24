@@ -34,7 +34,7 @@ const slideArr = [
     backgroundUrl: '/src/Carousel_IMG/Banner_Background_IMG_요가명상.png',
     pathUrl: '/meditation_painting',
     ment: {
-      title: '요가명상',
+      title: '요가 명상',
       subTitle: '요가 명상을 통해 편안한 몸과 마음을 만들어보세요.',
     },
   },
@@ -43,17 +43,17 @@ const slideArr = [
     backgroundUrl: '/src/Carousel_IMG/Banner_Background_IMG_요가명상.png',
     pathUrl: '/meditation_painting',
     ment: {
-      title: '그림명상',
+      title: '그림 명상',
       subTitle: '그림명상 멘트',
     },
   },
   {
-    name: '풀밭명상',
-    backgroundUrl: '/src/Carousel_IMG/Banner_Background_IMG_요가명상.png',
-    pathUrl: '/meditation_painting',
+    name: '음악명상',
+    backgroundUrl: '/src/Carousel_IMG/Banner_Background_IMG_음악명상.png',
+    pathUrl: '/meditation_music',
     ment: {
-      title: '풀밭명상',
-      subTitle: '풀밭명상 멘트',
+      title: '음악 명상',
+      subTitle: '음악 명상을 통해 편안한 몸과 마음을 만들어보세요.',
     },
   },
 ];

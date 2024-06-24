@@ -11,7 +11,7 @@ const contentArr = [
     title: '음악 명상',
     subtitle: '내마음을 차분하게 해줄 음악을 선택하여 마음을 힐링해 보세요.',
     iconPath: '/src/Content_IMG/Icon_IMG/Icon_음악명상.png',
-    linkUrl: '/meditation_painting',
+    linkUrl: '/meditation_music',
     backColor: '#FFFBE9',
     color: '#FF7D95',
   },

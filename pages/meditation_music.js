@@ -19,60 +19,60 @@ const meditationVideoContentList = [
   {
     type: 'candle',
     videoId: 'nKCY3qz30N8',
-    imageUrl: '/src/Background_IMG/Mobile/soyes_mobile.jpg',
-    title: '촛불 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_1.png',
+    title: '가벼운 마음의 음악',
   },
   {
     type: 'breath',
     videoId: 'tNao3xp5yjM',
-    imageUrl: '/src/image.png',
-    title: '호흡 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_2.png',
+    title: '마음의 행운을 주는 음악',
   },
   {
     type: 'breath',
     videoId: 'nKCY3qz30N8',
-    imageUrl: '',
-    title: 'A 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_3.png',
+    title: '마음이 차분해지는 빗소리',
   },
   {
     type: 'breath',
     videoId: 'nKCY3qz30N8',
-    imageUrl: '',
-    title: 'B 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_4.png',
+    title: '몸의 긴장을 풀어주는 음악',
   },
   {
     type: 'breath',
     videoId: 'nKCY3qz30N8',
-    imageUrl: '',
-    title: 'C 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_5.png',
+    title: '몸의 긴장을 풀어주는 음악',
   },
   {
     type: 'breath',
     videoId: 'nKCY3qz30N8',
-    imageUrl: 'src/.png',
-    title: 'D 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_6.png',
+    title: '상쾌한 아침을 여는 힐링 음악',
   },
   {
     type: 'breath',
     videoId: 'nKCY3qz30N8',
-    imageUrl: 'src/.png',
-    title: 'E 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_7.png',
+    title: '집중력을 높이는 음악 ',
   },
   {
     type: 'breath',
     videoId: 'nKCY3qz30N8',
-    imageUrl: 'src/.png',
-    title: 'F 명상',
+    imageUrl: '/src/Meditation_IMG/Music/Meditation_Music_IMG_8.png',
+    title: '미정',
   },
 ];
 
 // Renewel Test 페이지
-export default function Meditation() {
+export default function MeditationMusic() {
   const [login, setLogin] = useRecoilState(log);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [videoId, setVideoId] = useState('');
 
-  const { t } = useTranslation('meditation_painting');
+  const { t } = useTranslation('meditation_music');
   const router = useRouter();
 
   const openModalHandler = (youtubeUrl) => {
@@ -104,10 +104,10 @@ export default function Meditation() {
     <MainContainer>
       <CarouselBanner
         ment={{
-          title: '그림 명상',
-          subTitle: '그림명상 멘트',
+          title: '음악 명상',
+          subTitle: '음악 명상을 통해 편안한 몸과 마음을 만들어보세요.',
         }}
-        backgroundUrl=""
+        backgroundUrl="/src/Carousel_IMG/Banner_Background_IMG_음악명상.png"
       />
       <FlexContainer
         justify="center"
@@ -149,7 +149,7 @@ export default function Meditation() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['meditation_painting', 'nav'])),
+      ...(await serverSideTranslations(locale, ['meditation_music', 'nav'])),
     },
   };
 }
@@ -163,7 +163,6 @@ const MainContainer = styled.div`
   width: 100vw;
   height: auto;
   min-height: 100vh;
-
   position: relative;
 
   display: flex;
@@ -180,20 +179,20 @@ const ContentContainer = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
 
-  position: relative;
   gap: 0.5rem;
-
   @media (max-width: 768px) {
     overflow: hidden;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
   }
+
+  position: relative;
 `;
 // 버튼 컴포넌트 정의
 const ImageButton = styled.button`
   width: 430px; /* 버튼 너비 */
-  min-height: 320px;
   height: auto; /* 버튼 높이 */
+  min-height: 320px;
 
   background-image: url(${(props) => props.imageUrl}); /* 이미지 경로 설정 */
   background-size: cover; /* 이미지 크기 조정 */
@@ -226,6 +225,7 @@ const ImageButton = styled.button`
     left: 0;
     width: 100%;
     height: 100%;
+    /* background-color: rgb(0, 0, 0, 0.1); */
   }
 
   @media (max-width: 500px) {
@@ -258,7 +258,7 @@ const StyledLabel = styled.div`
   align-items: center;
 
   min-height: 2.5rem; /* 라벨 높이 */
-  background-color: #b0c4de; /* 배경 색상 */
+  background-color: #ffaf75; /* 배경 색상 */
   border: none;
   border-radius: 25px; /* 라운드 처리 */
   position: relative; /* 아이콘 위치를 위한 상대 위치 설정 */
@@ -278,6 +278,7 @@ const StyledLabel = styled.div`
 const LabelText = styled.span`
   flex: 1;
   text-align: center;
+
   font-size: 1.3rem;
   font-weight: 600;
   font-family: AppleSDGothicNeoB00;

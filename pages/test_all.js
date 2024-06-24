@@ -337,7 +337,16 @@ export default function Test() {
       }, 1000);
     }
     // 그 외
-    else setIsInitPending(false);
+    else {
+      const initment = {
+        role: 'assistant',
+        content: 'ㅎㅇㅎㅇ',
+      };
+      setTimeout(() => {
+        setInitArr([initment]);
+      }, 500);
+      setIsInitPending(false);
+    }
 
     setMessageArr([]);
     setInitArr([]);

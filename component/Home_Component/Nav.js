@@ -140,11 +140,11 @@ export default function Nav() {
       </Link>
       {login ? (
         <NavUl>
-          {/* <NavLi>
-            <Link href="/intro" passHref>
-              <NavBtn>intro</NavBtn>
+          <NavLi>
+            <Link href="/mypage" passHref>
+              <NavBtn>MyPage</NavBtn>
             </Link>
-          </NavLi> */}
+          </NavLi>
           {/* <NavLi>
             <Link href="/" passHref>
               <NavBtn>{t('main')}</NavBtn>

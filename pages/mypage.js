@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
 import { log } from '../store/state';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // MyPage 페이지
 export default function MyPage() {
@@ -27,6 +29,15 @@ export default function MyPage() {
       </FlexContainer>
     </MainContainer>
   );
+}
+
+// Translation 파일 적용
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'nav'])), // 파일 다중 적용 가능
+    },
+  };
 }
 
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)

@@ -87,11 +87,9 @@ const StyledBubble = styled.div`
 const InitContanier = styled.div`
   margin-top: 0.2rem;
   display: flex;
-  flex-direction: ${(props) => (props.message.length < 30 ? 'row' : 'column')};
-  justify-content: ${(props) =>
-    props.message.length < 30 ? 'flex-start' : 'center'};
-  align-items: ${(props) =>
-    props.message.length < 30 ? 'center' : 'flex-start'};
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 const MessageP = styled.p`
