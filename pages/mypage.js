@@ -7,6 +7,7 @@ import { useRecoilState } from 'recoil';
 import { log } from '../store/state';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Calendar from '@/component/MyPage_Component/Calendar';
 
 // MyPage 페이지
 export default function MyPage() {
@@ -24,9 +25,7 @@ export default function MyPage() {
 
   return (
     <MainContainer>
-      <FlexContainer justify="center" align="center" dir="col" height="100vh">
-        <MyPageSpan>This is MyPage</MyPageSpan>
-      </FlexContainer>
+      <Calendar />
     </MainContainer>
   );
 }
@@ -53,7 +52,21 @@ const FadeInSpan = keyframes`
 `;
 
 const MainContainer = styled.div`
-  background-image: url('/src/img.jpg');
+  width: 100vw;
+  min-height: 100vh;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    background-image: url('/src/Background_IMG/Mobile/mobile_background_2.png');
+    justify-content: center;
+  }
 `;
 
 const MyPageSpan = styled.span`

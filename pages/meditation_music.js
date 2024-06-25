@@ -191,8 +191,8 @@ const ContentContainer = styled.div`
 // 버튼 컴포넌트 정의
 const ImageButton = styled.button`
   width: 430px; /* 버튼 너비 */
-  height: auto; /* 버튼 높이 */
   min-height: 320px;
+  height: auto; /* 버튼 높이 */
 
   background-image: url(${(props) => props.imageUrl}); /* 이미지 경로 설정 */
   background-size: cover; /* 이미지 크기 조정 */
@@ -231,6 +231,7 @@ const ImageButton = styled.button`
   @media (max-width: 500px) {
     width: 7rem;
     height: 8rem;
+    min-height: 5rem;
   }
 `;
 // 텍스트 오버레이
@@ -282,6 +283,10 @@ const LabelText = styled.span`
   font-size: 1.3rem;
   font-weight: 600;
   font-family: AppleSDGothicNeoB00;
+
+  @media (max-width: 500px) {
+    font-size: 1rem;
+  }
 `;
 
 // // 통짜 이미지 잘라쓰기

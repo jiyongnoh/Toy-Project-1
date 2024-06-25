@@ -228,9 +228,10 @@ const ImageButton = styled.button`
     height: 100%;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 768px) {
     width: 7rem;
     height: 8rem;
+    min-height: 5rem;
   }
 `;
 // 텍스트 오버레이
@@ -238,7 +239,7 @@ const ButtonText = styled.span`
   font-size: 1.1rem;
   font-family: AppleSDGothicNeoB00;
 
-  @media (max-width: 500px) {
+  @media (max-width: 768px) {
     font-size: 0.8rem;
   }
 `;
@@ -281,6 +282,10 @@ const LabelText = styled.span`
   font-size: 1.3rem;
   font-weight: 600;
   font-family: AppleSDGothicNeoB00;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
 `;
 
 // // 통짜 이미지 잘라쓰기
