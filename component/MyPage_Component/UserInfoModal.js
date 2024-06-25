@@ -116,7 +116,7 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
                 <TestCard
                   key={index}
                   title={el.title}
-                  count={calendarData[el.type]?.length || 0}
+                  count={calendarData[el.type]?.length}
                   iconSrc={el.iconSrc}
                   playIconSrc={el.playIconSrc}
                   setContent={setContent}
@@ -124,13 +124,13 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
               );
             })}
           </TestCardContainer>
-          {calendarData.ebt_data?.length && content === '정서행동검사' && (
+          {calendarData.ebt_data?.length > 0 && content === '정서행동검사' && (
             <ResultCard
               content={content}
               description={calendarData.ebt_data[0]?.ebt_analysis}
             />
           )}
-          {calendarData.pt_data?.length && content === '성격검사' && (
+          {calendarData.pt_data?.length > 0 && content === '성격검사' && (
             <ResultCard
               content={content}
               description={calendarData.pt_data[0]?.pt_analysis}
