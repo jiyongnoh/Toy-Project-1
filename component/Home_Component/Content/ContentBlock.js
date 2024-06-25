@@ -10,9 +10,10 @@ const ContentBlock = ({
   linkUrl,
   backColor,
   color,
+  consult,
 }) => {
   return (
-    <Container backColor={backColor}>
+    <Container backColor={backColor} consult={consult}>
       <Image
         src={iconPath}
         alt="Content_Icon"
@@ -29,7 +30,7 @@ const ContentBlock = ({
         </StyledLink>
         <Subtitle>{subtitle}</Subtitle>
       </TextContainer>
-      <PlayButton>
+      <PlayButton consult={consult}>
         <Link href={linkUrl}>
           <Image
             src="/src/Content_IMG/Frame_재생버튼.png"
@@ -51,7 +52,7 @@ const StyledLink = styled(Link)`
 `;
 
 const Container = styled.div`
-  width: 435px;
+  width: ${(props) => (props.consult ? '610px' : '435px')};
   height: 150px;
   display: flex;
   justify-content: center;
@@ -59,9 +60,8 @@ const Container = styled.div`
 
   border-radius: 1.5rem;
   padding: 2.5rem;
-  background-color: #fffbe9;
-  /* ${(props) => props.backColor || '#FFFBE9'} */
-  gap: 3rem;
+  background-color: ${(props) => props.backColor || '#FFFBE9'};
+  gap: ${(props) => (props.consult ? '2rem' : '3rem')};
 
   border: 2.11px solid #e7e7e7;
 
@@ -114,13 +114,13 @@ const Subtitle = styled.p`
 `;
 
 const PlayButton = styled.button`
-  display: none;
+  display: ${(props) => (props.consult ? 'flex' : 'none')};
   background: none;
   border: none;
   outline: none;
   cursor: pointer;
   font-size: 24px;
-  color: #bbb;
+  color: #e7a500;
   &:hover {
     color: #888;
   }

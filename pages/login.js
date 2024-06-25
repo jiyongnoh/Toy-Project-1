@@ -16,7 +16,7 @@ import {
 } from '@/fetchAPI';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { log, oauthType } from '../store/state';
+import { log, oauthType, uid } from '../store/state';
 import Swal from 'sweetalert2';
 import { useSearchParams } from 'next/navigation';
 import GoogleOAuthBtn from '@/component/Login_Componet/googleOAuthBtn';
@@ -34,6 +34,7 @@ export default function Login() {
   const { t } = useTranslation('login');
 
   const [id, setId] = useState('');
+  const [userId, setUserId] = useRecoilState(uid);
   const [pwd, setPwd] = useState('');
   const [login, setLogin] = useRecoilState(log);
   const [url, setUrl] = useState('');
@@ -75,6 +76,7 @@ export default function Login() {
           })
         );
         localStorage.setItem('id', id);
+        setUserId(id);
         // router.push('/');
         router.back(); // Guset 로그인 시 뒤로가기 발동
       });
@@ -112,6 +114,7 @@ export default function Login() {
               })
             );
             localStorage.setItem('id', data.data.id);
+            setUserId(data.data.id);
             router.push('/');
           });
         } else {
@@ -153,6 +156,7 @@ export default function Login() {
               })
             );
             localStorage.setItem('id', data.data.id);
+            setUserId(data.data.id);
             router.push('/');
           });
         } else {

@@ -33,6 +33,7 @@ export default function Nav() {
       if (new Date(parsedSession.expires) > new Date()) {
         setLogin(true);
       } else {
+        // 1시간 세션 만료 처리
         handleSessionExpired();
       }
     }

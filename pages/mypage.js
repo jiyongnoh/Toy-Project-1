@@ -4,27 +4,39 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import { useRecoilState } from 'recoil';
-import { log } from '../store/state';
+import { log, uid } from '../store/state';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Calendar from '@/component/MyPage_Component/Calendar';
+import ContentBlock from '@/component/Home_Component/Content/ContentBlock';
+import UserGreeting from '@/component/MyPage_Component/UserGreeting';
 
 // MyPage 페이지
 export default function MyPage() {
-  const [loading, setLoading] = useState(false);
-  const [login, setLogin] = useRecoilState(log);
+  const [userId, setUserId] = useRecoilState(uid);
 
-  // 1초 뒤에 로딩 상태 true로 변경. 최초 1번만 실행
   useEffect(() => {
-    if (!login) {
-      setTimeout(() => {
-        setLoading(true);
-      }, 1000);
-    }
-  }, [login]);
+    setUserId(localStorage.getItem('id'));
+  }, []);
 
   return (
     <MainContainer>
+      <IntroContainer>
+        <UserGreeting
+          username={userId}
+          daysLeft="30"
+          purchaseDate="2024년 3월 10일"
+        />
+        <ContentBlock
+          title="전문가 상담 예약"
+          subtitle="전문가와의 심리상담을 예약할 수 있어요."
+          iconPath="/src/Content_IMG/Icon_IMG/Icon_전문가상담.png"
+          linkUrl="/meditation_music"
+          color="#E14615"
+          backColor="#FFE296"
+          consult={true}
+        />
+      </IntroContainer>
       <Calendar />
     </MainContainer>
   );
@@ -55,6 +67,7 @@ const MainContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   background-color: white;
+  padding: 5rem 0;
 
   display: flex;
   flex-direction: column;
@@ -67,6 +80,16 @@ const MainContainer = styled.div`
     background-image: url('/src/Background_IMG/Mobile/mobile_background_2.png');
     justify-content: center;
   }
+`;
+
+const IntroContainer = styled.div`
+  width: 100%;
+  padding: 0 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 1rem;
 `;
 
 const MyPageSpan = styled.span`
