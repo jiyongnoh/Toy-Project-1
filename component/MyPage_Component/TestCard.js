@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-const TestCard = ({ title, count, iconSrc, playIconSrc }) => {
+const TestCard = ({ title, count, iconSrc, playIconSrc, setContent }) => {
   return (
     <CardContainer>
       <IconContainer>
@@ -20,7 +20,13 @@ const TestCard = ({ title, count, iconSrc, playIconSrc }) => {
         <Subtitle>[{count}]회</Subtitle>
       </TextContainer>
       <PlayIcon>
-        <PlayIconImage src={playIconSrc} alt="Play Icon" />
+        <PlayIconImage
+          src={playIconSrc}
+          alt="Play Icon"
+          onClick={() => {
+            setContent(title);
+          }}
+        />
       </PlayIcon>
     </CardContainer>
   );
@@ -33,7 +39,7 @@ const CardContainer = styled.div`
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 25vw;
+  width: 27vw;
   height: 250px;
   position: relative;
 

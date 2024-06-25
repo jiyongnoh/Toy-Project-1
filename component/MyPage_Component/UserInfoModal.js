@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { handleCalendarResult } from '@/fetchAPI';
 // import { useSession } from "next-auth/react";
 import TestCard from './TestCard';
+import ResultCard from './ResultCard';
 import Image from 'next/image';
 
 const userInfoArr = [
@@ -49,6 +50,8 @@ const userInfoArr = [
 const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
   const [calendarData, setCalendarData] = useState({});
   const [isPending, setIsPending] = useState(false);
+  const [content, setContent] = useState('');
+
   const dateArr = date.split('-');
 
   // 달력 데이터 반환 API 호출 세션
@@ -116,10 +119,23 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
                   count={calendarData[el.type]?.length || 0}
                   iconSrc={el.iconSrc}
                   playIconSrc={el.playIconSrc}
+                  setContent={setContent}
                 />
               );
             })}
           </TestCardContainer>
+          {calendarData.ebt_data?.length && content === '정서행동검사' && (
+            <ResultCard
+              content={content}
+              description={calendarData.ebt_data[0]?.ebt_analysis}
+            />
+          )}
+          {calendarData.pt_data?.length && content === '성격검사' && (
+            <ResultCard
+              content={content}
+              description={calendarData.pt_data[0]?.pt_analysis}
+            />
+          )}
         </UserInfoContainer>
       )}
     </StyledModal>
@@ -133,14 +149,19 @@ const StyledModal = styled(Modal)`
   right: auto;
   bottom: auto;
   transform: translate(-50%, -50%);
-  width: 90vw;
+
   /* max-width: 640px; */
+  width: 90vw;
   height: auto;
+  max-height: 90vh;
+
   background: #9051ff;
   border-radius: 40px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   outline: none;
+
+  overflow: auto;
   z-index: 1;
 `;
 
@@ -164,8 +185,9 @@ const UserInfoHeaderContainer = styled.div`
 
 const UserInfoContainer = styled.div`
   width: 100%;
-  height: 100%;
   min-height: 600px;
+  padding: 2rem 0;
+
   z-index: 1;
   background-color: #fffef8;
 
@@ -173,6 +195,8 @@ const UserInfoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  gap: 2rem;
 `;
 
 const TestCardContainer = styled.div`
@@ -186,6 +210,11 @@ const TestCardContainer = styled.div`
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(6, 1fr);
   }
+`;
+
+const TestContainer = styled.div`
+  width: 100px;
+  height: 2000px;
 `;
 
 export default UserInfoModal;
