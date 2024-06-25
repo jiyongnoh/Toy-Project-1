@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useRecoilState } from 'recoil';
-import { log, avarta, mobile } from '../../store/state';
+import { log, avarta, mobile, uid } from '../../store/state';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 import { useEffect, useState, useCallback, useMemo } from 'react';
@@ -17,6 +17,7 @@ export default function Nav() {
   const currentPath = router.pathname;
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
+  const [userId, setUserId] = useRecoilState(uid);
   const [showMenu, setShowMenu] = useState(false); // currentPath !== '/' ? true : false
   const [showNavbar, setShowNavbar] = useState(false);
   // Resize 상태 처리
@@ -59,6 +60,9 @@ export default function Nav() {
     handleResize();
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
+
+    if (localStorage.getItem('id')) setUserId(localStorage.getItem('id'));
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);

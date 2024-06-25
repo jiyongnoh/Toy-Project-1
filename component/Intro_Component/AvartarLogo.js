@@ -36,6 +36,11 @@ const YellowCircle = styled.div`
   position: relative;
 
   /* padding-right: 4rem; */
+
+  @media (max-width: 768px) {
+    width: 400px;
+    height: 400px;
+  }
 `;
 
 const Character = styled.div`

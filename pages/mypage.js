@@ -1,43 +1,38 @@
 import styled, { keyframes } from 'styled-components';
-import { FlexContainer } from '../styled-component/common';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
-
 import { useRecoilState } from 'recoil';
-import { log, uid } from '../store/state';
+import { uid } from '../store/state';
+
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Calendar from '@/component/MyPage_Component/Calendar';
-import ContentBlock from '@/component/Home_Component/Content/ContentBlock';
-import UserGreeting from '@/component/MyPage_Component/UserGreeting';
+import MyInfo from '@/component/MyPage_Component/MyInfo';
+import UserInfoModal from '@/component/MyPage_Component/UserInfoModal';
 
 // MyPage 페이지
 export default function MyPage() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [date, setDate] = useState('1999-01-01');
   const [userId, setUserId] = useRecoilState(uid);
 
   useEffect(() => {
-    setUserId(localStorage.getItem('id'));
-  }, []);
+    console.log(date);
+  }, [date]);
 
   return (
     <MainContainer>
-      <IntroContainer>
-        <UserGreeting
-          username={userId}
-          daysLeft="30"
-          purchaseDate="2024년 3월 10일"
+      <MyInfo />
+      <Calendar setIsOpen={setIsOpen} setDate={setDate} />
+      {isOpen && (
+        <UserInfoModal
+          isOpen={isOpen}
+          onRequestClose={() => {
+            setIsOpen(false);
+          }}
+          date={date}
+          userId={userId}
         />
-        <ContentBlock
-          title="전문가 상담 예약"
-          subtitle="전문가와의 심리상담을 예약할 수 있어요."
-          iconPath="/src/Content_IMG/Icon_IMG/Icon_전문가상담.png"
-          linkUrl="/meditation_music"
-          color="#E14615"
-          backColor="#FFE296"
-          consult={true}
-        />
-      </IntroContainer>
-      <Calendar />
+      )}
     </MainContainer>
   );
 }
@@ -52,16 +47,6 @@ export async function getStaticProps({ locale }) {
 }
 
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
-const FadeInSpan = keyframes`
-  0% {
-    opacity: 0;
-    font-size: 1rem;
-  }
-  100% {
-    opacity: 1;
-    font-size: 3rem;
-  }
-`;
 
 const MainContainer = styled.div`
   width: 100vw;
@@ -80,24 +65,4 @@ const MainContainer = styled.div`
     background-image: url('/src/Background_IMG/Mobile/mobile_background_2.png');
     justify-content: center;
   }
-`;
-
-const IntroContainer = styled.div`
-  width: 100%;
-  padding: 0 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  gap: 1rem;
-`;
-
-const MyPageSpan = styled.span`
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-  // 애니메이션 인스턴스는 문자열 리터럴과 동일하게 $ + {} 사용
-  animation: ${FadeInSpan} 0.6s linear alternate;
-
-  transition: 0.5s;
 `;

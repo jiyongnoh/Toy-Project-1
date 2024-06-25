@@ -84,6 +84,7 @@ const StyledModal = styled(Modal)`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
   outline: none;
+  z-index: 1;
 `;
 
 const ModalContent = styled.div`
@@ -92,6 +93,7 @@ const ModalContent = styled.div`
     height: 360px;
   }
   min-height: 360px;
+  z-index: 1;
 `;
 
 export default VideoModal;

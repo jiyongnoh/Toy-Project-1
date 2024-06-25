@@ -257,3 +257,26 @@ export const handleEbtResult = async (input, path) => {
     };
   }
 };
+
+// 캘린더 데이터 반환 API 호출 함수
+export const handleCalendarResult = async (input) => {
+  console.log('Calendar Result API 호출');
+  //console.log(input, path);
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/openAI/calendar`,
+      { EBTData: input },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+    // console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log('API 호출 실패');
+    console.error(err);
+  }
+};

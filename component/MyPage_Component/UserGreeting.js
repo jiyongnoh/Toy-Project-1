@@ -7,10 +7,10 @@ const UserGreeting = ({ username, daysLeft, purchaseDate }) => {
   return (
     <Container>
       <Image
-        src="/src/MyPage_IMG/MyPage_Soyes_Icon_IMG.png"
+        src="/src/MyPage_IMG/Icon/MyPage_Soyes_Icon_IMG.png"
         alt="User Avatar"
-        width={180}
-        height={180}
+        width={120}
+        height={120}
         style={{ maxWidth: '100%', height: 'auto' }}
       />
       {/* <Avatar
@@ -33,9 +33,16 @@ const UserGreeting = ({ username, daysLeft, purchaseDate }) => {
 const Container = styled.div`
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: none;
   border-radius: 20px;
   padding: 10px 20px;
+
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    background-color: #fff;
+  }
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 `;
 
@@ -63,6 +70,12 @@ const GreetingText = styled.div`
   span {
     font-size: 2rem;
     color: #746d69;
+  }
+
+  @media (max-width: 768px) {
+    span {
+      font-size: 1.5rem;
+    }
   }
 `;
 
