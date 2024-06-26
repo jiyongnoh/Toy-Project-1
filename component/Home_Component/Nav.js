@@ -128,6 +128,7 @@ export default function Nav() {
       { href: '/review', label: t('review') },
       { href: '/meditation_painting', label: t('meditation_painting') },
       { href: '/shop', label: t('shop') },
+      { href: '/mypage', label: t('mypage') },
     ],
     [t]
   );
@@ -145,11 +146,11 @@ export default function Nav() {
       </Link>
       {login ? (
         <NavUl>
-          <NavLi>
+          {/* <NavLi>
             <Link href="/mypage" passHref>
               <NavBtn>MyPage</NavBtn>
             </Link>
-          </NavLi>
+          </NavLi> */}
           {/* <NavLi>
             <Link href="/" passHref>
               <NavBtn>{t('main')}</NavBtn>
@@ -242,22 +243,21 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 3rem;
-  height: 6rem;
+  padding: 1rem 1.5rem 0rem 1.5rem;
+  height: auto;
   z-index: 1;
+
   /* animation: ${(props) =>
     props.show ? slideDown : 'none'} 0.3s ease-in-out; */
 
   @media (max-width: 1150px) {
-    height: fit-content;
     align-items: start;
-    padding: 1rem;
+    padding: 1rem 1rem 0rem 1rem;
   }
 
   @media (max-width: 768px) {
-    height: fit-content;
     align-items: start;
-    padding: 1rem;
+    padding: 1rem 1rem 0rem 1rem;
   }
 `;
 

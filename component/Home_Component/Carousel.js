@@ -194,6 +194,7 @@ const StyledSlider = styled(Slider)`
   } */
   @media (max-width: 768px) {
     width: 26rem;
+    margin-top: 3rem;
   }
 `;
 

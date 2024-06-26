@@ -116,7 +116,7 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
                 <TestCard
                   key={index}
                   title={el.title}
-                  count={calendarData[el.type]?.length}
+                  count={calendarData[el.type]?.length || 0}
                   iconSrc={el.iconSrc}
                   playIconSrc={el.playIconSrc}
                   setContent={setContent}
@@ -144,7 +144,7 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
 
 const StyledModal = styled(Modal)`
   position: absolute;
-  top: 50%;
+  top: 55%;
   left: 50%;
   right: auto;
   bottom: auto;
@@ -163,6 +163,10 @@ const StyledModal = styled(Modal)`
 
   overflow: auto;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    top: 55%;
+  }
 `;
 
 const UserInfoHeaderContainer = styled.div`
@@ -180,6 +184,19 @@ const UserInfoHeaderContainer = styled.div`
     background: none;
     border: none;
     cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    padding: 0 0 1rem 1rem;
+    button {
+      width: 35px;
+      height: 35px;
+      padding: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
   }
 `;
 

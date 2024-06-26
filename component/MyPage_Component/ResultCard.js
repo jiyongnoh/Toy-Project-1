@@ -71,6 +71,12 @@ const Content = styled.div`
   display: flex;
   gap: 2rem;
   padding: 4rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
 `;
 
 const IconContainer = styled.div`
@@ -95,12 +101,20 @@ const Title = styled.div`
   color: #4a4a4a;
 
   font-family: AppleSDGothicNeoM00;
+
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 
 const Subtitle = styled.div`
   font-size: 1.3rem;
   color: #4a4a4a;
   font-family: AppleSDGothicNeoM00;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const Description = styled.div`
@@ -109,6 +123,10 @@ const Description = styled.div`
   font-size: 1.3rem;
   color: #4a4a4a;
   font-family: AppleSDGothicNeoM00;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
 `;
 
 const Button = styled.button`

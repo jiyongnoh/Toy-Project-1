@@ -186,6 +186,10 @@ const CalendarContainer = styled.div`
       font-size: 1rem;
       font-weight: 600;
     }
+
+    .fc-daygrid-day-frame {
+      padding: 6px;
+    }
   }
 `;
 
