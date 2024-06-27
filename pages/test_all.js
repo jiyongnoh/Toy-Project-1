@@ -305,8 +305,9 @@ export default function Test() {
         );
       }
 
-      setAvartaAI('default');
-      localStorage.removeItem('avarta');
+      // setAvartaAI('default');
+      // localStorage.removeItem('avarta');
+
       // Cookies Clear (session ID 초기화)
       // handleClearCookies(unMount_api_info.clearCookie.path);
 
