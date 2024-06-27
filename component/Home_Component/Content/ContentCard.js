@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import ContentBlock from './ContentBlock';
-import ContentBlockWeb from './ContentBlockWeb';
-import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { mobile } from '@/store/state';
+// import ContentBlockWeb from './ContentBlockWeb';
+// import { useEffect, useState } from 'react';
 
 const contentArr = [
   {
@@ -34,8 +32,6 @@ const contentArr = [
 ];
 
 const ContentCard = () => {
-  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
-
   return (
     <ContentCardContainer>
       {contentArr.map((content, index) => {

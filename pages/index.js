@@ -10,18 +10,13 @@ import { useEffect, useState } from 'react';
 import Carousel from '@/component/Home_Component/Carousel';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import TopButton from '@/component/Home_Component/TopButton';
+
 import AvartarCard from '@/component/Home_Component/AvartarCard';
 import ContentCard from '@/component/Home_Component/Content/ContentCard';
-import Image from 'next/image';
-
-import { useRecoilState } from 'recoil';
-import { mobile } from '@/store/state';
 
 // Home 페이지
 export default function Home() {
   // const [loading, setLoading] = useState(false);
-  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
 
   // const { t } = useTranslation("nav");
   // console.log('Test 주석');
@@ -51,9 +46,8 @@ export default function Home() {
         <Carousel />
         <AvartarTitle>AI 상담 캐릭터</AvartarTitle>
         <AvartarCard />
-        <ContentCard mobileFlag={mobileFlag} />
+        <ContentCard />
       </MainContainer>
-      {/* <TopButton /> */}
     </MasterContainer>
 
     // <PageContainer>

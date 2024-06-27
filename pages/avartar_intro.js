@@ -52,7 +52,7 @@ const avatarMap = {
   },
 };
 
-export default function Intro() {
+export default function Avartar_Intro() {
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
 
   return (
