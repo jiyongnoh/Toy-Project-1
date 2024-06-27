@@ -2,8 +2,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { uid } from '../../store/state';
 
-const UserGreeting = ({ username, daysLeft, purchaseDate }) => {
+const UserGreeting = ({ daysLeft, purchaseDate }) => {
+  const [userId, setUserId] = useRecoilState(uid);
+
   return (
     <Container>
       <Image
@@ -13,18 +17,22 @@ const UserGreeting = ({ username, daysLeft, purchaseDate }) => {
         height={120}
         style={{ maxWidth: '100%', height: 'auto' }}
       />
-      {/* <Avatar
-        src="/src/MyPage_IMG/MyPage_Soyes_Icon_IMG.png"
-        alt="User Avatar"
-      /> */}
       <TextContainer>
         <GreetingText>
-          <span>{username}</span>님 안녕하세요!
+          <span>{userId}</span>님 안녕하세요!
         </GreetingText>
         <StatusText>
-          현재 <span>{daysLeft}일 이용권</span> 사용중이에요.
+          현재
+          {daysLeft ? (
+            <span> {daysLeft}일 이용권</span>
+          ) : (
+            <span> 구매한 이용권</span>
+          )}
+          {daysLeft ? '사용중이에요.' : '이 없어요.'}
         </StatusText>
-        <PurchaseDate>[{purchaseDate} 구매]</PurchaseDate>
+        <PurchaseDate>
+          {purchaseDate ? `[ ${purchaseDate}구매 ]` : null}
+        </PurchaseDate>
       </TextContainer>
     </Container>
   );

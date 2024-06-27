@@ -1,22 +1,13 @@
 import styled from 'styled-components';
 
-import { useRecoilState } from 'recoil';
-import { uid } from '../../store/state';
-
 import ContentBlock from '../Home_Component/Content/ContentBlock';
 import UserGreeting from './UserGreeting';
 
 // MyPage 페이지
 const MyInfo = () => {
-  const [userId, setUserId] = useRecoilState(uid);
-
   return (
     <IntroContainer>
-      <UserGreeting
-        username={userId}
-        daysLeft="30"
-        purchaseDate="2024년 3월 10일"
-      />
+      <UserGreeting />
       <ContentBlock
         title="전문가 상담 예약"
         subtitle="전문가와의 심리상담을 예약할 수 있어요."
