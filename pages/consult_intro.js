@@ -13,7 +13,7 @@ const avatarArr = [
     subMent: '친구의 정서 및 성격검사를 나와 같이 해보자!',
     cardImgUrl: '/src/AvatarList_IMG/Card/AvatarList_Soyes_Card_IMG.png',
     backColor: '#B88CD4',
-    borderColor: 'A278BD',
+    borderColor: '#A278BD',
   },
   {
     name: '엘라',
@@ -22,7 +22,7 @@ const avatarArr = [
     subMent: '친구의 정서적 고민은 내가 상담해줄께~',
     cardImgUrl: '/src/AvatarList_IMG/Card/AvatarList_Ella_Card_IMG.png',
     backColor: '#E79999',
-    borderColor: 'CD9898',
+    borderColor: '#CD9898',
   },
   {
     name: '푸푸',
@@ -31,7 +31,7 @@ const avatarArr = [
     subMent: '공부를 잘하고 싶어? 나와 이야기 해볼래?!',
     cardImgUrl: '/src/AvatarList_IMG/Card/AvatarList_Pupu_Card_IMG.png',
     backColor: '#93BE84',
-    borderColor: '7AA46B',
+    borderColor: '#7AA46B',
   },
   {
     name: '우비',
@@ -40,7 +40,7 @@ const avatarArr = [
     subMent: '오늘도 스트레스 받은 친구 나에게 풀어봐!!',
     cardImgUrl: '/src/AvatarList_IMG/Card/AvatarList_Ubi_Card_IMG.png',
     backColor: '#35A19B',
-    borderColor: '388581',
+    borderColor: '#388581',
   },
   {
     name: '북극이',
@@ -49,7 +49,7 @@ const avatarArr = [
     subMent: '심심해? 내가 이야기 친구가 되어줄게~',
     cardImgUrl: '/src/AvatarList_IMG/Card/AvatarList_North_Card_IMG.png',
     backColor: '#5289CD',
-    borderColor: '4170AA',
+    borderColor: '#4170AA',
   },
   {
     name: '랜덤',
@@ -60,24 +60,26 @@ const avatarArr = [
   },
 ];
 
-export default function AvartarList() {
+export default function Consult() {
   return (
-    <AvartarListContainer>
-      {avatarArr.map((el, index) => {
-        return (
-          <AvartarListCard
-            key={index}
-            backColor={el.backColor}
-            borderColor={el.borderColor}
-            cardImgUrl={el.cardImgUrl}
-            name={el.name}
-            codeName={el.codeName}
-            role={el.role}
-            subMent={el.subMent}
-          />
-        );
-      })}
-    </AvartarListContainer>
+    <MainContainer>
+      <AvartarListContainer>
+        {avatarArr.map((el, index) => {
+          return (
+            <AvartarListCard
+              key={index}
+              backColor={el.backColor}
+              borderColor={el.borderColor}
+              cardImgUrl={el.cardImgUrl}
+              name={el.name}
+              codeName={el.codeName}
+              role={el.role}
+              subMent={el.subMent}
+            />
+          );
+        })}
+      </AvartarListContainer>
+    </MainContainer>
   );
 }
 
@@ -95,17 +97,25 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const AvartarListContainer = styled.div`
+const MainContainer = styled.div`
   width: 100vw;
   min-height: 100vh;
   height: 100%;
-  padding: 2rem;
+  padding: 1rem;
   background-color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const AvartarListContainer = styled.div`
+  margin-top: 4rem;
 
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 1rem;
+  gap: 1rem 2.5rem;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;

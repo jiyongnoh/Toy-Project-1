@@ -67,14 +67,22 @@ const Container = styled.div`
 
   background-color: ${(props) => props.backColor || '#EBEBEB'};
   border-radius: 15px;
-  padding: 1rem;
   border: 2px solid ${(props) => props.borderColor || '#CDCDCD'};
+  padding: 1rem;
 
   width: 100%;
   max-width: 870px;
   height: auto;
 
   color: white;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &:active {
+    opacity: 0.9;
+  }
 
   @media (max-width: 1200px) {
     flex-direction: column;

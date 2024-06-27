@@ -124,7 +124,7 @@ export default function Nav() {
     () => [
       { href: '/test_ebt', label: t('ebt') },
       { href: '/test_pt', label: t('pt') },
-      { href: '/avartar_list', label: t('consult') },
+      { href: '/consult_intro', label: t('consult') },
       { href: '/review', label: t('review') },
       { href: '/meditation_painting', label: t('meditation_painting') },
       { href: '/shop', label: t('shop') },

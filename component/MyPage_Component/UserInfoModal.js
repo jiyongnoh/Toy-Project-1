@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import { handleCalendarResult } from '@/fetchAPI';
@@ -52,6 +52,7 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
   const [isPending, setIsPending] = useState(false);
   const [content, setContent] = useState('');
 
+  const UserInfoContainerRef = useRef(null);
   const dateArr = date.split('-');
 
   // 달력 데이터 반환 API 호출 세션
@@ -83,6 +84,10 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
     }
   }, [date]);
 
+  useEffect(() => {
+    const UserInfoBody = UserInfoContainerRef.current;
+  }, [content]);
+
   return (
     <StyledModal
       isOpen={isOpen}
@@ -109,7 +114,7 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
       {isPending ? (
         <div>Loading...</div>
       ) : (
-        <UserInfoContainer>
+        <UserInfoContainer ref={UserInfoContainerRef}>
           <TestCardContainer>
             {userInfoArr.map((el, index) => {
               return (
