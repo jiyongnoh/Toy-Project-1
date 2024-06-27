@@ -29,17 +29,23 @@ export default function TopButton() {
   }, []);
 
   return (
-    <TopButtonWrap>
-      {showButton && <Button onClick={handleScroll}>Top</Button>}
-    </TopButtonWrap>
+    <TopButtonContainer>
+      <TopButtonWrap>
+        {showButton && <Button onClick={handleScroll}>Top</Button>}
+      </TopButtonWrap>
+    </TopButtonContainer>
   );
 }
+
+const TopButtonContainer = styled.div`
+  position: fixed; // 화면에 요소 고정
+  bottom: 5%;
+  right: 2%;
+`;
 
 const TopButtonWrap = styled.div`
   margin-left: auto; // 부모가 flex일 경우, 현재 요소를 우측 정렬
   position: sticky; // 화면에 요소 고정
-  bottom: 5%;
-  right: 2%;
 `;
 
 // 스타일링된 버튼 컴포넌트
