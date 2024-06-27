@@ -167,7 +167,7 @@ const CalendarContainer = styled.div`
 
   @media (max-width: 768px) {
     .fc {
-      height: auto;
+      height: 26rem;
     }
 
     .fc-toolbar-title {
@@ -184,11 +184,12 @@ const CalendarContainer = styled.div`
 
     .fc-daygrid-day-number {
       font-size: 1rem;
+      font-family: AppleSDGothicNeoB00;
       font-weight: 600;
     }
 
     .fc-daygrid-day-frame {
-      padding: 6px;
+      padding: 5px;
     }
   }
 `;
