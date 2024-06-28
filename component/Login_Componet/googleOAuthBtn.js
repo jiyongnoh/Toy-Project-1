@@ -30,13 +30,16 @@ const GoogleOAuthBtn = ({ setUrl }) => {
 const GoogleLoginButton = styled.button`
   background-color: #ffffff; // Google Blue
   color: black;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 15px;
+  padding: 1rem;
+  border: 1px solid #c9c9c9;
+
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+
+  font-size: 20px;
+  font-weight: 400;
   text-align: center;
+  font-family: AppleSDGothicNeoL00;
   transition: background-color 0.3s;
 
   &:hover {
@@ -54,23 +57,23 @@ const GoogleLoginButton = styled.button`
     box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.5); // Google Blue with transparency
   }
 
-  // Icon alignment, if you choose to include a Google icon
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.7rem;
 
-  // Add margin to the icon if it exists
-  .google-icon {
-    margin-right: 10px;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0.5rem;
   }
 `;
 
 const GoogleIcon = styled.img.attrs({
-  src: '/path-to-your-google-icon.png', // The path to your Google icon image file
+  src: '/src/Login_IMG/Login_Google_Icon_IMG.png', // The path to your Google icon image file
   alt: 'Google sign-in',
 })`
-  width: 20px;
-  height: 20px;
+  width: 33px;
+  height: 38px;
 `;
 
 export default GoogleOAuthBtn;

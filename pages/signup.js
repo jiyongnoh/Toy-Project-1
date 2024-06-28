@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import {
   FlexContainer,
   StyledButton,
   StyledInput,
-} from "../styled-component/common";
+} from '../styled-component/common';
 
-import { useRouter } from "next/router";
-import { signupAPI } from "@/fetchAPI";
+import { useRouter } from 'next/router';
+import { signupAPI } from '@/fetchAPI';
 // SweetAlert2
-import Swal from "sweetalert2";
-import { useRecoilState } from "recoil";
-import { log } from "../store/state";
+import Swal from 'sweetalert2';
+import { useRecoilState } from 'recoil';
+import { log } from '../store/state';
 
-import { useTranslation } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // SignUp 페이지
 export default function Signup() {
-  const [id, setId] = useState("");
-  const [pwd, setPwd] = useState("");
-  const [email, setEmail] = useState("");
+  const [id, setId] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [email, setEmail] = useState('');
   const [check, setCheck] = useState(false);
   const [login, setLogin] = useRecoilState(log);
 
@@ -33,9 +33,9 @@ export default function Signup() {
   const regex = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/; // 한글 및 한글 자모를 포함하는 정규 표현식
 
   useEffect(() => {
-    const loginSession = JSON.parse(localStorage.getItem("log"));
+    const loginSession = JSON.parse(localStorage.getItem('log'));
     if (loginSession) {
-      router.replace("/");
+      router.replace('/');
       return;
     }
   }, [login]);
@@ -44,8 +44,8 @@ export default function Signup() {
   const formCheck = () => {
     if (!id || !pwd) {
       Swal.fire({
-        icon: "error",
-        title: "Input is empty!",
+        icon: 'error',
+        title: 'Input is empty!',
         showConfirmButton: false,
         timer: 1000,
       });
@@ -54,8 +54,8 @@ export default function Signup() {
 
     if (regex.test(id) || regex.test(pwd)) {
       Swal.fire({
-        icon: "error",
-        title: "한글 쓰지마!!",
+        icon: 'error',
+        title: '한글 쓰지마!!',
         showConfirmButton: false,
         timer: 1000,
       });
@@ -64,7 +64,7 @@ export default function Signup() {
 
     if (id.length < minlengthStd) {
       Swal.fire({
-        icon: "error",
+        icon: 'error',
         title: `ID 길이 ${minlengthStd}글자 이상!`,
         showConfirmButton: false,
         timer: 1000,
@@ -74,7 +74,7 @@ export default function Signup() {
 
     if (id.length > maxlengthStd) {
       Swal.fire({
-        icon: "error",
+        icon: 'error',
         title: `ID 길이 ${maxlengthStd}글자 이하!`,
         showConfirmButton: false,
         timer: 1000,
@@ -84,7 +84,7 @@ export default function Signup() {
 
     if (pwd.length < minlengthStd) {
       Swal.fire({
-        icon: "error",
+        icon: 'error',
         title: `Password 길이 ${minlengthStd}글자 이상!`,
         showConfirmButton: false,
         timer: 1000,
@@ -94,7 +94,7 @@ export default function Signup() {
 
     if (pwd.length > maxlengthStd) {
       Swal.fire({
-        icon: "error",
+        icon: 'error',
         title: `Password 길이 ${maxlengthStd}글자 이하!`,
         showConfirmButton: false,
         timer: 1000,
@@ -104,8 +104,8 @@ export default function Signup() {
 
     if (!check) {
       Swal.fire({
-        icon: "error",
-        title: "약관 동의 Check!",
+        icon: 'error',
+        title: '약관 동의 Check!',
         showConfirmButton: false,
         timer: 1000,
       });
@@ -135,19 +135,19 @@ export default function Signup() {
 
     if (flag) {
       Swal.fire({
-        icon: "success",
-        title: "Sign Up Success!",
-        text: "Login Page로 이동합니다",
+        icon: 'success',
+        title: 'Sign Up Success!',
+        text: 'Login Page로 이동합니다',
         showConfirmButton: false,
         timer: 1500,
       }).then(() => {
         // useRouter 인스턴스의 push 메서드를 통해 페이지 이동 가능
-        router.push("/login");
+        router.push('/login');
       });
     } else {
       Swal.fire({
-        icon: "error",
-        title: "Sign Up Fail",
+        icon: 'error',
+        title: 'Sign Up Fail',
       });
     }
   };
@@ -217,7 +217,7 @@ export default function Signup() {
               <StyledButton
                 onClick={(e) => {
                   e.preventDefault();
-                  console.log("Cancle btn");
+                  console.log('Cancle btn');
                   router.back(); // 뒤로가기
                 }}
               >
@@ -234,13 +234,13 @@ export default function Signup() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["signup", "nav"])),
+      ...(await serverSideTranslations(locale, ['signup', 'nav'])),
     },
   };
 }
 
 const SignUpPageContainer = styled.main`
-  background-image: url("/src/img.jpg");
+  background-image: url('/src/Login_IMG/Login_Background_IMG.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

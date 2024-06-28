@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import {
   FlexContainer,
@@ -16,7 +15,7 @@ import {
 } from '@/fetchAPI';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { log, oauthType, uid } from '../store/state';
+import { log, uid, mobile } from '../store/state';
 import Swal from 'sweetalert2';
 import { useSearchParams } from 'next/navigation';
 import GoogleOAuthBtn from '@/component/Login_Componet/googleOAuthBtn';
@@ -24,11 +23,55 @@ import KakaoOAuthBtn from '@/component/Login_Componet/kakaoOAuthBtn';
 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import Image from 'next/image';
 
 const expireSetHourFunc = (hour) => {
   const today = new Date();
   return today.setHours(today.getHours() + hour);
 };
+
+const AvartarIconArr = [
+  {
+    src: '/src/Login_IMG/Login_Ella_Icon_IMG.png',
+    alt: 'Ella_Icon',
+    width: 246,
+    height: 156,
+    top: '-28%',
+    left: '-3%',
+  },
+  {
+    src: '/src/Login_IMG/Login_Pupu_Icon_IMG.png',
+    alt: 'Pupu_Icon',
+    width: 191,
+    height: 150,
+    top: '-5%',
+    left: '-15%',
+  },
+  {
+    src: '/src/Login_IMG/Login_Soyes_Icon_IMG.png',
+    alt: 'Soyes_Icon',
+    width: 153,
+    height: 171,
+    left: '-13%',
+    bottom: '5%',
+  },
+  {
+    src: '/src/Login_IMG/Login_Ubi_Icon_IMG.png',
+    alt: 'Ubi_Icon',
+    width: 194,
+    height: 190,
+    top: '-28%',
+    right: '0%',
+  },
+  {
+    src: '/src/Login_IMG/Login_North_Icon_IMG.png',
+    alt: 'North_Icon',
+    width: 169,
+    height: 173,
+    top: '-10%',
+    right: '-13%',
+  },
+];
 
 export default function Login() {
   const { t } = useTranslation('login');
@@ -38,6 +81,8 @@ export default function Login() {
   const [pwd, setPwd] = useState('');
   const [login, setLogin] = useRecoilState(log);
   const [url, setUrl] = useState('');
+  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
+
   const router = useRouter();
   const searchParams = useSearchParams();
   const code = searchParams.get('code');
@@ -200,23 +245,47 @@ export default function Login() {
 
   return (
     <LoginPageContainer>
-      <FlexContainer
-        justify="center"
-        align="center"
-        dir="col"
-        width="100vw"
-        height="100vh"
-      >
+      {!mobileFlag && (
+        <Image
+          src="/src/Login_IMG/Login_Logo_IMG.png"
+          alt={'soyes_logo'}
+          width={412}
+          height={102}
+          style={{ maxWidth: '100%', height: 'auto' }}
+        />
+      )}
+
+      <FormWrap>
+        {!mobileFlag &&
+          AvartarIconArr.map((el, index) => {
+            return (
+              <AvartarIconWrap
+                key={index}
+                top={el.top}
+                left={el.left}
+                bottom={el.bottom}
+                right={el.right}
+              >
+                <Image
+                  src={el.src}
+                  alt={el.alt}
+                  width={el.width}
+                  height={el.height}
+                  style={{ maxWidth: '100%', height: 'auto' }}
+                />
+              </AvartarIconWrap>
+            );
+          })}
+        <H1>{t('login_title')}</H1>
         <FormContainer>
-          <H1>{t('login_title')}</H1>
           <InputContainer>
-            <StyledInput
+            <LoginInput
               color="black"
               placeholder={t('login_id_placeholder')}
               value={id}
               onChange={(e) => setId(e.target.value)}
             />
-            <StyledInput
+            <LoginInput
               color="black"
               type="password"
               placeholder={t('login_password_placeholder')}
@@ -224,13 +293,13 @@ export default function Login() {
               onChange={(e) => setPwd(e.target.value)}
             />
           </InputContainer>
-          <StyledButton color="black" onClick={submitHandler}>
-            {t('login_submit')}
-          </StyledButton>
+          <LoginButton onClick={submitHandler}>{t('login_submit')}</LoginButton>
+        </FormContainer>
+        <OAuthWrap>
           <GoogleOAuthBtn setUrl={setUrl} />
           <KakaoOAuthBtn setUrl={setUrl} />
-        </FormContainer>
-      </FlexContainer>
+        </OAuthWrap>
+      </FormWrap>
     </LoginPageContainer>
   );
 }
@@ -244,36 +313,172 @@ export async function getStaticProps({ locale }) {
 }
 
 const LoginPageContainer = styled.main`
-  background-image: url('/src/soyesKids_Background_image.png');
+  background-image: url('/src/Login_IMG/Login_Background_IMG.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
   width: 100vw;
   height: 100vh;
+
+  padding-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+
+  gap: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    justify-content: center;
+  }
+`;
+
+const FormWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.5rem;
+  padding: 3rem 5rem;
+
+  border-radius: 40px;
+  background-color: #ffffff;
+
+  border: 10px solid #007f74;
+
+  position: relative;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 2rem 3rem;
+  }
+`;
+
+const AvartarIconWrap = styled.div`
+  position: absolute;
+  top: ${(props) => props.top || null};
+  bottom: ${(props) => props.bottom || null};
+  left: ${(props) => props.left || null};
+  right: ${(props) => props.right || null};
 `;
 
 const FormContainer = styled.form`
-  padding: 3rem 5rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
 
-  border-radius: 20px;
-
+  border-radius: 40px;
   background-color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.05);
-  // 불투명 필터
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+`;
+
+const OAuthWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 2rem 2rem 0 2rem;
+
+  border-radius: 40px;
+
+  @media (max-width: 768px) {
+    margin-top: 1rem;
+    width: 100%;
+    flex-direction: column;
+    padding: 0;
+  }
 `;
 
 const H1 = styled.h1`
+  font-size: 40px;
+  font-family: Cafe24Ssurround;
   color: black;
+
+  margin-bottom: 2rem;
 `;
 
 const InputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: baseline;
+  align-items: center;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    gap: 0.5rem;
+  }
+`;
+
+export const LoginInput = styled.input`
+  width: 27rem;
+  height: 4.3rem;
+  background-color: #f9f9f9;
+
+  color: ${(props) => (props.color ? props.color : 'white')};
+
+  padding: 13px 18px;
+
+  border-radius: 20px;
+  font-size: 25px;
+  font-family: AppleSDGothicNeoL00;
+  text-align: left;
+
+  border: 1px solid #bfbfbf;
+
+  transition: 0.5s;
+
+  &:focus {
+    /* padding: 15px 20px; */
+  }
+
+  &::placeholder {
+    color: #b8b8b8;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    font-size: 1rem;
+  }
+`;
+
+export const LoginButton = styled.button`
+  color: white;
+
+  width: 180px;
+  min-height: 153px;
+
+  background-color: #007f74;
+  border: none;
+  border-radius: 15px;
+
+  padding: 13px 23px;
+
+  text-align: center;
+  text-decoration: none;
+
+  font-size: 32px;
+  font-weight: bold;
+  font-family: AppleSDGothicNeoEB00;
+
+  cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
+
+  transition: 0.5s;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    min-height: fit-content;
+    min-height: 53px;
+  }
 `;

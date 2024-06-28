@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
 // Component usage
-const KakaoOAuthBtn = ({ setUrl }) => {
+const KakaoOAuthBtn = () => {
   const { t } = useTranslation('login');
 
   const handleLogin = (e) => {
@@ -23,15 +23,18 @@ const KakaoOAuthBtn = ({ setUrl }) => {
 };
 
 const KakaoLoginButton = styled.button`
-  background-color: #fee500; // Google Blue
+  background-color: #f9e000; // Google Blue
   color: black;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 15px;
+  padding: 1rem;
+  border: 1px solid #c9c9c9;
+
+  border-radius: 20px;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+
+  font-size: 20px;
+  font-weight: 400;
   text-align: center;
+  font-family: AppleSDGothicNeoL00;
   transition: background-color 0.3s;
 
   &:hover {
@@ -54,18 +57,20 @@ const KakaoLoginButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  // Add margin to the icon if it exists
-  .google-icon {
-    margin-right: 10px;
+  gap: 0.7rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0.5rem;
   }
 `;
 
 const KakaoIcon = styled.img.attrs({
-  src: '/kakao_logo.png', // The path to your Google icon image file
+  src: '/src/Login_IMG/Login_Kakao_Icon_IMG.png', // The path to your Google icon image file
   alt: 'Google sign-in',
 })`
-  width: 20px;
-  height: 20px;
+  width: 33px;
+  height: 38px;
 `;
 
 export default KakaoOAuthBtn;
