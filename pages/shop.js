@@ -188,6 +188,11 @@ const ShopPageContainer = styled.main`
   align-items: flex-start;
 
   gap: 4rem;
+
+  @media (max-width: 768px) {
+    padding: 5rem 1rem;
+    gap: 1rem;
+  }
 `;
 
 const PlanContainer = styled.div`
@@ -200,6 +205,10 @@ const PlanContainer = styled.div`
   gap: 0.5rem;
 
   border-radius: 20px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const TicketContainer = styled.div`
@@ -210,6 +219,11 @@ const TicketContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 0.5rem;
+  }
 `;
 
 // const InputContainer = styled.div`

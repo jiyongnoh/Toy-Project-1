@@ -32,8 +32,8 @@ const Container = styled.div`
   border-radius: 20px;
   padding: 20px;
 
-  width: 1000px;
-
+  max-width: 1000px;
+  width: 100%;
   position: relative;
 `;
 
@@ -58,6 +58,11 @@ const TextContainer = styled.div`
   bottom: 7%;
 
   font-family: AppleSDGothicNeoH00;
+
+  @media (max-width: 768px) {
+    padding: 1rem 0.5rem;
+    font-size: 1rem;
+  }
 `;
 
 export default SubscriptionStatus;

@@ -52,15 +52,16 @@ const ContentCard = () => {
 };
 
 const ContentCardContainer = styled.div`
+  max-width: 80vw;
+  width: 100%;
   position: relative;
   display: flex;
-  justify-content: center;
-  gap: 5.5rem;
-  margin-bottom: 2rem;
+  justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 768px) {
-    gap: 0.3rem;
     flex-direction: column;
+    gap: 0.3rem;
   }
 `;
 

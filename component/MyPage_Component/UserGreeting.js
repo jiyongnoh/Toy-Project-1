@@ -48,8 +48,8 @@ const Container = styled.div`
   gap: 1rem;
 
   @media (max-width: 768px) {
-    width: 100vw;
-    background-color: #fff;
+    width: 95vw;
+    background-color: #fffbe5;
   }
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 `;

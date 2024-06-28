@@ -55,6 +55,9 @@ const CardContainer = styled.button`
     props.backgroundUrl
       ? `url(${props.backgroundUrl})`
       : `url('/src/Shop_IMG/Shop_Ticket_Bg1_IMG.png')`};
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   border-radius: 20px;
 
   padding: 20px;
@@ -70,6 +73,13 @@ const CardContainer = styled.button`
   gap: 1rem;
 
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 130px;
+    height: 250px;
+    gap: 0rem;
+    padding-top: 5rem;
+  }
 `;
 
 const Title = styled.div`
@@ -82,6 +92,11 @@ const Title = styled.div`
   text-align: center;
 
   letter-spacing: -0.25rem;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+    letter-spacing: -0.2rem;
+  }
 `;
 
 const OriginalPrice = styled.div`
@@ -91,6 +106,11 @@ const OriginalPrice = styled.div`
   font-family: AppleSDGothicNeoH00;
 
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+    margin-bottom: 0;
+  }
 `;
 
 const DiscountedPrice = styled.div`
@@ -99,6 +119,10 @@ const DiscountedPrice = styled.div`
   font-weight: bold;
   line-height: 40px;
   font-family: AppleSDGothicNeoH00;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 export default TicketCard;
