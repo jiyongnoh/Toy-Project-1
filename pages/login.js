@@ -2,17 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import {
-  FlexContainer,
-  StyledButton,
-  StyledInput,
-} from '../styled-component/common';
-import {
-  loginAPI,
-  logoutAPI,
-  loginAPI_OAuth_URL,
-  loginAPI_OAuth_AccessToken,
-} from '@/fetchAPI';
+import { loginAPI, loginAPI_OAuth_AccessToken } from '@/fetchAPI';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { log, uid, mobile } from '../store/state';
@@ -296,8 +286,8 @@ export default function Login() {
           <LoginButton onClick={submitHandler}>{t('login_submit')}</LoginButton>
         </FormContainer>
         <OAuthWrap>
-          <GoogleOAuthBtn setUrl={setUrl} />
           <KakaoOAuthBtn setUrl={setUrl} />
+          <GoogleOAuthBtn setUrl={setUrl} />
         </OAuthWrap>
       </FormWrap>
     </LoginPageContainer>
@@ -418,7 +408,7 @@ const InputContainer = styled.div`
   }
 `;
 
-export const LoginInput = styled.input`
+const LoginInput = styled.input`
   width: 27rem;
   height: 4.3rem;
   background-color: #f9f9f9;
@@ -450,7 +440,7 @@ export const LoginInput = styled.input`
   }
 `;
 
-export const LoginButton = styled.button`
+const LoginButton = styled.button`
   color: white;
 
   width: 180px;
@@ -480,5 +470,6 @@ export const LoginButton = styled.button`
     width: 100%;
     min-height: fit-content;
     min-height: 53px;
+    font-size: 20px;
   }
 `;
