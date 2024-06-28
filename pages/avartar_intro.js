@@ -3,7 +3,7 @@
 import styled, { keyframes } from 'styled-components';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import IntroBlock from '@/component/Intro_Component/IntroBlock';
+import IntroBlock from '@/component/Intro_Avartar_Component/IntroBlock';
 import { useRecoilState } from 'recoil';
 import { avarta } from '../store/state';
 

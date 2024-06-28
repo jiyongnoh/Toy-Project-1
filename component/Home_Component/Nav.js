@@ -126,7 +126,7 @@ export default function Nav() {
       { href: '/test_pt', label: t('pt') },
       { href: '/consult_intro', label: t('consult') },
       { href: '/review', label: t('review') },
-      { href: '/meditation_painting', label: t('meditation_painting') },
+      { href: '/meditation_intro', label: t('meditation_intro') },
       { href: '/shop', label: t('shop') },
       { href: '/mypage', label: t('mypage') },
     ],
@@ -147,8 +147,8 @@ export default function Nav() {
       {login ? (
         <NavUl>
           {/* <NavLi>
-            <Link href="/mypage" passHref>
-              <NavBtn>MyPage</NavBtn>
+            <Link href="/meditation_intro" passHref>
+              <NavBtn>meditation_intro</NavBtn>
             </Link>
           </NavLi> */}
           {/* <NavLi>

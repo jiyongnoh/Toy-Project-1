@@ -3,7 +3,7 @@
 import styled, { keyframes } from 'styled-components';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import AvartarListCard from '@/component/AvartarList_Component/AvartarListCard';
+import AvartarListCard from '@/component/Intro_Consult_Component/AvartarListCard';
 
 const avatarArr = [
   {
@@ -60,7 +60,7 @@ const avatarArr = [
   },
 ];
 
-export default function Consult() {
+export default function Consult_Intro() {
   return (
     <MainContainer>
       <AvartarListContainer>
