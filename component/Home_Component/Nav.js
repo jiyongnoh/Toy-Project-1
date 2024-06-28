@@ -137,7 +137,7 @@ export default function Nav() {
     <NavContainer show={showNavbar}>
       <Link href="/" passHref>
         <Image
-          src="/src/soyesKids_Logo.png"
+          src="/src/Login_IMG/Login_Logo_IMG.png"
           alt={'soyes_logo'}
           width={220}
           height={36}
