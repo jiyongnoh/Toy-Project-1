@@ -45,10 +45,11 @@ const AvartarCardContainer = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
+  padding: 0 1rem;
 
   @media (max-width: 768px) {
     gap: 0.3rem;
-    padding: 0 1rem;
+    max-width: 100%;
   }
 `;
 

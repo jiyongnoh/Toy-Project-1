@@ -58,8 +58,10 @@ const ContentCardContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 1rem;
 
   @media (max-width: 768px) {
+    max-width: 100%;
     flex-direction: column;
     gap: 0.3rem;
   }
