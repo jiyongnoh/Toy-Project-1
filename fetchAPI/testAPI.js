@@ -43,8 +43,9 @@ export const handleEbtAnalsys = async (input) => {
   } catch (err) {
     console.log('EBT 결과 분석 API 호출 실패');
     console.error(err);
+
     return {
-      message: 'EBT 결과 분석 API 호출 실패',
+      message: '해당 서비스는 로그인 후 사용 가능합니다!',
       emotion: 0,
     };
   }

@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const AvartarLogo = ({ iconImgUrl, name, backImgUrl }) => {
   return (
-    <YellowCircle backImgUrl={backImgUrl}>
+    <AvartarLogoContainer backImgUrl={backImgUrl}>
       <Character name={name}>
         <Image
           src={iconImgUrl}
@@ -15,11 +15,14 @@ const AvartarLogo = ({ iconImgUrl, name, backImgUrl }) => {
           style={{ maxWidth: '100%', height: 'auto' }}
         />
       </Character>
-    </YellowCircle>
+    </AvartarLogoContainer>
   );
 };
 
-const YellowCircle = styled.div`
+const AvartarLogoContainer = styled.div`
+  width: 504px;
+  height: 504px;
+
   background-image: ${(props) => `url(${props.backImgUrl})`};
   background-size: cover;
   background-repeat: no-repeat;
@@ -28,18 +31,15 @@ const YellowCircle = styled.div`
   justify-content: center;
   align-items: center;
 
-  width: 504px;
-  height: 504px;
   /* background-color: #ffdd00; Yellow background */
-  border-radius: 50%;
 
   position: relative;
 
   /* padding-right: 4rem; */
 
   @media (max-width: 768px) {
-    width: 400px;
-    height: 400px;
+    width: 95vw;
+    height: 95vw;
   }
 `;
 

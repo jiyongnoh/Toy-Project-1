@@ -180,7 +180,6 @@ const ContentContainer = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
 
-  position: relative;
   gap: 0.5rem;
 
   @media (max-width: 768px) {
@@ -191,7 +190,7 @@ const ContentContainer = styled.div`
 `;
 // 버튼 컴포넌트 정의
 const ImageButton = styled.button`
-  width: 430px; /* 버튼 너비 */
+  width: 23vw; /* 버튼 너비 */
   min-height: 320px;
   height: auto; /* 버튼 높이 */
 

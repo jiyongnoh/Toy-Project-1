@@ -52,7 +52,7 @@ export default function Test() {
       // 감정 분석 API 호출 이후 state 갱신
       const data = await handlePtAnalsys({
         resultText: resultType,
-        pUid: localStorage.getItem('id') || 'dummy',
+        pUid: localStorage.getItem('id'),
       });
 
       setIsPending(false);

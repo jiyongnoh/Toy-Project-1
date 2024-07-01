@@ -190,7 +190,7 @@ const ContentContainer = styled.div`
 `;
 // 버튼 컴포넌트 정의
 const ImageButton = styled.button`
-  width: 430px; /* 버튼 너비 */
+  width: 23vw;
   min-height: 320px;
   height: auto; /* 버튼 높이 */
 

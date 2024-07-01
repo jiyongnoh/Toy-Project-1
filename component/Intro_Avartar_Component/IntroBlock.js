@@ -39,18 +39,8 @@ const IntroBlock = ({ avartar }) => {
 
 export default IntroBlock;
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  border-radius: 15px;
-  gap: 1rem;
-`;
-
 const IntroAvatarContainer = styled.div`
   width: 100vw;
-  height: 100%;
 
   display: flex;
   align-items: center;
@@ -62,6 +52,17 @@ const IntroAvatarContainer = styled.div`
     justify-content: center;
     flex-direction: column;
   }
+`;
+
+const Container = styled.div`
+  width: 50vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 15px;
+  gap: 1rem;
 `;
 
 const ButtonContainer = styled.div`

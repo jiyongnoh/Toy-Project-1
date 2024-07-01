@@ -71,7 +71,7 @@ export default function Test() {
         messageArr: parseMessageArr,
         type: ebtClassMap[localStorage.getItem('EBTClass') || 'School'].type,
         score: scoreArr,
-        pUid: localStorage.getItem('id') || 'dummy',
+        pUid: localStorage.getItem('id'),
       });
 
       setIsPending(false);
