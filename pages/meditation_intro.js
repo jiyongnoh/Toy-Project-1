@@ -84,7 +84,7 @@ const MeditationIntroContainer = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     justify-content: center;
   }
 `;

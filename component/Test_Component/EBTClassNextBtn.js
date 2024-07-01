@@ -4,59 +4,40 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 // EBTClassSelector 컴포넌트
-const EBTClassSelector = ({ isProceeding, EBTArr, ebtType }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const EBTClassNextBtn = ({ ebtType }) => {
   const router = useRouter();
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-  // EBT Class 변경 핸들러
   const ebtChangeHandler = (e) => {
-    // 검사 도중 변경 불가능
-    if (isProceeding) {
-      alert('검사 진행 중엔 바꿀 수 없어!');
-      return;
+    // 마지막 검사인 경우
+    if (e.target.value === 'END') {
+      router.push('/mypage'); // 총평으로 이동
+    } else {
+      // 로컬 스토리지에 EBTClass값 저장 후 리로드
+      localStorage.setItem('EBTClass', e.target.value);
+      router.reload();
     }
-    // 로컬 스토리지에 EBTClass값 저장 후 리로드
-    localStorage.setItem('EBTClass', e.target.value);
-    router.reload();
   };
 
   return (
     <EBTSelectorContainer>
-      <NavBtn onClick={toggleMenu}>EBT</NavBtn>
-      <ButtonsContainer>
-        {Object.values(EBTArr).map((ebt, index) => (
-          <NavBtn
-            key={ebt.name}
-            value={ebt.type}
-            selected={ebtType === ebt.type}
-            hidden={!isOpen}
-            transitionDelay={`${isOpen ? index * 100 : (3 - index) * 100}ms`}
-            onClick={ebtChangeHandler}
-          >
-            {ebt.name}
-          </NavBtn>
-        ))}
-      </ButtonsContainer>
+      <NavBtn value={ebtType} onClick={ebtChangeHandler}>
+        {ebtType === 'END' ? '총평' : '다음 검사 진행하기'}
+      </NavBtn>
     </EBTSelectorContainer>
   );
 };
 
 const EBTSelectorContainer = styled.div`
-  position: absolute;
-  top: 1%;
-  right: 5%;
-
-  @media (max-width: 768px) {
-    width: fit-content;
-    left: 0;
-  }
-
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
+  align-items: center;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    left: 0;
+  }
 `;
 
 const ButtonsContainer = styled.div`
@@ -101,4 +82,4 @@ const NavBtn = styled.button`
     `}
 `;
 
-export default EBTClassSelector;
+export default EBTClassNextBtn;

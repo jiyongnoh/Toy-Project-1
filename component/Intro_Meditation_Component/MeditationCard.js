@@ -33,6 +33,11 @@ const CardContainer = styled.div`
   justify-content: flex-end;
   align-items: center;
   color: white;
+
+  @media (max-width: 768px) {
+    width: 90vw;
+    min-height: 400px;
+  }
 `;
 
 const Title = styled.div`
@@ -44,6 +49,10 @@ const Title = styled.div`
   margin-bottom: 10px;
   text-align: center;
   letter-spacing: -0.1rem;
+
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
 `;
 
 const Subtitle = styled.div`
@@ -55,6 +64,10 @@ const Subtitle = styled.div`
 
   text-align: center;
   line-height: 1.5;
+
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `;
 
 export default MeditationCard;

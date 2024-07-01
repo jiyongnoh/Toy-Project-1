@@ -8,6 +8,7 @@ import { handleEbtAnalsys } from '@/fetchAPI/testAPI';
 import EBTestBubble from '@/component/Test_Component/EBTestBubble';
 import EBTClassSelector from '@/component/Test_Component/EBTClassSelector';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+import EBTClassNextBtn from '@/component/Test_Component/EBTClassNextBtn';
 
 // import { useRouter } from "next/router";
 import { ebtClassMap } from '@/store/testGenerator';
@@ -26,6 +27,7 @@ export default function Test() {
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
   const [ebtType, setEbtType] = useState('');
+  const [endTrigger, setEndTrigger] = useState(false); // 검사 종료 트리거 (변경 시 다음 검사 버튼 뿌리기)
 
   // const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
@@ -79,8 +81,11 @@ export default function Test() {
         // { role: "end", content: "다음 검사 진행하기" },
       ]);
       setIsProceeding(false);
-      setResultTrigger(false);
       setBottom(true);
+
+      setTimeout(() => {
+        setEndTrigger(true);
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
@@ -211,13 +216,13 @@ export default function Test() {
           height={93}
         /> */}
         <EBTBox>
-          <EBTClassSelector
-            isProceeding={isProceeding}
-            EBTArr={ebtClassMap}
-            ebtType={ebtType}
-          />
           {/* <EBTBoxHeader>정서행동 검사</EBTBoxHeader> */}
           <EBTBoxBody ref={chatBoxBody}>
+            {/* <EBTClassSelector
+              isProceeding={isProceeding}
+              EBTArr={ebtClassMap}
+              ebtType={ebtType}
+            /> */}
             {messageArr.map((el, index) => (
               <div key={index}>
                 <EBTestBubble
@@ -233,6 +238,10 @@ export default function Test() {
             ))}
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
+            {/* 다음 검사 OR 총평 */}
+            {endTrigger ? (
+              <EBTClassNextBtn ebtType={ebtClassMap[ebtType].next} />
+            ) : null}
           </EBTBoxBody>
         </EBTBox>
         <div class="codingnexus">
@@ -367,6 +376,8 @@ const EBTBoxBody = styled.div`
   display: flex;
   flex-direction: column;
   width: auto;
+
+  position: relative;
 
   @media (max-width: 768px) {
     height: 86%;

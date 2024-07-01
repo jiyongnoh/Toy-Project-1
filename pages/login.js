@@ -311,10 +311,10 @@ const LoginPageContainer = styled.main`
   width: 100vw;
   height: 100vh;
 
-  padding-top: 5rem;
+  /* padding-top: 5rem; */
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
 
   gap: 2rem;

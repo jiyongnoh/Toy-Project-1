@@ -232,56 +232,67 @@ export const ebtClassMap = {
     type: 'School',
     name: '학교생활',
     generator: ebtSchool,
+    next: 'Friend',
   },
   Friend: {
     type: 'Friend',
     name: '친구관계',
     generator: ebtFriend,
+    next: 'Family',
   },
   Family: {
     type: 'Family',
     name: '가족관계',
     generator: ebtFamily,
+    next: 'Mood',
   },
   Mood: {
     type: 'Mood',
     name: '기분',
     generator: ebtMood,
+    next: 'Unrest',
   },
   Unrest: {
     type: 'Unrest',
     name: '불안',
     generator: ebtUnrest,
+    next: 'Sad',
   },
   Sad: {
     type: 'Sad',
     name: '우울',
     generator: ebtSad,
+    next: 'Health',
   },
   Health: {
     type: 'Health',
     name: '신체증상',
     generator: ebtHealth,
+    next: 'Attention',
   },
   Attention: {
     type: 'Attention',
     name: '주의집중',
     generator: ebtAttention,
+    next: 'Movement',
   },
   Movement: {
     type: 'Movement',
     name: '과잉행동',
     generator: ebtMovement,
+    next: 'Angry',
   },
   Angry: {
     type: 'Angry',
     name: '분노/공격성',
     generator: ebtAngry,
+    next: 'Self',
   },
   Self: {
     type: 'Self',
     name: '자기인식',
     generator: ebtSelf,
+    next: 'END',
   },
 };
 // 정서행동 검사 - 학교생활
