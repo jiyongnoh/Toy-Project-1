@@ -71,7 +71,7 @@ export default function Shop() {
       // KakaoPay 승인 API 호출
       handleKakaoPayApprove({
         cid: process.env.NEXT_PUBLIC_KAKAO_PAY_CID,
-        tid: localStorage.getItem('tid'),
+        tid: '', // 서버 세션 데이터에 저장
         partner_order_id:
           payInfo[localStorage.getItem('payClass')].partner_order_id,
         partner_user_id: localStorage.getItem('id'),

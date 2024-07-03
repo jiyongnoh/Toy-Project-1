@@ -33,11 +33,9 @@ const TicketCard = ({
         fail_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`, // ready 실패 시 이동 페이지
         cancel_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`, // ready 취소 시 이동 페이지
       });
-      // redirect 되기 때문에 로컬 스토리지에 저장
-      localStorage.setItem('tid', data.tid);
       // 결제 페이지로 이동하기
       window.location.href = mobileFlag
-        ? data.next_redirect_app_url
+        ? data.next_redirect_mobile_url
         : data.next_redirect_pc_url;
     } catch (error) {
       console.error(error);
