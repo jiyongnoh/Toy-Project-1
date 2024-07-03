@@ -109,17 +109,24 @@ const Subtitle = styled.h2`
 `;
 
 const ProgressBarContainer = styled.div`
-  width: 80%;
-  height: 10px;
-  background-color: #e0e0e0;
-  border-radius: 5px;
+  width: 30%;
+  height: 20px;
+  background-color: #c978ff;
+  border-radius: 10px;
   overflow: hidden;
   margin-bottom: 20px;
+
+  padding: 0.15rem;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 const ProgressBar = styled.div`
+  border-radius: 10px;
   height: 100%;
-  background-color: #a35eff;
+  background-color: white;
   width: ${(props) => props.progress}%;
   transition: width 0.5s ease;
 `;
