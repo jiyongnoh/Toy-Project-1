@@ -3,6 +3,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { payInfo } from '@/store/payInfo';
 import { handleKakaoPayReady } from '@/fetchAPI/kakaoPayAPI';
+import { useRecoilState } from 'recoil';
+import { mobile } from '../../store/state';
 
 const TicketCard = ({
   days,
@@ -12,27 +14,31 @@ const TicketCard = ({
   backgroundUrl,
   color,
 }) => {
+  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
+
   const kakaoPayHandle = async (e) => {
     // 카카오페이 결제 준비 API 호출 후, 받은 URL로 모달 띄우기
     try {
-      let payClass = e.target.value;
-      console.log(payClass);
-      localStorage.setItem('payClass', payClass);
-      let input = payInfo[payClass];
+      let payClass = e.target.value; // 선택한 상품 속성명
+      // console.log(payClass);
+      localStorage.setItem('payClass', payClass); // 상품 정보를 로컬 스토리지 저장
+      let input = payInfo[payClass]; // handleKakaoPayReady Input 값 지정
 
       // KakaoPay Ready API 호출
       const data = await handleKakaoPayReady({
         ...input,
-        cid: process.env.NEXT_PUBLIC_KAKAO_PAY_CID, // 사업자 번호
+        cid: process.env.NEXT_PUBLIC_KAKAO_PAY_CID, // 가맹점 번호 (현재는 테스트용 번호)
         partner_user_id: localStorage.getItem('id'),
-        approval_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`,
-        fail_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`,
-        cancel_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`,
+        approval_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`, // approve(결제 승인 단계) 이동 페이지
+        fail_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`, // ready 실패 시 이동 페이지
+        cancel_url: `${process.env.NEXT_PUBLIC_INNER_URL}/shop`, // ready 취소 시 이동 페이지
       });
       // redirect 되기 때문에 로컬 스토리지에 저장
       localStorage.setItem('tid', data.tid);
       // 결제 페이지로 이동하기
-      window.location.href = data.next_redirect_pc_url;
+      window.location.href = mobileFlag
+        ? data.next_redirect_app_url
+        : data.next_redirect_pc_url;
     } catch (error) {
       console.error(error);
     }

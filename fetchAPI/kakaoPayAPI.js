@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 
-// Ready
+// KakaoPay Ready
 export const handleKakaoPayReady = async (input) => {
   try {
     const response = await axios.post(
@@ -8,7 +8,7 @@ export const handleKakaoPayReady = async (input) => {
       { readyData: input },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
@@ -16,12 +16,12 @@ export const handleKakaoPayReady = async (input) => {
     // console.log(response.data.data);
     return response.data.data;
   } catch (err) {
-    console.log("handlePayReady 호출 실패");
+    console.log('handlePayReady 호출 실패');
     console.error(err);
   }
 };
 
-// Approve
+// KakaoPay Approve
 export const handleKakaoPayApprove = async (input) => {
   try {
     const response = await axios.post(
@@ -29,14 +29,14 @@ export const handleKakaoPayApprove = async (input) => {
       { approveData: input },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       }
     );
     return response;
   } catch (err) {
-    console.log("ReviewCreate API 호출 실패");
+    console.log('ReviewCreate API 호출 실패');
     console.error(err);
     return {
       status: 400,
