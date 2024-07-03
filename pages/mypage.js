@@ -8,7 +8,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Calendar from '@/component/MyPage_Component/Calendar';
 import MyInfo from '@/component/MyPage_Component/MyInfo';
 import UserInfoModal from '@/component/MyPage_Component/UserInfoModal';
-
 // MyPage 페이지
 export default function MyPage() {
   const [isOpen, setIsOpen] = useState(false);

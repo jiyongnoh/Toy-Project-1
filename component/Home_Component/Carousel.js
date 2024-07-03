@@ -40,11 +40,11 @@ const slideArr = [
   },
   {
     name: '그림명상',
-    backgroundUrl: '/src/Carousel_IMG/Banner_Background_IMG_요가명상.png',
+    backgroundUrl: '/src/Carousel_IMG/Banner_Background_IMG_그림명상.png',
     pathUrl: '/meditation_painting',
     ment: {
       title: '그림 명상',
-      subTitle: '그림명상 멘트',
+      subTitle: '그림 명상을 통해 편안한 몸과 마음을 만들어보세요.',
     },
   },
   {

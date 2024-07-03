@@ -6,6 +6,8 @@ import { handleCalendarResult } from '@/fetchAPI';
 // import { useSession } from "next-auth/react";
 import TestCard from './TestCard';
 import ResultCard from './ResultCard';
+import Loading from '@/component/Common_Component/Loading';
+
 import Image from 'next/image';
 
 const userInfoArr = [
@@ -47,6 +49,8 @@ const userInfoArr = [
   },
 ];
 
+const loadingDuration = 1000;
+
 const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
   const [calendarData, setCalendarData] = useState({});
   const [isPending, setIsPending] = useState(false);
@@ -70,7 +74,7 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
             setCalendarData({ ...cData });
             setTimeout(() => {
               setIsPending(false);
-            }, 500);
+            }, loadingDuration);
           } else {
             console.error('Failed to fetch Calendar Data');
           }
@@ -112,7 +116,7 @@ const UserInfoModal = ({ isOpen, onRequestClose, date, userId }) => {
         </UserInfoHeaderContainer>
       )}
       {isPending ? (
-        <div>Loading...</div>
+        <Loading duration={loadingDuration} />
       ) : (
         <UserInfoContainer ref={UserInfoContainerRef}>
           <TestCardContainer>

@@ -14,13 +14,10 @@ const UserGreeting = ({ purchaseDate }) => {
     handleUserExpiration({ pUid: localStorage.getItem('id') })
       .then((res) => res.data)
       .then((data) => {
-        if (!data?.expirationDate) return;
-        // 두 날짜 간의 차이를 밀리초 단위로 계산
-        const timeDifference = new Date(data.expirationDate) - new Date();
-        // 값이 음수라면 이용권이 지났거나 없다는 의미
-        if (timeDifference <= 0) return;
-        // 밀리초 단위의 차이를 일(day) 단위로 변환
-        const dayDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        if (!data?.expirationDate) return; // 초회 결제조차 안한 경우
+        const timeDifference = new Date(data.expirationDate) - new Date(); // 두 날짜 간의 차이를 밀리초 단위로 계산
+        if (timeDifference <= 0) return; // 이용권이 지난 경우
+        const dayDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // 밀리초 단위의 차이를 일(day) 단위로 변환
         setDaysLeft(dayDifference);
       });
   }, []);
