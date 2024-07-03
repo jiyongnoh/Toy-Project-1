@@ -43,3 +43,26 @@ export const handleKakaoPayApprove = async (input) => {
     };
   }
 };
+
+// User Expiration period 조회
+export const handleUserExpiration = async (input) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/kakaopay/expiration`,
+      { data: input },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (err) {
+    console.log('UserExpiratio API 호출 실패');
+    console.error(err);
+    return {
+      status: 400,
+    };
+  }
+};

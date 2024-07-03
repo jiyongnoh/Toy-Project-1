@@ -1,12 +1,29 @@
 // components/UserGreeting.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { uid } from '../../store/state';
+import { handleUserExpiration } from '@/fetchAPI/kakaoPayAPI';
 
-const UserGreeting = ({ daysLeft, purchaseDate }) => {
+const UserGreeting = ({ purchaseDate }) => {
   const [userId, setUserId] = useRecoilState(uid);
+  const [daysLeft, setDaysLeft] = useState(0);
+
+  useEffect(() => {
+    handleUserExpiration({ pUid: localStorage.getItem('id') })
+      .then((res) => res.data)
+      .then((data) => {
+        if (!data?.expirationDate) return;
+        // 두 날짜 간의 차이를 밀리초 단위로 계산
+        const timeDifference = new Date(data.expirationDate) - new Date();
+        // 값이 음수라면 이용권이 지났거나 없다는 의미
+        if (timeDifference <= 0) return;
+        // 밀리초 단위의 차이를 일(day) 단위로 변환
+        const dayDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+        setDaysLeft(dayDifference);
+      });
+  }, []);
 
   return (
     <Container>
@@ -21,15 +38,15 @@ const UserGreeting = ({ daysLeft, purchaseDate }) => {
         <GreetingText>
           <span>{userId}</span>님 안녕하세요!
         </GreetingText>
-        <StatusText>
-          현재
-          {daysLeft ? (
-            <span> {daysLeft}일 이용권</span>
-          ) : (
-            <span> 구매한 이용권</span>
-          )}
-          {daysLeft ? '사용중이에요.' : '이 없어요.'}
-        </StatusText>
+        {daysLeft ? (
+          <StatusText>
+            현재 <span>이용권이 {daysLeft}일</span> 남았어요
+          </StatusText>
+        ) : (
+          <StatusText>
+            현재 구매한 <span>이용권</span>이 없어요
+          </StatusText>
+        )}
         <PurchaseDate>
           {purchaseDate ? `[ ${purchaseDate}구매 ]` : null}
         </PurchaseDate>
