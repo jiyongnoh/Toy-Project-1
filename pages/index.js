@@ -101,6 +101,7 @@ const MasterContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   z-index: -1;
 `;
@@ -128,7 +129,6 @@ const IntroContainer = styled.div`
 
 const MainContainer = styled.div`
   width: 100vw;
-  max-width: 1920px;
   min-height: 100vh;
   background-color: white;
   padding-bottom: 2rem;
