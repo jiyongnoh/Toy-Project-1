@@ -69,6 +69,7 @@ export default function Nav() {
     };
   }, []);
 
+  // 모바일 전역 state 처리
   useEffect(() => {
     if (window.innerWidth < 768) setMobileFlag(true);
     else setMobileFlag(false);
@@ -171,12 +172,15 @@ export default function Nav() {
               <NavBtn onClick={() => setShowMenu(!showMenu)}>
                 {showMenu ? '▲' : '▼'}
               </NavBtn>
-              <NavMenuContainer showMenu={showMenu}>
+              <NavMenuContainer>
                 {showMenu &&
                   menuItems.map((item) => (
                     <NavLiMenu key={item.href}>
                       <Link href={item.href} passHref>
-                        <NavBtn selected={item.href === currentPath}>
+                        <NavBtn
+                          selected={item.href === currentPath}
+                          onClick={() => setShowMenu(false)}
+                        >
                           {item.label}
                         </NavBtn>
                       </Link>
@@ -243,7 +247,7 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem 0rem 1.5rem;
+  padding: 1rem 1.5rem;
   height: auto;
   z-index: 1;
 
