@@ -2,7 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { loginAPI, loginAPI_OAuth_AccessToken } from '@/fetchAPI';
+import {
+  loginAPI,
+  loginAPI_OAuth_Approve_Google,
+  loginAPI_OAuth_Approve_Kakao,
+} from '@/fetchAPI';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { log, uid, mobile } from '../store/state';
@@ -127,13 +131,10 @@ export default function Login() {
   const oauthGoogleHandler = async () => {
     if (code) {
       try {
-        const res = await loginAPI_OAuth_AccessToken(
-          `${process.env.NEXT_PUBLIC_URL}/login/oauth_token/google`,
-          { code }
-        );
+        const res = await loginAPI_OAuth_Approve_Google({ code });
 
         if (res.status === 200) {
-          const data = await res.json();
+          const data = res;
           Swal.fire({
             icon: 'success',
             title: t('login_success_title'),
@@ -168,14 +169,11 @@ export default function Login() {
   const oauthKakaoHandler = async () => {
     if (code) {
       try {
-        const res = await loginAPI_OAuth_AccessToken(
-          `${process.env.NEXT_PUBLIC_URL}/login/oauth_token/kakao`,
-          { code }
-        );
+        const res = await loginAPI_OAuth_Approve_Kakao({ code });
         console.log(res);
 
         if (res.status === 200) {
-          const data = await res.json();
+          const data = res;
           Swal.fire({
             icon: 'success',
             title: t('login_success_title'),
@@ -209,7 +207,7 @@ export default function Login() {
 
   useEffect(() => {
     if (window.Kakao && !window.Kakao.isInitialized()) {
-      console.log(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
+      // console.log(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
       window.Kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_KEY);
     }
   }, []);

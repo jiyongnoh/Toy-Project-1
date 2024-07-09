@@ -1,17 +1,27 @@
 import styled from 'styled-components';
 import { useTranslation } from 'next-i18next';
+import { loginAPI_OAuth_URL_Kakao } from '@/fetchAPI';
+
 // Component usage
-const KakaoOAuthBtn = () => {
+const KakaoOAuthBtn = ({ setUrl }) => {
   const { t } = useTranslation('login');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault(); // 새로고침 방지
 
     // Kakao 인증 페이지로 이동
-    window.Kakao.Auth.authorize({
-      redirectUri: `${process.env.NEXT_PUBLIC_REDIRECT_URI}?type=kakao`, // 로그인 성공 후 리디렉션 될 페이지의 URI
-      prompt: 'select_account',
-    });
+    // window.Kakao.Auth.authorize({
+    //   redirectUri: `${process.env.NEXT_PUBLIC_REDIRECT_URI}?type=kakao`, // 로그인 성공 후 리디렉션 될 페이지의 URI
+    //   prompt: 'select_account',
+    // });
+    const data = await loginAPI_OAuth_URL_Kakao();
+    const directUrl = data.url;
+
+    if (directUrl) {
+      setUrl(directUrl);
+    } else {
+      setUrl(window.location.href + '?code=response_fail');
+    }
   };
 
   return (

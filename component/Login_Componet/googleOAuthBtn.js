@@ -7,11 +7,9 @@ const GoogleOAuthBtn = ({ setUrl }) => {
 
   const handleLogin = async (e) => {
     e.preventDefault(); // 새로고침 방지
-    const directUrl = await loginAPI_OAuth_URL(process.env.NEXT_PUBLIC_URL, {
-      oauthType: e.target.value,
-    });
+    const data = await loginAPI_OAuth_URL();
+    const directUrl = data.url;
 
-    // console.log(directUrl);
     if (directUrl) {
       setUrl(directUrl);
     } else {
