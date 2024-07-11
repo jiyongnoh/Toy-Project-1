@@ -29,7 +29,7 @@ const testMap = {
 
 const ConsultButton = ({ avartar }) => {
   return (
-    <StyledLink href="/test_all">
+    <StyledLink href={avartar.name === '엘라' ? '/ella/mood' : '/test_all'}>
       <YellowButton>{avartar.name}와 상담하러 가기</YellowButton>
     </StyledLink>
   );
