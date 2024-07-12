@@ -5,14 +5,13 @@ import { useEffect, useState, useRef } from 'react';
 
 import { handlePtAnalsys } from '@/fetchAPI/testAPI';
 
-import PTestBubble from '@/component/Test_Component/PTestBubble';
 import FixBubble from '@/component/EllaTraning_Component/FixBubble';
 import Image from 'next/image';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 import { useRouter } from 'next/router';
 
-import { motion } from 'framer-motion';
-import { ellaMood_1 } from '@/store/ellaGenerator';
+// import { motion } from 'framer-motion';
+import { ellaMood_Round_first } from '@/store/ellaGenerator';
 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -37,7 +36,7 @@ export default function Test() {
   const moodSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
 
-  if (!moodSessionRef.current) moodSessionRef.current = ellaMood_1();
+  if (!moodSessionRef.current) moodSessionRef.current = ellaMood_Round_first();
 
   const scrollToBottom_useRef = () => {
     const ptBoxBody = chatBoxBody.current;
@@ -75,7 +74,7 @@ export default function Test() {
   // 페이지 초기설정 - 성격검사 첫 문항 제시
   useEffect(() => {
     setTimeout(() => {
-      const { value, done } = moodSessionRef.current.next(select);
+      const { value, done } = moodSessionRef.current.next();
       if (!done) {
         if (value.type === 'fix') {
           setGeneratorData({ ...value });

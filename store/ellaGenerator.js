@@ -1,6 +1,6 @@
 // 엘라 기분관리 훈련 프로그램
 // 1회기
-export function* ellaMood_1() {
+export function* ellaMood_Round_first() {
   // 인사말
   yield {
     role: 'assistant',
