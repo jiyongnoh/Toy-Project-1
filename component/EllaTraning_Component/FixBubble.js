@@ -2,35 +2,63 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-const FixBubble = ({ fix_content }) => {
+const FixBubble = ({ fix_data }) => {
+  const { role, fix_content } = fix_data;
   return (
     <PTestBubbleContainer>
-      <Image
-        src="/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png"
-        alt={'avartar_icon'}
-        width={45}
-        height={45}
-      />
-      <AvartarTitle>심리상담 소예</AvartarTitle>
-      <StyledBubble role="assistant">
-        {fix_content.map((el) => {
-          const { key, value } = el;
-          return key === 'img' ? (
-            <ImgContanier>
-              <Image
-                src={value}
-                alt={'avartar_icon'}
-                width={400}
-                height={300}
-              />
-            </ImgContanier>
-          ) : (
-            <TextContanier>
-              <MessageP>{value}</MessageP>
-            </TextContanier>
-          );
-        })}
-      </StyledBubble>
+      {role === 'assistant' && (
+        <Image
+          src="/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png"
+          alt={'avartar_icon'}
+          width={45}
+          height={45}
+        />
+      )}
+
+      {role === 'assistant' ? (
+        <AssistantBubbleContainer>
+          <AvartarTitle>엘라</AvartarTitle>
+          <StyledBubble role={role}>
+            {fix_content.map((el) => {
+              const { key, value } = el;
+              return key === 'img' ? (
+                <ImgContanier>
+                  <Image
+                    src={value}
+                    alt={'avartar_icon'}
+                    width={400}
+                    height={300}
+                  />
+                </ImgContanier>
+              ) : (
+                <TextContanier>
+                  <MessageP>{value}</MessageP>
+                </TextContanier>
+              );
+            })}
+          </StyledBubble>
+        </AssistantBubbleContainer>
+      ) : (
+        <StyledBubble role={role}>
+          {fix_content.map((el) => {
+            const { key, value } = el;
+            return key === 'img' ? (
+              <ImgContanier>
+                <Image
+                  src={value}
+                  alt={'avartar_icon'}
+                  width={400}
+                  height={300}
+                />
+              </ImgContanier>
+            ) : (
+              <TextContanier>
+                <MessageP>{value}</MessageP>
+              </TextContanier>
+            );
+          })}
+        </StyledBubble>
+      )}
     </PTestBubbleContainer>
   );
 };
@@ -47,20 +75,21 @@ const PTestBubbleContainer = styled.div`
 
 const StyledBubble = styled.div`
   max-width: 100%;
-  padding: ${(props) => (props.role === 'assistant' ? '1rem' : '0')};
+  padding: 1rem;
   border-radius: 1rem;
   margin: 0.2rem 0.1rem;
   word-wrap: break-word;
 
   color: ${(props) => (props.role === 'assistant' ? 'black' : 'black')};
-  background-color: ${(props) => (props.role === 'assistant' ? 'white' : null)};
+  background-color: ${(props) =>
+    props.role === 'assistant' ? 'white' : 'yellow'};
   align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
 
   p {
     margin: 0;
   }
 
-  border: ${(props) => (props.role === 'user' ? '0' : '3px solid #ececec')};
+  border: 3px solid #ececec;
   text-align: left;
   margin-left: ${(props) => (props.role === 'user' ? 'auto' : null)};
   white-space: pre-wrap;
@@ -68,6 +97,8 @@ const StyledBubble = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  gap: 1rem;
 `;
 
 const AvartarTitle = styled.span`
@@ -78,30 +109,6 @@ const AvartarTitle = styled.span`
     font-size: 1rem;
   }
 `;
-// const StyledBubble = styled.div`
-//   max-width: 100%;
-//   padding: 10px;
-//   border-radius: 10px;
-//   margin: 0.2rem 0.1rem;
-
-//   word-wrap: break-word;
-//   color: ${(props) => (props.role === 'assistant' ? 'white' : 'black')};
-
-//   background-color: ${(props) =>
-//     props.role === 'assistant' ? '#0b93f6' : '#e5e5ea'};
-//   align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
-
-//   p {
-//     margin: 0;
-//   }
-
-//   text-align: ${(props) => (props.role === 'user' ? 'right' : 'left')};
-//   margin-left: ${(props) => (props.role === 'user' ? 'auto' : null)};
-
-//   white-space: pre-wrap;
-//   display: flex;
-//   align-items: center;
-// `;
 
 const ImgContanier = styled.div`
   width: 100%;
@@ -126,7 +133,7 @@ const TextContanier = styled.div`
   align-items: flex-start;
 `;
 
-const BubbleContainer = styled.div`
+const AssistantBubbleContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -134,7 +134,6 @@ export default function Login() {
         const res = await loginAPI_OAuth_Approve_Google({ code });
 
         if (res.status === 200) {
-          const data = res;
           Swal.fire({
             icon: 'success',
             title: t('login_success_title'),
@@ -149,8 +148,8 @@ export default function Login() {
                 expires: expireSetHourFunc(1),
               })
             );
-            localStorage.setItem('id', data.data.id);
-            setUserId(data.data.id);
+            localStorage.setItem('id', res.data.id);
+            setUserId(res.data.id);
             router.push('/');
           });
         } else {
@@ -170,10 +169,9 @@ export default function Login() {
     if (code) {
       try {
         const res = await loginAPI_OAuth_Approve_Kakao({ code });
-        console.log(res);
+        console.log(res.data);
 
         if (res.status === 200) {
-          const data = res;
           Swal.fire({
             icon: 'success',
             title: t('login_success_title'),
@@ -188,8 +186,8 @@ export default function Login() {
                 expires: expireSetHourFunc(1),
               })
             );
-            localStorage.setItem('id', data.data.id);
-            setUserId(data.data.id);
+            localStorage.setItem('id', res.data.id);
+            setUserId(res.data.id);
             router.push('/');
           });
         } else {

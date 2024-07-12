@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 import { FlexContainer } from '@/styled-component/common';
 import { useEffect, useState, useRef } from 'react';
 
-import { handlePtAnalsys } from '@/fetchAPI/testAPI';
+import { handleTrainingMoodElla } from '@/fetchAPI/ellaTrainingAPI';
 
 import FixBubble from '@/component/EllaTraning_Component/FixBubble';
 import Image from 'next/image';
@@ -24,6 +24,10 @@ export default function Test() {
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
+
+  // Input 채팅 관련 State
+  const [chat, setChat] = useState('');
+  const [flagEnter, setFlagEnter] = useState(false);
 
   const [generatorData, setGeneratorData] = useState({});
   const [fixTrigger, setFixTrigger] = useState(false); // 제너레이터 반환값이 fix인 경우 발동될 트리거
@@ -51,20 +55,36 @@ export default function Test() {
     // }
   };
 
-  // 성격 검사 분석 요청 API 호출 메서드
-  const requetAnalysis = async () => {
+  // gpt 호출 메서드
+  const createGptText = async (gptData) => {
+    const { code, gpt_input } = gptData;
     try {
       // 감정 분석 API 호출 이후 state 갱신
-      const data = await handlePtAnalsys({
-        // resultText: resultType,
+      const data = await handleTrainingMoodElla({
         pUid: localStorage.getItem('id'),
+        messageArr,
+        code,
+        ...gpt_input,
       });
 
       setIsPending(false);
       setMessageArr([
         ...messageArr,
-        { role: 'assistant', content: data.message },
+        {
+          role: 'assistant',
+          type: 'fix',
+          fix_content: [
+            {
+              key: 'text',
+              value: data.message,
+            },
+          ],
+        },
       ]);
+      setTimeout(() => {
+        setNext(true);
+      }, 1000);
+
       setBottom(true);
     } catch (error) {
       console.log(error);
@@ -75,21 +95,12 @@ export default function Test() {
   useEffect(() => {
     setTimeout(() => {
       const { value, done } = moodSessionRef.current.next();
+      console.log(value);
       if (!done) {
         if (value.type === 'fix') {
           setGeneratorData({ ...value });
           setFixTrigger(true);
         }
-
-        // const question_message = {
-        //   role: 'assistant',
-        //   content: value.question,
-        // };
-        // const selection_message = {
-        //   role: 'user',
-        //   content: value.selection,
-        // };
-        // setMessageArr([...messageArr, question_message, selection_message]);
       }
     }, 1000);
   }, []);
@@ -97,8 +108,10 @@ export default function Test() {
   // 심리 검사 다음 문항 진행
   useEffect(() => {
     if (next) {
-      const { value, done } = moodSessionRef.current.next(select);
-      // console.log(done);
+      const { value, done } = moodSessionRef.current.next(chat);
+      if (chat) setChat('');
+
+      console.log(value);
       // 검사 문항 진행
       if (!done) {
         setNext(false);
@@ -106,17 +119,14 @@ export default function Test() {
           setGeneratorData({ ...value });
           setFixTrigger(true);
         }
-        // const question_message = {
-        //   role: 'assistant',
-        //   content: value.question,
-        //   imgURL: value.question_imgURL,
-        // };
-        // const selection_message = {
-        //   role: 'user',
-        //   content: value.selection,
-        //   imgURL: value.selection_imgURL,
-        // };
-        // setMessageArr([...messageArr, question_message, selection_message]);
+        if (value.type === 'input') {
+          setGeneratorData({ ...value });
+          setInputTrigger(true);
+        }
+        if (value.type === 'gpt') {
+          setGeneratorData({ ...value });
+          setGptTrigger(true);
+        }
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
@@ -140,6 +150,7 @@ export default function Test() {
     }
   }, [next]);
 
+  // 고정 멘트
   useEffect(() => {
     if (fixTrigger) {
       setMessageArr([...messageArr, generatorData]);
@@ -150,6 +161,39 @@ export default function Test() {
     }
     setBottom(true);
   }, [fixTrigger]);
+
+  // 유저 입력 완료 시점 Rerendering.
+  useEffect(() => {
+    if (flagEnter) {
+      setMessageArr([
+        ...messageArr,
+        {
+          role: 'user',
+          type: 'fix',
+          fix_content: [
+            {
+              key: 'text',
+              value: chat,
+            },
+          ],
+        },
+      ]);
+      setInputTrigger(false);
+      setFlagEnter(false);
+      setTimeout(() => {
+        setNext(true);
+      }, 1000);
+    }
+    setBottom(true);
+  }, [flagEnter]);
+
+  useEffect(() => {
+    if (gptTrigger) {
+      setGptTrigger(false);
+      setIsPending(true);
+      createGptText(generatorData);
+    }
+  }, [gptTrigger]);
 
   // 스크롤 바텀
   useEffect(() => {
@@ -179,13 +223,54 @@ export default function Test() {
           {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
           <PTBoxBody>
             {messageArr.map((el, index) => {
-              if (el.type === 'fix')
-                return <FixBubble fix_content={el.fix_content} />;
-              else return <div>Dummy</div>;
+              if (el.type === 'fix') return <FixBubble fix_data={el} />;
+              else return;
             })}
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
           </PTBoxBody>
+          <ChatBoxFooter>
+            <ChatBoxFooterInput
+              value={chat}
+              onChange={(e) => {
+                setChat(e.target.value);
+              }}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && chat !== '' && !isPending) {
+                  console.log(chat);
+                  setFlagEnter(true);
+                }
+              }}
+              // placeholder={placehold}
+              inputTrigger={inputTrigger}
+            />
+            <ChatBoxFooterButton
+              onClick={() => {
+                if (chat !== '' && !isPending) {
+                  console.log(chat);
+                  setFlagEnter(true);
+                }
+              }}
+              inputTrigger={inputTrigger}
+            >
+              <Image
+                src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
+                alt={'send_icon'}
+                width={72}
+                height={57}
+              />
+              {/* {isPending || isInitPending ? (
+                <span class="material-symbols-outlined">block</span>
+              ) : (
+                <Image
+                  src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
+                  alt={'send_icon'}
+                  width={72}
+                  height={57}
+                />
+              )} */}
+            </ChatBoxFooterButton>
+          </ChatBoxFooter>
         </PTBox>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
@@ -220,24 +305,6 @@ const MainContainer = styled.div`
   }
 `;
 
-// const MainContainer = styled.div`
-//   /* background-image: url('/src/soyesKids_Background_image.png');
-//   background-size: cover;
-//   background-position: center;
-//   background-repeat: no-repeat; */
-
-//   background-color: #fdf6ff;
-
-//   width: 100vw;
-//   height: 100vh;
-
-//   @media (max-width: 768px) {
-//     overflow: hidden;
-//   }
-
-//   position: relative;
-// `;
-
 const PTBox = styled.div`
   /* background-image: ${(props) =>
     props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
@@ -268,36 +335,6 @@ const PTBox = styled.div`
     max-width: 37rem;
     padding: 0;
   }
-`;
-
-// const PTBox = styled.div`
-//   position: relative;
-//   margin: 0 auto;
-//   margin-top: 6rem;
-
-//   width: 100%;
-//   max-width: 37rem;
-
-//   height: 100%;
-//   /* height: calc(100vh - 150px); */
-//   /* max-height: calc(100vh - 150px); */
-
-//   background-color: #ffffff;
-//   border-radius: 8px;
-
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//   overflow: hidden;
-// `;
-
-const PTBoxHeader = styled.div`
-  background-color: #0084ff;
-  color: #ffffff;
-  padding: 16px;
-  font-size: 20px;
-  font-weight: bold;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  height: 9%;
 `;
 
 const PTBoxBody = styled.div`
@@ -345,14 +382,68 @@ const PTBoxBody = styled.div`
 //   padding: 8px 16px;
 // `;
 
-// const PTBoxFooterInput = styled.input`
-//   flex: 1;
-//   padding: 8px;
-//   border: 1px solid #e6e6e6;
-//   border-radius: 8px;
-//   font-size: 16px;
-//   outline: none;
-// `;
+const ChatBoxFooter = styled.div`
+  margin-top: 1rem;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;
+`;
+
+const ChatBoxFooterInput = styled.input`
+  width: 100%;
+  padding: 2rem;
+  border: 1px solid #e6e6e6;
+  border-radius: 3.5rem;
+  font-size: 1.2rem;
+  outline: none;
+  pointer-events: ${(props) => (props.inputTrigger ? 'auto' : 'none')};
+  background-color: ${(props) => (props.inputTrigger ? '#ffffff' : '#f0f0f0')};
+  transition: background-color 0.3s ease;
+
+  &::placeholder {
+    color: #a9a9a9;
+  }
+
+  ${(props) => props.inputTrigger && `animation: blink 2s;`}
+
+  @keyframes blink {
+    0%,
+    100% {
+      background-color: #ffffff;
+    }
+    50% {
+      background-color: #0084ff;
+    }
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    padding: 0.5rem 1rem;
+  }
+`;
+
+const ChatBoxFooterButton = styled.button`
+  background: inherit;
+  margin-left: 8px;
+  padding: 5px 12px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: ${(props) => (props.inputTrigger ? 'pointer' : null)};
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:active {
+    background-color: ${(props) => (props.inputTrigger ? '#B88CD5' : null)};
+  }
+  display: flex;
+  transition: 0.2s;
+`;
 
 // const PTBoxFooterButton = styled.button`
 //   margin-left: 8px;
