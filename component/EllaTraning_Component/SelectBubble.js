@@ -4,11 +4,10 @@ import SelectRow from './SelectRow';
 
 import Image from 'next/image';
 
-const SelectBubble = ({ select_data, setChat, setNext, setSelect }) => {
-  const { role, select_content, selected } = select_data;
+const SelectBubble = ({ select_data, setChat, setNext }) => {
+  const { role, select_content } = select_data;
   const selectHandler = (value) => {
     setChat(value);
-    setSelect(value);
     setNext(true);
   };
 
@@ -26,7 +25,6 @@ const SelectBubble = ({ select_data, setChat, setNext, setSelect }) => {
                   value={value}
                   message={selection}
                   role={role}
-                  selected={selected === value ? true : false}
                 />
               );
             })}

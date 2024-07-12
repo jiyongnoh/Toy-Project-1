@@ -1,12 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SelectRow = ({ message, selectHandler, value, role, selected }) => {
+const SelectRow = ({ message, selectHandler, value, role }) => {
   return (
     <CardContainer
       onClick={selectHandler ? () => selectHandler(value) : null}
       role={role}
-      selected={selected}
     >
       <MessageP>{message}</MessageP>
     </CardContainer>

@@ -23,7 +23,6 @@ export default function Test() {
   const [isPending, setIsPending] = useState(false);
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
-  const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
 
   // Input 채팅 관련 State
@@ -217,9 +216,9 @@ export default function Test() {
         height="100%"
         padding="0 1rem"
       >
-        <PTBox ref={chatBoxBody}>
+        <EllaMoodBox ref={chatBoxBody}>
           {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
-          <PTBoxBody>
+          <EllaMoodBoxBody>
             {messageArr.map((el, index) => {
               if (el.type === 'fix') return <FixBubble fix_data={el} />;
               else if (el.type === 'select')
@@ -228,14 +227,13 @@ export default function Test() {
                     select_data={el}
                     setChat={index === messageArr.length - 1 && setChat}
                     setNext={index === messageArr.length - 1 && setNext}
-                    setSelect={index === messageArr.length - 1 && setSelect}
                   />
                 );
               else return;
             })}
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
-          </PTBoxBody>
+          </EllaMoodBoxBody>
           <ChatBoxFooter>
             <ChatBoxFooterInput
               value={chat}
@@ -268,7 +266,7 @@ export default function Test() {
               />
             </ChatBoxFooterButton>
           </ChatBoxFooter>
-        </PTBox>
+        </EllaMoodBox>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
         </div>
@@ -302,7 +300,7 @@ const MainContainer = styled.div`
   }
 `;
 
-const PTBox = styled.div`
+const EllaMoodBox = styled.div`
   /* background-image: ${(props) =>
     props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
   background-size: cover;
@@ -334,7 +332,7 @@ const PTBox = styled.div`
   }
 `;
 
-const PTBoxBody = styled.div`
+const EllaMoodBoxBody = styled.div`
   /* background-image: ${(props) =>
     props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
   background-size: cover;
@@ -358,26 +356,6 @@ const PTBoxBody = styled.div`
     min-height: 70vh;
   }
 `;
-
-// const PTBoxBody = styled.div`
-//   padding: 6px;
-//   height: 91%;
-//   overflow-y: auto;
-//   /* height: calc(100% - 360px); */
-
-//   display: flex;
-//   flex-direction: column;
-//   width: auto;
-// `;
-
-// const PTBoxFooter = styled.div`
-//   bottom: 0;
-//   display: flex;
-//   align-items: center;
-//   background-color: #ffffff;
-//   border-top: 1px solid #e6e6e6;
-//   padding: 8px 16px;
-// `;
 
 const ChatBoxFooter = styled.div`
   margin-top: 1rem;
@@ -442,25 +420,3 @@ const ChatBoxFooterButton = styled.button`
   }
   transition: 0.2s;
 `;
-
-// const PTBoxFooterButton = styled.button`
-//   margin-left: 8px;
-//   padding: 5px 12px;
-//   background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0084ff")};
-//   color: #ffffff;
-//   font-size: 16px;
-//   font-weight: bold;
-//   border: none;
-//   border-radius: 8px;
-//   cursor: ${(props) => (props.isPending ? "" : "pointer")};
-
-//   &:hover {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-
-//   &:active {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-//   display: flex;
-//   transition: 0.2s;
-// `;
