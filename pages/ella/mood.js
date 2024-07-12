@@ -6,6 +6,8 @@ import { useEffect, useState, useRef } from 'react';
 import { handleTrainingMoodElla } from '@/fetchAPI/ellaTrainingAPI';
 
 import FixBubble from '@/component/EllaTraning_Component/FixBubble';
+import SelectBubble from '@/component/EllaTraning_Component/SelectBubble';
+
 import Image from 'next/image';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 import { useRouter } from 'next/router';
@@ -20,7 +22,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 export default function Test() {
   const [isPending, setIsPending] = useState(false);
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
-  const [select, setSelect] = useState('2'); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
@@ -34,6 +35,7 @@ export default function Test() {
   const [inputTrigger, setInputTrigger] = useState(false); // 제너레이터 반환값이 input인 경우 발동될 트리거
   const [gptTrigger, setGptTrigger] = useState(false); // 제너레이터 반환값이 gpt인 경우 발동될 트리거
   const [selectTrigger, setSelectTrigger] = useState(false); // 제너레이터 반환값이 select인 경우 발동될 트리거
+  const [select, setSelect] = useState(-1); // 유저 문항 선택지 1 || 2
 
   const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
@@ -59,10 +61,19 @@ export default function Test() {
   const createGptText = async (gptData) => {
     const { code, gpt_input } = gptData;
     try {
-      // 감정 분석 API 호출 이후 state 갱신
+      const tmp = messageArr.map((el) => {
+        let role = el.role;
+        let textArr = el.fix_content
+          .filter((el) => el.key === 'text' && el.value)
+          .map((el) => {
+            return { role, content: el.value };
+          });
+        return textArr[0];
+      });
+      // 엘라 API 호출 이후 state 갱신
       const data = await handleTrainingMoodElla({
         pUid: localStorage.getItem('id'),
-        messageArr,
+        messageArr: [...tmp.filter((el) => el)],
         code,
         ...gpt_input,
       });
@@ -115,35 +126,19 @@ export default function Test() {
       // 검사 문항 진행
       if (!done) {
         setNext(false);
-        if (value.type === 'fix') {
-          setGeneratorData({ ...value });
-          setFixTrigger(true);
-        }
-        if (value.type === 'input') {
-          setGeneratorData({ ...value });
-          setInputTrigger(true);
-        }
-        if (value.type === 'gpt') {
-          setGeneratorData({ ...value });
-          setGptTrigger(true);
-        }
+        setGeneratorData({ ...value });
+        if (value.type === 'fix') setFixTrigger(true);
+        if (value.type === 'input') setInputTrigger(true);
+        if (value.type === 'gpt') setGptTrigger(true);
+        if (value.type === 'select') setSelectTrigger(true);
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
-        // const { result, type } = value;
-        // setIsPending(true);
-        // setTimeout(() => {
-        //   setMessageArr([
-        //     ...messageArr,
-        //     {
-        //       role: 'assistant',
-        //       content: result,
-        //     },
-        //   ]);
-        //   setNext(false);
-        //   setResultTrigger(true);
-        //   setBottom(true);
-        // }, 1500);
+        const { sava_data } = value;
+        console.log(sava_data);
+        delete value.sava_data;
+        setMessageArr([...messageArr, value]);
+        // Todo. 회기별 DB 저장 API 호출
       } else return;
 
       setBottom(true);
@@ -181,6 +176,7 @@ export default function Test() {
       setInputTrigger(false);
       setFlagEnter(false);
       setTimeout(() => {
+        setIsPending(false);
         setNext(true);
       }, 1000);
     }
@@ -194,6 +190,14 @@ export default function Test() {
       createGptText(generatorData);
     }
   }, [gptTrigger]);
+
+  useEffect(() => {
+    if (selectTrigger) {
+      setMessageArr([...messageArr, generatorData]);
+      setSelectTrigger(false);
+    }
+    setBottom(true);
+  }, [selectTrigger]);
 
   // 스크롤 바텀
   useEffect(() => {
@@ -213,17 +217,20 @@ export default function Test() {
         height="100%"
         padding="0 1rem"
       >
-        {/* <Image
-          src="/src/soyesKids_Logo.png"
-          alt={"soyes_logo"}
-          width={529}
-          height={93}
-        /> */}
         <PTBox ref={chatBoxBody}>
           {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
           <PTBoxBody>
             {messageArr.map((el, index) => {
               if (el.type === 'fix') return <FixBubble fix_data={el} />;
+              else if (el.type === 'select')
+                return (
+                  <SelectBubble
+                    select_data={el}
+                    setChat={index === messageArr.length - 1 && setChat}
+                    setNext={index === messageArr.length - 1 && setNext}
+                    setSelect={index === messageArr.length - 1 && setSelect}
+                  />
+                );
               else return;
             })}
             {/* 로딩바 */}
@@ -237,7 +244,7 @@ export default function Test() {
               }}
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && chat !== '' && !isPending) {
-                  console.log(chat);
+                  setIsPending(true);
                   setFlagEnter(true);
                 }
               }}
@@ -247,7 +254,7 @@ export default function Test() {
             <ChatBoxFooterButton
               onClick={() => {
                 if (chat !== '' && !isPending) {
-                  console.log(chat);
+                  setIsPending(true);
                   setFlagEnter(true);
                 }
               }}
@@ -259,16 +266,6 @@ export default function Test() {
                 width={72}
                 height={57}
               />
-              {/* {isPending || isInitPending ? (
-                <span class="material-symbols-outlined">block</span>
-              ) : (
-                <Image
-                  src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
-                  alt={'send_icon'}
-                  width={72}
-                  height={57}
-                />
-              )} */}
             </ChatBoxFooterButton>
           </ChatBoxFooter>
         </PTBox>
@@ -391,6 +388,7 @@ const ChatBoxFooter = styled.div`
 `;
 
 const ChatBoxFooterInput = styled.input`
+  display: ${(props) => (props.inputTrigger ? 'flex' : 'none')};
   width: 100%;
   padding: 2rem;
   border: 1px solid #e6e6e6;
@@ -424,6 +422,7 @@ const ChatBoxFooterInput = styled.input`
 `;
 
 const ChatBoxFooterButton = styled.button`
+  display: ${(props) => (props.inputTrigger ? 'flex' : 'none')};
   background: inherit;
   margin-left: 8px;
   padding: 5px 12px;
@@ -441,7 +440,6 @@ const ChatBoxFooterButton = styled.button`
   &:active {
     background-color: ${(props) => (props.inputTrigger ? '#B88CD5' : null)};
   }
-  display: flex;
   transition: 0.2s;
 `;
 
