@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+// import { useRecoilState } from 'recoil';
+// import { mobile } from '../../store/state';
 
 const FixBubble = ({ fix_data }) => {
   const { role, fix_content } = fix_data;
+
   return (
     <PTestBubbleContainer>
       {role === 'assistant' && (
@@ -28,6 +31,7 @@ const FixBubble = ({ fix_data }) => {
                     alt={'avartar_icon'}
                     width={400}
                     height={300}
+                    style={{ maxWidth: '100%', height: 'auto' }}
                   />
                 </ImgContanier>
               ) : (

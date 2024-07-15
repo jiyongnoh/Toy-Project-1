@@ -17,8 +17,13 @@ const UploadPage = () => {
     console.log(imageUrl);
   }, [imageUrl]);
 
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
+  useEffect(() => {
+    console.log(file);
+  }, [file]);
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    // 파일 용량이 50MB 이상일 경우
     if (selectedFile?.size > MAX_FILE_SIZE) {
       alert('파일 크기가 너무 큽니다. 50MB 이하의 파일을 선택해주세요.');
       return;
@@ -27,18 +32,23 @@ const UploadPage = () => {
   };
 
   const handleUpload = async () => {
+    // 파일을 선택하지 않은 경우
     if (!file) {
       alert('파일을 선택해주세요.');
       return;
     }
-    setIsPending(true);
+
+    setIsPending(true); // 로딩 걸기
+
     const reader = new FileReader();
+    // 파일 읽기 완료 시점에 수행되는 이벤트 핸들러
     reader.onloadend = async () => {
-      const base64Data = reader.result.split(',')[1];
+      const base64Data = reader.result;
 
       try {
+        // 파일 업로드 API 호출
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_URL}/openAI/upload`,
+          `${process.env.NEXT_PUBLIC_URL}/openAI/analysis_img`,
           {
             name: file.name,
             mimeType: file.type,
@@ -60,6 +70,7 @@ const UploadPage = () => {
       }
     };
 
+    // 파일 읽기 시작 (현재 state로 관리되는 file 읽기)
     reader.readAsDataURL(file);
   };
 

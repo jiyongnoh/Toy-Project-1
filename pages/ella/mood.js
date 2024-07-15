@@ -13,7 +13,10 @@ import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 import { useRouter } from 'next/router';
 
 // import { motion } from 'framer-motion';
-import { ellaMood_Round_first } from '@/store/ellaGenerator';
+import {
+  ellaMood_Round_first,
+  ellaMood_Round_second,
+} from '@/store/ellaGenerator';
 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -41,19 +44,19 @@ export default function Test() {
   const moodSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
 
-  if (!moodSessionRef.current) moodSessionRef.current = ellaMood_Round_first();
-
-  const scrollToBottom_useRef = () => {
-    const ptBoxBody = chatBoxBody.current;
-    if (ptBoxBody.scrollHeight > 800)
-      window.scrollTo({
-        top: ptBoxBody.scrollHeight, // 세로 스크롤 위치
-        left: 0, // 가로 스크롤 위치
-        behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
-      });
-    // if (chatBoxBody.current) {
-    //   chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
-    // }
+  // 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
+  const initMoodRound = async () => {
+    moodSessionRef.current = ellaMood_Round_second();
+    setTimeout(() => {
+      const { value, done } = moodSessionRef.current.next();
+      console.log(value);
+      if (!done) {
+        if (value.type === 'fix') {
+          setGeneratorData({ ...value });
+          setFixTrigger(true);
+        }
+      }
+    }, 1000);
   };
 
   // gpt 호출 메서드
@@ -103,16 +106,7 @@ export default function Test() {
 
   // 페이지 초기설정 - 성격검사 첫 문항 제시
   useEffect(() => {
-    setTimeout(() => {
-      const { value, done } = moodSessionRef.current.next();
-      console.log(value);
-      if (!done) {
-        if (value.type === 'fix') {
-          setGeneratorData({ ...value });
-          setFixTrigger(true);
-        }
-      }
-    }, 1000);
+    initMoodRound();
   }, []);
 
   // 심리 검사 다음 문항 진행
@@ -151,7 +145,7 @@ export default function Test() {
       setFixTrigger(false);
       setTimeout(() => {
         setNext(true);
-      }, 1000);
+      }, 1500);
     }
     setBottom(true);
   }, [fixTrigger]);
@@ -198,6 +192,18 @@ export default function Test() {
     setBottom(true);
   }, [selectTrigger]);
 
+  const scrollToBottom_useRef = () => {
+    const ptBoxBody = chatBoxBody.current;
+    if (ptBoxBody.scrollHeight > 800)
+      window.scrollTo({
+        top: ptBoxBody.scrollHeight, // 세로 스크롤 위치
+        left: 0, // 가로 스크롤 위치
+        behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
+      });
+    // if (chatBoxBody.current) {
+    //   chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
+    // }
+  };
   // 스크롤 바텀
   useEffect(() => {
     if (bottom) {
