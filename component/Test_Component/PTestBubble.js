@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PTSelectCard from './PTSelectCard';
 import Image from 'next/image';
 
 const PTestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
+  const [selected, setSelected] = useState(-2);
   const selectHandler = (value) => {
     setSelect(value);
+    setSelected(value);
     setNext(true);
   };
 
@@ -31,6 +33,7 @@ const PTestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
                   message={message[0]}
                   imgURL={imgURL[0]}
                   role={role}
+                  selected={selected === '1'}
                 />
                 <PTSelectCard
                   selectHandler={setSelect && selectHandler}
@@ -38,6 +41,7 @@ const PTestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
                   message={message[1]}
                   imgURL={imgURL[1]}
                   role={role}
+                  selected={selected === '2'}
                 />
                 {/* <motion.div
                   whileHover={{

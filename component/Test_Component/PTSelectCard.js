@@ -9,6 +9,7 @@ const PTSelectCard = ({
   value,
   type,
   role,
+  selected,
 }) => {
   return (
     <>
@@ -17,6 +18,7 @@ const PTSelectCard = ({
           onClick={selectHandler ? () => selectHandler(value) : null}
           type={type}
           role={role}
+          selected={selected}
         >
           <MessageP>{message}</MessageP>
         </CardContainer>
@@ -54,8 +56,11 @@ const CardContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${(props) => (props.role === 'user' ? '#B88CD5' : 'white')};
-  color: ${(props) => (props.role === 'user' ? 'white' : 'black')};
+  background-color: ${(props) =>
+    props.selected ? 'yellow' : props.role === 'user' ? '#B88CD5' : 'white'};
+  color: ${(props) =>
+    props.selected ? 'black' : props.role === 'user' ? 'white' : 'black'};
+
   border: ${(props) => (props.role === 'user' ? '1px solid #A278BD' : null)};
   border-radius: 10px;
 
