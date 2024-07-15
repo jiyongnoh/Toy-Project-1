@@ -45,8 +45,8 @@ export default function Test() {
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
 
   // 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
-  const initMoodRound = async () => {
-    moodSessionRef.current = ellaMood_Round_second();
+  const initMoodTrainingRound = async () => {
+    moodSessionRef.current = ellaMood_Round_second('까망이'); // Mood table에 저장시킨 기분명 삽입
     setTimeout(() => {
       const { value, done } = moodSessionRef.current.next();
       console.log(value);
@@ -57,6 +57,17 @@ export default function Test() {
         }
       }
     }, 1000);
+  };
+
+  // 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
+  const endMoodTraining = async (sava_data) => {
+    // Todo. save_data DB 저장
+    // const data = await handleTrainingMoodEllaSave({
+    //   pUid: localStorage.getItem('id'),
+    //   ...sava_data,
+    // });
+
+    console.log(sava_data);
   };
 
   // gpt 호출 메서드
@@ -96,7 +107,7 @@ export default function Test() {
       ]);
       setTimeout(() => {
         setNext(true);
-      }, 1000);
+      }, 1500);
 
       setBottom(true);
     } catch (error) {
@@ -106,7 +117,7 @@ export default function Test() {
 
   // 페이지 초기설정 - 성격검사 첫 문항 제시
   useEffect(() => {
-    initMoodRound();
+    initMoodTrainingRound();
   }, []);
 
   // 심리 검사 다음 문항 진행
@@ -128,10 +139,9 @@ export default function Test() {
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
         const { sava_data } = value;
-        console.log(sava_data);
+        endMoodTraining(sava_data); // Todo. 회기별 DB 저장 API 호출
         delete value.sava_data;
         setMessageArr([...messageArr, value]);
-        // Todo. 회기별 DB 저장 API 호출
       } else return;
 
       setBottom(true);

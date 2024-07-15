@@ -363,21 +363,21 @@ export function* ellaMood_Round_first() {
     sava_data: {
       mood_name,
       congnitive_score,
+      type: 'first',
     },
   };
 }
 
-export function* ellaMood_Round_second() {
+export function* ellaMood_Round_second(mood_name) {
   let answerArr = [];
   // 인사말
   yield {
     role: 'assistant',
     type: 'fix',
     fix_content: [
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
       {
         key: 'text',
-        value: '2회차 시작 멘트',
+        value: '안녕 또 만났네',
       },
     ],
   };
@@ -386,10 +386,10 @@ export function* ellaMood_Round_second() {
     role: 'assistant',
     type: 'fix',
     fix_content: [
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 눈코입 없는 그림자 사람 이미지
       {
         key: 'text',
-        value: '슬프거나 아무 것도 하기 싫을 때가 있니?',
+        value: `${mood_name}(이) 기억나? 네가 슬프거나 아무 것도 하고 싶지 않을 때 만나는 마음이야.`,
       },
     ],
   };
@@ -398,47 +398,11 @@ export function* ellaMood_Round_second() {
     role: 'assistant',
     type: 'fix',
     fix_content: [
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
       {
         key: 'text',
-        value: '넌 이 마음을 뭐라고 부를래?',
+        value: `오늘, 또는 이번 주에는 어떨 때 ${mood_name}(이)를 만났어?`,
       },
-    ],
-  };
-
-  const mood_name = yield {
-    role: 'assistant',
-    type: 'input',
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `니 마음의 이름은 ${mood_name}(이)구나`,
-      },
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 눈코입 없는 사람 이미지
-      {
-        key: 'text',
-        value: `어떨 때 ${mood_name}(을)를 만나?`,
-      },
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 2회기 이미지
     ],
   };
 
@@ -447,15 +411,23 @@ export function* ellaMood_Round_second() {
     type: 'input',
   };
 
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
   yield {
     role: 'assistant',
     type: 'fix',
     fix_content: [
       {
         key: 'text',
-        value: `${mood_name}(을)를 만나면 기분이 어때?`,
+        value: `${mood_name}(이)를 만나서 어떤 기분이 들었어?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 2회기 이미지2
     ],
   };
 
@@ -480,6 +452,7 @@ export function* ellaMood_Round_second() {
         key: 'text',
         value: `또 어떤 생각이 들어?`,
       },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 2회기 이미지3
     ],
   };
 
@@ -542,60 +515,35 @@ export function* ellaMood_Round_second() {
     role: 'assistant',
     type: 'fix',
     fix_content: [
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 이름을 말하는 이미지
       {
         key: 'text',
-        value: `이젠 다른 걸 해볼까? 내가 물어보는 상황에 어떻게 할지 대답해 봐`,
+        value: `나라면…
+
+줄넘기 30번 넘기
+농구공 10번 튀기기
+그림 그리기
+집에서 물구나무서기
+문구점 구경하기
+난 이거 지금 당장 할 수 있어~!
+
+너도 한 번 생각해 봐`,
       },
     ],
   };
 
-  // 인지행동 치료 시작
+  const mood_todolist_1 = yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
   yield {
     role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `인지행동 문항 1`,
-      },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
-    ],
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
   };
-
-  const answer1 = yield {
-    role: 'user',
-    type: 'select',
-    select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
-    ],
-  };
-  answerArr.push(parseInt(answer1));
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `인지행동 문항 2`,
-      },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
-    ],
-  };
-  const answer2 = yield {
-    role: 'user',
-    type: 'select',
-    select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
-    ],
-  };
-  answerArr.push(parseInt(answer2));
 
   yield {
     role: 'assistant',
@@ -603,22 +551,23 @@ export function* ellaMood_Round_second() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 3`,
+        value: `또 뭐가 있을까?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
   };
-  const answer3 = yield {
-    role: 'user',
-    type: 'select',
-    select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
-    ],
+
+  const mood_todolist_2 = yield {
+    role: 'assistant',
+    type: 'input',
   };
-  answerArr.push(parseInt(answer3));
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
 
   yield {
     role: 'assistant',
@@ -626,22 +575,15 @@ export function* ellaMood_Round_second() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 4`,
+        value: `하나 더 써보자`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
   };
-  const answer4 = yield {
-    role: 'user',
-    type: 'select',
-    select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
-    ],
+
+  const mood_todolist_3 = yield {
+    role: 'assistant',
+    type: 'input',
   };
-  answerArr.push(parseInt(answer4));
 
   yield {
     role: 'assistant',
@@ -649,71 +591,20 @@ export function* ellaMood_Round_second() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 5`,
+        value: `좋아 너의 즐거운 활동 목록이 완성됐어!`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
   };
-  const answer5 = yield {
-    role: 'user',
-    type: 'select',
-    select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
-    ],
-  };
-  answerArr.push(parseInt(answer5));
 
+  // listing 프롬프트 적용 텍스트 생성
   yield {
     role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `인지행동 문항 6`,
-      },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
-    ],
+    type: 'gpt',
+    code: 'listing',
+    gpt_input: {
+      mood_list: [mood_todolist_1, mood_todolist_2, mood_todolist_3],
+    },
   };
-  const answer6 = yield {
-    role: 'user',
-    type: 'select',
-    select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
-    ],
-  };
-  answerArr.push(parseInt(answer6));
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `인지행동 문항 7`,
-      },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
-    ],
-  };
-  const answer7 = yield {
-    role: 'user',
-    type: 'select',
-    select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
-    ],
-  };
-
-  answerArr.push(parseInt(answer7));
-
-  const congnitive_score = answerArr.reduce((acc, cur) => acc + cur);
 
   return {
     role: 'assistant',
@@ -722,14 +613,12 @@ export function* ellaMood_Round_second() {
       {
         key: 'text',
         value:
-          congnitive_score >= 18
-            ? '좋았어! 멋진 생각을 나눠준 너에게 씨앗을 줄게. 마음을 가꾸듯 잘 키워봐. 다음에 또 만나'
-            : '수고했어. 좀 더 분발해서 다음엔 씨앗을 받아보자. 다음 시간에 만나',
+          '이 활동들을 지금 한 번 실천해봐. 그리고 언제든 슬픈 마음이 들 때 해보길 바라. 실천한 소감을 감정일기-즐거운 활동하기 코너에 남기면 씨앗을 받을 수 있어~',
       },
     ],
     sava_data: {
-      mood_name,
-      congnitive_score,
+      type: 'second',
+      mood_todo_list: [mood_todolist_1, mood_todolist_2, mood_todolist_3],
     },
   };
 }
