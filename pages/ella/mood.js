@@ -164,6 +164,7 @@ export default function Test() {
     if (fixTrigger) {
       setMessageArr([...messageArr, generatorData]);
       setFixTrigger(false);
+      // Todo. button, media 관련 처리하기
       setTimeout(() => {
         setNext(true);
       }, 1500);

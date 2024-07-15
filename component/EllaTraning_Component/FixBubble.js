@@ -24,27 +24,37 @@ const FixBubble = ({ fix_data }) => {
           <StyledBubble role={role}>
             {fix_content.map((el) => {
               const { key, value } = el;
-              return key === 'img' ? (
-                <ImgContanier>
-                  <Image
-                    src={value}
-                    alt={'avartar_icon'}
-                    width={400}
-                    height={300}
-                    style={{ maxWidth: '100%', height: 'auto' }}
-                  />
-                </ImgContanier>
-              ) : (
-                <TextContanier>
-                  <MessageP>{value}</MessageP>
-                </TextContanier>
-              );
+              if (key === 'img')
+                return (
+                  <ImgContanier>
+                    <Image
+                      src={value}
+                      alt={'avartar_icon'}
+                      width={400}
+                      height={300}
+                      style={{ maxWidth: '100%', height: 'auto' }}
+                    />
+                  </ImgContanier>
+                );
+              else if (key === 'text')
+                return (
+                  <TextContanier>
+                    <MessageP>{value}</MessageP>
+                  </TextContanier>
+                );
+              // Todo
+              // else if (key === 'button') return;
+              // else if (key === 'media') return;
             })}
           </StyledBubble>
         </AssistantBubbleContainer>
       ) : (
         <StyledBubble role={role}>
-          {fix_content.map((el) => {
+          <TextContanier>
+            <MessageP>{fix_content[0].value}</MessageP>
+          </TextContanier>
+
+          {/* {fix_content.map((el) => {
             const { key, value } = el;
             return key === 'img' ? (
               <ImgContanier>
@@ -53,6 +63,7 @@ const FixBubble = ({ fix_data }) => {
                   alt={'avartar_icon'}
                   width={400}
                   height={300}
+                  style={{ maxWidth: '100%', height: 'auto' }}
                 />
               </ImgContanier>
             ) : (
@@ -60,7 +71,7 @@ const FixBubble = ({ fix_data }) => {
                 <MessageP>{value}</MessageP>
               </TextContanier>
             );
-          })}
+          })} */}
         </StyledBubble>
       )}
     </PTestBubbleContainer>
@@ -148,19 +159,6 @@ const AssistantBubbleContainer = styled.div`
   @media (max-width: 768px) {
   }
 `;
-
-// const BubbleContainer = styled.div`
-//   width: 100vw;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-
-//   gap: 1rem;
-
-//   @media (max-width: 768px) {
-//     flex-direction: column;
-//   }
-// `;
 
 const MessageP = styled.p`
   display: flex;

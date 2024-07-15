@@ -384,9 +384,9 @@ export function* ellaMood_Round_first() {
       },
     ],
     sava_data: {
+      type: 'first',
       mood_name,
       congnitive_score,
-      type: 'first',
     },
   };
 }
@@ -958,8 +958,196 @@ export function* ellaMood_Round_third(mood_name) {
       },
     ],
     sava_data: {
-      type: 'second',
+      type: 'third',
       mood_talk_list: [mood_talk_1, mood_talk_2, mood_talk_3],
+    },
+  };
+}
+// 4회기
+export function* ellaMood_Round_fourth(mood_name) {
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: '4회기 (개발용)',
+      },
+    ],
+  };
+
+  // 인사말
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: '안녕, 오늘은 마지막 시간이야',
+      },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 눈코입 없는 그림자 사람 이미지
+      {
+        key: 'text',
+        value: `${mood_name}(이) 기억나? 네가 슬프거나 아무 것도 하고 싶지 않을 때 만나는 마음이야.`,
+      },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `오늘, 또는 이번 주에는 어떨 때 ${mood_name}(이)를 만났어?`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 3회기 이미지
+    ],
+  };
+
+  const mood_situation = yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `${mood_name}(이)를 만나서 어떤 기분이 들었어?`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 3회기 이미지2
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `또 어떤 생각이 들어?`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 2회기 이미지3
+    ],
+  };
+
+  const mood_thought = yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
+  // situation 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'situation',
+    gpt_input: { mood_situation },
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // solution 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'solution',
+    gpt_input: {},
+  };
+
+  // thought 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'thought',
+    gpt_input: { mood_thought },
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // another 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'another',
+    gpt_input: {},
+  };
+
+  // -----------------------------------------------------
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `이젠 다른 걸 해볼까?
+편안한 마음이 들게 하는 명상을 해볼 거야
+오늘은 사전 준비가 필요해
+편안히 누울 수 있는 곳을 찾아봐
+준비가 되면 시작하기 버튼을 눌러 줘`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 편안히 누울 수 있는 장소 이미지
+      { key: 'button', value: '시작하기' },
+    ],
+  };
+
+  return {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value:
+          '이 말들을 메모지에 적어서 잘 보이는 곳에 붙여 봐. 그리고 하루에 한 번씩 읽으면서 마음에 밴드를 붙여 줘. 분명 힘이 될 거야. 다음 시간에 만나',
+      },
+    ],
+    sava_data: {
+      type: 'fourth',
     },
   };
 }
