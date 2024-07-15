@@ -144,13 +144,13 @@ export default function Test() {
         };
 
         // 선택 문항 갱신
-        let updateMsgArr = [...messageArr];
-        updateMsgArr[updateMsgArr.length - 1] = {
-          ...updateMsgArr[updateMsgArr.length - 1],
-          selected: select,
-        };
+        // let updateMsgArr = [...messageArr];
+        // updateMsgArr[updateMsgArr.length - 1] = {
+        //   ...updateMsgArr[updateMsgArr.length - 1],
+        //   selected: select,
+        // };
 
-        setMessageArr([...updateMsgArr, question_message, selection_message]);
+        setMessageArr([...messageArr, question_message, selection_message]);
         setNext(false);
       }
       // 검사 종료 - 결과 및 AI 분석 요청
@@ -158,13 +158,14 @@ export default function Test() {
         const { result, ebtScore } = value;
         setIsPending(true);
         // 선택 문항 갱신
-        let updateMsgArr = [...messageArr];
-        updateMsgArr[updateMsgArr.length - 1] = {
-          ...updateMsgArr[updateMsgArr.length - 1],
-          selected: select,
-        };
+        // let updateMsgArr = [...messageArr];
+        // updateMsgArr[updateMsgArr.length - 1] = {
+        //   ...updateMsgArr[updateMsgArr.length - 1],
+        //   selected: select,
+        // };
+
         setMessageArr([
-          ...updateMsgArr,
+          ...messageArr,
           {
             role: 'assistant',
             content: result,
@@ -209,20 +210,8 @@ export default function Test() {
         height="100%"
         padding="0 1rem"
       >
-        {/* <Image
-          src="/src/soyesKids_Logo.png"
-          alt={'soyes_logo'}
-          width={529}
-          height={93}
-        /> */}
         <EBTBox>
-          {/* <EBTBoxHeader>정서행동 검사</EBTBoxHeader> */}
           <EBTBoxBody ref={chatBoxBody}>
-            {/* <EBTClassSelector
-              isProceeding={isProceeding}
-              EBTArr={ebtClassMap}
-              ebtType={ebtType}
-            /> */}
             {messageArr.map((el, index) => (
               <div key={index}>
                 <EBTestBubble
@@ -232,7 +221,6 @@ export default function Test() {
                   imgURL={el.imgURL}
                   setSelect={index === messageArr.length - 1 && setSelect}
                   setNext={index === messageArr.length - 1 && setNext}
-                  selected={el.selected}
                 />
               </div>
             ))}

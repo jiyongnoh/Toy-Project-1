@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import SelectRow from './SelectRow';
 
-import Image from 'next/image';
-
 const SelectBubble = ({ select_data, setChat, setNext }) => {
   const { role, select_content } = select_data;
-  const selectHandler = (value) => {
+  const [selected, setSelected] = useState(-1);
+
+  const selectHandler = (value, index) => {
     setChat(value);
+    setSelected(index);
     setNext(true);
   };
 
@@ -23,8 +24,10 @@ const SelectBubble = ({ select_data, setChat, setNext }) => {
                   key={index}
                   selectHandler={setChat && selectHandler}
                   value={value}
+                  index={index}
                   message={selection}
                   role={role}
+                  selected={selected === index}
                 />
               );
             })}

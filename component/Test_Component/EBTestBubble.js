@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import EBTSelectRow from './EBTSelectRow';
 import { motion } from 'framer-motion';
@@ -11,10 +11,12 @@ const EBTestBubble = ({
   setSelect,
   setNext,
   score,
-  selected,
+  // selected,
 }) => {
+  const [selected, setSelected] = useState(-1);
   const selectHandler = (value) => {
     setSelect(value);
+    setSelected(value);
     setNext(true);
   };
 
@@ -39,6 +41,7 @@ const EBTestBubble = ({
                     key={index}
                     selectHandler={setSelect && selectHandler}
                     value={score[index]}
+                    index={index}
                     message={message[index]}
                     imgURL={imgURL[index]}
                     role={role}

@@ -16,6 +16,7 @@ import { useRouter } from 'next/router';
 import {
   ellaMood_Round_first,
   ellaMood_Round_second,
+  ellaMood_Round_third,
 } from '@/store/ellaGenerator';
 
 import { useTranslation } from 'next-i18next';
@@ -37,7 +38,6 @@ export default function Test() {
   const [inputTrigger, setInputTrigger] = useState(false); // 제너레이터 반환값이 input인 경우 발동될 트리거
   const [gptTrigger, setGptTrigger] = useState(false); // 제너레이터 반환값이 gpt인 경우 발동될 트리거
   const [selectTrigger, setSelectTrigger] = useState(false); // 제너레이터 반환값이 select인 경우 발동될 트리거
-  const [select, setSelect] = useState(-1); // 유저 문항 선택지 1 || 2
 
   const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
@@ -46,7 +46,7 @@ export default function Test() {
 
   // 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
   const initMoodTrainingRound = async () => {
-    moodSessionRef.current = ellaMood_Round_second('까망이'); // Mood table에 저장시킨 기분명 삽입
+    moodSessionRef.current = ellaMood_Round_first('까망이'); // Mood table에 저장시킨 기분명 삽입
     setTimeout(() => {
       const { value, done } = moodSessionRef.current.next();
       console.log(value);
@@ -75,6 +75,7 @@ export default function Test() {
     const { code, gpt_input } = gptData;
     try {
       const tmp = messageArr.map((el) => {
+        if (!el.fix_content) return;
         let role = el.role;
         let textArr = el.fix_content
           .filter((el) => el.key === 'text' && el.value)
@@ -83,6 +84,12 @@ export default function Test() {
           });
         return textArr[0];
       });
+
+      // 유저 선택지
+      if (gpt_input.mood_talk) {
+        tmp.push({ role: 'user', content: gpt_input.mood_talk });
+      }
+
       // 엘라 API 호출 이후 state 갱신
       const data = await handleTrainingMoodElla({
         pUid: localStorage.getItem('id'),
@@ -135,6 +142,10 @@ export default function Test() {
         if (value.type === 'input') setInputTrigger(true);
         if (value.type === 'gpt') setGptTrigger(true);
         if (value.type === 'select') setSelectTrigger(true);
+        if (value.type === 'input&select') {
+          setInputTrigger(true);
+          setSelectTrigger(true);
+        }
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
@@ -190,6 +201,8 @@ export default function Test() {
     if (gptTrigger) {
       setGptTrigger(false);
       setIsPending(true);
+      // 3회기 버튼 + 인풋 동시 트리거일 경우 InputTrigger 제외
+      if (inputTrigger) setInputTrigger(false);
       createGptText(generatorData);
     }
   }, [gptTrigger]);
@@ -237,7 +250,7 @@ export default function Test() {
           <EllaMoodBoxBody>
             {messageArr.map((el, index) => {
               if (el.type === 'fix') return <FixBubble fix_data={el} />;
-              else if (el.type === 'select')
+              else if (el.type === 'select' || el.type === 'input&select')
                 return (
                   <SelectBubble
                     select_data={el}

@@ -2,6 +2,17 @@
 // 1회기
 export function* ellaMood_Round_first() {
   let answerArr = [];
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: '1회기',
+      },
+    ],
+  };
+
   // 인사말
   yield {
     role: 'assistant',
@@ -348,6 +359,18 @@ export function* ellaMood_Round_first() {
 
   const congnitive_score = answerArr.reduce((acc, cur) => acc + cur);
 
+  // 개발용
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `Result: ${congnitive_score}점`,
+      },
+    ],
+  };
+
   return {
     role: 'assistant',
     type: 'fix',
@@ -369,7 +392,17 @@ export function* ellaMood_Round_first() {
 }
 
 export function* ellaMood_Round_second(mood_name) {
-  let answerArr = [];
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: '2회기',
+      },
+    ],
+  };
+
   // 인사말
   yield {
     role: 'assistant',
@@ -602,7 +635,7 @@ export function* ellaMood_Round_second(mood_name) {
     type: 'gpt',
     code: 'listing',
     gpt_input: {
-      mood_list: [mood_todolist_1, mood_todolist_2, mood_todolist_3],
+      mood_todo_list: [mood_todolist_1, mood_todolist_2, mood_todolist_3],
     },
   };
 
@@ -619,6 +652,314 @@ export function* ellaMood_Round_second(mood_name) {
     sava_data: {
       type: 'second',
       mood_todo_list: [mood_todolist_1, mood_todolist_2, mood_todolist_3],
+    },
+  };
+}
+
+export function* ellaMood_Round_third(mood_name) {
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: '3회기',
+      },
+    ],
+  };
+
+  // 인사말
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: '안녕, 오늘 하루 잘 보냈어?',
+      },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 눈코입 없는 그림자 사람 이미지
+      {
+        key: 'text',
+        value: `${mood_name}(이) 기억나? 네가 슬프거나 아무 것도 하고 싶지 않을 때 만나는 마음이야.`,
+      },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `오늘, 또는 이번 주에는 어떨 때 ${mood_name}(이)를 만났어?`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 3회기 이미지
+    ],
+  };
+
+  const mood_situation = yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `${mood_name}(이)를 만나서 어떤 기분이 들었어?`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 3회기 이미지2
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `또 어떤 생각이 들어?`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 2회기 이미지3
+    ],
+  };
+
+  const mood_thought = yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
+  // situation 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'situation',
+    gpt_input: { mood_situation },
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // solution 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'solution',
+    gpt_input: {},
+  };
+
+  // thought 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'thought',
+    gpt_input: { mood_thought },
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // another 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'another',
+    gpt_input: {},
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `이젠 다른 걸 해볼까? ${mood_name}에게 붙일 수 있는 치료 밴드를 만들거야`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // Bandage flower
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `네 ${mood_name}에게 어떤 말을 해주고 싶어?`,
+      },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
+    ],
+  };
+
+  // mood_talk 저장 1
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `이런 말은 어때?`,
+      },
+    ],
+  };
+  const mood_talk_1 = yield {
+    role: 'user',
+    type: 'input&select',
+    select_content: [
+      { selection: '그럴 수도 있지', value: '그럴 수도 있지' },
+      {
+        selection: '시간이 지나면 괜찮아질 거야',
+        value: '시간이 지나면 괜찮아질 거야',
+      },
+      { selection: '울어도 괜찮아', value: '울어도 괜찮아' },
+      { selection: '넌 멋진 사람이 될 거야', value: '넌 멋진 사람이 될 거야' },
+      { selection: '난 널 믿어', value: '난 널 믿어' },
+    ],
+  };
+  // 선택 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {
+      mood_talk: mood_talk_1,
+    },
+  };
+
+  // mood_talk 저장 2
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `이런 말은 어때?`,
+      },
+    ],
+  };
+  const mood_talk_2 = yield {
+    role: 'user',
+    type: 'input&select',
+    select_content: [
+      { selection: '그럴 수도 있지', value: '그럴 수도 있지' },
+      {
+        selection: '시간이 지나면 괜찮아질 거야',
+        value: '시간이 지나면 괜찮아질 거야',
+      },
+      { selection: '울어도 괜찮아', value: '울어도 괜찮아' },
+      { selection: '넌 멋진 사람이 될 거야', value: '넌 멋진 사람이 될 거야' },
+      { selection: '난 널 믿어', value: '난 널 믿어' },
+    ],
+  };
+  // 선택 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: { mood_talk: mood_talk_2 },
+  };
+
+  // mood_talk 저장 3
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `이런 말은 어때?`,
+      },
+    ],
+  };
+  const mood_talk_3 = yield {
+    role: 'user',
+    type: 'input&select',
+    select_content: [
+      { selection: '그럴 수도 있지', value: '그럴 수도 있지' },
+      {
+        selection: '시간이 지나면 괜찮아질 거야',
+        value: '시간이 지나면 괜찮아질 거야',
+      },
+      { selection: '울어도 괜찮아', value: '울어도 괜찮아' },
+      { selection: '넌 멋진 사람이 될 거야', value: '넌 멋진 사람이 될 거야' },
+      { selection: '난 널 믿어', value: '난 널 믿어' },
+    ],
+  };
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `좋아, 치료밴드를 다 만들었어`,
+      },
+    ],
+  };
+
+  // listing 프롬프트 적용 텍스트 생성
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'talking',
+    gpt_input: {
+      mood_talk_list: [mood_talk_1, mood_talk_2, mood_talk_3],
+    },
+  };
+
+  return {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value:
+          '이 말들을 메모지에 적어서 잘 보이는 곳에 붙여 봐. 그리고 하루에 한 번씩 읽으면서 마음에 밴드를 붙여 줘. 분명 힘이 될 거야. 다음 시간에 만나',
+      },
+    ],
+    sava_data: {
+      type: 'second',
+      mood_talk_list: [mood_talk_1, mood_talk_2, mood_talk_3],
     },
   };
 }
