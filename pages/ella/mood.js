@@ -44,7 +44,7 @@ export default function Test() {
   const moodSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
 
-  // 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
+  // 시작 Method - 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
   const initMoodTrainingRound = async () => {
     moodSessionRef.current = ellaMood_Round_first('까망이'); // Mood table에 저장시킨 기분명 삽입
     setTimeout(() => {
@@ -59,9 +59,9 @@ export default function Test() {
     }, 1000);
   };
 
-  // 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
+  // 종료 Method - 유저 회기별 기분관리 훈련 DB 데이터 저장
   const endMoodTraining = async (sava_data) => {
-    // Todo. save_data DB 저장
+    // Todo - save_data DB 저장
     // const data = await handleTrainingMoodEllaSave({
     //   pUid: localStorage.getItem('id'),
     //   ...sava_data,

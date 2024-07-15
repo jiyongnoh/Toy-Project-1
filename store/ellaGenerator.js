@@ -8,7 +8,7 @@ export function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: '1회기',
+        value: '1회기 (개발용)',
       },
     ],
   };
@@ -359,14 +359,14 @@ export function* ellaMood_Round_first() {
 
   const congnitive_score = answerArr.reduce((acc, cur) => acc + cur);
 
-  // 개발용
+  // 개발용 - 추후 삭제
   yield {
     role: 'assistant',
     type: 'fix',
     fix_content: [
       {
         key: 'text',
-        value: `Result: ${congnitive_score}점`,
+        value: `Result: ${congnitive_score}점 (개발용)`,
       },
     ],
   };
@@ -390,7 +390,7 @@ export function* ellaMood_Round_first() {
     },
   };
 }
-
+// 2회기
 export function* ellaMood_Round_second(mood_name) {
   yield {
     role: 'assistant',
@@ -398,7 +398,7 @@ export function* ellaMood_Round_second(mood_name) {
     fix_content: [
       {
         key: 'text',
-        value: '2회기',
+        value: '2회기 (개발용)',
       },
     ],
   };
@@ -655,7 +655,7 @@ export function* ellaMood_Round_second(mood_name) {
     },
   };
 }
-
+// 3회기
 export function* ellaMood_Round_third(mood_name) {
   yield {
     role: 'assistant',
@@ -663,7 +663,7 @@ export function* ellaMood_Round_third(mood_name) {
     fix_content: [
       {
         key: 'text',
-        value: '3회기',
+        value: '3회기 (개발용)',
       },
     ],
   };

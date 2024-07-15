@@ -13,7 +13,7 @@ const EBTestBubble = ({
   score,
   // selected,
 }) => {
-  const [selected, setSelected] = useState(-1);
+  const [selected, setSelected] = useState(-2);
   const selectHandler = (value) => {
     setSelect(value);
     setSelected(value);
