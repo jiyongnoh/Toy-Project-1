@@ -3,7 +3,12 @@ import styled, { keyframes } from 'styled-components';
 import { FlexContainer } from '@/styled-component/common';
 import { useEffect, useState, useRef } from 'react';
 
-import { handleTrainingMoodElla } from '@/fetchAPI/ellaTrainingAPI';
+// API 호출 메서드
+import {
+  handleTrainingMoodElla,
+  handleTrainingMoodEllaSave,
+  handleTrainingMoodEllaLoad,
+} from '@/fetchAPI/ellaTrainingAPI';
 
 import FixBubble from '@/component/EllaTraning_Component/FixBubble';
 import SelectBubble from '@/component/EllaTraning_Component/SelectBubble';
@@ -13,11 +18,7 @@ import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 import { useRouter } from 'next/router';
 
 // import { motion } from 'framer-motion';
-import {
-  ellaMood_Round_first,
-  ellaMood_Round_second,
-  ellaMood_Round_third,
-} from '@/store/ellaGenerator';
+import { ellaMood_Round_Array } from '@/store/ellaGenerator';
 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -32,7 +33,7 @@ export default function Test() {
   // Input 채팅 관련 State
   const [chat, setChat] = useState('');
   const [flagEnter, setFlagEnter] = useState(false);
-
+  // 제너레이터 반환값 트리거 관련 State
   const [generatorData, setGeneratorData] = useState({});
   const [fixTrigger, setFixTrigger] = useState(false); // 제너레이터 반환값이 fix인 경우 발동될 트리거
   const [inputTrigger, setInputTrigger] = useState(false); // 제너레이터 반환값이 input인 경우 발동될 트리거
@@ -46,10 +47,16 @@ export default function Test() {
 
   // 시작 Method - 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
   const initMoodTrainingRound = async () => {
-    moodSessionRef.current = ellaMood_Round_first('까망이'); // Mood table에 저장시킨 기분명 삽입
+    // Todo - 기분 프로그램 Data Get API 호출 - mood_name 및 mood_round_idx Load
+    const data = await handleTrainingMoodEllaLoad({
+      pUid: localStorage.getItem('id'),
+    });
+    const { mood_round_idx, mood_name } = data;
+    // Mood Round 맵핑 + mood_name 삽입
+    moodSessionRef.current = ellaMood_Round_Array[mood_round_idx](mood_name);
     setTimeout(() => {
       const { value, done } = moodSessionRef.current.next();
-      console.log(value);
+      // console.log(value);
       if (!done) {
         if (value.type === 'fix') {
           setGeneratorData({ ...value });
@@ -122,6 +129,21 @@ export default function Test() {
     }
   };
 
+  // gpt 호출 메서드
+  const moodDataSave = async (sava_data) => {
+    try {
+      // 엘라 API 호출 이후 state 갱신
+      const data = await handleTrainingMoodEllaSave({
+        pUid: localStorage.getItem('id'),
+        ...sava_data,
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // 페이지 초기설정 - 성격검사 첫 문항 제시
   useEffect(() => {
     initMoodTrainingRound();
@@ -133,7 +155,7 @@ export default function Test() {
       const { value, done } = moodSessionRef.current.next(chat);
       if (chat) setChat('');
 
-      console.log(value);
+      // console.log(value);
       // 검사 문항 진행
       if (!done) {
         setNext(false);
@@ -153,6 +175,7 @@ export default function Test() {
         endMoodTraining(sava_data); // Todo. 회기별 DB 저장 API 호출
         delete value.sava_data;
         setMessageArr([...messageArr, value]);
+        moodDataSave(sava_data);
       } else return;
 
       setBottom(true);
@@ -164,10 +187,11 @@ export default function Test() {
     if (fixTrigger) {
       setMessageArr([...messageArr, generatorData]);
       setFixTrigger(false);
-      // Todo. button, media 관련 처리하기
-      setTimeout(() => {
-        setNext(true);
-      }, 1500);
+      // Todo. fix_content의 요소에 button이 없는 경우만 Next 실행
+      if (!generatorData.fix_content.some((el) => el.key === 'button'))
+        setTimeout(() => {
+          setNext(true);
+        }, 1500);
     }
     setBottom(true);
   }, [fixTrigger]);
@@ -250,7 +274,8 @@ export default function Test() {
           {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
           <EllaMoodBoxBody>
             {messageArr.map((el, index) => {
-              if (el.type === 'fix') return <FixBubble fix_data={el} />;
+              if (el.type === 'fix')
+                return <FixBubble fix_data={el} setNext={setNext} />;
               else if (el.type === 'select' || el.type === 'input&select')
                 return (
                   <SelectBubble

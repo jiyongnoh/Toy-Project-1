@@ -1,14 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
+
+import MediaRow from './MediaRow';
 // import { useRecoilState } from 'recoil';
 // import { mobile } from '../../store/state';
 
-const FixBubble = ({ fix_data }) => {
+const FixBubble = ({ fix_data, setNext }) => {
   const { role, fix_content } = fix_data;
 
   return (
-    <PTestBubbleContainer>
+    <FixBubbleContainer>
       {role === 'assistant' && (
         <Image
           src="/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png"
@@ -24,27 +26,38 @@ const FixBubble = ({ fix_data }) => {
           <StyledBubble role={role}>
             {fix_content.map((el) => {
               const { key, value } = el;
+              // Img Row
               if (key === 'img')
                 return (
-                  <ImgContanier>
-                    <Image
-                      src={value}
-                      alt={'avartar_icon'}
-                      width={400}
-                      height={300}
-                      style={{ maxWidth: '100%', height: 'auto' }}
-                    />
-                  </ImgContanier>
+                  <Image
+                    src={value}
+                    alt={'avartar_icon'}
+                    width={500}
+                    height={350}
+                    style={{ maxWidth: '100%', height: 'auto' }}
+                  />
                 );
+              // Text Row
               else if (key === 'text')
                 return (
                   <TextContanier>
                     <MessageP>{value}</MessageP>
                   </TextContanier>
                 );
-              // Todo
-              // else if (key === 'button') return;
-              // else if (key === 'media') return;
+              // Button Row
+              else if (key === 'button')
+                return (
+                  <CardContainer
+                    onClick={() => {
+                      setNext(true);
+                    }}
+                    role={role}
+                  >
+                    <MessageP>{value}</MessageP>
+                  </CardContainer>
+                );
+              // Media Row
+              else if (key === 'media') return <MediaRow videoId={value} />;
             })}
           </StyledBubble>
         </AssistantBubbleContainer>
@@ -74,12 +87,12 @@ const FixBubble = ({ fix_data }) => {
           })} */}
         </StyledBubble>
       )}
-    </PTestBubbleContainer>
+    </FixBubbleContainer>
   );
 };
 
 // Styled Components
-const PTestBubbleContainer = styled.div`
+const FixBubbleContainer = styled.div`
   display: flex;
   justify-content: ${(props) => (props.role === 'user' ? 'right' : 'left')};
   gap: 0.3rem;
@@ -89,7 +102,8 @@ const PTestBubbleContainer = styled.div`
 `;
 
 const StyledBubble = styled.div`
-  max-width: 100%;
+  max-width: 32rem;
+
   padding: 1rem;
   border-radius: 1rem;
   margin: 0.2rem 0.1rem;
@@ -113,7 +127,7 @@ const StyledBubble = styled.div`
   flex-direction: column;
   align-items: center;
 
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 const AvartarTitle = styled.span`
@@ -157,6 +171,30 @@ const AssistantBubbleContainer = styled.div`
   gap: 0.3rem;
 
   @media (max-width: 768px) {
+  }
+`;
+
+const CardContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #b88cd5;
+  color: white;
+  border: 3px solid #ececec;
+  border-radius: 10px;
+
+  width: 100%;
+  height: 100%;
+
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  /* user-select: none; */
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 1.5rem;
   }
 `;
 

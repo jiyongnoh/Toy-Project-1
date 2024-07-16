@@ -1,6 +1,13 @@
-// 엘라 기분관리 훈련 프로그램
+// 엘라 기분관리 훈련 프로그램 배열
+export const ellaMood_Round_Array = [
+  ellaMood_Round_first,
+  ellaMood_Round_second,
+  ellaMood_Round_third,
+  ellaMood_Round_fourth,
+];
+
 // 1회기
-export function* ellaMood_Round_first() {
+function* ellaMood_Round_first() {
   let answerArr = [];
   yield {
     role: 'assistant',
@@ -357,7 +364,7 @@ export function* ellaMood_Round_first() {
 
   answerArr.push(parseInt(answer7));
 
-  const congnitive_score = answerArr.reduce((acc, cur) => acc + cur);
+  const mood_cognitive_score = answerArr.reduce((acc, cur) => acc + cur);
 
   // 개발용 - 추후 삭제
   yield {
@@ -366,7 +373,7 @@ export function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `Result: ${congnitive_score}점 (개발용)`,
+        value: `Result: ${mood_cognitive_score}점 (개발용)`,
       },
     ],
   };
@@ -378,7 +385,7 @@ export function* ellaMood_Round_first() {
       {
         key: 'text',
         value:
-          congnitive_score >= 18
+          mood_cognitive_score >= 18
             ? '좋았어! 멋진 생각을 나눠준 너에게 씨앗을 줄게. 마음을 가꾸듯 잘 키워봐. 다음에 또 만나'
             : '수고했어. 좀 더 분발해서 다음엔 씨앗을 받아보자. 다음 시간에 만나',
       },
@@ -386,12 +393,12 @@ export function* ellaMood_Round_first() {
     sava_data: {
       type: 'first',
       mood_name,
-      congnitive_score,
+      mood_cognitive_score,
     },
   };
 }
 // 2회기
-export function* ellaMood_Round_second(mood_name) {
+function* ellaMood_Round_second(mood_name) {
   yield {
     role: 'assistant',
     type: 'fix',
@@ -656,7 +663,7 @@ export function* ellaMood_Round_second(mood_name) {
   };
 }
 // 3회기
-export function* ellaMood_Round_third(mood_name) {
+function* ellaMood_Round_third(mood_name) {
   yield {
     role: 'assistant',
     type: 'fix',
@@ -964,7 +971,7 @@ export function* ellaMood_Round_third(mood_name) {
   };
 }
 // 4회기
-export function* ellaMood_Round_fourth(mood_name) {
+function* ellaMood_Round_fourth(mood_name) {
   yield {
     role: 'assistant',
     type: 'fix',
@@ -1117,8 +1124,6 @@ export function* ellaMood_Round_fourth(mood_name) {
     gpt_input: {},
   };
 
-  // -----------------------------------------------------
-
   yield {
     role: 'assistant',
     type: 'fix',
@@ -1136,14 +1141,63 @@ export function* ellaMood_Round_fourth(mood_name) {
     ],
   };
 
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      { key: 'media', value: 'nKCY3qz30N8' }, // 바닷가 명상
+      {
+        key: 'text',
+        value: `눈을 감고 편안히 누워서 바다의 소리와 풍경을 떠올려볼 거야.`,
+      },
+      { key: 'button', value: '그만보기' },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      { key: 'media', value: 'tNao3xp5yjM' }, // 풀밭 명상
+      {
+        key: 'text',
+        value: `눈을 감고 편안히 누워서 풀밭의 소리와 풍경을 떠올려볼 거야. 처음엔 어색하겠지만 아주 편안하고 시원한 곳에 있다고 생각하고 명상을 따라해봐`,
+      },
+      { key: 'button', value: '그만보기' },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      {
+        key: 'text',
+        value: `명상이 어땠니?`,
+      },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'input',
+  };
+
+  // 단순 공감 반응
+  yield {
+    role: 'assistant',
+    type: 'gpt',
+    code: 'emotion',
+    gpt_input: {},
+  };
+
   return {
     role: 'assistant',
     type: 'fix',
     fix_content: [
       {
         key: 'text',
-        value:
-          '이 말들을 메모지에 적어서 잘 보이는 곳에 붙여 봐. 그리고 하루에 한 번씩 읽으면서 마음에 밴드를 붙여 줘. 분명 힘이 될 거야. 다음 시간에 만나',
+        value: `마음이 힘들 때 네가 편안히 쉴 수 있는 안전한 곳이 있었으면 좋겠어. 기분 수업(가칭)은 여기까지야. 함께 배운 걸 반복하면서 네 안의 ${mood_name}(이)도 건강하게 자라길 바랄게`,
       },
     ],
     sava_data: {
