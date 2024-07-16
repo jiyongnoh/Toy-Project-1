@@ -24,8 +24,7 @@ export const handleTrainingMoodElla = async (input) => {
     };
   }
 };
-
-// 엘라 기분관리 훈련 데이터 저장 API 호출 함수
+// 엘라 기분관리 훈련 데이터 Save API 호출 함수
 export const handleTrainingMoodEllaSave = async (input) => {
   try {
     const response = await axios.post(
@@ -49,8 +48,7 @@ export const handleTrainingMoodEllaSave = async (input) => {
     };
   }
 };
-
-// 엘라 기분관리 훈련 데이터 저장 API 호출 함수
+// 엘라 기분관리 훈련 데이터 Load API 호출 함수
 export const handleTrainingMoodEllaLoad = async (input) => {
   try {
     const response = await axios.post(

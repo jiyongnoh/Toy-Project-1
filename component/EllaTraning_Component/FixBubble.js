@@ -26,7 +26,7 @@ const FixBubble = ({ fix_data, setNext }) => {
           <StyledBubble role={role}>
             {fix_content.map((el) => {
               const { key, value } = el;
-              // Img Row
+              // IMG Row
               if (key === 'img')
                 return (
                   <Image
@@ -66,25 +66,6 @@ const FixBubble = ({ fix_data, setNext }) => {
           <TextContanier>
             <MessageP>{fix_content[0].value}</MessageP>
           </TextContanier>
-
-          {/* {fix_content.map((el) => {
-            const { key, value } = el;
-            return key === 'img' ? (
-              <ImgContanier>
-                <Image
-                  src={value}
-                  alt={'avartar_icon'}
-                  width={400}
-                  height={300}
-                  style={{ maxWidth: '100%', height: 'auto' }}
-                />
-              </ImgContanier>
-            ) : (
-              <TextContanier>
-                <MessageP>{value}</MessageP>
-              </TextContanier>
-            );
-          })} */}
         </StyledBubble>
       )}
     </FixBubbleContainer>
