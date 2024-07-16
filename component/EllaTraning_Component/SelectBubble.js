@@ -7,9 +7,11 @@ const SelectBubble = ({ select_data, setChat, setNext }) => {
   const [selected, setSelected] = useState(-1);
 
   const selectHandler = (value, index) => {
-    setChat(value);
-    setSelected(index);
-    setNext(true);
+    if (selected === -1) {
+      setChat(value);
+      setSelected(index);
+      setNext(true);
+    }
   };
 
   return (
