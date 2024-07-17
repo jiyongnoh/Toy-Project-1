@@ -356,12 +356,12 @@ export default function Test() {
   useEffect(() => {
     // 엘라 상담 중, 주제가 선정되었을 경우
     if (testType && avartaAI === 'pupu') {
-      const ending_ment = {
+      const init_ending_ment = {
         role: 'assistant',
-        content: `'${ebtClassMapKorean[testType]}' 관련 상담을 진행할게! 반가워 나는 엘라야!`,
+        content: `${ebtClassMapKorean[testType]} 관련 상담을 진행할게! 반가워 나는 푸푸야!`,
       };
 
-      setInitArr([...initArr, ending_ment]);
+      setInitArr([...initArr, init_ending_ment]);
       setIsInitPending(false);
     }
   }, [testType]);
