@@ -17,6 +17,9 @@ import Image from 'next/image';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 import { useRouter } from 'next/router';
 
+import { useRecoilState } from 'recoil';
+import { log } from '../../store/state';
+
 // import { motion } from 'framer-motion';
 import { ellaMood_Round_Array } from '@/store/ellaGenerator';
 
@@ -25,6 +28,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
 export default function Test() {
+  const [login, setLogin] = useRecoilState(log);
   const [isPending, setIsPending] = useState(false);
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
@@ -47,23 +51,27 @@ export default function Test() {
 
   // 시작 Method - 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
   const initMoodTrainingRound = async () => {
-    // Todo - 기분 프로그램 Data Get API 호출 - mood_name 및 mood_round_idx Load
-    const data = await handleTrainingMoodEllaLoad({
-      pUid: localStorage.getItem('id'),
-    });
-    const { mood_round_idx, mood_name } = data;
-    // Mood Round 맵핑 + mood_name 삽입
-    moodSessionRef.current = ellaMood_Round_Array[mood_round_idx](mood_name);
-    setTimeout(() => {
-      const { value, done } = moodSessionRef.current.next();
-      // console.log(value);
-      if (!done) {
-        if (value.type === 'fix') {
-          setGeneratorData({ ...value });
-          setFixTrigger(true);
+    try {
+      // Todo - 기분 프로그램 Data Get API 호출 - mood_name 및 mood_round_idx Load
+      const data = await handleTrainingMoodEllaLoad({
+        pUid: localStorage.getItem('id'),
+      });
+      const { mood_round_idx, mood_name } = data;
+      // Mood Round 맵핑 + mood_name 삽입
+      moodSessionRef.current = ellaMood_Round_Array[mood_round_idx](mood_name);
+      setTimeout(() => {
+        const { value, done } = moodSessionRef.current.next();
+        // console.log(value);
+        if (!done) {
+          if (value.type === 'fix') {
+            setGeneratorData({ ...value });
+            setFixTrigger(true);
+          }
         }
-      }
-    }, 1000);
+      }, 1000);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   // gpt 호출 메서드
@@ -137,6 +145,14 @@ export default function Test() {
   useEffect(() => {
     initMoodTrainingRound();
   }, []);
+
+  // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
+  useEffect(() => {
+    const loginSession = JSON.parse(localStorage.getItem('log'));
+    if (!loginSession) {
+      router.replace('/login');
+    }
+  }, [login]);
 
   // 심리 검사 다음 문항 진행
   useEffect(() => {
