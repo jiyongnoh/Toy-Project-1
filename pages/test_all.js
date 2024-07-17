@@ -329,7 +329,7 @@ export default function Test() {
   useEffect(() => {
     if (avartaAI === 'default') return;
     // 엘라일 경우
-    if (avartaAI === 'lala') {
+    if (avartaAI === 'pupu') {
       setIsInitPending(true); // 채팅창 비활성화
       setTestType(''); // 상담 주제 초기화
       // 엘라 상담 주제 선정 메서드 1초 뒤 호출
@@ -355,7 +355,7 @@ export default function Test() {
 
   useEffect(() => {
     // 엘라 상담 중, 주제가 선정되었을 경우
-    if (testType && avartaAI === 'lala') {
+    if (testType && avartaAI === 'pupu') {
       const ending_ment = {
         role: 'assistant',
         content: `'${ebtClassMapKorean[testType]}' 관련 상담을 진행할게! 반가워 나는 엘라야!`,
