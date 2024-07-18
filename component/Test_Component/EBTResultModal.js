@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 import Image from 'next/image';
 import BarChart from './BarChart';
+import Loading from '@/component/Common_Component/Loading';
+
+const loadingDuration = 1000;
 
 const EBTResultModal = ({ isOpen, onRequestClose, ebtClassData }) => {
   return (
@@ -163,7 +166,9 @@ const ChartContainer = styled.div`
 
 const TestCardContainer = styled.div`
   width: 80%;
+  font-size: 30px;
   @media (max-width: 768px) {
+    font-size: 1rem;
   }
 `;
 

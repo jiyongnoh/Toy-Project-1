@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const EBTResultCard = ({
   ebt_class,
@@ -16,7 +17,13 @@ const EBTResultCard = ({
         onClick(ebt_class);
       }}
     >
-      <Icon src={img_url} alt={title} />
+      <Image
+        src={img_url}
+        alt={'soyes_logo'}
+        width={100}
+        height={100}
+        style={{ maxWidth: '100%', height: 'auto' }}
+      />
       <Title color={color}>{title}</Title>
     </CardContainer>
   );
@@ -24,7 +31,7 @@ const EBTResultCard = ({
 
 const CardContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   background-color: ${(props) => props.backColor || '#fff'};
   border-radius: 10px;
@@ -38,12 +45,10 @@ const CardContainer = styled.div`
   gap: 4rem;
 
   cursor: pointer;
-`;
 
-const Icon = styled.img`
-  width: 124px;
-  height: 124px;
-  margin-bottom: 10px;
+  @media (max-width: 768px) {
+    gap: 2rem;
+  }
 `;
 
 const Title = styled.div`
@@ -51,6 +56,10 @@ const Title = styled.div`
   font-weight: bold;
   font-family: AppleSDGothicNeoM00;
   color: ${(props) => (props.color ? props.color : 'black')};
+
+  @media (max-width: 768px) {
+    font-size: 25px;
+  }
 `;
 
 export default EBTResultCard;

@@ -14,7 +14,6 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import EBTResultModal from '@/component/Test_Component/EBTResultModal';
 import EBTResultCard from '@/component/Test_Component/EBTResultCard';
-
 const ebtCardInfoArr = [
   {
     ebt_class: 'Overall',
@@ -104,7 +103,6 @@ const ebtCardInfoArr = [
 
 // Renewel Test 페이지
 export default function Test() {
-  const [isPending, setIsPending] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [ebtDataArr, setEbtDataArr] = useState([]);
   const [ebtClassData, setEbtClassData] = useState({ content: 'default' });
@@ -115,7 +113,6 @@ export default function Test() {
   const router = useRouter();
 
   const handleEbtClassData = (ebt_class) => {
-    console.log(ebt_class);
     setIsOpen(true);
     if (ebt_class === 'Overall') {
       let tmpObj = {};
@@ -226,4 +223,11 @@ const CardContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(4, 1fr);
   gap: 2rem 3rem;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
