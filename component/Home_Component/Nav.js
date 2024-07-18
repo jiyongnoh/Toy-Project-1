@@ -26,6 +26,7 @@ export default function Nav() {
     width: undefined,
     height: undefined,
   });
+
   useEffect(() => {
     const loginSession = localStorage.getItem('log');
     // 로그인 세션 만료 처리
@@ -102,6 +103,14 @@ export default function Nav() {
     }).then((result) => {
       if (result.isConfirmed) {
         logoutAPI(`${process.env.NEXT_PUBLIC_URL}`);
+        // 히스토리 정보 삭제
+        if (typeof window !== 'undefined') {
+          window.history.pushState(
+            {},
+            document.title,
+            window.location.pathname
+          );
+        }
         Swal.fire({
           icon: 'success',
           title: 'LogOut Success!',

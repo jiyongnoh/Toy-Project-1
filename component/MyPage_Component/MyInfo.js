@@ -8,11 +8,20 @@ const MyInfo = () => {
   return (
     <IntroContainer>
       <UserGreeting />
-      <ContentBlock
+      {/* <ContentBlock
         title="전문가 상담 예약"
         subtitle="전문가와의 심리상담을 예약할 수 있어요."
         iconPath="/src/Content_IMG/Icon_IMG/Icon_전문가상담.png"
         linkUrl="/meditation_music"
+        color="#E14615"
+        backColor="#FFE296"
+        consult={true}
+      /> */}
+      <ContentBlock
+        title="정서행동검사 결과보기"
+        subtitle="정서행동검사 11종 결과 및 총평을 볼 수 있어!"
+        iconPath="/src/Content_IMG/Icon_IMG/Icon_전문가상담.png"
+        linkUrl="/soyes/ebt_result"
         color="#E14615"
         backColor="#FFE296"
         consult={true}
