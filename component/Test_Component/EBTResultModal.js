@@ -99,7 +99,6 @@ const StyledModal = styled(Modal)`
   z-index: 1;
 
   @media (max-width: 768px) {
-    top: 55%;
   }
 `;
 
@@ -148,10 +147,15 @@ const UserInfoContainer = styled.div`
   align-items: center;
 
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    height: 100%;
+  }
 `;
 
 const ChartContainer = styled.div`
   width: 60%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

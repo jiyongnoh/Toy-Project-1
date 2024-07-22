@@ -132,6 +132,7 @@ export default function Nav() {
   // useMemo 적용
   const menuItems = useMemo(
     () => [
+      { href: '/music', label: 'music' },
       { href: '/test_ebt', label: t('ebt') },
       { href: '/test_pt', label: t('pt') },
       { href: '/consult_intro', label: t('consult') },
