@@ -39,6 +39,7 @@ const MusicDirectory = ({ data }) => {
   const [items, setItems] = useState([]);
   const [isRoot, setIsRoot] = useState(true);
   const [trackData, setTrackData] = useState({});
+  const [audioKey, setAudioKey] = useState(0); // unique key for AudioPlayer
 
   useEffect(() => {
     const currentParentId = path[path.length - 1];
@@ -54,6 +55,7 @@ const MusicDirectory = ({ data }) => {
       setPath([...path, item.id]);
     } else {
       setTrackData(item);
+      setAudioKey((prevKey) => prevKey + 1); // change key to re-render AudioPlayer
       console.log(`Playing URL: ${item.url}`);
     }
   };
@@ -77,7 +79,7 @@ const MusicDirectory = ({ data }) => {
       {trackData.url && (
         <>
           <h2>{trackData.name}</h2>
-          <AudioPlayer controls>
+          <AudioPlayer key={audioKey} controls autoPlay>
             <source src={trackData.url} type="audio/mp3" />
           </AudioPlayer>
         </>
