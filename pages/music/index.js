@@ -1,30 +1,64 @@
-import Link from 'next/link';
-import fs from 'fs';
-import path from 'path';
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import MusicDirectory from '../../component/Music_Component/MusicDirectory';
+import { handleDirectoryGet } from '@/fetchAPI/directory';
 
-export default function MusicHome({ semesters }) {
+const musicData = {
+  root: [
+    {
+      name: '봄학기',
+      type: 'directory',
+      contents: [
+        {
+          name: '잠자는_숲속_공주',
+          type: 'directory',
+          contents: [
+            { name: 'track1.mp3', type: 'file' },
+            { name: 'track2.mp3', type: 'file' },
+          ],
+        },
+        {
+          name: '다른_수업',
+          type: 'directory',
+          contents: [{ name: 'track1.mp3', type: 'file' }],
+        },
+      ],
+    },
+    {
+      name: '여름학기',
+      type: 'directory',
+      contents: [
+        {
+          name: '다른_수업',
+          type: 'directory',
+          contents: [{ name: 'track1.mp3', type: 'file' }],
+        },
+      ],
+    },
+  ],
+};
+
+export default function MusicHome({ data }) {
   return (
     <MainContainer>
-      <Title>수업 음원 듣기</Title>
-      <List>
-        {semesters.map((semester, index) => (
-          <ListItem key={index}>
-            <Link href={`/music/${semester}`} passHref>
-              <StyledLink>{semester}</StyledLink>
-            </Link>
-          </ListItem>
-        ))}
-      </List>
+      <Title>Music Test Page</Title>
+      <MusicDirectory data={data} />
     </MainContainer>
   );
 }
 
 export async function getStaticProps() {
-  const musicDir = path.join(process.cwd(), 'public/music');
-  const semesters = fs.readdirSync(musicDir);
+  const data = await handleDirectoryGet();
 
-  return { props: { semesters } };
+  const formattedData = data.directories.map((dir) => ({
+    ...dir,
+    url:
+      dir.type === 'file'
+        ? data.tracks.find((track) => track.directory_id === dir.id)?.url
+        : null,
+  }));
+
+  return { props: { data: formattedData } };
 }
 
 const MainContainer = styled.div`
@@ -50,19 +84,4 @@ const Title = styled.h1`
   background-color: #4caf50;
   color: white;
   padding: 10px;
-`;
-
-const List = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-const ListItem = styled.li`
-  margin: 5px 0;
-`;
-
-const StyledLink = styled.a`
-  text-decoration: none;
-  color: #4caf50;
-  cursor: pointer;
 `;
