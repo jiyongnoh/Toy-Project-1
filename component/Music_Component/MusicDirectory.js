@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import UploadForm from './UploadForm'; // 새로운 업로드 폼 컴포넌트
 
 const Container = styled.div`
   padding: 20px;
@@ -65,8 +66,16 @@ const MusicDirectory = ({ data }) => {
     setTrackData({});
   };
 
+  const handleUpload = (newTrack) => {
+    setItems([...items, newTrack]);
+  };
+
   return (
     <Container>
+      <UploadForm
+        directories={data.filter((item) => item.type === 'directory')}
+        onUpload={handleUpload}
+      />
       <List>
         {items.map((item, index) => (
           <ListItem key={index}>

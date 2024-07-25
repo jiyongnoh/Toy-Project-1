@@ -22,12 +22,14 @@ export const handleDirectoryGet = async () => {
     };
   }
 };
+
+// 미구현
 // CREATE
-export const handleReviewCreate = async (input) => {
+export const handleDirectoryCreate = async (input) => {
   try {
     const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_URL}/review`,
-      { ReviewData: input },
+      `${process.env.NEXT_PUBLIC_URL}/directory/create`,
+      { data: input },
       {
         headers: {
           'Content-Type': 'application/json',
@@ -35,7 +37,7 @@ export const handleReviewCreate = async (input) => {
         withCredentials: true,
       }
     );
-    // console.log(response);
+    console.log(response);
     return response;
   } catch (err) {
     console.log('ReviewCreate API 호출 실패');
