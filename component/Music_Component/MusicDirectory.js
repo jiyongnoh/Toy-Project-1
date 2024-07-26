@@ -2,39 +2,6 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UploadForm from './UploadForm'; // 새로운 업로드 폼 컴포넌트
 
-const Container = styled.div`
-  padding: 20px;
-`;
-
-const List = styled.ul`
-  list-style: none;
-  padding: 0;
-`;
-
-const ListItem = styled.li`
-  margin: 5px 0;
-`;
-
-const StyledLink = styled.a`
-  text-decoration: none;
-  color: #4caf50;
-  cursor: pointer;
-`;
-
-const BackButton = styled.button`
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
-  margin-top: 20px;
-`;
-
-const AudioPlayer = styled.audio`
-  width: 100%;
-  margin-top: 20px;
-`;
-
 const MusicDirectory = ({ data }) => {
   const [path, setPath] = useState([null]); // root path with null
   const [items, setItems] = useState([]);
@@ -76,6 +43,7 @@ const MusicDirectory = ({ data }) => {
         directories={data.filter((item) => item.type === 'directory')}
         onUpload={handleUpload}
       />
+      {!isRoot && <BackButton onClick={handleBackClick}>Back</BackButton>}
       <List>
         {items.map((item, index) => (
           <ListItem key={index}>
@@ -93,11 +61,43 @@ const MusicDirectory = ({ data }) => {
           </AudioPlayer>
         </>
       )}
-      {!isRoot && (
-        <BackButton onClick={handleBackClick}>상위 디렉토리로</BackButton>
-      )}
     </Container>
   );
 };
+
+const Container = styled.div`
+  padding: 20px;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+
+const ListItem = styled.li`
+  margin: 5px 0;
+  padding: 0.5rem;
+  background-color: wheat;
+`;
+
+const StyledLink = styled.a`
+  text-decoration: none;
+  color: #4caf50;
+  cursor: pointer;
+`;
+
+const BackButton = styled.button`
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 20px;
+`;
+
+const AudioPlayer = styled.audio`
+  width: 100%;
+  margin-top: 20px;
+`;
 
 export default MusicDirectory;

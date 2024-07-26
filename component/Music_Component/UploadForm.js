@@ -4,7 +4,7 @@ import { handleDirectoryCreate } from '@/fetchAPI/directory';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 
-const UploadForm = ({ directories, onUpload }) => {
+const UploadForm = ({ directories }) => {
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [isPending, setIsPending] = useState(false);
   const [file, setFile] = useState(null);
@@ -12,9 +12,16 @@ const UploadForm = ({ directories, onUpload }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsPending(true);
-    if (!selectedDirectory || !file) return;
+    if (!selectedDirectory) {
+      alert('폴더 선택 ㄱㄱ');
+      return;
+    }
 
+    if (!file) {
+      alert('파일 선택 ㄱㄱ');
+      return;
+    }
+    setIsPending(true);
     const reader = new FileReader();
     reader.onloadend = async () => {
       const base64String = reader.result
@@ -33,8 +40,8 @@ const UploadForm = ({ directories, onUpload }) => {
       if (response.status === 200) {
         Swal.fire({
           icon: 'success',
-          title: 'LogOut Success!',
-          text: 'Main Page로 이동합니다',
+          title: 'Upload Success!',
+          text: 'Page Reload',
           showConfirmButton: false,
           timer: 1500,
         }).then(() => {
@@ -75,7 +82,7 @@ const UploadForm = ({ directories, onUpload }) => {
           />
         </FormGroup>
         <Button type="submit" disabled={isPending}>
-          Upload
+          {isPending ? 'Uploading...' : 'Upload'}
         </Button>
       </form>
     </FormContainer>

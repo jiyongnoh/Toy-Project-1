@@ -4,29 +4,37 @@ import MusicDirectory from '../../component/Music_Component/MusicDirectory';
 import { handleDirectoryGet } from '@/fetchAPI/directory';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-export default function MusicHome({ data }) {
+export default function MusicHome() {
+  const [data, setData] = useState([]);
+
+  // 음원 디렉토리 구조 초기화 메서드
+  const initMusicDirectory = async () => {
+    const data = await handleDirectoryGet();
+    const formattedData = data.directories.map((dir) => ({
+      ...dir,
+      url:
+        dir.type === 'file'
+          ? data.tracks.find((track) => track.directory_id === dir.id)?.url
+          : null,
+    }));
+    setData([...formattedData]);
+  };
+
+  useEffect(() => {
+    initMusicDirectory();
+  }, []);
+
   return (
     <MainContainer>
       <Title>Music Test Page</Title>
-      <MusicDirectory data={data} />
+      {data.length && <MusicDirectory data={data} />}
     </MainContainer>
   );
 }
 
 export async function getStaticProps({ locale }) {
-  const data = await handleDirectoryGet();
-
-  const formattedData = data.directories.map((dir) => ({
-    ...dir,
-    url:
-      dir.type === 'file'
-        ? data.tracks.find((track) => track.directory_id === dir.id)?.url
-        : null,
-  }));
-
   return {
     props: {
-      data: formattedData,
       ...(await serverSideTranslations(locale, ['consult', 'nav'])),
     },
   };
