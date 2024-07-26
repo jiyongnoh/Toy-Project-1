@@ -31,44 +31,46 @@ const EBTResultModal = ({ isOpen, onRequestClose, ebtClassData }) => {
         {ebtClassData.content ? (
           <TestContainer>
             <TestCardContainer>
-              {ebtClassData.ebt_class}: {ebtClassData.result}
+              {ebtClassData.result === '양호' ? (
+                <Image
+                  src="/src/EBT_Result_IMG/Result_Icon/EBT_Result_Icon_Green_IMG.png.png"
+                  alt="Icon"
+                  width={466}
+                  height={187}
+                  style={{ maxWidth: '100%', height: 'auto' }}
+                />
+              ) : ebtClassData.result === '주의' ? (
+                <Image
+                  src="/src/EBT_Result_IMG/Result_Icon/EBT_Result_Icon_Yellow_IMG.png"
+                  alt="Icon"
+                  width={466}
+                  height={187}
+                  style={{ maxWidth: '100%', height: 'auto' }}
+                />
+              ) : (
+                <Image
+                  src="/src/EBT_Result_IMG/Result_Icon/EBT_Result_Icon_Red_IMG.png.png"
+                  alt="Icon"
+                  width={466}
+                  height={187}
+                  style={{ maxWidth: '100%', height: 'auto' }}
+                />
+              )}
             </TestCardContainer>
-            <TestCardContainer>{ebtClassData.content}</TestCardContainer>
+            <TestCardContainer>
+              <span>안녕하세요!? 소예키즈 AI상담사입니다.</span>
+              상담 내용에 대한 AI분석 결과를 안내드립니다.
+            </TestCardContainer>
+            <TestContentContainer>{ebtClassData.content}</TestContentContainer>
           </TestContainer>
         ) : (
           <ChartContainer>
-            <BarChart
-              labels={['학교생활', '또래관계', '가족관계', '자기인식']}
-              scores={[
-                ebtClassData.School,
-                ebtClassData.Friend,
-                ebtClassData.Family,
-                ebtClassData.Self,
-              ]}
-              chartName="적응 영역"
-            />
-            <BarChart
-              labels={[
-                '전반적 기분',
-                '불안',
-                '우울',
-                '신체증상',
-                '분노/공격성',
-              ]}
-              scores={[
-                ebtClassData.Mood,
-                ebtClassData.Unrest,
-                ebtClassData.Sad,
-                ebtClassData.Health,
-                ebtClassData.Angry,
-              ]}
-              chartName="정서적 스트레스"
-            />
-            <BarChart
-              labels={['주의집중', '과잉행동']}
-              scores={[ebtClassData.Attention, ebtClassData.Movement]}
-              chartName="주의집중/과잉행동"
-            />
+            <BarChart ebtClassData={ebtClassData} />
+            <ChartTextContainer>
+              * T점수 65점 이상은 ‘주의’로 해당 영역에서 다소 어려움이 있을
+              가능성을, 70점 이상은 ‘경고’로 많은 어려움이 있을 가능성을
+              의미합니다.
+            </ChartTextContainer>
           </ChartContainer>
         )}
       </UserInfoContainer>
@@ -86,8 +88,7 @@ const StyledModal = styled(Modal)`
 
   /* max-width: 640px; */
   width: 90vw;
-  height: auto;
-  max-height: 90vh;
+  height: 100%;
 
   background: #9051ff;
   border-radius: 40px;
@@ -96,9 +97,10 @@ const StyledModal = styled(Modal)`
   outline: none;
 
   overflow: auto;
-  z-index: 1;
+  z-index: 10;
 
   @media (max-width: 768px) {
+    margin-top: 3rem;
   }
 `;
 
@@ -135,6 +137,7 @@ const UserInfoHeaderContainer = styled.div`
 
 const UserInfoContainer = styled.div`
   width: 100%;
+  height: 100%;
   min-height: 600px;
   padding: 2rem 0;
 
@@ -154,25 +157,18 @@ const UserInfoContainer = styled.div`
 `;
 
 const ChartContainer = styled.div`
-  width: 60%;
+  width: 100%;
   height: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  gap: 2rem;
+  gap: 1rem;
 
   @media (max-width: 768px) {
     width: 100%;
-  }
-`;
-
-const TestCardContainer = styled.div`
-  width: 80%;
-  font-size: 30px;
-  @media (max-width: 768px) {
-    font-size: 1rem;
   }
 `;
 
@@ -182,7 +178,62 @@ const TestContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  gap: 1rem;
+  gap: 2rem;
 `;
 
+const TestCardContainer = styled.div`
+  width: 80%;
+  max-width: 40rem;
+  font-size: 25px;
+  font-family: AppleSDGothicNeoM00;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+`;
+
+const TestContentContainer = styled.div`
+  padding: 2rem;
+  width: 80%;
+  max-width: 40rem;
+  font-size: 25px;
+  font-family: AppleSDGothicNeoM00;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ecccfa;
+  border-radius: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 1rem;
+  }
+`;
+
+const ChartTextContainer = styled.div`
+  width: 80%;
+  max-width: 40rem;
+  font-size: 16px;
+  font-family: AppleSDGothicNeoM00;
+  font-weight: bold;
+  color: #6a7ec8;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 3rem;
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+`;
 export default EBTResultModal;

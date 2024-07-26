@@ -43,8 +43,8 @@ const MusicDirectory = ({ data }) => {
         directories={data.filter((item) => item.type === 'directory')}
         onUpload={handleUpload}
       />
-      {!isRoot && <BackButton onClick={handleBackClick}>Back</BackButton>}
       <List>
+        {!isRoot && <BackButton onClick={handleBackClick}>Back</BackButton>}
         {items.map((item, index) => (
           <ListItem key={index}>
             <StyledLink onClick={() => handleItemClick(item)}>
@@ -52,26 +52,27 @@ const MusicDirectory = ({ data }) => {
             </StyledLink>
           </ListItem>
         ))}
+        {trackData.url && (
+          <>
+            <h2>{trackData.name}</h2>
+            <AudioPlayer key={audioKey} controls autoPlay>
+              <source src={trackData.url} type="audio/mp3" />
+            </AudioPlayer>
+          </>
+        )}
       </List>
-      {trackData.url && (
-        <>
-          <h2>{trackData.name}</h2>
-          <AudioPlayer key={audioKey} controls autoPlay>
-            <source src={trackData.url} type="audio/mp3" />
-          </AudioPlayer>
-        </>
-      )}
     </Container>
   );
 };
 
 const Container = styled.div`
-  padding: 20px;
+  padding: 1rem;
 `;
 
 const List = styled.ul`
   list-style: none;
-  padding: 0;
+  padding: 1rem;
+  border: 1px solid green;
 `;
 
 const ListItem = styled.li`

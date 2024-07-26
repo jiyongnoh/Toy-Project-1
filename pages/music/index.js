@@ -27,7 +27,7 @@ export default function MusicHome() {
   return (
     <MainContainer>
       <Title>Music Test Page</Title>
-      {data.length && <MusicDirectory data={data} />}
+      {data.length > 0 && <MusicDirectory data={data} />}
     </MainContainer>
   );
 }
@@ -35,7 +35,7 @@ export default function MusicHome() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['consult', 'nav'])),
+      ...(await serverSideTranslations(locale, ['nav'])),
     },
   };
 }

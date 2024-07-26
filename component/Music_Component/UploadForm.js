@@ -91,6 +91,8 @@ const UploadForm = ({ directories }) => {
 
 const FormContainer = styled.div`
   margin: 20px;
+  padding: 1rem;
+  border: 1px solid green;
 `;
 
 const FormGroup = styled.div`
