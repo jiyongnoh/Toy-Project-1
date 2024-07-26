@@ -4,9 +4,6 @@ import Modal from 'react-modal';
 import styled from 'styled-components';
 import Image from 'next/image';
 import BarChart from './BarChart';
-import Loading from '@/component/Common_Component/Loading';
-
-const loadingDuration = 1000;
 
 const EBTResultModal = ({ isOpen, onRequestClose, ebtClassData }) => {
   return (
@@ -88,7 +85,7 @@ const StyledModal = styled(Modal)`
 
   /* max-width: 640px; */
   width: 90vw;
-  height: 100%;
+  height: 90vh;
 
   background: #9051ff;
   border-radius: 40px;
@@ -138,6 +135,7 @@ const UserInfoHeaderContainer = styled.div`
 const UserInfoContainer = styled.div`
   width: 100%;
   height: 100%;
+
   min-height: 600px;
   padding: 2rem 0;
 
@@ -173,12 +171,21 @@ const ChartContainer = styled.div`
 `;
 
 const TestContainer = styled.div`
+  width: 100%;
+  height: 100%;
+
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
 
-  gap: 2rem;
+  @media (max-width: 1200px) {
+    gap: 0;
+  }
+
+  @media (max-width: 768px) {
+    gap: 0;
+  }
 `;
 
 const TestCardContainer = styled.div`
@@ -192,17 +199,25 @@ const TestCardContainer = styled.div`
   justify-content: center;
   align-items: center;
 
+  @media (max-width: 1200px) {
+    width: 70%;
+    padding: 20px;
+  }
+
   @media (max-width: 768px) {
+    width: 100%;
     font-size: 15px;
   }
 `;
 
 const TestContentContainer = styled.div`
-  padding: 2rem;
   width: 80%;
   max-width: 40rem;
+
   font-size: 25px;
   font-family: AppleSDGothicNeoM00;
+
+  padding: 2rem;
 
   display: flex;
   flex-direction: column;
@@ -232,6 +247,11 @@ const ChartTextContainer = styled.div`
   align-items: center;
 
   gap: 3rem;
+
+  @media (max-width: 1200px) {
+    font-size: 1rem;
+  }
+
   @media (max-width: 768px) {
     font-size: 1rem;
   }

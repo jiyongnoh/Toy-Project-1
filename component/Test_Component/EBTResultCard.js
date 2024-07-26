@@ -46,6 +46,10 @@ const CardContainer = styled.div`
 
   cursor: pointer;
 
+  @media (max-width: 1200px) {
+    gap: 2rem;
+  }
+
   @media (max-width: 768px) {
     gap: 2rem;
   }
@@ -56,6 +60,10 @@ const Title = styled.div`
   font-weight: bold;
   font-family: AppleSDGothicNeoM00;
   color: ${(props) => (props.color ? props.color : 'black')};
+
+  @media (max-width: 1200px) {
+    font-size: 30px;
+  }
 
   @media (max-width: 768px) {
     font-size: 25px;

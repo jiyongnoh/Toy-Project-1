@@ -293,6 +293,12 @@ const BarContainer = styled.div`
 
   position: relative;
 
+  @media (max-width: 1200px) {
+    width: 33rem;
+    height: 30rem;
+    padding: 3rem;
+  }
+
   @media (max-width: 768px) {
     width: 20rem;
     height: 18rem;
@@ -307,6 +313,11 @@ const ChangeButton = styled.button`
   position: absolute;
   top: ${(props) => props.top};
   right: ${(props) => props.right};
+
+  @media (max-width: 1200px) {
+    padding: 0.4rem;
+  }
+
   @media (max-width: 768px) {
     padding: 1px;
   }
