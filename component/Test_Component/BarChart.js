@@ -248,33 +248,30 @@ const BarChart = ({ ebtClassData }) => {
           setData({ ...dataSet[Number(e.target.value)] });
           setChartName(chartNameSet[Number(e.target.value)]);
         }}
-        top={'3%'}
-        right={'3%'}
-      >
-        A
-      </ChangeButton>
+        top="3%"
+        right="3%"
+        backgroundColor="#ffa4a4"
+      ></ChangeButton>
       <ChangeButton
         value={2}
         onClick={(e) => {
           setData({ ...dataSet[Number(e.target.value)] });
           setChartName(chartNameSet[Number(e.target.value)]);
         }}
-        top={'11.5%'}
-        right={'2%'}
-      >
-        B
-      </ChangeButton>
+        top="11.5%"
+        right="2%"
+        backgroundColor="#ffe486"
+      ></ChangeButton>
       <ChangeButton
         value={3}
         onClick={(e) => {
           setData({ ...dataSet[Number(e.target.value)] });
           setChartName(chartNameSet[Number(e.target.value)]);
         }}
-        top={'19.5%'}
-        right={'0.3%'}
-      >
-        C
-      </ChangeButton>
+        top="19.5%"
+        right="0.3%"
+        backgroundColor="#b5e3f1"
+      ></ChangeButton>
     </BarContainer>
   );
 };
@@ -307,19 +304,22 @@ const BarContainer = styled.div`
 `;
 
 const ChangeButton = styled.button`
-  padding: 0.7rem;
-  /* visibility: hidden; */
+  padding: 1rem;
 
+  background-color: ${(props) => props.backgroundColor};
+
+  border: 0;
   position: absolute;
   top: ${(props) => props.top};
   right: ${(props) => props.right};
+  cursor: pointer;
 
   @media (max-width: 1200px) {
     padding: 0.4rem;
   }
 
   @media (max-width: 768px) {
-    padding: 1px;
+    padding: 0.4rem;
   }
 `;
 export default BarChart;

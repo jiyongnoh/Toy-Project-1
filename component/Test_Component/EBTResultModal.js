@@ -97,7 +97,6 @@ const StyledModal = styled(Modal)`
   z-index: 10;
 
   @media (max-width: 768px) {
-    margin-top: 3rem;
   }
 `;
 
@@ -121,9 +120,10 @@ const UserInfoHeaderContainer = styled.div`
   @media (max-width: 768px) {
     font-size: 1.5rem;
     padding: 0 0 1rem 1rem;
+
     button {
-      width: 35px;
-      height: 35px;
+      width: 25px;
+      height: 25px;
       padding: 0;
       background: none;
       border: none;
@@ -146,8 +146,6 @@ const UserInfoContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  gap: 2rem;
 
   @media (max-width: 768px) {
     height: 100%;
@@ -176,8 +174,10 @@ const TestContainer = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+
+  gap: 2rem;
 
   @media (max-width: 1200px) {
     gap: 0;
