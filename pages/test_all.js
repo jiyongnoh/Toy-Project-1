@@ -328,8 +328,8 @@ export default function Test() {
   // avartaAI 관련 처리
   useEffect(() => {
     if (avartaAI === 'default') return;
-    // 엘라일 경우
-    if (avartaAI === 'pupu') {
+    // 푸푸일 경우
+    if (avartaAI === 'dummy') {
       setIsInitPending(true); // 채팅창 비활성화
       setTestType(''); // 상담 주제 초기화
       // 엘라 상담 주제 선정 메서드 1초 뒤 호출
@@ -341,7 +341,7 @@ export default function Test() {
     else {
       const initment = {
         role: 'assistant',
-        content: 'ㅎㅇㅎㅇ',
+        content: avartaAI_info[avartaAI].placehold,
       };
       setTimeout(() => {
         setInitArr([initment]);

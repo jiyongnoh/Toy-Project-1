@@ -202,7 +202,7 @@ const PlanContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
+  gap: 2rem;
 
   border-radius: 20px;
 

@@ -45,7 +45,6 @@ const ImageContainer = styled.div`
 `;
 
 const TextContainer = styled.div`
-  min-width: 320px;
   background-color: #9051ff;
   color: white;
   border-radius: 40px;
