@@ -55,9 +55,10 @@ const MusicDirectory = ({ data }) => {
         {trackData.url && (
           <>
             <h2>{trackData.name}</h2>
-            <AudioPlayer key={audioKey} controls autoPlay>
+            {/* <AudioPlayer key={audioKey} controls autoPlay>
               <source src={trackData.url} type="audio/mp3" />
-            </AudioPlayer>
+            </AudioPlayer> */}
+            <iframe src={trackData.url} />
           </>
         )}
       </List>
