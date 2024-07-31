@@ -1,15 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { handleDirectoryCreate } from '@/fetchAPI/directory';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
+import DropdownTreeSelect from 'react-dropdown-tree-select';
+import 'react-dropdown-tree-select/dist/styles.css';
 
 const UploadFormDir = ({ directories }) => {
+  const [treeData, setTreeData] = useState([]);
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [isPending, setIsPending] = useState(false);
   const [directoryName, setDirectoryName] = useState('');
 
   const router = useRouter();
+
+  useEffect(() => {
+    const buildTreeData = (dirs) => {
+      const map = {};
+      const roots = [];
+
+      dirs.forEach((dir) => {
+        map[dir.id] = { ...dir, label: dir.name, value: dir.id, children: [] };
+      });
+
+      dirs.forEach((dir) => {
+        if (dir.parent_id === null) {
+          roots.push(map[dir.id]);
+        } else {
+          map[dir.parent_id].children.push(map[dir.id]);
+        }
+      });
+
+      return roots;
+    };
+
+    setTreeData(buildTreeData(directories));
+  }, [directories]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +49,7 @@ const UploadFormDir = ({ directories }) => {
 
     const formData = {
       type: 'directory',
-      directoryId: selectedDirectory,
+      directoryId: selectedDirectory.id,
       directoryName,
     };
 
@@ -46,24 +72,26 @@ const UploadFormDir = ({ directories }) => {
     }
   };
 
+  const handleChange = (currentNode, selectedNodes) => {
+    setSelectedDirectory(currentNode);
+  };
+
   return (
     <FormContainer>
       <h3>Directory Create Form</h3>
       <form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="directory">Directory</Label>
-          <select
-            id="directory"
-            value={selectedDirectory}
-            onChange={(e) => setSelectedDirectory(e.target.value)}
-          >
-            <option value="">Select Directory</option>
-            {directories.map((dir) => (
-              <option key={dir.id} value={dir.id}>
-                {dir.name}
-              </option>
-            ))}
-          </select>
+          <DropdownTreeSelect
+            texts={{
+              placeholder: selectedDirectory?.name || 'Choose a directory',
+              noMatches: 'No matches found',
+            }}
+            data={treeData}
+            onChange={handleChange}
+            className="dropdown"
+            mode="multiSelect"
+          />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="directoryName">Directory Name</Label>
