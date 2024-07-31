@@ -4,61 +4,51 @@ import { handleDirectoryCreate } from '@/fetchAPI/directory';
 import { useRouter } from 'next/router';
 import Swal from 'sweetalert2';
 
-const UploadForm = ({ directories }) => {
+const UploadFormDir = ({ directories }) => {
   const [selectedDirectory, setSelectedDirectory] = useState('');
   const [isPending, setIsPending] = useState(false);
-  const [file, setFile] = useState(null);
+  const [directoryName, setDirectoryName] = useState('');
+
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedDirectory) {
-      alert('폴더 선택 ㄱㄱ');
+
+    if (!directoryName) {
+      alert('디렉토리명 입력 ㄱㄱ');
       return;
     }
 
-    if (!file) {
-      alert('파일 선택 ㄱㄱ');
-      return;
-    }
     setIsPending(true);
-    const reader = new FileReader();
-    reader.onloadend = async () => {
-      const base64String = reader.result
-        .replace('data:', '')
-        .replace(/^.+,/, '');
 
-      const formData = {
-        type: 'file',
-        trackName: file.name,
-        mimeType: file.type,
-        trackData: `data:${file.type};base64,${base64String}`,
-        directoryId: selectedDirectory,
-      };
-
-      const response = await handleDirectoryCreate(formData);
-
-      if (response.status === 200) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Upload Success!',
-          text: 'Page Reload',
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => {
-          setIsPending(false);
-          router.reload();
-        });
-      } else {
-        console.error('Upload failed');
-      }
+    const formData = {
+      type: 'directory',
+      directoryId: selectedDirectory,
+      directoryName,
     };
-    reader.readAsDataURL(file);
+
+    const response = await handleDirectoryCreate(formData);
+
+    if (response.status === 200) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Directory Upload Success!',
+        text: 'Page Reload',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        setIsPending(false);
+        router.reload();
+      });
+    } else {
+      console.error('Directory Upload failed');
+      alert('Directory Upload failed');
+    }
   };
 
   return (
     <FormContainer>
-      <h3>File Create Form</h3>
+      <h3>Directory Create Form</h3>
       <form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="directory">Directory</Label>
@@ -76,11 +66,12 @@ const UploadForm = ({ directories }) => {
           </select>
         </FormGroup>
         <FormGroup>
-          <Label htmlFor="file">File</Label>
+          <Label htmlFor="directoryName">Directory Name</Label>
           <Input
-            type="file"
-            id="file"
-            onChange={(e) => setFile(e.target.files[0])}
+            value={directoryName}
+            type="text"
+            id="directoryName"
+            onChange={(e) => setDirectoryName(e.target.value)}
           />
         </FormGroup>
         <Button type="submit" disabled={isPending}>
@@ -125,4 +116,4 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-export default UploadForm;
+export default UploadFormDir;

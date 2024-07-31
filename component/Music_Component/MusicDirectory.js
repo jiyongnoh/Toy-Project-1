@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import UploadForm from './UploadForm'; // 새로운 업로드 폼 컴포넌트
+import UploadFormDir from './UploadFormDir';
 
 const MusicDirectory = ({ data }) => {
   const [path, setPath] = useState([null]); // root path with null
@@ -33,33 +34,31 @@ const MusicDirectory = ({ data }) => {
     setTrackData({});
   };
 
-  const handleUpload = (newTrack) => {
-    setItems([...items, newTrack]);
-  };
-
   return (
     <Container>
-      <UploadForm
-        directories={data.filter((item) => item.type === 'directory')}
-        onUpload={handleUpload}
-      />
+      <UploadContainer>
+        <UploadForm
+          directories={data.filter((item) => item.type === 'directory')}
+        />
+        <UploadFormDir
+          directories={data.filter((item) => item.type === 'directory')}
+        />
+      </UploadContainer>
       <List>
         {!isRoot && <BackButton onClick={handleBackClick}>Back</BackButton>}
         {items.map((item, index) => (
-          <ListItem key={index}>
-            <StyledLink onClick={() => handleItemClick(item)}>
-              {item.name}
-            </StyledLink>
+          <ListItem key={index} onClick={() => handleItemClick(item)}>
+            <StyledLink type={item.type}>{item.name}</StyledLink>
           </ListItem>
         ))}
         {trackData.url && (
-          <>
+          <div>
             <h2>{trackData.name}</h2>
             {/* <AudioPlayer key={audioKey} controls autoPlay>
               <source src={trackData.url} type="audio/mp3" />
             </AudioPlayer> */}
-            <iframe src={trackData.url} />
-          </>
+            <iframe key={audioKey} src={trackData.url} width="350" />
+          </div>
         )}
       </List>
     </Container>
@@ -68,6 +67,13 @@ const MusicDirectory = ({ data }) => {
 
 const Container = styled.div`
   padding: 1rem;
+`;
+
+const UploadContainer = styled.div`
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const List = styled.ul`
@@ -80,12 +86,15 @@ const ListItem = styled.li`
   margin: 5px 0;
   padding: 0.5rem;
   background-color: wheat;
+  cursor: pointer;
+
+  display: flex;
+  gap: 1rem;
 `;
 
 const StyledLink = styled.a`
   text-decoration: none;
-  color: #4caf50;
-  cursor: pointer;
+  color: ${(props) => (props.type === 'directory' ? '#4caf50' : 'black')};
 `;
 
 const BackButton = styled.button`
@@ -97,9 +106,9 @@ const BackButton = styled.button`
   margin-top: 20px;
 `;
 
-const AudioPlayer = styled.audio`
-  width: 100%;
-  margin-top: 20px;
-`;
+// const AudioPlayer = styled.audio`
+//   width: 100%;
+//   margin-top: 20px;
+// `;
 
 export default MusicDirectory;
