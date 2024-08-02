@@ -41,8 +41,8 @@ const avartaAI_info = {
   ubi: {
     name: 'ubi',
     path: '/openAI/consulting_emotion_ubi',
-    headerTitle: '학습친구 우비',
-    placehold: '나는 학습친구 우비야. 같이 공부하자!',
+    headerTitle: '게임친구 우비',
+    placehold: '나는 게임친구 우비야. 같이 놀자!',
     iconUrl: '/src/Consult_IMG/Icon/Consult_Ubi_Icon_IMG.png',
     backgroundImgUrl:
       '/src/Consult_IMG/Background/Consult_Ubi_Background_IMG.png',
@@ -123,6 +123,11 @@ const ebtClassMapKorean = {
   Health: '신체증상',
   Self: '자기이해',
 };
+const gameMapKorean = {
+  remarks: '끝말잇기',
+  game2: '게임2',
+  game3: '게임3',
+};
 
 // Renewel Test 페이지
 export default function Test() {
@@ -135,6 +140,8 @@ export default function Test() {
   const [initArr, setInitArr] = useState([]); //
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [testType, setTestType] = useState(''); // 상담 주제 6종
+  const [gameType, setGameType] = useState(''); // 게임 3종
+
   // 전역 변수
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
@@ -163,10 +170,14 @@ export default function Test() {
       // Chat Compleation Request
 
       // messageArr 깊은 복사 후 audioURL, media 속성 삭제
-      const tmpMsgArr = [...JSON.parse(JSON.stringify(messageArr))];
+      const tmpMsgArr = [
+        ...JSON.parse(JSON.stringify(initArr)),
+        ...JSON.parse(JSON.stringify(messageArr)),
+      ];
       tmpMsgArr.forEach((el) => {
         delete el.audioURL;
         delete el.media;
+        delete el.btn;
       });
 
       const data = await handleGptCompletion(
@@ -174,6 +185,7 @@ export default function Test() {
           messageArr: tmpMsgArr,
           pUid: localStorage.getItem('id'),
           type: testType,
+          game: gameType,
         },
         path
       );
@@ -278,6 +290,24 @@ export default function Test() {
     }
   };
 
+  // 우비 시작 멘트 관련 메서드
+  const initUbi = async () => {
+    const ment = {
+      role: 'assistant',
+      content: '안녕? 같이 게임하자! 어떤 게임을 하고싶어?',
+    };
+
+    const selectBtnArr = ['remarks'].map((el) => {
+      return {
+        role: 'assistant',
+        content: `${el}`,
+        btn: true,
+      };
+    });
+
+    setInitArr([ment, ...selectBtnArr]);
+  };
+
   // 상담 페이지 초기 설정
   useEffect(() => {
     // 상담 화면에 처음 진입한 경우: 엘라 상담 화면으로 재설정
@@ -328,13 +358,22 @@ export default function Test() {
   // avartaAI 관련 처리
   useEffect(() => {
     if (avartaAI === 'default') return;
-    // 푸푸일 경우
-    if (avartaAI === 'dummy') {
+    // 엘라일 경우
+    else if (avartaAI === 'lala') {
       setIsInitPending(true); // 채팅창 비활성화
       setTestType(''); // 상담 주제 초기화
-      // 엘라 상담 주제 선정 메서드 1초 뒤 호출
+      // 1초 뒤 init 메서드 호출
       setTimeout(() => {
-        initElla();
+        initUbi();
+      }, 1000);
+    }
+    // 우비일 경우
+    else if (avartaAI === 'ubi') {
+      setIsInitPending(true); // 채팅창 비활성화
+      setGameType(''); // 게임 주제 초기화
+      // 1초 뒤 init 메서드 호출
+      setTimeout(() => {
+        initUbi();
       }, 1000);
     }
     // 그 외
@@ -365,6 +404,19 @@ export default function Test() {
       setIsInitPending(false);
     }
   }, [testType]);
+
+  useEffect(() => {
+    // 우비 상담 중, 게임이 선택됐을 경우
+    if (gameType && avartaAI === 'ubi') {
+      const init_ending_ment = {
+        role: 'assistant',
+        content: `${gameMapKorean[gameType]}! 재밌겠다!! 너부터 시작해!`,
+      };
+
+      setInitArr([...initArr, init_ending_ment]);
+      setIsInitPending(false);
+    }
+  }, [gameType]);
 
   // Chat 관련 처리
   useEffect(() => {
@@ -424,8 +476,11 @@ export default function Test() {
                 iconUrl={avartaAI_info[avartaAI].iconUrl}
                 headerTitle={avartaAI_info[avartaAI].headerTitle}
                 btn={el.btn}
-                setTestType={setTestType}
                 testType={testType}
+                setTestType={setTestType}
+                gameType={gameType}
+                setGameType={setGameType}
+                avarta={avartaAI}
               />
             ))}
             {messageArr.map((el, index) => (

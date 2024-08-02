@@ -13,6 +13,12 @@ const ebtClassMapKorean = {
   Self: '자기이해',
 };
 
+const gameMapKorean = {
+  remarks: '끝말잇기',
+  game2: '게임2',
+  game3: '게임3',
+};
+
 const InitChatBubble = ({
   message,
   isMine,
@@ -20,10 +26,12 @@ const InitChatBubble = ({
   btn,
   setTestType,
   testType,
+  setGameType,
+  gameType,
   iconUrl,
   headerTitle,
+  avarta,
 }) => {
-  // console.log(media);
   return (
     <BubbleContainer role={role}>
       {!btn && role !== 'user' ? (
@@ -35,10 +43,13 @@ const InitChatBubble = ({
             <InitButton
               value={message}
               onClick={(e) => {
-                if (!testType) setTestType(e.target.value);
+                if (avarta === 'lala' && !testType) setTestType(e.target.value);
+                if (avarta === 'ubi' && !gameType) setGameType(e.target.value);
               }}
             >
-              {ebtClassMapKorean[message]}
+              {ebtClassMapKorean[message]
+                ? ebtClassMapKorean[message]
+                : gameMapKorean[message]}
             </InitButton>
           </StyledBubble>
         </InitContanier>
