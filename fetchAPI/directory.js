@@ -23,7 +23,6 @@ export const handleDirectoryGet = async () => {
   }
 };
 
-// 미구현
 // CREATE
 export const handleDirectoryCreate = async (input) => {
   try {
@@ -47,8 +46,8 @@ export const handleDirectoryCreate = async (input) => {
     };
   }
 };
-// DELETE
-export const handleReviewDelete = async (uri) => {
+// DELETE (Todo)
+export const handleDirectoryDelete = async (uri) => {
   try {
     const response = await axios.delete(`${uri}`, {
       headers: {
@@ -62,8 +61,8 @@ export const handleReviewDelete = async (uri) => {
     console.error(err);
   }
 };
-// UPDATE
-export const handleReviewUpdate = async (input) => {
+// UPDATE (Todo)
+export const handleDirectoryUpdate = async (input) => {
   try {
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_URL}/review/update`,

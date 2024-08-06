@@ -155,7 +155,7 @@ function* ellaMood_Round_first() {
     gpt_input: { mood_situation },
   };
 
-  yield {
+  const mood_different_solution = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -176,7 +176,7 @@ function* ellaMood_Round_first() {
     gpt_input: { mood_thought },
   };
 
-  yield {
+  const mood_different_thought = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -385,7 +385,7 @@ function* ellaMood_Round_first() {
       {
         key: 'text',
         value:
-          mood_cognitive_score >= 18
+          mood_cognitive_score >= 13
             ? '좋았어! 멋진 생각을 나눠준 너에게 씨앗을 줄게. 마음을 가꾸듯 잘 키워봐. 다음에 또 만나'
             : '수고했어. 좀 더 분발해서 다음엔 씨앗을 받아보자. 다음 시간에 만나',
       },
@@ -393,6 +393,10 @@ function* ellaMood_Round_first() {
     sava_data: {
       type: 'first',
       mood_name,
+      mood_situation,
+      mood_thought,
+      mood_different_solution,
+      mood_different_thought,
       mood_cognitive_score,
     },
   };
@@ -517,7 +521,7 @@ function* ellaMood_Round_second(mood_name) {
     gpt_input: { mood_situation },
   };
 
-  yield {
+  const mood_different_solution = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -530,7 +534,7 @@ function* ellaMood_Round_second(mood_name) {
     gpt_input: {},
   };
 
-  // situation 프롬프트 적용 텍스트 생성
+  // thought 프롬프트 적용 텍스트 생성
   yield {
     role: 'assistant',
     type: 'gpt',
@@ -538,7 +542,7 @@ function* ellaMood_Round_second(mood_name) {
     gpt_input: { mood_thought },
   };
 
-  yield {
+  const mood_different_thought = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -555,6 +559,10 @@ function* ellaMood_Round_second(mood_name) {
     role: 'assistant',
     type: 'fix',
     fix_content: [
+      {
+        key: 'text',
+        value: `이젠 다른 걸 해볼까? 지금 당장 10분 동안 할 수 있는 기분 좋은 일에는 뭐가 있을까?`,
+      },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 이름을 말하는 이미지
       {
         key: 'text',
@@ -658,6 +666,10 @@ function* ellaMood_Round_second(mood_name) {
     ],
     sava_data: {
       type: 'second',
+      mood_situation,
+      mood_thought,
+      mood_different_solution,
+      mood_different_thought,
       mood_todo_list: [mood_todolist_1, mood_todolist_2, mood_todolist_3],
     },
   };
@@ -782,7 +794,7 @@ function* ellaMood_Round_third(mood_name) {
     gpt_input: { mood_situation },
   };
 
-  yield {
+  const mood_different_solution = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -803,7 +815,7 @@ function* ellaMood_Round_third(mood_name) {
     gpt_input: { mood_thought },
   };
 
-  yield {
+  const mood_different_thought = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -966,6 +978,10 @@ function* ellaMood_Round_third(mood_name) {
     ],
     sava_data: {
       type: 'third',
+      mood_situation,
+      mood_thought,
+      mood_different_solution,
+      mood_different_thought,
       mood_talk_list: [mood_talk_1, mood_talk_2, mood_talk_3],
     },
   };
@@ -1090,7 +1106,7 @@ function* ellaMood_Round_fourth(mood_name) {
     gpt_input: { mood_situation },
   };
 
-  yield {
+  const mood_different_solution = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -1111,7 +1127,7 @@ function* ellaMood_Round_fourth(mood_name) {
     gpt_input: { mood_thought },
   };
 
-  yield {
+  const mood_different_thought = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -1178,7 +1194,7 @@ function* ellaMood_Round_fourth(mood_name) {
     ],
   };
 
-  yield {
+  const mood_meditation_feedback = yield {
     role: 'assistant',
     type: 'input',
   };
@@ -1202,6 +1218,11 @@ function* ellaMood_Round_fourth(mood_name) {
     ],
     sava_data: {
       type: 'fourth',
+      mood_situation,
+      mood_thought,
+      mood_different_solution,
+      mood_different_thought,
+      mood_meditation_feedback,
     },
   };
 }
