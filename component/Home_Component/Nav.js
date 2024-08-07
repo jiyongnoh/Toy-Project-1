@@ -132,7 +132,7 @@ export default function Nav() {
   // useMemo 적용
   const menuItems = useMemo(
     () => [
-      { href: '/music', label: 'music' },
+      // { href: '/music', label: 'music' },
       { href: '/test_ebt', label: t('ebt') },
       { href: '/test_pt', label: t('pt') },
       { href: '/consult_intro', label: t('consult') },
@@ -160,21 +160,6 @@ export default function Nav() {
           {/* <NavLi>
             <Link href="/meditation_intro" passHref>
               <NavBtn>meditation_intro</NavBtn>
-            </Link>
-          </NavLi> */}
-          {/* <NavLi>
-            <Link href="/" passHref>
-              <NavBtn>{t('main')}</NavBtn>
-            </Link>
-          </NavLi> */}
-          {/* <NavLi>
-            <Link href="/upload" passHref>
-              <NavBtn>Upload</NavBtn>
-            </Link>
-          </NavLi> */}
-          {/* <NavLi>
-            <Link href="/meditation" passHref>
-              <NavBtn>Meditation</NavBtn>
             </Link>
           </NavLi> */}
           {mobileFlag ? (
