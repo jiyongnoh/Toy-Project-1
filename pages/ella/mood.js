@@ -48,6 +48,7 @@ export default function Test() {
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
   const moodSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
+  const inputRef = useRef(null);
 
   // 시작 Method - 유저 회기별 기분관리 훈련 프로그램 제너레이터 초기화
   const initMoodTrainingRound = async () => {
@@ -251,6 +252,12 @@ export default function Test() {
     setBottom(true);
   }, [selectTrigger]);
 
+  useEffect(() => {
+    if (inputTrigger && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [inputTrigger]); // value가 변경될 때마다 useEffect 실행
+
   const scrollToBottom_useRef = () => {
     const ptBoxBody = chatBoxBody.current;
     if (ptBoxBody.scrollHeight > 800)
@@ -312,6 +319,7 @@ export default function Test() {
                   setFlagEnter(true);
                 }
               }}
+              ref={inputRef}
               // placeholder={placehold}
               inputTrigger={inputTrigger}
             />
