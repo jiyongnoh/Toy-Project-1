@@ -20,18 +20,18 @@ function* ellaMood_Round_first() {
     ],
   };
 
-  // // 인사말
-  // yield {
-  //   role: 'assistant',
-  //   type: 'fix',
-  //   fix_content: [
-  //     { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
-  //     {
-  //       key: 'text',
-  //       value: '엘라와 함께 불쾌한 기분은 줄이고 즐거운 기분은 늘려보자',
-  //     },
-  //   ],
-  // };
+  // 인사말
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
+      // { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
+      {
+        key: 'text',
+        value: '엘라와 함께 불쾌한 기분은 줄이고 즐거운 기분은 늘려보자',
+      },
+    ],
+  };
 
   yield {
     role: 'assistant',
@@ -44,6 +44,14 @@ function* ellaMood_Round_first() {
 그리고 그 마음에 이름을 붙여주자
 `,
       },
+    ],
+    delay: 2000,
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
       {
         key: 'img',
         value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Shadow_IMG.png',
@@ -54,18 +62,6 @@ function* ellaMood_Round_first() {
       },
     ],
   };
-
-  // yield {
-  //   role: 'assistant',
-  //   type: 'fix',
-  //   fix_content: [
-  //     { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
-  //     {
-  //       key: 'text',
-  //       value: '넌 이 마음을 뭐라고 부를래?',
-  //     },
-  //   ],
-  // };
 
   const mood_name = yield {
     role: 'assistant',
@@ -91,6 +87,13 @@ function* ellaMood_Round_first() {
         key: 'img',
         value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Shadow_IMG.png',
       }, // 눈코입 없는 사람 이미지
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
       {
         key: 'text',
         value: `어떨 때 ${mood_name}(을)를 만나?`,
@@ -119,6 +122,13 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `${mood_name}(을)를 만나면 기분이 어때?`,
       },
+    ],
+  };
+
+  yield {
+    role: 'assistant',
+    type: 'fix',
+    fix_content: [
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
     ],
   };
@@ -134,6 +144,7 @@ function* ellaMood_Round_first() {
     type: 'gpt',
     code: 'emotion',
     gpt_input: {},
+    // delay: 3000,
   };
 
   yield {
@@ -144,6 +155,7 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `또 어떤 생각이 들어?`,
       },
+      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
     ],
   };
 
@@ -181,7 +193,7 @@ function* ellaMood_Round_first() {
     gpt_input: {},
   };
 
-  // situation 프롬프트 적용 텍스트 생성
+  // thought 프롬프트 적용 텍스트 생성
   yield {
     role: 'assistant',
     type: 'gpt',
@@ -200,6 +212,7 @@ function* ellaMood_Round_first() {
     type: 'gpt',
     code: 'another',
     gpt_input: {},
+    delay: 3000,
   };
 
   yield {

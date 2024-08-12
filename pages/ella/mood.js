@@ -116,9 +116,12 @@ export default function Test() {
           ],
         },
       ]);
-      setTimeout(() => {
-        setNext(true);
-      }, 1500);
+      setTimeout(
+        () => {
+          setNext(true);
+        },
+        gptData.delay ? gptData.delay : 1500
+      );
 
       setBottom(true);
     } catch (error) {
@@ -194,9 +197,12 @@ export default function Test() {
       setFixTrigger(false);
       // Todo. fix_content의 요소에 button이 없는 경우만 Next 실행
       if (!generatorData.fix_content.some((el) => el.key === 'button'))
-        setTimeout(() => {
-          setNext(true);
-        }, 1500);
+        setTimeout(
+          () => {
+            setNext(true);
+          },
+          generatorData.delay ? generatorData.delay : 1500
+        );
     }
     setBottom(true);
   }, [fixTrigger]);
