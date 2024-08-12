@@ -5,6 +5,39 @@ import TestButton from './TestButton';
 import ConsultButton from './ConsultButton';
 import AvartarLogo from './AvartarLogo';
 
+const avatarBtnInfo = {
+  soyes: {
+    backColor: '#ffd700',
+    color: 'black',
+    title: '',
+  },
+  lala: {
+    backColor: '#FF6489',
+    color: 'white',
+    title: '엘라 체험하기',
+  },
+  pupu: {
+    backColor: '#8C9FFF',
+    color: 'black',
+    title: '푸푸와 상담하러 가기',
+  },
+  ubi: {
+    backColor: '#FF9900',
+    color: 'black',
+    title: '우비와 상담하러 가기',
+  },
+  north: {
+    backColor: '#FFB1B1',
+    color: 'black',
+    title: '북극이와 상담하러 가기',
+  },
+  default: {
+    backColor: '#ffd700',
+    color: 'black',
+    title: '엘라 체험하기',
+  },
+};
+
 const IntroBlock = ({ avartar }) => {
   return (
     <IntroAvatarContainer>
@@ -22,8 +55,8 @@ const IntroBlock = ({ avartar }) => {
       />
       <Container>
         <ButtonContainer>
-          <TestButton testClass="ebt" />
-          <TestButton testClass="pt" />
+          {avartar.codeName === 'soyes' && <TestButton testClass="ebt" />}
+          {avartar.codeName === 'soyes' && <TestButton testClass="pt" />}
         </ButtonContainer>
         {/* {avartar.codeName === 'soyes' && (
           <ButtonContainer>
@@ -31,7 +64,14 @@ const IntroBlock = ({ avartar }) => {
             <TestButton testClass="pt" />
           </ButtonContainer>
         )} */}
-        <ConsultButton avartar={avartar} />
+        {avartar.codeName !== 'soyes' && (
+          <ConsultButton
+            avartar={avartar}
+            backColor={avatarBtnInfo[avartar.codeName].backColor}
+            color={avatarBtnInfo[avartar.codeName].color}
+            title={avatarBtnInfo[avartar.codeName].title}
+          />
+        )}
       </Container>
     </IntroAvatarContainer>
   );

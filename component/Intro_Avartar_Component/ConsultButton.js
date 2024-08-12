@@ -1,36 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
 import Link from 'next/link';
 
-const testMap = {
-  ebt: {
-    testClass: '정서행동 검사',
-    imgUrl: '/src/Intro_IMG/Intro_EBT_Icon1_IMG.png',
-    width: 233,
-    height: 180,
-    path: '/test_ebt',
-  },
-  pt: {
-    testClass: '성격 검사',
-    imgUrl: '/src/Intro_IMG/Intro_PT_Icon2_IMG.png',
-    width: 250,
-    height: 193,
-    path: '/test_pt',
-  },
-  default: {
-    testClass: '성격 검사',
-    imgUrl: '/src/Intro_IMG/Intro_PT_Icon2_IMG.png',
-    width: 250,
-    height: 193,
-    path: '/test_pt',
-  },
-};
-
-const ConsultButton = ({ avartar }) => {
+const ConsultButton = ({ avartar, backColor, color, title }) => {
   return (
     <StyledLink href={avartar.name === '엘라' ? '/ella/mood' : '/test_all'}>
-      <YellowButton>{avartar.name}와 상담하러 가기</YellowButton>
+      <YellowButton backColor={backColor} color={color} title={title}>
+        {title}
+      </YellowButton>
     </StyledLink>
   );
 };
@@ -50,9 +27,9 @@ const YellowButton = styled.div`
   width: 610px;
   height: 130px;
 
-  background-color: #ffd700;
+  background-color: ${(props) => props.backColor || '#ffd700'};
+  color: ${(props) => props.color || 'black'};
   border-radius: 25px;
-  color: black;
   font-size: 35px;
   font-weight: bold;
   cursor: pointer;

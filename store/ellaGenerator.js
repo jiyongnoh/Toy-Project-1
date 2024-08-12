@@ -207,7 +207,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 1`,
+        value: `방학이지만 부모님이 출근하셔서 나도 일찍 학원에 가야 해. 어떻게 할까?`,
       },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
@@ -217,10 +217,16 @@ function* ellaMood_Round_first() {
     role: 'user',
     type: 'select',
     select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
+      {
+        selection: '방학에 쉬고 싶은 마음을 부모님과 나누고 방법을 찾아볼래.',
+        value: 2,
+      },
+      { selection: '나만 방학에 쉬지도 못해. 억울하다고 말할 거야.', value: 1 },
+      {
+        selection: '어떤 시간이 조정되면 좋을지 생각해보고 부모님과 상의할래.',
+        value: 3,
+      },
+      { selection: '학원 가기 싫어. 늦잠 잘래.', value: 0 },
     ],
   };
   answerArr.push(parseInt(answer1));
@@ -231,7 +237,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 2`,
+        value: `나보다 키 큰 아래 학년 동생이 나를  작다고 무시해. 어떻게 할까?`,
       },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
@@ -240,10 +246,13 @@ function* ellaMood_Round_first() {
     role: 'user',
     type: 'select',
     select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
+      {
+        selection: '예의 없는 애라고 생각하면서 나도 무시하고 지나가.',
+        value: 2,
+      },
+      { selection: '기분 나쁘지만 대꾸하지 않고 자리를 떠.', value: 3 },
+      { selection: '무시하지 못하도록 한 대 때려줘야지.', value: 0 },
+      { selection: '흥분해서 화내고 따져.', value: 1 },
     ],
   };
   answerArr.push(parseInt(answer2));
@@ -254,7 +263,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 3`,
+        value: `기대했던 여행인데 부모님께 갑자기 일이 생겨서 못 가. 어떻게 할까?`,
       },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
@@ -263,10 +272,10 @@ function* ellaMood_Round_first() {
     role: 'user',
     type: 'select',
     select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
+      { selection: '가고 싶은데 못 가게 돼서 짜증낼 것 같아.', value: 0 },
+      { selection: '시무룩한 상태로 하루를 보낼 거야.', value: 1 },
+      { selection: '다음 기회에 가면 되니까 괜찮아.', value: 2 },
+      { selection: '너무 아쉽지만 부모님 일도 중요하지.', value: 3 },
     ],
   };
   answerArr.push(parseInt(answer3));
@@ -277,7 +286,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 4`,
+        value: `머리도 아프고 속도 안 좋은 거 같고 학교에 가기 싫어. 어떻게 할까?`,
       },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
@@ -286,10 +295,13 @@ function* ellaMood_Round_first() {
     role: 'user',
     type: 'select',
     select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
+      { selection: '오늘은 가지 말아야지.', value: 0 },
+      { selection: '왜 가야하냐고 투정부려.', value: 1 },
+      { selection: '일단 학교에 가서 몸이 어떤지 살펴볼래.', value: 3 },
+      {
+        selection: '약 먹고 학교에 가서 더 아프면 양호실에 가야겠어.',
+        value: 3,
+      },
     ],
   };
   answerArr.push(parseInt(answer4));
@@ -300,7 +312,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 5`,
+        value: `너무 화가 나서 물건을 부수고 싶어. 어떻게 할까?`,
       },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
@@ -309,10 +321,16 @@ function* ellaMood_Round_first() {
     role: 'user',
     type: 'select',
     select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
+      { selection: '다 쾅쾅 부숴버릴 거야.', value: 0 },
+      { selection: '꾹 참으면 괜찮아질 거야.', value: 1 },
+      {
+        selection: '무엇 때문에 물건을 부수고 싶을 만큼 화가 났을까?',
+        value: 2,
+      },
+      {
+        selection: '잠깐 멈추고 심호흡을 한 뒤에 무엇이 문제인지 생각해봐.',
+        value: 3,
+      },
     ],
   };
   answerArr.push(parseInt(answer5));
@@ -323,7 +341,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 6`,
+        value: `밤에 잠도 잘 안 오고, 누울 때마다 내일이 안 왔으면 좋겠다는 생각이 들어. 어떻게 할까?`,
       },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
@@ -332,10 +350,13 @@ function* ellaMood_Round_first() {
     role: 'user',
     type: 'select',
     select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
+      { selection: '지구가 멸망하는 것밖에는 답이 없어.', value: 0 },
+      { selection: '이게 무슨 마음인지 모르겠어.', value: 1 },
+      { selection: '친구들에게 얘기하고 위로 받고 싶어.', value: 2 },
+      {
+        selection: '나 지금 많이 힘든가봐, 어른들에게 상담을 받아보고 싶어.',
+        value: 3,
+      },
     ],
   };
   answerArr.push(parseInt(answer6));
@@ -346,7 +367,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `인지행동 문항 7`,
+        value: `아무것도 제대로 못하는 나에게 너무 화가 나서 내 머리를 쳤어. 어떻게 생각해?`,
       },
       { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
     ],
@@ -355,10 +376,16 @@ function* ellaMood_Round_first() {
     role: 'user',
     type: 'select',
     select_content: [
-      { selection: '선택지1', value: 0 },
-      { selection: '선택지2', value: 1 },
-      { selection: '선택지3', value: 2 },
-      { selection: '선택지4', value: 3 },
+      { selection: '잘못했으니 벌을 받아야지.', value: 0 },
+      { selection: '너무 화가 나면 그럴 수도 있지.', value: 1 },
+      {
+        selection: '엄청 화가 나지만 머리를 치지 말고 말로 표현해보자.',
+        value: 2,
+      },
+      {
+        selection: '누구나 실수할 수 있잖아, 나를 너무 몰아붙이지 말자.',
+        value: 3,
+      },
     ],
   };
 

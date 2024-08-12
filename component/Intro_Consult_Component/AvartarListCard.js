@@ -5,7 +5,7 @@ import { useRecoilState } from 'recoil';
 import { avarta } from '../../store/state';
 import Link from 'next/link';
 
-const randomArr = ['soyes', 'lala', 'pupu', 'ubi', 'north'];
+const randomArr = ['soyes', 'pupu', 'ubi', 'north'];
 
 const AvartarListCard = ({
   backColor,
