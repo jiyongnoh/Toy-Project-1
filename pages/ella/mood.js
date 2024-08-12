@@ -346,10 +346,10 @@ export async function getStaticProps({ locale }) {
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
 
 const MainContainer = styled.div`
-  /* background-image: url('/src/soyesKids_Background_image.png');
+  background-image: url('/src/Ella_Mood_IMG/Background/Ella_Mood_Background_IMG.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; */
+  background-repeat: no-repeat;
   background-color: #fdf6ff;
   width: 100%;
   min-height: 100vh;
@@ -368,15 +368,18 @@ const EllaMoodBox = styled.div`
   background-repeat: no-repeat; */
 
   /* 화면 좁히기 가능 */
-  width: 100vw;
-  background: inherit;
+  width: 50vw;
+  /* background: inherit; */
+  background-color: #fdf6ff;
   /* position: relative; */
   /* margin: 0 auto; */
   margin-top: 6rem;
-  padding: 0 5rem;
+  padding: 0 3rem;
+  /* border: 1px solid blue; */
   border-radius: 8px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 
+  /* min-height: 70vh; */
   height: 100%;
 
   /* 채팅 중앙정렬 가능 */

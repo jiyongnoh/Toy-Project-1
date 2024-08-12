@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from 'styled-components';
 import Link from 'next/link';
@@ -29,16 +30,21 @@ export default function Nav() {
 
   useEffect(() => {
     const loginSession = localStorage.getItem('log');
-    // 로그인 세션 만료 처리
     if (loginSession) {
-      const parsedSession = JSON.parse(loginSession);
-      if (new Date(parsedSession.expires) > new Date()) {
-        setLogin(true);
-      } else {
-        // 1시간 세션 만료 처리
-        handleSessionExpired();
+      setLogin(true);
+
+      // LOCK - 2024.08.19 이후 회의 (로그인 세션 만료 처리 기능 잠금)
+      if (false) {
+        const parsedSession = JSON.parse(loginSession);
+        if (new Date(parsedSession.expires) > new Date()) {
+          setLogin(true);
+        } else {
+          // 1시간 세션 만료 처리
+          handleSessionExpired();
+        }
       }
     }
+
     // 아바타 확인
     const avarta = localStorage.getItem('avarta');
     if (avarta) setAvartaAI(avarta);
