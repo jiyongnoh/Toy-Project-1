@@ -262,7 +262,7 @@ export default function Test() {
   // 스크롤 바텀 기능
   const scrollToBottom_useRef = () => {
     const ptBoxBody = chatBoxBody.current;
-    if (ptBoxBody.scrollHeight > 800)
+    if (ptBoxBody.scrollHeight > 1080)
       window.scrollTo({
         top: ptBoxBody.scrollHeight, // 세로 스크롤 위치
         left: 0, // 가로 스크롤 위치

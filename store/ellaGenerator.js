@@ -6,19 +6,9 @@ export const ellaMood_Round_Array = [
   ellaMood_Round_fourth,
 ];
 
-// 1회기
+// TODO# 쇼케이스용 1회기 - 2024.08.20 이후 삭제
 function* ellaMood_Round_first() {
   let answerArr = [];
-  // yield {
-  //   role: 'assistant',
-  //   type: 'fix',
-  //   fix_content: [
-  //     {
-  //       key: 'text',
-  //       value: '1회기 (개발용)',
-  //     },
-  //   ],
-  // };
 
   // 인사말
   yield {
@@ -28,209 +18,7 @@ function* ellaMood_Round_first() {
       // { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
       {
         key: 'text',
-        value: '엘라와 함께 불쾌한 기분은 줄이고 즐거운 기분은 늘려보자 ☺',
-      },
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `슬프거나 아무 것도 하기 싫을 때가 있니?
-그 마음을 떠올려 봐
-그리고 그 마음에 이름을 붙여주자
-`,
-      },
-    ],
-    delay: 2000,
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'img',
-        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Shadow_IMG.png',
-      },
-      {
-        key: 'text',
-        value: '넌 이 마음을 뭐라고 부를래?',
-      },
-    ],
-  };
-
-  const mood_name = yield {
-    role: 'assistant',
-    type: 'input',
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `니 마음의 이름은 ${mood_name}(이)구나`,
-      },
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'img',
-        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Shadow_IMG.png',
-      }, // 눈코입 없는 사람 이미지
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `어떨 때 ${mood_name}(을)를 만나?`,
-      },
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'img',
-        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids1_IMG.png',
-      }, // 다른 애들이 말하는 이미지
-    ],
-  };
-
-  const mood_situation = yield {
-    role: 'assistant',
-    type: 'input',
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `${mood_name}(을)를 만나면 기분이 어때?`,
-      },
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'img',
-        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids2_IMG.png',
-      }, // 다른 애들이 말하는 이미지
-    ],
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'input',
-  };
-
-  // 단순 공감 반응
-  yield {
-    role: 'assistant',
-    type: 'gpt',
-    code: 'emotion',
-    gpt_input: {},
-    // delay: 3000,
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `또 어떤 생각이 들어?`,
-      },
-      {
-        key: 'img',
-        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids3_IMG.png',
-      }, // 다른 애들이 말하는 이미지
-    ],
-  };
-
-  const mood_thought = yield {
-    role: 'assistant',
-    type: 'input',
-  };
-
-  // 단순 공감 반응
-  yield {
-    role: 'assistant',
-    type: 'gpt',
-    code: 'emotion',
-    gpt_input: {},
-  };
-
-  // situation 프롬프트 적용 텍스트 생성
-  yield {
-    role: 'assistant',
-    type: 'gpt',
-    code: 'situation',
-    gpt_input: { mood_situation },
-  };
-
-  const mood_different_solution = yield {
-    role: 'assistant',
-    type: 'input',
-  };
-
-  // solution 프롬프트 적용 텍스트 생성
-  yield {
-    role: 'assistant',
-    type: 'gpt',
-    code: 'solution',
-    gpt_input: {},
-  };
-
-  // thought 프롬프트 적용 텍스트 생성
-  yield {
-    role: 'assistant',
-    type: 'gpt',
-    code: 'thought',
-    gpt_input: { mood_thought },
-  };
-
-  const mood_different_thought = yield {
-    role: 'assistant',
-    type: 'input',
-  };
-
-  // another 프롬프트 적용 텍스트 생성
-  yield {
-    role: 'assistant',
-    type: 'gpt',
-    code: 'another',
-    gpt_input: {},
-    delay: 3000,
-  };
-
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `이젠 다른 걸 해볼까? 내가 물어보는 상황에 어떻게 할지 대답해 봐 ☺`,
+        value: '오늘은 인지행동치료를 시작해보자! ☺',
       },
     ],
   };
@@ -276,7 +64,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `나보다 키 큰 아래 학년 동생이 나를  작다고 무시해. 어떻게 할까?`,
+        value: `나보다 키 큰 아래 학년 동생이 나를 작다고 무시해. 어떻게 할까?`,
       },
       {
         key: 'img',
@@ -482,15 +270,502 @@ function* ellaMood_Round_first() {
     ],
     sava_data: {
       type: 'first',
-      mood_name,
-      mood_situation,
-      mood_thought,
-      mood_different_solution,
-      mood_different_thought,
-      mood_cognitive_score,
+      // mood_name: '',
+      // mood_situation: '',
+      // mood_thought: '',
+      // mood_different_solution: '',
+      // mood_different_thought: '',
+      // mood_cognitive_score,
     },
   };
 }
+// function* ellaMood_Round_first() {
+//   let answerArr = [];
+//   // yield {
+//   //   role: 'assistant',
+//   //   type: 'fix',
+//   //   fix_content: [
+//   //     {
+//   //       key: 'text',
+//   //       value: '1회기 (개발용)',
+//   //     },
+//   //   ],
+//   // };
+
+//   // 인사말
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       // { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
+//       {
+//         key: 'text',
+//         value: '엘라와 함께 불쾌한 기분은 줄이고 즐거운 기분은 늘려보자 ☺',
+//       },
+//     ],
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `슬프거나 아무 것도 하기 싫을 때가 있니?
+// 그 마음을 떠올려 봐
+// 그리고 그 마음에 이름을 붙여주자
+// `,
+//       },
+//     ],
+//     delay: 2000,
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'img',
+//         value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Shadow_IMG.png',
+//       },
+//       {
+//         key: 'text',
+//         value: '넌 이 마음을 뭐라고 부를래?',
+//       },
+//     ],
+//   };
+
+//   // 오늘은 인지행동치료를 시작해보자!
+
+//   const mood_name = yield {
+//     role: 'assistant',
+//     type: 'input',
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `니 마음의 이름은 ${mood_name}(이)구나`,
+//       },
+//     ],
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'img',
+//         value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Shadow_IMG.png',
+//       }, // 눈코입 없는 사람 이미지
+//     ],
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `어떨 때 ${mood_name}(을)를 만나?`,
+//       },
+//     ],
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'img',
+//         value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids1_IMG.png',
+//       }, // 다른 애들이 말하는 이미지
+//     ],
+//   };
+
+//   const mood_situation = yield {
+//     role: 'assistant',
+//     type: 'input',
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `${mood_name}(을)를 만나면 기분이 어때?`,
+//       },
+//     ],
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'img',
+//         value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids2_IMG.png',
+//       }, // 다른 애들이 말하는 이미지
+//     ],
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'input',
+//   };
+
+//   // 단순 공감 반응
+//   yield {
+//     role: 'assistant',
+//     type: 'gpt',
+//     code: 'emotion',
+//     gpt_input: {},
+//     // delay: 3000,
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `또 어떤 생각이 들어?`,
+//       },
+//       {
+//         key: 'img',
+//         value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids3_IMG.png',
+//       }, // 다른 애들이 말하는 이미지
+//     ],
+//   };
+
+//   const mood_thought = yield {
+//     role: 'assistant',
+//     type: 'input',
+//   };
+
+//   // 단순 공감 반응
+//   yield {
+//     role: 'assistant',
+//     type: 'gpt',
+//     code: 'emotion',
+//     gpt_input: {},
+//   };
+
+//   // situation 프롬프트 적용 텍스트 생성
+//   yield {
+//     role: 'assistant',
+//     type: 'gpt',
+//     code: 'situation',
+//     gpt_input: { mood_situation },
+//   };
+
+//   const mood_different_solution = yield {
+//     role: 'assistant',
+//     type: 'input',
+//   };
+
+//   // solution 프롬프트 적용 텍스트 생성
+//   yield {
+//     role: 'assistant',
+//     type: 'gpt',
+//     code: 'solution',
+//     gpt_input: {},
+//   };
+
+//   // thought 프롬프트 적용 텍스트 생성
+//   yield {
+//     role: 'assistant',
+//     type: 'gpt',
+//     code: 'thought',
+//     gpt_input: { mood_thought },
+//   };
+
+//   const mood_different_thought = yield {
+//     role: 'assistant',
+//     type: 'input',
+//   };
+
+//   // another 프롬프트 적용 텍스트 생성
+//   yield {
+//     role: 'assistant',
+//     type: 'gpt',
+//     code: 'another',
+//     gpt_input: {},
+//     delay: 3000,
+//   };
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `이젠 다른 걸 해볼까? 내가 물어보는 상황에 어떻게 할지 대답해 봐 ☺`,
+//       },
+//     ],
+//   };
+
+//   // 인지행동 치료 시작
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `방학이지만 부모님이 출근하셔서 나도 일찍 학원에 가야 해. 어떻게 할까?`,
+//       },
+//       {
+//         key: 'img',
+//         value:
+//           '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive1_IMG.png',
+//       }, // 인지행동 문항 이미지
+//     ],
+//   };
+
+//   const answer1 = yield {
+//     role: 'user',
+//     type: 'select',
+//     select_content: [
+//       {
+//         selection: '방학에 쉬고 싶은 마음을 부모님과 나누고 방법을 찾아볼래.',
+//         value: 2,
+//       },
+//       { selection: '나만 방학에 쉬지도 못해. 억울하다고 말할 거야.', value: 1 },
+//       {
+//         selection: '어떤 시간이 조정되면 좋을지 생각해보고 부모님과 상의할래.',
+//         value: 3,
+//       },
+//       { selection: '학원 가기 싫어. 늦잠 잘래.', value: 0 },
+//     ],
+//   };
+//   answerArr.push(parseInt(answer1));
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `나보다 키 큰 아래 학년 동생이 나를  작다고 무시해. 어떻게 할까?`,
+//       },
+//       {
+//         key: 'img',
+//         value:
+//           '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive2_IMG.png',
+//       }, // 인지행동 문항 이미지
+//     ],
+//   };
+//   const answer2 = yield {
+//     role: 'user',
+//     type: 'select',
+//     select_content: [
+//       {
+//         selection: '예의 없는 애라고 생각하면서 나도 무시하고 지나가.',
+//         value: 2,
+//       },
+//       { selection: '기분 나쁘지만 대꾸하지 않고 자리를 떠.', value: 3 },
+//       { selection: '무시하지 못하도록 한 대 때려줘야지.', value: 0 },
+//       { selection: '흥분해서 화내고 따져.', value: 1 },
+//     ],
+//   };
+//   answerArr.push(parseInt(answer2));
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `기대했던 여행인데 부모님께 갑자기 일이 생겨서 못 가. 어떻게 할까?`,
+//       },
+//       {
+//         key: 'img',
+//         value:
+//           '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive3_IMG.png',
+//       }, // 인지행동 문항 이미지
+//     ],
+//   };
+//   const answer3 = yield {
+//     role: 'user',
+//     type: 'select',
+//     select_content: [
+//       { selection: '가고 싶은데 못 가게 돼서 짜증낼 것 같아.', value: 0 },
+//       { selection: '시무룩한 상태로 하루를 보낼 거야.', value: 1 },
+//       { selection: '다음 기회에 가면 되니까 괜찮아.', value: 2 },
+//       { selection: '너무 아쉽지만 부모님 일도 중요하지.', value: 3 },
+//     ],
+//   };
+//   answerArr.push(parseInt(answer3));
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `머리도 아프고 속도 안 좋은 거 같고 학교에 가기 싫어. 어떻게 할까?`,
+//       },
+//       {
+//         key: 'img',
+//         value:
+//           '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive4_IMG.png',
+//       }, // 인지행동 문항 이미지
+//     ],
+//   };
+//   const answer4 = yield {
+//     role: 'user',
+//     type: 'select',
+//     select_content: [
+//       { selection: '오늘은 가지 말아야지.', value: 0 },
+//       { selection: '왜 가야하냐고 투정부려.', value: 1 },
+//       { selection: '일단 학교에 가서 몸이 어떤지 살펴볼래.', value: 3 },
+//       {
+//         selection: '약 먹고 학교에 가서 더 아프면 양호실에 가야겠어.',
+//         value: 3,
+//       },
+//     ],
+//   };
+//   answerArr.push(parseInt(answer4));
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `너무 화가 나서 물건을 부수고 싶어. 어떻게 할까?`,
+//       },
+//       {
+//         key: 'img',
+//         value:
+//           '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive5_IMG.png',
+//       }, // 인지행동 문항 이미지
+//     ],
+//   };
+//   const answer5 = yield {
+//     role: 'user',
+//     type: 'select',
+//     select_content: [
+//       { selection: '다 쾅쾅 부숴버릴 거야.', value: 0 },
+//       { selection: '꾹 참으면 괜찮아질 거야.', value: 1 },
+//       {
+//         selection: '무엇 때문에 물건을 부수고 싶을 만큼 화가 났을까?',
+//         value: 2,
+//       },
+//       {
+//         selection: '잠깐 멈추고 심호흡을 한 뒤에 무엇이 문제인지 생각해봐.',
+//         value: 3,
+//       },
+//     ],
+//   };
+//   answerArr.push(parseInt(answer5));
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `밤에 잠도 잘 안 오고, 누울 때마다 내일이 안 왔으면 좋겠다는 생각이 들어. 어떻게 할까?`,
+//       },
+//       {
+//         key: 'img',
+//         value:
+//           '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive6_IMG.png',
+//       }, // 인지행동 문항 이미지
+//     ],
+//   };
+//   const answer6 = yield {
+//     role: 'user',
+//     type: 'select',
+//     select_content: [
+//       { selection: '지구가 멸망하는 것밖에는 답이 없어.', value: 0 },
+//       { selection: '이게 무슨 마음인지 모르겠어.', value: 1 },
+//       { selection: '친구들에게 얘기하고 위로 받고 싶어.', value: 2 },
+//       {
+//         selection: '나 지금 많이 힘든가봐, 어른들에게 상담을 받아보고 싶어.',
+//         value: 3,
+//       },
+//     ],
+//   };
+//   answerArr.push(parseInt(answer6));
+
+//   yield {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value: `아무것도 제대로 못하는 나에게 너무 화가 나서 내 머리를 쳤어. 어떻게 생각해?`,
+//       },
+//       {
+//         key: 'img',
+//         value:
+//           '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive7_IMG.png',
+//       }, // 인지행동 문항 이미지
+//     ],
+//   };
+//   const answer7 = yield {
+//     role: 'user',
+//     type: 'select',
+//     select_content: [
+//       { selection: '잘못했으니 벌을 받아야지.', value: 0 },
+//       { selection: '너무 화가 나면 그럴 수도 있지.', value: 1 },
+//       {
+//         selection: '엄청 화가 나지만 머리를 치지 말고 말로 표현해보자.',
+//         value: 2,
+//       },
+//       {
+//         selection: '누구나 실수할 수 있잖아, 나를 너무 몰아붙이지 말자.',
+//         value: 3,
+//       },
+//     ],
+//   };
+
+//   answerArr.push(parseInt(answer7));
+
+//   const mood_cognitive_score = answerArr.reduce((acc, cur) => acc + cur);
+
+//   // 개발용 - 추후 삭제
+//   // yield {
+//   //   role: 'assistant',
+//   //   type: 'fix',
+//   //   fix_content: [
+//   //     {
+//   //       key: 'text',
+//   //       value: `Result: ${mood_cognitive_score}점 (개발용)`,
+//   //     },
+//   //   ],
+//   // };
+
+//   return {
+//     role: 'assistant',
+//     type: 'fix',
+//     fix_content: [
+//       {
+//         key: 'text',
+//         value:
+//           mood_cognitive_score >= 13
+//             ? '좋았어! 멋진 생각을 나눠준 너에게 씨앗을 줄게. 마음을 가꾸듯 잘 키워봐. 다음에 또 만나 ☺'
+//             : '수고했어. 좀 더 분발해서 다음엔 씨앗을 받아보자. 다음 시간에 만나 ☺',
+//       },
+//     ],
+//     sava_data: {
+//       type: 'first',
+//       mood_name,
+//       mood_situation,
+//       mood_thought,
+//       mood_different_solution,
+//       mood_different_thought,
+//       mood_cognitive_score,
+//     },
+//   };
+// }
+
 // 2회기
 function* ellaMood_Round_second(mood_name) {
   yield {
