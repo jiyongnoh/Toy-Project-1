@@ -244,7 +244,11 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `방학이지만 부모님이 출근하셔서 나도 일찍 학원에 가야 해. 어떻게 할까?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
+      {
+        key: 'img',
+        value:
+          '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive1_IMG.png',
+      }, // 인지행동 문항 이미지
     ],
   };
 
@@ -274,7 +278,11 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `나보다 키 큰 아래 학년 동생이 나를  작다고 무시해. 어떻게 할까?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
+      {
+        key: 'img',
+        value:
+          '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive2_IMG.png',
+      }, // 인지행동 문항 이미지
     ],
   };
   const answer2 = yield {
@@ -300,7 +308,11 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `기대했던 여행인데 부모님께 갑자기 일이 생겨서 못 가. 어떻게 할까?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
+      {
+        key: 'img',
+        value:
+          '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive3_IMG.png',
+      }, // 인지행동 문항 이미지
     ],
   };
   const answer3 = yield {
@@ -323,7 +335,11 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `머리도 아프고 속도 안 좋은 거 같고 학교에 가기 싫어. 어떻게 할까?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
+      {
+        key: 'img',
+        value:
+          '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive4_IMG.png',
+      }, // 인지행동 문항 이미지
     ],
   };
   const answer4 = yield {
@@ -349,7 +365,11 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `너무 화가 나서 물건을 부수고 싶어. 어떻게 할까?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
+      {
+        key: 'img',
+        value:
+          '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive5_IMG.png',
+      }, // 인지행동 문항 이미지
     ],
   };
   const answer5 = yield {
@@ -378,7 +398,11 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `밤에 잠도 잘 안 오고, 누울 때마다 내일이 안 왔으면 좋겠다는 생각이 들어. 어떻게 할까?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
+      {
+        key: 'img',
+        value:
+          '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive6_IMG.png',
+      }, // 인지행동 문항 이미지
     ],
   };
   const answer6 = yield {
@@ -404,7 +428,11 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `아무것도 제대로 못하는 나에게 너무 화가 나서 내 머리를 쳤어. 어떻게 생각해?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 인지행동 문항 이미지
+      {
+        key: 'img',
+        value:
+          '/src/Ella_Mood_IMG/1st/Cognitive/Ella_Mood_1st_Congnitive7_IMG.png',
+      }, // 인지행동 문항 이미지
     ],
   };
   const answer7 = yield {

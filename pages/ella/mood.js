@@ -365,6 +365,8 @@ const MainContainer = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed; /* 배경 고정 */
+
   background-color: #fdf6ff;
   width: 100%;
   min-height: 100vh;
