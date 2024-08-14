@@ -130,7 +130,7 @@ export default function Test() {
     }
   };
 
-  // gpt 호출 메서드
+  // mood data 저장 메서드
   const moodDataSave = async (sava_data) => {
     try {
       // 엘라 API 호출 이후 state 갱신
@@ -252,12 +252,14 @@ export default function Test() {
     setBottom(true);
   }, [selectTrigger]);
 
+  // Input 태그 포커싱 기능
   useEffect(() => {
     if (inputTrigger && inputRef.current) {
       inputRef.current.focus();
     }
   }, [inputTrigger]); // value가 변경될 때마다 useEffect 실행
 
+  // 스크롤 바텀 기능
   const scrollToBottom_useRef = () => {
     const ptBoxBody = chatBoxBody.current;
     if (ptBoxBody.scrollHeight > 800)
@@ -270,7 +272,6 @@ export default function Test() {
     //   chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
     // }
   };
-  // 스크롤 바텀
   useEffect(() => {
     if (bottom) {
       scrollToBottom_useRef();

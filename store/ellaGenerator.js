@@ -9,16 +9,16 @@ export const ellaMood_Round_Array = [
 // 1회기
 function* ellaMood_Round_first() {
   let answerArr = [];
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: '1회기 (개발용)',
-      },
-    ],
-  };
+  // yield {
+  //   role: 'assistant',
+  //   type: 'fix',
+  //   fix_content: [
+  //     {
+  //       key: 'text',
+  //       value: '1회기 (개발용)',
+  //     },
+  //   ],
+  // };
 
   // 인사말
   yield {
@@ -28,7 +28,7 @@ function* ellaMood_Round_first() {
       // { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' },
       {
         key: 'text',
-        value: '엘라와 함께 불쾌한 기분은 줄이고 즐거운 기분은 늘려보자',
+        value: '엘라와 함께 불쾌한 기분은 줄이고 즐거운 기분은 늘려보자 ☺',
       },
     ],
   };
@@ -105,7 +105,10 @@ function* ellaMood_Round_first() {
     role: 'assistant',
     type: 'fix',
     fix_content: [
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
+      {
+        key: 'img',
+        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids1_IMG.png',
+      }, // 다른 애들이 말하는 이미지
     ],
   };
 
@@ -129,7 +132,10 @@ function* ellaMood_Round_first() {
     role: 'assistant',
     type: 'fix',
     fix_content: [
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
+      {
+        key: 'img',
+        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids2_IMG.png',
+      }, // 다른 애들이 말하는 이미지
     ],
   };
 
@@ -155,7 +161,10 @@ function* ellaMood_Round_first() {
         key: 'text',
         value: `또 어떤 생각이 들어?`,
       },
-      { key: 'img', value: '/src/PT_IMG/Test/PT_Question_IMG_1.png' }, // 다른 애들이 말하는 이미지
+      {
+        key: 'img',
+        value: '/src/Ella_Mood_IMG/1st/Ella_Mood_1st_Kids3_IMG.png',
+      }, // 다른 애들이 말하는 이미지
     ],
   };
 
@@ -221,7 +230,7 @@ function* ellaMood_Round_first() {
     fix_content: [
       {
         key: 'text',
-        value: `이젠 다른 걸 해볼까? 내가 물어보는 상황에 어떻게 할지 대답해 봐`,
+        value: `이젠 다른 걸 해볼까? 내가 물어보는 상황에 어떻게 할지 대답해 봐 ☺`,
       },
     ],
   };
@@ -420,16 +429,16 @@ function* ellaMood_Round_first() {
   const mood_cognitive_score = answerArr.reduce((acc, cur) => acc + cur);
 
   // 개발용 - 추후 삭제
-  yield {
-    role: 'assistant',
-    type: 'fix',
-    fix_content: [
-      {
-        key: 'text',
-        value: `Result: ${mood_cognitive_score}점 (개발용)`,
-      },
-    ],
-  };
+  // yield {
+  //   role: 'assistant',
+  //   type: 'fix',
+  //   fix_content: [
+  //     {
+  //       key: 'text',
+  //       value: `Result: ${mood_cognitive_score}점 (개발용)`,
+  //     },
+  //   ],
+  // };
 
   return {
     role: 'assistant',
@@ -439,8 +448,8 @@ function* ellaMood_Round_first() {
         key: 'text',
         value:
           mood_cognitive_score >= 13
-            ? '좋았어! 멋진 생각을 나눠준 너에게 씨앗을 줄게. 마음을 가꾸듯 잘 키워봐. 다음에 또 만나'
-            : '수고했어. 좀 더 분발해서 다음엔 씨앗을 받아보자. 다음 시간에 만나',
+            ? '좋았어! 멋진 생각을 나눠준 너에게 씨앗을 줄게. 마음을 가꾸듯 잘 키워봐. 다음에 또 만나 ☺'
+            : '수고했어. 좀 더 분발해서 다음엔 씨앗을 받아보자. 다음 시간에 만나 ☺',
       },
     ],
     sava_data: {
