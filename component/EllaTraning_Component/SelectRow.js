@@ -14,8 +14,12 @@ const SelectRow = ({
       onClick={selectHandler ? () => selectHandler(value, index) : null}
       role={role}
       selected={selected}
+      correted={!selectHandler && value === 3 ? true : false}
     >
-      <MessageP>{message}</MessageP>
+      <MessageP>
+        {/* {!selectHandler && value === 3 ? 'O' : 'X'} */}
+        {message}
+      </MessageP>
     </CardContainer>
   );
 };
@@ -27,11 +31,30 @@ const CardContainer = styled.div`
   flex-direction: ${(props) => (props.role === 'user' ? 'row' : 'column')};
   justify-content: center;
   align-items: center;
+
+  /* background-color: ${(props) =>
+    props.selected ? 'yellow' : props.role === 'user' ? '#B88CD5' : 'white'}; */
+
   background-color: ${(props) =>
-    props.selected ? 'yellow' : props.role === 'user' ? '#B88CD5' : 'white'};
+    props.selected && props.correted
+      ? '#1CDC72'
+      : props.selected
+        ? 'yellow'
+        : props.correted
+          ? 'red'
+          : '#B88CD5'};
+
+  /* color: ${(props) =>
+    props.selected ? 'black' : props.role === 'user' ? 'white' : 'black'}; */
 
   color: ${(props) =>
-    props.selected ? 'black' : props.role === 'user' ? 'white' : 'black'};
+    props.selected && props.correted
+      ? 'white'
+      : props.selected
+        ? '#333333'
+        : props.correted
+          ? 'white'
+          : 'white'};
 
   border: ${(props) => (props.role === 'user' ? '3px solid #ececec' : null)};
   border-radius: 10px;

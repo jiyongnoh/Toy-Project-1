@@ -136,7 +136,7 @@ function* ellaMood_Round_first() {
     select_content: [
       { selection: '오늘은 가지 말아야지.', value: 0 },
       { selection: '왜 가야하냐고 투정부려.', value: 1 },
-      { selection: '일단 학교에 가서 몸이 어떤지 살펴볼래.', value: 3 },
+      { selection: '일단 학교에 가서 몸이 어떤지 살펴볼래.', value: 2 },
       {
         selection: '약 먹고 학교에 가서 더 아프면 양호실에 가야겠어.',
         value: 3,
