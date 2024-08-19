@@ -411,7 +411,7 @@ export function* ebtSchool() {
   const result = scoreSum >= 7.6 ? '경고' : scoreSum >= 6.5 ? '주의' : '양호';
 
   return {
-    result: `너의 학교생활 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 학교생활 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -562,7 +562,7 @@ export function* ebtFriend() {
   const result = scoreSum >= 9.6 ? '경고' : scoreSum >= 8.2 ? '주의' : '양호';
 
   return {
-    result: `너의 친구관계 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 친구관계 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -702,7 +702,7 @@ export function* ebtFamily() {
   const result = scoreSum >= 8 ? '경고' : scoreSum >= 7 ? '주의' : '양호';
 
   return {
-    result: `너의 가족관계 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 가족관계 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -768,7 +768,7 @@ export function* ebtMood() {
   const result = scoreSum >= 5 ? '경고' : scoreSum >= 4 ? '주의' : '양호';
 
   return {
-    result: `너의 기분 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 기분 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -886,7 +886,7 @@ export function* ebtUnrest() {
   const result = scoreSum >= 10 ? '경고' : scoreSum >= 9 ? '주의' : '양호';
 
   return {
-    result: `너의 불안 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 불안 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -1029,7 +1029,7 @@ export function* ebtSad() {
         : '양호';
 
   return {
-    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 ${ebtClass} 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -1138,7 +1138,7 @@ export function* ebtHealth() {
         : '양호';
 
   return {
-    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 ${ebtClass} 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -1284,7 +1284,7 @@ export function* ebtAttention() {
         : '양호';
 
   return {
-    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 ${ebtClass} 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -1429,7 +1429,7 @@ export function* ebtMovement() {
         : '양호';
 
   return {
-    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 ${ebtClass} 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -1555,7 +1555,7 @@ export function* ebtAngry() {
         : '양호';
 
   return {
-    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 ${ebtClass} 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
@@ -1664,7 +1664,7 @@ export function* ebtSelf() {
         : '양호';
 
   return {
-    result: `너의 ${ebtClass} 만족도와 적응 수준은 ${result} 단계야.`,
+    result: `너의 ${ebtClass} 검사 결과는 ${result} 수준이야.`,
     ebtScore,
   };
 }
