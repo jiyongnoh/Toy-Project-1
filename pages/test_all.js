@@ -5,16 +5,18 @@ import Live2DViewerTest from '@/component/Live2D_Component/Live2DViewerTest';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import {
-  emotionAPI,
-  handleClovaVoice,
+  // emotionAPI,
+  // handleClovaVoice,
+  // handleClearCookies,
   handleGptCompletion,
-  handleClearCookies,
   handleConsultLogSave,
   handleEbtResult,
 } from '@/fetchAPI';
 import ChatBubble from '@/component/Chat_Component/ChatBubble';
 import InitChatBubble from '@/component/Chat_Component/InitChatBubble';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+import AvartaThree from '@/component/Chat_Component/AvartaThree';
+
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
 import { log, avarta, mobile } from '../store/state';
@@ -137,7 +139,7 @@ export default function Test() {
   const [isInitPending, setIsInitPending] = useState(true);
   const [emotion, setEmotion] = useState('중립');
   const [messageArr, setMessageArr] = useState([]);
-  const [initArr, setInitArr] = useState([]); //
+  const [initArr, setInitArr] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [testType, setTestType] = useState(''); // 상담 주제 6종
   const [gameType, setGameType] = useState(''); // 게임 3종
@@ -442,6 +444,9 @@ export default function Test() {
       className="main-container"
       backColor={avartaAI_info[avartaAI].backColor}
     >
+      <Avarta3DViewerContainer>
+        <AvartaThree />
+      </Avarta3DViewerContainer>
       <FlexContainer
         className="flex-container"
         justify="center"
@@ -458,7 +463,6 @@ export default function Test() {
           height={93}
           style={{ maxWidth: '100%', height: 'auto' }}
         /> */}
-
         <ChatBox
           className="chat-box"
           ref={chatBoxRef}
@@ -569,9 +573,9 @@ export default function Test() {
           />
         </div> */}
       </FlexContainer>
-      <Live2DViewerContainer>
+      {/* <Live2DViewerContainer>
         <Live2DViewerTest emotion={emotion} avarta={name} />
-      </Live2DViewerContainer>
+      </Live2DViewerContainer> */}
     </MainContainer>
   );
 }
@@ -623,6 +627,18 @@ const Live2DViewerContainer = styled.div`
 
   @media (max-width: 768px) {
     display: none;
+  }
+`;
+
+const Avarta3DViewerContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 15%;
+  right: 0%;
+
+  @media (max-width: 768px) {
+    top: 25%;
+    right: 10%;
   }
 `;
 

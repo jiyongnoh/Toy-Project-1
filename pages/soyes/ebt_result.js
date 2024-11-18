@@ -133,6 +133,7 @@ export default function Test() {
       {
         pUid: `${localStorage.getItem('id')}`,
         contentKey: true,
+        // pKeyValue: 12,
       },
       '/openAI/ebtresult'
     );
