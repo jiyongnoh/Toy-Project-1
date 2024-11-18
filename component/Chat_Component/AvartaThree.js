@@ -54,7 +54,7 @@ export default function AvartaThree() {
     let mixer = null; // 전역 변수로 FBX 모델 저장
     const loader = new FBXLoader();
     loader.load(
-      './soye_3model/idle.fbx', // FBX 파일 경로
+      '/soye_3model/Idle.fbx', // FBX 파일 경로
       (fbx) => {
         fbx.scale.set(0.05, 0.05, 0.05); // 크기 조정
         fbx.position.set(0, -10, 0); // 큐브 앞에 배치
