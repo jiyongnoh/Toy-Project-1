@@ -6,7 +6,7 @@ import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import {
   // emotionAPI,
-  // handleClovaVoice,
+  handleClovaVoice,
   // handleClearCookies,
   handleGptCompletion,
   handleConsultLogSave,
@@ -210,8 +210,8 @@ export default function Test() {
         return;
       }
       // Audio URL 생성 (임시로 막아둠)
-      const audioURL = '';
-      // const audioURL = await handleClovaVoice(data.message);
+      // const audioURL = '';
+      const audioURL = await handleClovaVoice(data.message);
       const media = data.message.match(/추천/) !== null; // main
       // const media = messageArr.length; // test
       const candle = data.message.match(/촛불/) !== null;
