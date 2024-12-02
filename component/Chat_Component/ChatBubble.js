@@ -20,7 +20,6 @@ const ChatBubble = ({
 
   useEffect(() => {
     if (lastKey && audioRef.current) audioRef.current.muted = false;
-    else audioRef?.current?.pause();
   }, []);
 
   return (
@@ -36,7 +35,7 @@ const ChatBubble = ({
             <MessageP>
               {message}
               {/* {audioURL ? <AudioPlayerButton src={audioURL} /> : null} */}
-              {audioURL ? (
+              {lastKey && audioURL ? (
                 <audio ref={audioRef} src={audioURL} muted autoPlay />
               ) : null}
             </MessageP>
