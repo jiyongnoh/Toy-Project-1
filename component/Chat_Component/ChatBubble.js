@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import AudioPlayerButton from './AudioPlayerButton';
+// import AudioPlayerButton from './AudioPlayerButton';
 import VideoModal from './VideoModal';
 import Image from 'next/image';
 
 const ChatBubble = ({
+  lastKey,
   message,
   isMine,
   role,
@@ -18,7 +19,8 @@ const ChatBubble = ({
   const audioRef = useRef(null);
 
   useEffect(() => {
-    if (audioRef.current) audioRef.current.muted = false;
+    if (lastKey && audioRef.current) audioRef.current.muted = false;
+    else audioRef?.current?.pause();
   }, []);
 
   return (

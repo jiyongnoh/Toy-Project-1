@@ -212,10 +212,10 @@ export default function Test() {
       // Audio URL 생성 (임시로 막아둠)
       // const audioURL = '';
       const audioURL = await handleClovaVoice(data.message);
-      const media = data.message.match(/추천/) !== null; // main
+      // const media = data.message.match(/추천/) !== null; // main
       // const media = messageArr.length; // test
-      const candle = data.message.match(/촛불/) !== null;
-      const breath = data.message.match(/호흡/) !== null;
+      // const candle = data.message.match(/촛불/) !== null;
+      // const breath = data.message.match(/호흡/) !== null;
 
       setIsPending(false); // 로딩 off
       setMessageArr([
@@ -224,11 +224,11 @@ export default function Test() {
           role: 'assistant',
           content: data.message,
           audioURL,
-          media: media
-            ? candle
-              ? mediVideo['candle']
-              : mediVideo['breath']
-            : null,
+          // media: media
+          //   ? candle
+          //     ? mediVideo['candle']
+          //     : mediVideo['breath']
+          //   : null,
         },
       ]);
     } catch (error) {
@@ -490,25 +490,26 @@ export default function Test() {
             {messageArr.map((el, index) => (
               <ChatBubble
                 key={index}
+                lastKey={index === messageArr.length - 1}
                 message={el.content}
                 role={el.role}
                 iconUrl={avartaAI_info[avartaAI].iconUrl}
                 headerTitle={avartaAI_info[avartaAI].headerTitle}
                 audioURL={el.audioURL}
-                media={
-                  el.media
-                    ? {
-                        videoInfo: el.media,
-                        modalIsOpen,
-                        closeModal: () => {
-                          setModalIsOpen(false);
-                        },
-                        openModal: () => {
-                          setModalIsOpen(true);
-                        },
-                      }
-                    : null
-                }
+                // media={
+                //   el.media
+                //     ? {
+                //         videoInfo: el.media,
+                //         modalIsOpen,
+                //         closeModal: () => {
+                //           setModalIsOpen(false);
+                //         },
+                //         openModal: () => {
+                //           setModalIsOpen(true);
+                //         },
+                //       }
+                //     : null
+                // }
               />
             ))}
             {/* 로딩바 */}
