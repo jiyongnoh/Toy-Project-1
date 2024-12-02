@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import AudioPlayerButton from './AudioPlayerButton';
 import VideoModal from './VideoModal';
@@ -14,6 +15,12 @@ const ChatBubble = ({
   headerTitle,
 }) => {
   // console.log(media);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.muted = false;
+  }, []);
+
   return (
     <BubbleContainer role={role}>
       {role !== 'user' ? (
@@ -26,7 +33,10 @@ const ChatBubble = ({
           <StyledBubble isMine={isMine} role={role}>
             <MessageP>
               {message}
-              {audioURL ? <AudioPlayerButton src={audioURL} /> : null}
+              {/* {audioURL ? <AudioPlayerButton src={audioURL} /> : null} */}
+              {audioURL ? (
+                <audio ref={audioRef} src={audioURL} muted autoPlay />
+              ) : null}
             </MessageP>
           </StyledBubble>
           {media ? (
