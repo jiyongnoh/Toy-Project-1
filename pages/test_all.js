@@ -100,23 +100,23 @@ const unMount_api_info = {
     path: '/openAI/clear_cookies',
   },
 };
-const mediVideo = {
-  candle: { type: 'candle', url: 'nKCY3qz30N8' },
-  breath: { type: 'breath', url: 'tNao3xp5yjM' },
-};
-const ebtClassMap = {
-  School: 'School',
-  Friend: 'Friend',
-  Family: 'Family',
-  Mood: 'Mood',
-  Unrest: 'Mood',
-  Sad: 'Mood',
-  Health: 'Health',
-  Attention: 'School',
-  Movement: 'Friend',
-  Angry: 'Mood',
-  Self: 'Self',
-};
+// const mediVideo = {
+//   candle: { type: 'candle', url: 'nKCY3qz30N8' },
+//   breath: { type: 'breath', url: 'tNao3xp5yjM' },
+// };
+// const ebtClassMap = {
+//   School: 'School',
+//   Friend: 'Friend',
+//   Family: 'Family',
+//   Mood: 'Mood',
+//   Unrest: 'Mood',
+//   Sad: 'Mood',
+//   Health: 'Health',
+//   Attention: 'School',
+//   Movement: 'Friend',
+//   Angry: 'Mood',
+//   Self: 'Self',
+// };
 const ebtClassMapKorean = {
   School: '학업/성적',
   Friend: '대인관계',
@@ -246,51 +246,51 @@ export default function Test() {
       });
   };
   // 엘라 시작 멘트 관련 메서드
-  const initElla = async () => {
-    // 유저 EBT 결과 조회 (11종)
-    const data = await handleEbtResult(
-      {
-        pUid: `${localStorage.getItem('id')}`,
-      },
-      '/openAI/ebtresult'
-    );
+  // const initElla = async () => {
+  //   // 유저 EBT 결과 조회 (11종)
+  //   const data = await handleEbtResult(
+  //     {
+  //       pUid: `${localStorage.getItem('id')}`,
+  //     },
+  //     '/openAI/ebtresult'
+  //   );
 
-    const { message } = data;
+  //   const { message } = data;
 
-    // 정서행동 검사를 1개라도 실시하지 않은 경우
-    if (!message[0].testStatus) {
-      setInitArr([
-        {
-          role: 'assistant',
-          content:
-            '안녕? 아직 정서행동검사를 모두 실시하지 않았구나? 상담 전에 검사하고 와줄래?',
-        },
-      ]);
-    }
-    // 정서행동 검사를 모두 실시한 경우
-    else {
-      const ment = {
-        role: 'assistant',
-        content: '안녕? 너의 심리검사 결과를 봤어. 아래의 상담 주제를 추천해',
-      };
+  //   // 정서행동 검사를 1개라도 실시하지 않은 경우
+  //   if (!message[0].testStatus) {
+  //     setInitArr([
+  //       {
+  //         role: 'assistant',
+  //         content:
+  //           '안녕? 아직 정서행동검사를 모두 실시하지 않았구나? 상담 전에 검사하고 와줄래?',
+  //       },
+  //     ]);
+  //   }
+  //   // 정서행동 검사를 모두 실시한 경우
+  //   else {
+  //     const ment = {
+  //       role: 'assistant',
+  //       content: '안녕? 너의 심리검사 결과를 봤어. 아래의 상담 주제를 추천해',
+  //     };
 
-      const selectBtnArr = message
-        .map((el) => {
-          return {
-            role: 'assistant',
-            content: `${ebtClassMap[el.ebt_class]}`,
-            btn: true,
-          };
-        })
-        .filter(
-          (item, index, self) =>
-            index === self.findIndex((t) => t.content === item.content)
-        )
-        .filter((item, index) => index <= 2);
+  //     const selectBtnArr = message
+  //       .map((el) => {
+  //         return {
+  //           role: 'assistant',
+  //           content: `${ebtClassMap[el.ebt_class]}`,
+  //           btn: true,
+  //         };
+  //       })
+  //       .filter(
+  //         (item, index, self) =>
+  //           index === self.findIndex((t) => t.content === item.content)
+  //       )
+  //       .filter((item, index) => index <= 2);
 
-      setInitArr([ment, ...selectBtnArr]);
-    }
-  };
+  //     setInitArr([ment, ...selectBtnArr]);
+  //   }
+  // };
 
   // 우비 시작 멘트 관련 메서드
   const initUbi = async () => {
