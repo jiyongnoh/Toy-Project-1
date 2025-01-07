@@ -139,10 +139,10 @@ export default function Nav() {
   const menuItems = useMemo(
     () => [
       // { href: '/music', label: 'music' },
-      { href: '/test_ebt', label: t('ebt') },
-      { href: '/test_pt', label: t('pt') },
-      { href: '/consult_intro', label: t('consult') },
-      { href: '/review', label: t('review') },
+      // { href: '/test_ebt', label: t('ebt') },
+      // { href: '/test_pt', label: t('pt') },
+      // { href: '/consult_intro', label: t('consult') },
+      // { href: '/review', label: t('review') },
       { href: '/meditation_intro', label: t('meditation_intro') },
       { href: '/shop', label: t('shop') },
       { href: '/mypage', label: t('mypage') },

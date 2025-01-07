@@ -4,7 +4,15 @@ import Link from 'next/link';
 
 const ConsultButton = ({ avartar, backColor, color, title }) => {
   return (
-    <StyledLink href={avartar.name === '엘라' ? '/ella/mood' : '/test_all'}>
+    <StyledLink
+      href={
+        avartar.name === '엘라'
+          ? '/ella/mood'
+          : avartar.name === '우비'
+            ? '/ubi'
+            : '/test_all'
+      }
+    >
       <YellowButton backColor={backColor} color={color} title={title}>
         {title}
       </YellowButton>

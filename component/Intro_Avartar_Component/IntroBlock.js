@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
+
 import TestButton from './TestButton';
 import ConsultButton from './ConsultButton';
 import AvartarLogo from './AvartarLogo';
@@ -24,7 +24,7 @@ const avatarBtnInfo = {
   ubi: {
     backColor: '#FF9900',
     color: 'black',
-    title: '우비와 상담하러 가기',
+    title: '우비와 명상하러 가기',
   },
   north: {
     backColor: '#FFB1B1',
@@ -41,13 +41,6 @@ const avatarBtnInfo = {
 const IntroBlock = ({ avartar }) => {
   return (
     <IntroAvatarContainer>
-      {/* <Image
-        src={avartar.iconImgUrl}
-        alt={avartar.name}
-        width={547}
-        height={499}
-        style={{ maxWidth: '100%', height: 'auto' }}
-      /> */}
       <AvartarLogo
         iconImgUrl={avartar.iconImgUrl}
         name={avartar.name}
@@ -58,12 +51,6 @@ const IntroBlock = ({ avartar }) => {
           {avartar.codeName === 'soyes' && <TestButton testClass="ebt" />}
           {avartar.codeName === 'soyes' && <TestButton testClass="pt" />}
         </ButtonContainer>
-        {/* {avartar.codeName === 'soyes' && (
-          <ButtonContainer>
-            <TestButton testClass="ebt" />
-            <TestButton testClass="pt" />
-          </ButtonContainer>
-        )} */}
         {avartar.codeName !== 'soyes' && (
           <ConsultButton
             avartar={avartar}
