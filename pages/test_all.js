@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from 'styled-components';
 import { FlexContainer } from '../styled-component/common';
-import Live2DViewerTest from '@/component/Live2D_Component/Live2DViewerTest';
+// import Live2DViewerTest from '@/component/Live2D_Component/Live2DViewerTest';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import {
@@ -10,12 +10,12 @@ import {
   // handleClearCookies,
   handleGptCompletion,
   handleConsultLogSave,
-  handleEbtResult,
+  // handleEbtResult,
 } from '@/fetchAPI';
 import ChatBubble from '@/component/Chat_Component/ChatBubble';
 import InitChatBubble from '@/component/Chat_Component/InitChatBubble';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
-import AvartaThree from '@/component/Chat_Component/AvartaThree';
+// import AvartaThree from '@/component/Chat_Component/AvartaThree';
 
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
@@ -24,7 +24,7 @@ import { log, avarta, mobile } from '../store/state';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 
-import { useTranslation } from 'next-i18next';
+// import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // import VideoModal from "@/component/Chat_Component/VideoModal";
@@ -444,9 +444,9 @@ export default function Test() {
       className="main-container"
       backColor={avartaAI_info[avartaAI].backColor}
     >
-      <Avarta3DViewerContainer>
+      {/* <Avarta3DViewerContainer>
         <AvartaThree />
-      </Avarta3DViewerContainer>
+      </Avarta3DViewerContainer> */}
       <FlexContainer
         className="flex-container"
         justify="center"
