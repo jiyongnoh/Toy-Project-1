@@ -241,12 +241,14 @@ export const handleClovaVoice = async (text) => {
   const response = await axios.post(
     `${process.env.NEXT_PUBLIC_URL}/openAI/tts`,
     {
-      speaker: 'nminyoung',
-      volume: '0',
-      speed: '0',
-      pitch: '0',
-      text,
-      format: 'mp3',
+      data: {
+        speaker: 'nminyoung',
+        volume: '0',
+        speed: '0',
+        pitch: '0',
+        text,
+        format: 'mp3',
+      },
     },
     { responseType: 'arraybuffer' }
   );
