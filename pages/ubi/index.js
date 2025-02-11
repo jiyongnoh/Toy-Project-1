@@ -197,7 +197,7 @@ export default function Ubi() {
           })}
         </ContentGridContainer>
         {/* 무한 스크롤 갱신 로딩바 */}
-        {isPending && <LoadingAnimation />}
+        {page !== 1 && isPending && <LoadingAnimation />}
       </ReviewContainer>
     </MainContainer>
   );
