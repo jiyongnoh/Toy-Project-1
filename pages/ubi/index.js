@@ -2,6 +2,7 @@
 import styled from 'styled-components';
 
 import { useEffect, useState, useCallback } from 'react';
+import Image from 'next/image';
 
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
@@ -9,6 +10,7 @@ import { log } from '../../store/state';
 
 import { useRouter } from 'next/router';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+import UbiThumbnail from '@/component/Ubi_Component/UbiThumbnail';
 
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
@@ -194,22 +196,10 @@ export default function Ubi() {
           </StyledButton>
         </ButtonContainer>
         <ContentGridContainer>
-          {contents.map((el, index) => {
-            return (
-              <StyledIframe
-                key={index}
-                src={el} // 수업 영상 유튜브 링크
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-                allowFullScreen
-              />
-            );
+          {contents.map((link, index) => {
+            return <UbiThumbnail key={`${link}_${index}`} link={link} />;
           })}
         </ContentGridContainer>
-
-        {/* {reviews.map((review, index) => (
-            <Review key={index} review={review} />
-          ))} */}
         {/* 무한 스크롤 갱신 로딩바 */}
         {isPending && <LoadingAnimation />}
       </ReviewContainer>
@@ -262,18 +252,12 @@ const ContentGridContainer = styled.div`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
 
-  gap: 1rem;
+  gap: 1.5rem;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(6, 1fr);
   }
-`;
-
-const StyledIframe = styled.iframe`
-  border: none;
-  width: 480px;
-  height: 270px;
 `;
 
 const ButtonContainer = styled.div`
