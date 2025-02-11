@@ -2,7 +2,6 @@
 import styled from 'styled-components';
 
 import { useEffect, useState, useCallback } from 'react';
-import Image from 'next/image';
 
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
@@ -89,17 +88,10 @@ const heartContentLinkArr = [
   '//www.youtube.com/embed/r3vwBkM0dzM',
 ];
 
-const allContentLinkArr = [
-  ...yogaContentLinkArr,
-  ...musicContentLinkArr,
-  ...heartContentLinkArr,
-];
-
 const ContentsMap = {
   yoga: yogaContentLinkArr,
   music: musicContentLinkArr,
   heart: heartContentLinkArr,
-  all: allContentLinkArr,
 };
 
 // Ubi 메인 페이지
@@ -110,7 +102,7 @@ export default function Ubi() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true); // 무한 스크롤 트리거 state
   const [contents, setContents] = useState([]);
-  const [contentTag, setContentTag] = useState('all');
+  const [contentTag, setContentTag] = useState('yoga');
 
   const router = useRouter();
 
@@ -289,7 +281,6 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    padding: 15px 25px;
     background-color: rgba(205, 205, 205, 0.5);
     color: white;
   }

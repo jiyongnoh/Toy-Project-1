@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 // 유튜브 영상 ID 추출 함수
@@ -15,7 +15,7 @@ const fetchVideoTitle = async (videoId) => {
       `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`
     );
     const data = await response.json();
-    console.log(data);
+
     return data.title; // 제목 반환
   } catch (error) {
     console.error('YouTube 제목 가져오기 실패:', error);
@@ -31,12 +31,26 @@ export default function UbiThumbnail({ link }) {
 
   const [isHovering, setIsHovering] = useState(false);
   const [videoTitle, setVideoTitle] = useState('');
+  const hoverTimeoutRef = useRef(null);
 
   useEffect(() => {
     if (videoId) {
       fetchVideoTitle(videoId).then(setVideoTitle);
     }
   }, [videoId]);
+
+  const handleMouseEnter = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsHovering(true);
+    }, 300); // 0.3초 동안 유지되면 실행
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current); // 0.3초 안에 떠나면 실행 취소
+    }
+    setIsHovering(false);
+  };
 
   //   useEffect(() => {
   //     let timeout;
@@ -48,8 +62,8 @@ export default function UbiThumbnail({ link }) {
 
   return (
     <ThumbnailContainer
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
     >
       {isHovering ? (
         <StyledIframe
@@ -83,12 +97,14 @@ const ThumbnailContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
 `;
 
 const StyledIframe = styled.iframe`
   border: none;
-  width: 480px;
-  height: 270px;
+  width: 100%;
+  height: 100%;
 `;
 
 const VideoTitle = styled.p`
