@@ -92,10 +92,10 @@ export async function getStaticProps({ locale }) {
   };
 }
 
-const fadeIn = keyframes`
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-`;
+// const fadeIn = keyframes`
+//   from { opacity: 0; transform: translateY(20px); }
+//   to { opacity: 1; transform: translateY(0); }
+// `;
 
 const MasterContainer = styled.div`
   display: flex;
@@ -106,26 +106,26 @@ const MasterContainer = styled.div`
   z-index: -1;
 `;
 
-const IntroContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
+// const IntroContainer = styled.div`
+//   width: 100vw;
+//   height: 100vh;
 
-  background-image: url('/src/soyesKids_Background_image.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+//   background-image: url('/src/soyesKids_Background_image.png');
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   align-items: center;
 
-  @media (max-width: 768px) {
-    display: none;
-    background-image: url('/src/Background_IMG/Mobile/mobile_background_1.png');
-    justify-content: center;
-  }
-`;
+//   @media (max-width: 768px) {
+//     display: none;
+//     background-image: url('/src/Background_IMG/Mobile/mobile_background_1.png');
+//     justify-content: center;
+//   }
+// `;
 
 const MainContainer = styled.div`
   width: 100vw;

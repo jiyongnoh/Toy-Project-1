@@ -28,6 +28,9 @@ export default function UbiThumbnail({ link }) {
   const thumbnailSrc = videoId
     ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
     : '';
+  const youtubeUrl = videoId
+    ? `https://www.youtube.com/watch?v=${videoId}`
+    : null;
 
   const [isHovering, setIsHovering] = useState(false);
   const [videoTitle, setVideoTitle] = useState('');
@@ -42,7 +45,7 @@ export default function UbiThumbnail({ link }) {
   const handleMouseEnter = () => {
     hoverTimeoutRef.current = setTimeout(() => {
       setIsHovering(true);
-    }, 300); // 0.3초 동안 유지되면 실행
+    }, 500); // 0.3초 동안 유지되면 실행
   };
 
   const handleMouseLeave = () => {
@@ -60,34 +63,69 @@ export default function UbiThumbnail({ link }) {
   //     return () => clearTimeout(timeout);
   //   }, [isHovering]);
 
+  const handleClick = () => {
+    if (youtubeUrl) {
+      window.open(youtubeUrl, '_blank'); // 새 탭에서 유튜브 영상 열기
+    }
+  };
+
   return (
-    <ThumbnailContainer
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      {isHovering ? (
-        <StyledIframe
-          src={`${link}?autoplay=1&controls=0&mute=1&modestbranding=1&rel=0`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        />
-      ) : (
-        <Image
-          src={thumbnailSrc}
-          alt="YouTube Thumbnail"
-          width={480}
-          height={270}
-          style={{
-            width: '100%',
-            height: 'auto',
-            borderRadius: '8px',
-          }}
-        />
-      )}
-      <VideoTitle>{videoTitle}</VideoTitle>
-    </ThumbnailContainer>
+    <Wrapper>
+      <ThumbnailContainer
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* 썸네일 */}
+        <ImageWrapper isHovering={isHovering} onClick={handleClick}>
+          <Image
+            src={thumbnailSrc}
+            alt="YouTube Thumbnail"
+            width={480}
+            height={270}
+            style={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: '8px',
+            }}
+          />
+          <VideoTitle>{videoTitle}</VideoTitle>
+        </ImageWrapper>
+
+        {isHovering && (
+          <IframeWrapper isHovering={isHovering} onClick={handleClick}>
+            <StyledIframe
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&modestbranding=1&rel=0&fs=0&playsinline=1`}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              style={{
+                borderRadius: '8px',
+              }}
+            />
+          </IframeWrapper>
+        )}
+
+        {/* iframe (애니메이션 효과 적용) */}
+        {/* <IframeWrapper isHovering={isHovering} onClick={handleClick}>
+          <StyledIframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&modestbranding=1&rel=0&fs=0&playsinline=1`}
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+          <VideoTitle>{videoTitle}</VideoTitle>
+        </IframeWrapper> */}
+      </ThumbnailContainer>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  width: 480px;
+  height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 const ThumbnailContainer = styled.div`
   width: 100%;
@@ -98,7 +136,32 @@ const ThumbnailContainer = styled.div`
   justify-content: center;
   align-items: center;
 
+  position: relative;
+`;
+
+// 이미지 애니메이션 (opacity로 전환)
+const ImageWrapper = styled.div`
+  position: absolute;
+
+  width: 480px;
+  height: 270px;
+
+  transition: all 0.5s ease-in-out;
+  opacity: ${(props) => (props.isHovering ? 0 : 1)};
+
   cursor: pointer;
+`;
+
+// iframe 애니메이션 (opacity + transform)
+const IframeWrapper = styled.div`
+  position: absolute;
+  width: 480px;
+  height: 270px;
+
+  cursor: pointer;
+
+  transition: all 0.5s ease-in-out;
+  opacity: ${(props) => (props.isHovering ? 1 : 0)};
 `;
 
 const StyledIframe = styled.iframe`

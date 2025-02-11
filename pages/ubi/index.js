@@ -147,7 +147,7 @@ export default function Ubi() {
       setTimeout(() => {
         setContents([...ContentsMap[contentTag].slice(0, page * 6)]);
         setIsPending(false);
-      }, 1000);
+      }, 500);
     } else {
       setContents([...ContentsMap[contentTag].slice(0, 6)]);
       setIsPending(false);
