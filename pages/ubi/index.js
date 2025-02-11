@@ -120,6 +120,13 @@ export default function Ubi() {
     }
   }, [isPending, hasMore, page]);
 
+  const handleButtonClick = (e) => {
+    setContentTag(e.target.value);
+    setPage(1);
+    setIsPending(true);
+    setHasMore(true);
+  };
+
   // 무한스크롤 useCallback 함수 관련 이벤트 추가
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
@@ -127,32 +134,25 @@ export default function Ubi() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  useEffect(() => {
-    setPage(0);
-    setHasMore(true);
-  }, [contentTag]);
-
   // page 변경 시 contents 갱신
   useEffect(() => {
-    // 종료 조건
+    // contents 갱신 종료
     if (contents.length === ContentsMap[contentTag].length) {
       setHasMore(false);
       setIsPending(false);
       return;
     }
 
-    if (page === 0) setPage(1);
-
     if (page > 0) {
       setTimeout(() => {
         setContents([...ContentsMap[contentTag].slice(0, page * 6)]);
         setIsPending(false);
-      }, 500);
+      }, 1000);
     } else {
       setContents([...ContentsMap[contentTag].slice(0, 6)]);
       setIsPending(false);
     }
-  }, [page]);
+  }, [page, contentTag]);
 
   // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
   useEffect(() => {
@@ -169,24 +169,28 @@ export default function Ubi() {
         <h2></h2>
         <ButtonContainer>
           <StyledButton
-            onClick={() => setContentTag('yoga')}
+            onClick={handleButtonClick}
+            value={'yoga'} // 요가 명상
             selected={contentTag === 'yoga'}
           >
             요가 명상
           </StyledButton>
           <StyledButton
-            onClick={() => setContentTag('music')}
+            onClick={handleButtonClick}
+            value={'music'} // 음악 명상
             selected={contentTag === 'music'}
           >
             음악 명상
           </StyledButton>
           <StyledButton
-            onClick={() => setContentTag('heart')}
+            onClick={handleButtonClick}
+            value={'heart'} // 마음챙김 명상
             selected={contentTag === 'heart'}
           >
             마음챙김 명상
           </StyledButton>
         </ButtonContainer>
+        {page === 1 && isPending && <LoadingAnimation />}
         <ContentGridContainer>
           {contents.map((link, index) => {
             return <UbiThumbnail key={`${link}_${index}`} link={link} />;
@@ -276,6 +280,7 @@ const StyledButton = styled.button`
   text-align: center;
   text-decoration: none;
 
+  font-family: AppleSDGothicNeoM00;
   font-size: 1rem;
 
   cursor: pointer;
