@@ -106,6 +106,15 @@ export default function Ubi() {
 
   const router = useRouter();
 
+  // 버튼 클릭 핸들러 - contentTag 변경
+  const handleButtonClick = (e) => {
+    setContentTag(e.target.value);
+    setPage(1);
+    setIsPending(true);
+    setHasMore(true);
+  };
+
+  // 무한 스크롤 이벤트 핸들러
   const handleScroll = useCallback(() => {
     // 문서 높이, 뷰포트 높이, 스크롤 위치를 계산
     const scrollTop = document.documentElement.scrollTop;
@@ -116,16 +125,9 @@ export default function Ubi() {
     if (scrollTop + windowHeight >= fullHeight && !isPending && hasMore) {
       // 추가로 가져올 리뷰 데이터 요청 API 메서드 호출
       setIsPending(true);
-      setPage(page + 1);
+      setPage((prevPage) => prevPage + 1);
     }
   }, [isPending, hasMore, page]);
-
-  const handleButtonClick = (e) => {
-    setContentTag(e.target.value);
-    setPage(1);
-    setIsPending(true);
-    setHasMore(true);
-  };
 
   // 무한스크롤 useCallback 함수 관련 이벤트 추가
   useEffect(() => {

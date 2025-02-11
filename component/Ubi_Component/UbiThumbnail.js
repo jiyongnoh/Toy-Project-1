@@ -101,6 +101,7 @@ export default function UbiThumbnail({ link }) {
                 borderRadius: '8px',
               }}
             />
+            <VideoTitle>{videoTitle}</VideoTitle>
           </IframeWrapper>
         )}
 
