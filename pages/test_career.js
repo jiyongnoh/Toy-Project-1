@@ -1,23 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { FlexContainer } from '../styled-component/common';
 import { useEffect, useState, useRef } from 'react';
 
 import { handlePtAnalsys } from '@/fetchAPI/testAPI';
 
-import PTestBubble from '@/component/Test_Component/PTestBubble';
-import Image from 'next/image';
-import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
-import { useRouter } from 'next/router';
+import CareerTestBubble from '@/component/Test_Component/CareerTestBubble';
+import CareerTournamentBubble from '@/component/Test_Component/CareerTournamentBubble';
 
-import { motion } from 'framer-motion';
-import { psychologicalAsesssment } from '@/store/testGenerator';
+// import Image from 'next/image';
+import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+
+// import { motion } from 'framer-motion';
+import { careerFirst } from '@/store/testGenerator';
 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
-export default function PersnalityTest() {
+export default function CareerTest() {
   const [isPending, setIsPending] = useState(false);
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
   const [select, setSelect] = useState('2'); // 유저 문항 선택지 1 || 2
@@ -26,16 +27,13 @@ export default function PersnalityTest() {
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
 
-  const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
   const ptSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
 
-  if (!ptSessionRef.current) ptSessionRef.current = psychologicalAsesssment();
-
   const scrollToBottom_useRef = () => {
     const ptBoxBody = chatBoxBody.current;
-    if (ptBoxBody.scrollHeight > 800)
+    if (ptBoxBody.scrollHeight > 1000)
       window.scrollTo({
         top: ptBoxBody.scrollHeight, // 세로 스크롤 위치
         left: 0, // 가로 스크롤 위치
@@ -46,7 +44,7 @@ export default function PersnalityTest() {
     // }
   };
 
-  // 성격 검사 분석 요청 API 호출 메서드
+  // API 호출 메서드
   const requetAnalysis = async () => {
     try {
       // 감정 분석 API 호출 이후 state 갱신
@@ -65,61 +63,84 @@ export default function PersnalityTest() {
       console.log(error);
     }
   };
+
   // 페이지 초기설정 - 성격검사 첫 문항 제시
   useEffect(() => {
-    setTimeout(() => {
-      const { value, done } = ptSessionRef.current.next(select);
-      if (!done) {
-        const question_message = {
-          role: 'assistant',
-          content: value.question,
-          imgURL: value.question_imgURL,
-        };
-        const selection_message = {
-          role: 'user',
-          content: value.selection,
-          imgURL: value.selection_imgURL,
-        };
-        setMessageArr([...messageArr, question_message, selection_message]);
-      }
-    }, 1000);
+    if (!ptSessionRef.current) ptSessionRef.current = careerFirst();
+
+    const { value, done } = ptSessionRef.current.next(select);
+    if (!done) {
+      const question_message = {
+        role: 'assistant',
+        content: value.question,
+        imgURL: value.question_imgURL,
+        session: value.session,
+      };
+      setMessageArr([question_message]);
+    }
   }, []);
+
+  // useEffect(() => {
+  //   console.log(messageArr);
+  // }, [messageArr]);
 
   // 심리 검사 다음 문항 진행
   useEffect(() => {
     if (next) {
       const { value, done } = ptSessionRef.current.next(select);
-      // console.log(done);
       // 검사 문항 진행
       if (!done) {
-        const question_message = {
-          role: 'assistant',
-          content: value.question,
-          imgURL: value.question_imgURL,
-        };
-        const selection_message = {
-          role: 'user',
-          content: value.selection,
-          imgURL: value.selection_imgURL,
-        };
-        setMessageArr([...messageArr, question_message, selection_message]);
+        if (value.session === 'first') {
+          const question_message = {
+            role: 'assistant',
+            content: value.question,
+            imgURL: value.question_imgURL,
+            session: value.session,
+          };
+          setMessageArr([question_message]);
+        } else if (value.session === 'second') {
+          const { left, right } = value;
+          const tournament_message = {
+            role: 'assistant',
+            content: [left, right],
+            session: value.session,
+          };
+          const tmp =
+            messageArr.length > 1
+              ? messageArr.slice(0, -1)
+              : [
+                  ...messageArr,
+                  {
+                    role: 'assistant',
+                    content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
+                  },
+                ];
+          setMessageArr([...tmp, tournament_message]);
+        }
         setNext(false);
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
-        const { result, type } = value;
+        const { rankCareers, interestedCareerTypeMap } = value;
+        if (rankCareers.length === 0) {
+          alert('흥미있는 직업이 없습니다');
+          return;
+        }
         setIsPending(true);
         setTimeout(() => {
           setMessageArr([
             ...messageArr,
             {
               role: 'assistant',
-              content: result,
+              content: `1위: ${rankCareers[0]?.careerName || '없음'}
+2위: ${rankCareers[1]?.careerName || '없음'}
+3위: ${rankCareers[2]?.careerName || '없음'}`,
             },
           ]);
-          setResultType(type);
+          // setResultType(type);
+          // setResultTrigger(true); // API 호출 메서드 트리거
+          setIsPending(false);
           setNext(false);
-          setResultTrigger(true);
           setBottom(true);
         }, 1500);
       } else return;
@@ -154,40 +175,44 @@ export default function PersnalityTest() {
         height="100%"
         padding="0 1rem"
       >
-        {/* <Image
-          src="/src/soyesKids_Logo.png"
-          alt={"soyes_logo"}
-          width={529}
-          height={93}
-        /> */}
-        <PTBox ref={chatBoxBody}>
-          {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
-          <PTBoxBody>
-            <PTestBubble message={'성격검사 시작합니다!'} role="assistant" />
-            {messageArr.map((el, index) => (
-              <div key={index}>
-                {el.imgURL ? (
-                  <PTestBubble
+        <CareerBox ref={chatBoxBody}>
+          <CareerBoxBody>
+            <CareerTestBubble
+              message={'어른이 되면 어떤 일을 하고싶나요?'}
+              role="assistant"
+            />
+            {messageArr.map((el, index) => {
+              if (el?.session === 'second') {
+                return (
+                  <CareerTournamentBubble
+                    key={JSON.stringify(el.content[0]) + index}
+                    content={el.content}
+                    role={el.role}
+                    setSelect={
+                      index === messageArr.length - 1 ? setSelect : null
+                    }
+                    setNext={index === messageArr.length - 1 ? setNext : null}
+                  />
+                );
+              } else {
+                return (
+                  <CareerTestBubble
+                    key={el.imgURL + index}
                     message={el.content}
                     role={el.role}
-                    imgURL={el.imgURL}
-                    setSelect={index === messageArr.length - 1 && setSelect}
-                    setNext={index === messageArr.length - 1 && setNext}
+                    imgURL={el.imgURL || null}
+                    setSelect={
+                      index === messageArr.length - 1 ? setSelect : null
+                    }
+                    setNext={index === messageArr.length - 1 ? setNext : null}
                   />
-                ) : (
-                  <PTestBubble
-                    message={el.content}
-                    role={el.role}
-                    setSelect={index === messageArr.length - 1 && setSelect}
-                    setNext={index === messageArr.length - 1 && setNext}
-                  />
-                )}
-              </div>
-            ))}
+                );
+              }
+            })}
             {/* 로딩바 */}
             {isPending ? <LoadingAnimation /> : null}
-          </PTBoxBody>
-        </PTBox>
+          </CareerBoxBody>
+        </CareerBox>
         <div class="codingnexus">
           <a>Created by SoyesKids</a>
         </div>
@@ -239,7 +264,7 @@ const MainContainer = styled.div`
 //   position: relative;
 // `;
 
-const PTBox = styled.div`
+const CareerBox = styled.div`
   /* background-image: ${(props) =>
     props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
   background-size: cover;
@@ -256,6 +281,7 @@ const PTBox = styled.div`
   border-radius: 8px;
   /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
 
+  min-height: 100vh;
   height: 100%;
 
   /* 채팅 중앙정렬 가능 */
@@ -290,29 +316,25 @@ const PTBox = styled.div`
 //   overflow: hidden;
 // `;
 
-const PTBoxHeader = styled.div`
-  background-color: #0084ff;
-  color: #ffffff;
-  padding: 16px;
-  font-size: 20px;
-  font-weight: bold;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  height: 9%;
-`;
+// const PTBoxHeader = styled.div`
+//   background-color: #0084ff;
+//   color: #ffffff;
+//   padding: 16px;
+//   font-size: 20px;
+//   font-weight: bold;
+//   border-top-left-radius: 8px;
+//   border-top-right-radius: 8px;
+//   height: 9%;
+// `;
 
-const PTBoxBody = styled.div`
-  /* background-image: ${(props) =>
-    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
+const CareerBoxBody = styled.div`
   width: 100vw;
-  background: inherit;
-  padding: 1rem;
-  overflow-y: auto;
   min-height: 75vh;
   height: 100%;
+
+  padding: 1rem;
+  background: inherit;
+  overflow-y: auto;
 
   display: flex;
   flex-direction: column;

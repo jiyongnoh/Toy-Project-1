@@ -1,3 +1,309 @@
+const careers = [
+  {
+    careerId: 'firefighter',
+    careerName: '소방관',
+    careerType: 'R',
+    imgURL: '/src/Career_IMG/Test/R/firefighter.png',
+  },
+  {
+    careerId: 'police_officer',
+    careerName: '경찰관',
+    careerType: 'R',
+    imgURL: '/src/Career_IMG/Test/R/police_officer.png',
+  },
+  {
+    careerId: 'soldier',
+    careerName: '직업군인',
+    careerType: 'R',
+    imgURL: '/src/Career_IMG/Test/R/soldier.png',
+  },
+  {
+    careerId: 'athlete',
+    careerName: '운동선수',
+    careerType: 'R',
+    imgURL: '/src/Career_IMG/Test/R/athlete.png',
+  },
+  {
+    careerId: 'pilot',
+    careerName: '항공기 조종사',
+    careerType: 'R',
+    imgURL: '/src/Career_IMG/Test/R/pilot.png',
+  },
+  {
+    careerId: 'chef',
+    careerName: '조리사 및 주방장',
+    careerType: 'R',
+    imgURL: '/src/Career_IMG/Test/R/chef.png',
+  },
+  {
+    careerId: 'doctor',
+    careerName: '의사',
+    careerType: 'I',
+    imgURL: '/src/Career_IMG/Test/I/doctor.png',
+  },
+  {
+    careerId: 'veterinarian',
+    careerName: '수의사',
+    careerType: 'I',
+    imgURL: '/src/Career_IMG/Test/I/veterinarian.png',
+  },
+  {
+    careerId: 'computer_programmer',
+    careerName: '컴퓨터프로그래머',
+    careerType: 'I',
+    imgURL: '/src/Career_IMG/Test/I/computer_programmer.png',
+  },
+  {
+    careerId: 'automotive_engineer',
+    careerName: '자동차공학기술자',
+    careerType: 'I',
+    imgURL: '/src/Career_IMG/Test/I/automotive_engineer.png',
+  },
+  {
+    careerId: 'robotics_engineer',
+    careerName: '로봇공학기술자',
+    careerType: 'I',
+    imgURL: '/src/Career_IMG/Test/I/robotics_engineer.png',
+  },
+
+  {
+    careerId: 'singer',
+    careerName: '가수',
+    careerType: 'A',
+    imgURL: '/src/Career_IMG/Test/A/singer.png',
+  },
+  {
+    careerId: 'actor',
+    careerName: '연기자',
+    careerType: 'A',
+    imgURL: '/src/Career_IMG/Test/A/actor.png',
+  },
+  {
+    careerId: 'dancer',
+    careerName: '무용가',
+    careerType: 'A',
+    imgURL: '/src/Career_IMG/Test/A/dancer.png',
+  },
+  {
+    careerId: 'painter',
+    careerName: '화가',
+    careerType: 'A',
+    imgURL: '/src/Career_IMG/Test/A/painter.png',
+  },
+  {
+    careerId: 'cartoonist',
+    careerName: '만화가',
+    careerType: 'A',
+    imgURL: '/src/Career_IMG/Test/A/cartoonist.png',
+  },
+  {
+    careerId: 'makeup_artist',
+    careerName: '메이크업아티스트',
+    careerType: 'A',
+    imgURL: '/src/Career_IMG/Test/A/makeup_artist.png',
+  },
+  {
+    careerId: 'youtuber',
+    careerName: '유튜브 크리에이터',
+    careerType: 'A',
+    imgURL: '/src/Career_IMG/Test/A/youtuber.png',
+  },
+
+  {
+    careerId: 'psychologist',
+    careerName: '심리상담사(임상심리사)',
+    careerType: 'S',
+    imgURL: '/src/Career_IMG/Test/S/psychologist.png',
+  },
+  {
+    careerId: 'nurse',
+    careerName: '간호사',
+    careerType: 'S',
+    imgURL: '/src/Career_IMG/Test/S/nurse.png',
+  },
+  {
+    careerId: 'kindergarten_teacher',
+    careerName: '유치원교사',
+    careerType: 'S',
+    imgURL: '/src/Career_IMG/Test/S/kindergarten_teacher.png',
+  },
+  {
+    careerId: 'school_teacher',
+    careerName: '초중등 교사',
+    careerType: 'S',
+    imgURL: '/src/Career_IMG/Test/S/school_teacher.png',
+  },
+  {
+    careerId: 'clergy',
+    careerName: '성직자',
+    careerType: 'S',
+    imgURL: '/src/Career_IMG/Test/S/clergy.png',
+  },
+
+  {
+    careerId: 'lawyer',
+    careerName: '변호사',
+    careerType: 'E',
+    imgURL: '/src/Career_IMG/Test/E/lawyer.png',
+  },
+  {
+    careerId: 'diplomat',
+    careerName: '외교관',
+    careerType: 'E',
+    imgURL: '/src/Career_IMG/Test/E/diplomat.png',
+  },
+  {
+    careerId: 'congressman',
+    careerName: '국회의원',
+    careerType: 'E',
+    imgURL: '/src/Career_IMG/Test/E/congressman.png',
+  },
+  {
+    careerId: 'journalist',
+    careerName: '기자',
+    careerType: 'E',
+    imgURL: '/src/Career_IMG/Test/E/journalist.png',
+  },
+  {
+    careerId: 'broadcast_producer',
+    careerName: '방송연출가(PD)',
+    careerType: 'E',
+    imgURL: '/src/Career_IMG/Test/E/broadcast_producer.png',
+  },
+
+  {
+    careerId: 'public_official',
+    careerName: '공무원',
+    careerType: 'C',
+    imgURL: '/src/Career_IMG/Test/C/public_official.png',
+  },
+  {
+    careerId: 'librarian',
+    careerName: '사서',
+    careerType: 'C',
+    imgURL: '/src/Career_IMG/Test/C/librarian.png',
+  },
+  {
+    careerId: 'banker',
+    careerName: '은행원',
+    careerType: 'C',
+    imgURL: '/src/Career_IMG/Test/C/banker.png',
+  },
+  {
+    careerId: 'air_traffic_controller',
+    careerName: '항공교통관제사',
+    careerType: 'C',
+    imgURL: '/src/Career_IMG/Test/C/air_traffic_controller.png',
+  },
+  {
+    careerId: 'security_specialist',
+    careerName: '정보보안전문가',
+    careerType: 'C',
+    imgURL: '/src/Career_IMG/Test/C/security_specialist.png',
+  },
+];
+
+// 진로검사 제너레이터 (1차시)
+export function* careerFirst() {
+  const interestedCareerArray = [];
+  const interestedCareerTypeMap = {
+    R: 0,
+    I: 0,
+    A: 0,
+    S: 0,
+    E: 0,
+    C: 0,
+  };
+  const shuffledCareers = careers.sort(() => Math.random() - 0.5);
+
+  // 1차시 진로검사 문항
+  for (let i = 0; i < shuffledCareers.length; i++) {
+    const answer = yield {
+      question: shuffledCareers[i].careerName,
+      question_imgURL:
+        shuffledCareers[i].imgURL || `/src/PT_IMG/Test/PT_Question_IMG_1.png`,
+      career: shuffledCareers[i],
+      session: 'first',
+    };
+    if (answer === '1') {
+      interestedCareerArray.push(shuffledCareers[i]);
+      interestedCareerTypeMap[shuffledCareers[i].careerType]++;
+    }
+  }
+
+  // 2차시 진로검사 문항
+  if (interestedCareerArray.length === 0) {
+    return { rankCareers: [], comparisons: {} };
+  }
+  if (interestedCareerArray.length === 1) {
+    return { rankCareers: [interestedCareerArray[0]], comparisons: {} };
+  }
+
+  let rounds = [interestedCareerArray.slice()];
+  let comparisons = {};
+  let rankCareers = [];
+  let league = 0;
+
+  // ⚔️ 메인 토너먼트 진행
+  while (rounds[league].length > 1) {
+    let nextRound = [];
+    for (let i = 0; i < rounds[league].length; i += 2) {
+      if (i + 1 >= rounds[league].length) {
+        // 홀수일 경우 부전승 처리
+        nextRound.push(rounds[league][i]);
+        continue;
+      }
+
+      let left = rounds[league][i];
+      let right = rounds[league][i + 1];
+
+      const userChoice = yield { left, right, session: 'second' };
+      const winner = userChoice === 'left' ? left : right;
+      const loser = userChoice === 'left' ? right : left;
+
+      comparisons[winner] = loser;
+      nextRound.push(winner);
+    }
+    rounds.push(nextRound);
+    league++;
+  }
+
+  // 1위 결정
+  const winner = rounds[league][0];
+  rankCareers.push(winner);
+
+  // 2위 결정 (결승에서 패배한 항목)
+  if (league > 0) {
+    const finalists = rounds[league - 1];
+    const secondPlace = finalists.find((c) => c !== winner);
+    rankCareers.push(secondPlace);
+  }
+
+  // 3위 결정전 (최소 4개 이상일 경우)
+  if (rounds[0].length > 2) {
+    const finalists = rounds[league - 1];
+    const losers = rounds[0].filter((c) => !finalists.includes(c));
+    if (losers.length >= 2) {
+      const thirdChoice = yield {
+        left: losers[0],
+        right: losers[1],
+        session: 'second',
+      };
+      const thirdWinner = thirdChoice === 'left' ? losers[0] : losers[1];
+      rankCareers.push(thirdWinner);
+    } else {
+      // 3위 결정전 불가능 시 남은 항목 중 첫 번째를 3위로 지정
+      rankCareers.push(losers[0] || '없음');
+    }
+  }
+
+  return { rankCareers, interestedCareerTypeMap };
+
+  // const type = 'CPER';
+  // console.log(interestedCareerArray);
+  // return { result: `당신의 성격 유형은 ${type} 입니다.`, type };
+}
+
 // 성격검사 제너레이터
 export function* psychologicalAsesssment() {
   // CP, ER 유형 - 계산을 통해 특정 가능
