@@ -104,6 +104,10 @@ const StyledBubble = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const AvartarTitle = styled.span`
