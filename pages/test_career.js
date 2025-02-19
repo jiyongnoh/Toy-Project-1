@@ -98,6 +98,7 @@ export default function CareerTest() {
             session: value.session,
           };
           setMessageArr([question_message]);
+          setNext(false);
         } else if (value.session === 'second') {
           const { left, right } = value;
           const tournament_message = {
@@ -105,19 +106,41 @@ export default function CareerTest() {
             content: [left, right],
             session: value.session,
           };
-          const tmp =
-            messageArr.length > 1
-              ? messageArr.slice(0, -1)
-              : [
-                  ...messageArr,
-                  {
-                    role: 'assistant',
-                    content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
-                  },
-                ];
-          setMessageArr([...tmp, tournament_message]);
+          if (messageArr.length === 1) {
+            setMessageArr([
+              ...messageArr,
+              {
+                role: 'assistant',
+                content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
+              },
+            ]);
+            setTimeout(() => {
+              setMessageArr([
+                ...messageArr,
+                {
+                  role: 'assistant',
+                  content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
+                },
+                tournament_message,
+              ]);
+              setNext(false);
+            }, 1500);
+          } else {
+            setMessageArr([...messageArr.slice(0, -1), tournament_message]);
+            setNext(false);
+          }
+          // const tmp =
+          //   messageArr.length > 1
+          //     ? messageArr.slice(0, -1)
+          //     : [
+          //         ...messageArr,
+          //         {
+          //           role: 'assistant',
+          //           content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
+          //         },
+          //       ];
+          // setMessageArr([...tmp, tournament_message]);
         }
-        setNext(false);
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
