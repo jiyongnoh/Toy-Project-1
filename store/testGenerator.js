@@ -4,6 +4,9 @@ const careers = [
     careerName: '소방관',
     careerType: 'R',
     imgURL: '/src/Career_IMG/Test/R/firefighter.png',
+    // careerIntroduce: '소방관은 불을 끄는 사람입니다.',
+    // careerContents: '직업 설명 스크립트',
+    // carrerAptitudeInterest: '적성 및 흥미 스크립트',
   },
   {
     careerId: 'police_officer',
@@ -297,7 +300,11 @@ export function* careerFirst() {
     }
   }
 
-  return { rankCareers, interestedCareerTypeMap };
+  return {
+    rankCareers,
+    interestedCareerTypeMap,
+    interestedCareerTypeCount: interestedCareerArray.length,
+  };
 
   // const type = 'CPER';
   // console.log(interestedCareerArray);

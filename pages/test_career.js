@@ -144,7 +144,11 @@ export default function CareerTest() {
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
-        const { rankCareers, interestedCareerTypeMap } = value;
+        const {
+          rankCareers,
+          interestedCareerTypeMap,
+          interestedCareerTypeCount,
+        } = value;
         if (rankCareers.length === 0) {
           alert('흥미있는 직업이 없습니다');
           return;

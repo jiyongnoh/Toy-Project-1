@@ -142,6 +142,8 @@ const BubbleContainer = styled.div`
   justify-content: center;
   align-items: center;
 
+  gap: 2rem;
+
   @media (max-width: 768px) {
     flex-direction: column;
   }

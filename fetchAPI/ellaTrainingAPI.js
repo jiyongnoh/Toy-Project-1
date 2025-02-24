@@ -61,7 +61,7 @@ export const handleTrainingMoodEllaLoad = async (input) => {
         withCredentials: true,
       }
     );
-    console.log(response);
+    // console.log(response);
     return response.data;
   } catch (err) {
     console.log('엘라 기분 훈련 데이터 저장 API 호출 실패');

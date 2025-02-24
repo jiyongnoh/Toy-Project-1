@@ -42,7 +42,7 @@ const CardContainer = styled.div`
   height: 100%;
 
   gap: 2rem;
-  padding: 0.5rem 1.5rem;
+  /* padding: 0.5rem 1.5rem; */
   cursor: ${(props) => (props.role === 'user' ? 'pointer' : '')};
 
   @media (max-width: 768px) {
