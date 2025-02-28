@@ -466,7 +466,7 @@ export function* careerFirst() {
   const shuffledCareers = careers.sort(() => Math.random() - 0.5);
 
   // 1차시 진로검사 문항
-  for (let i = 0; i < shuffledCareers.length; i++) {
+  for (let i = 0; i < shuffledCareers.length / 30; i++) {
     const answer = yield {
       question: shuffledCareers[i].careerName,
       question_imgURL:

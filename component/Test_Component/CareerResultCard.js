@@ -58,8 +58,8 @@ const CareerResultCard = ({
           <Image
             src={imgURL}
             alt={'Soyes_Career_Img'}
-            width={250}
-            height={200}
+            width={220}
+            height={160}
             style={{ maxWidth: '100%', height: 'auto' }}
           />
         </ImgContainer>
@@ -177,8 +177,8 @@ const ImgContainer = styled.div`
   background-color: ${(props) => props.backColor || 'none'};
   border-radius: 100%;
 
-  width: 220px;
-  height: 220px;
+  width: 230px;
+  height: 230px;
 
   @media (max-width: 768px) {
     width: 120px;
