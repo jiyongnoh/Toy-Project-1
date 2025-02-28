@@ -242,11 +242,13 @@ const CareerLabel = styled.label`
 `;
 
 const CareerSpan = styled.span`
+  width: 70%;
   font-size: 1rem;
   font-family: AppleSDGothicNeoM00;
 
   @media (max-width: 768px) {
     font-size: 0.8rem;
+    width: 60%;
   }
 `;
 
