@@ -10,6 +10,8 @@ import CareerTournamentBubble from '@/component/Test_Component/CareerTournamentB
 
 // import Image from 'next/image';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+import CareerRadarChart from '@/component/Test_Component/CareerRadarChart';
+import CareerResultBubble from '@/component/Test_Component/CareerResultBubble';
 
 // import { motion } from 'framer-motion';
 import { careerFirst } from '@/store/testGenerator';
@@ -23,8 +25,10 @@ export default function CareerTest() {
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
   const [select, setSelect] = useState('2'); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
+
   const [resultType, setResultType] = useState('');
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
+
   const [messageArr, setMessageArr] = useState([]);
 
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
@@ -112,6 +116,7 @@ export default function CareerTest() {
               {
                 role: 'assistant',
                 content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
+                session: 'first',
               },
             ]);
             setTimeout(() => {
@@ -120,6 +125,7 @@ export default function CareerTest() {
                 {
                   role: 'assistant',
                   content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
+                  session: 'first',
                 },
                 tournament_message,
               ]);
@@ -129,28 +135,14 @@ export default function CareerTest() {
             setMessageArr([...messageArr.slice(0, -1), tournament_message]);
             setNext(false);
           }
-          // const tmp =
-          //   messageArr.length > 1
-          //     ? messageArr.slice(0, -1)
-          //     : [
-          //         ...messageArr,
-          //         {
-          //           role: 'assistant',
-          //           content: `정말 잘 했어! 지금부터는 친구가 관심이 있어서 동그라미를 선택한 직업 중 가장 마음에 드는 직업이 무엇인지 골라보는 시간을 가질 거야. 한 번에 두 가지 직업 카드를 보여줄 테니까, 둘 중 더 끌리는 직업 카드를 고르면 돼. 간단하지? 그럼 해볼까?`,
-          //         },
-          //       ];
-          // setMessageArr([...tmp, tournament_message]);
         }
       }
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
-        const {
-          rankCareers,
-          interestedCareerTypeMap,
-          interestedCareerTypeCount,
-        } = value;
+        const { rankCareers, interestedCareerTypeMap } = value;
         if (rankCareers.length === 0) {
           alert('흥미있는 직업이 없습니다');
+          window.location.reload();
           return;
         }
         setIsPending(true);
@@ -159,9 +151,8 @@ export default function CareerTest() {
             ...messageArr,
             {
               role: 'assistant',
-              content: `1위: ${rankCareers[0]?.careerName || '없음'}
-2위: ${rankCareers[1]?.careerName || '없음'}
-3위: ${rankCareers[2]?.careerName || '없음'}`,
+              content: rankCareers,
+              session: 'result', // 결과 세션
             },
           ]);
           // setResultType(type);
@@ -204,12 +195,29 @@ export default function CareerTest() {
       >
         <CareerBox ref={chatBoxBody}>
           <CareerBoxBody>
+            {/* <CareerRadarChart /> */}
             <CareerTestBubble
               message={'어른이 되면 어떤 일을 하고싶나요?'}
               role="assistant"
             />
             {messageArr.map((el, index) => {
-              if (el?.session === 'second') {
+              // 적성검사 1차시
+              if (el?.session === 'first') {
+                return (
+                  <CareerTestBubble
+                    key={el.imgURL + index}
+                    message={el.content}
+                    role={el.role}
+                    imgURL={el.imgURL || null}
+                    setSelect={
+                      index === messageArr.length - 1 ? setSelect : null
+                    }
+                    setNext={index === messageArr.length - 1 ? setNext : null}
+                  />
+                );
+              }
+              // 적성검사 2차시
+              else if (el?.session === 'second') {
                 return (
                   <CareerTournamentBubble
                     key={JSON.stringify(el.content[0]) + index}
@@ -221,17 +229,15 @@ export default function CareerTest() {
                     setNext={index === messageArr.length - 1 ? setNext : null}
                   />
                 );
-              } else {
+              }
+              // 적성검사 결과
+              else if (el?.session === 'result') {
+                // content: 직업 3개 Array
                 return (
-                  <CareerTestBubble
-                    key={el.imgURL + index}
-                    message={el.content}
+                  <CareerResultBubble
+                    key={JSON.stringify(el.content) + index}
+                    content={el.content}
                     role={el.role}
-                    imgURL={el.imgURL || null}
-                    setSelect={
-                      index === messageArr.length - 1 ? setSelect : null
-                    }
-                    setNext={index === messageArr.length - 1 ? setNext : null}
                   />
                 );
               }
@@ -259,10 +265,6 @@ export async function getStaticProps({ locale }) {
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
 
 const MainContainer = styled.div`
-  /* background-image: url('/src/soyesKids_Background_image.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
   background-color: #fdf6ff;
   width: 100%;
   min-height: 100vh;
@@ -273,31 +275,7 @@ const MainContainer = styled.div`
   }
 `;
 
-// const MainContainer = styled.div`
-//   /* background-image: url('/src/soyesKids_Background_image.png');
-//   background-size: cover;
-//   background-position: center;
-//   background-repeat: no-repeat; */
-
-//   background-color: #fdf6ff;
-
-//   width: 100vw;
-//   height: 100vh;
-
-//   @media (max-width: 768px) {
-//     overflow: hidden;
-//   }
-
-//   position: relative;
-// `;
-
 const CareerBox = styled.div`
-  /* background-image: ${(props) =>
-    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-
   /* 화면 좁히기 가능 */
   width: 100vw;
   background: inherit;
@@ -311,11 +289,6 @@ const CareerBox = styled.div`
   min-height: 100vh;
   height: 100%;
 
-  /* 채팅 중앙정렬 가능 */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-
   @media (max-width: 768px) {
     width: 100vw;
     height: 100%;
@@ -323,36 +296,6 @@ const CareerBox = styled.div`
     padding: 0;
   }
 `;
-
-// const PTBox = styled.div`
-//   position: relative;
-//   margin: 0 auto;
-//   margin-top: 6rem;
-
-//   width: 100%;
-//   max-width: 37rem;
-
-//   height: 100%;
-//   /* height: calc(100vh - 150px); */
-//   /* max-height: calc(100vh - 150px); */
-
-//   background-color: #ffffff;
-//   border-radius: 8px;
-
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//   overflow: hidden;
-// `;
-
-// const PTBoxHeader = styled.div`
-//   background-color: #0084ff;
-//   color: #ffffff;
-//   padding: 16px;
-//   font-size: 20px;
-//   font-weight: bold;
-//   border-top-left-radius: 8px;
-//   border-top-right-radius: 8px;
-//   height: 9%;
-// `;
 
 const CareerBoxBody = styled.div`
   width: 100vw;
@@ -374,54 +317,3 @@ const CareerBoxBody = styled.div`
     min-height: 70vh;
   }
 `;
-
-// const PTBoxBody = styled.div`
-//   padding: 6px;
-//   height: 91%;
-//   overflow-y: auto;
-//   /* height: calc(100% - 360px); */
-
-//   display: flex;
-//   flex-direction: column;
-//   width: auto;
-// `;
-
-// const PTBoxFooter = styled.div`
-//   bottom: 0;
-//   display: flex;
-//   align-items: center;
-//   background-color: #ffffff;
-//   border-top: 1px solid #e6e6e6;
-//   padding: 8px 16px;
-// `;
-
-// const PTBoxFooterInput = styled.input`
-//   flex: 1;
-//   padding: 8px;
-//   border: 1px solid #e6e6e6;
-//   border-radius: 8px;
-//   font-size: 16px;
-//   outline: none;
-// `;
-
-// const PTBoxFooterButton = styled.button`
-//   margin-left: 8px;
-//   padding: 5px 12px;
-//   background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0084ff")};
-//   color: #ffffff;
-//   font-size: 16px;
-//   font-weight: bold;
-//   border: none;
-//   border-radius: 8px;
-//   cursor: ${(props) => (props.isPending ? "" : "pointer")};
-
-//   &:hover {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-
-//   &:active {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-//   display: flex;
-//   transition: 0.2s;
-// `;

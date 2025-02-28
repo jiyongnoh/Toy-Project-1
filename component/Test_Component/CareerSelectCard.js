@@ -10,8 +10,8 @@ const CareerSelectCard = ({ message, imgURL, type, role, clickHandler }) => {
     []
   );
   return (
-    <CardContainer type={type} role={role} onClick={clickHandler}>
-      <ImgContainer backColor={backColor}>
+    <CardContainer type={type} role={role}>
+      <ImgContainer backColor={backColor} onClick={clickHandler}>
         <Image
           src={imgURL}
           alt={'Soyes_Career_Img'}
@@ -60,7 +60,7 @@ const ImgContainer = styled.div`
   align-items: center;
 
   background-color: ${(props) => props.backColor || 'none'};
-  border: ${(props) => (props.role === 'user' ? '1px solid #A278BD' : null)};
+  border: 2px solid white;
   border-radius: 10px;
 
   width: 100%;
@@ -69,6 +69,14 @@ const ImgContainer = styled.div`
   cursor: pointer;
 
   /* user-select: none; */
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    border: 2px solid red;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
