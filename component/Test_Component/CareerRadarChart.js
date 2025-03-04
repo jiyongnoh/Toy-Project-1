@@ -63,17 +63,8 @@ const customBackgroundPlugin = {
   },
 };
 
-const labels = [
-  { text: '실재형', subText: 'Realistic', color: '#FF4D4D' }, // R (Red)
-  { text: '탐구형', subText: 'Investigative', color: '#FFA500' }, // I (Orange)
-  { text: '예술형', subText: 'Artistic', color: '#6A5ACD' }, // A (Purple)
-  { text: '사회형', subText: 'Social', color: '#1E90FF' }, // S (Blue)
-  { text: '진취형', subText: 'Enterprising', color: '#32CD32' }, // E (Green)
-  { text: '관습형', subText: 'Conventional', color: '#FFD700' }, // C (Yellow)
-];
-
 // 6각 레이더 차트 컴포넌트
-const CareerRadarChart = () => {
+const CareerRadarChart = ({ labels, labelsData, careerTypeMap }) => {
   // 육각형 최외곽 꼭지점에 라벨을 추가하는 플러그인
   const customCornerLabelsPlugin = {
     id: 'customCornerLabelsPlugin',
@@ -108,14 +99,14 @@ const CareerRadarChart = () => {
         const textOffset = Math.cos(angle) > 0 ? 25 : -25; // 양수: 오른쪽, 음수: 왼쪽
 
         // 원 안의 한 글자 (영문 첫 글자)
-        ctx.font = 'bold 16px Arial';
+        ctx.font = 'bold 16px AppleSDGothicNeoM00';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
         ctx.fillText(label.subText[0], x, y);
 
         // 원 옆의 텍스트 (한글)
         ctx.fillStyle = 'black';
-        ctx.font = 'bold 14px Arial';
+        ctx.font = 'bold 14px AppleSDGothicNeoM00';
         ctx.textAlign = Math.cos(angle) > 0 ? 'left' : 'right';
         const offsetY =
           label.text === '실재형' || label.text === '탐구형'
@@ -126,16 +117,20 @@ const CareerRadarChart = () => {
         ctx.fillText(label.text, x + textOffset, y + offsetY);
 
         // 원 옆의 영문 텍스트 (서브 텍스트)
-        ctx.font = '14px Arial';
+        ctx.font = '14px AppleSDGothicNeoM00';
         ctx.fillStyle = label.color;
         ctx.textAlign = Math.cos(angle) > 0 ? 'left' : 'right';
         ctx.fillText(label.subText, x + textOffset, y + offsetY + 15);
 
-        // 원 옆의 영문 텍스트 (서브 텍스트)
-        ctx.font = '12px Arial';
+        // 원 옆의 좌표 텍스트 (0/0)
+        ctx.font = '12px AppleSDGothicNeoM00';
         ctx.fillStyle = 'gray';
         ctx.textAlign = Math.cos(angle) > 0 ? 'left' : 'right';
-        ctx.fillText(`(0/0)`, x + textOffset, y + offsetY + 30);
+        ctx.fillText(
+          `(${careerTypeMap[label.subText[0]]}/${label.maxCount})`,
+          x + textOffset,
+          y + offsetY + 30
+        );
 
         // 폰트 원래대로 복구
         ctx.font = 'bold 16px Arial';
@@ -149,8 +144,8 @@ const CareerRadarChart = () => {
     labels: ['', '', '', '', '', ''],
     datasets: [
       {
-        label: '선택 카드 수',
-        data: [50, 30, 40, 25, 50, 70], // 데이터 값 (예제)
+        label: 'Career Type',
+        data: labelsData, // 데이터 값 (예제)
         backgroundColor: 'rgba(255,107,107, 0.7)', // 내부 색상
         borderColor: '#ff6b6b', // 테두리 색상
         borderWidth: 2,
@@ -169,7 +164,7 @@ const CareerRadarChart = () => {
       r: {
         startAngle: -30, // 시작 각도
         suggestedMin: 0,
-        suggestedMax: 100,
+        suggestedMax: 150,
         beginAtZero: true,
         grid: {
           display: false, // 그리드 숨김
@@ -194,25 +189,15 @@ const CareerRadarChart = () => {
         display: false, // 범례 숨김
       },
       datalabels: {
-        color: '#6e6d6a', // 점수 색상
+        color: 'black', // 점수 색상
         font: {
-          size: 12,
-          weight: '400',
+          size: 13,
+          weight: '600',
+          family: 'AppleSDGothicNeoM00',
         },
-        formatter: (value) => value, // 점수 표시
-        anchor: 'end', // 라벨 위치 조정
-        align: function (context) {
-          // 꼭짓점 방향에 따라 `align` 값 동적 설정
-          const index = context.dataIndex;
-          const angle = index * (360 / 6) - 90; // 6각형 기준으로 각도 계산 (-90도 보정)
-
-          if (angle < -60) return 'left'; // 위쪽 꼭지점
-          if (angle < 0) return 'right'; // 오른쪽 위
-          if (angle < 60) return 'right'; // 오른쪽 아래
-          if (angle < 120) return 'right'; // 아래쪽 꼭지점
-          if (angle < 180) return 'left'; // 왼쪽 아래
-          return 'left'; // 왼쪽 위
-        },
+        formatter: (value) => (value < 14 ? '' : value), // 점수 표시
+        // anchor: 'end', // 라벨 기본 위치
+        align: () => 'end', // 라벨 위치 조정
         offset: -1, // 위치 조정
       },
     },
@@ -232,11 +217,16 @@ const CareerRadarChart = () => {
 // 스타일 적용 (Chart 크기 조정)
 const ChartContainer = styled.div`
   width: 440px;
-  height: 200px;
+  height: 220px;
 
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 350px;
+    height: 200px;
+  }
 `;
 
 export default CareerRadarChart;

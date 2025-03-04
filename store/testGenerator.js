@@ -466,7 +466,7 @@ export function* careerFirst() {
   const shuffledCareers = careers.sort(() => Math.random() - 0.5);
 
   // 1차시 진로검사 문항
-  for (let i = 0; i < shuffledCareers.length / 30; i++) {
+  for (let i = 0; i < shuffledCareers.length; i++) {
     const answer = yield {
       question: shuffledCareers[i].careerName,
       question_imgURL:
@@ -482,10 +482,10 @@ export function* careerFirst() {
 
   // 2차시 진로검사 문항
   if (interestedCareerArray.length === 0) {
-    return { rankCareers: [], comparisons: {} };
+    return { rankCareers: [], interestedCareerTypeMap };
   }
   if (interestedCareerArray.length === 1) {
-    return { rankCareers: [interestedCareerArray[0]], comparisons: {} };
+    return { rankCareers: [interestedCareerArray[0]], interestedCareerTypeMap };
   }
 
   let rounds = [interestedCareerArray.slice()];

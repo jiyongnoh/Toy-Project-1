@@ -9,9 +9,35 @@ import Modal from 'react-modal';
 // 모달 스타일 지정
 Modal.setAppElement('#__next');
 
-const CareerResultBubble = ({ content, role }) => {
+// 적성검사 결과 분석 레이블
+const labels = [
+  { text: '실재형', subText: 'Realistic', color: '#FF4D4D', maxCount: 6 }, // R (Red)
+  { text: '탐구형', subText: 'Investigative', color: '#FFA500', maxCount: 5 }, // I (Orange)
+  { text: '예술형', subText: 'Artistic', color: '#6A5ACD', maxCount: 7 }, // A (Purple)
+  { text: '사회형', subText: 'Social', color: '#1E90FF', maxCount: 5 }, // S (Blue)
+  { text: '진취형', subText: 'Enterprising', color: '#32CD32', maxCount: 5 }, // E (Green)
+  { text: '관습형', subText: 'Conventional', color: '#FFD700', maxCount: 5 }, // C (Yellow)
+];
+
+const CareerResultBubble = ({ content, role, careerTypeMap }) => {
   const [analysisModalIsOpen, setAnalysisModalIsOpen] = useState(false);
   const handleModalClose = () => setAnalysisModalIsOpen(false);
+
+  const labelsData = labels.map((label) => [
+    label.subText[0],
+    parseInt((careerTypeMap[label.subText[0]] / label.maxCount) * 100) || 5,
+  ]);
+
+  // 선호 유형 순위
+  const sortedEntries = labelsData.slice().sort((a, b) => b[1] - a[1]);
+
+  const [firstValue, secondValue] = [
+    ...new Set(sortedEntries.map((el) => el[1])),
+  ].slice(0, 2);
+
+  const labelsDataRank = sortedEntries
+    .filter(([_, value]) => value === firstValue || value === secondValue)
+    .map(([key]) => key);
 
   return (
     <>
@@ -27,9 +53,21 @@ const CareerResultBubble = ({ content, role }) => {
         <ImgContanier>
           {role !== 'user' ? <AvartarTitle>심리상담 소예</AvartarTitle> : null}
           <StyledBubble role={role}>
+            {/* Detail Button */}
+            <DetailButton onClick={() => setAnalysisModalIsOpen(true)}>
+              <Image
+                src={`/src/Career_IMG/Deatil.png`}
+                alt={'Soyes_Career_Img'}
+                width={35}
+                height={35}
+                style={{ maxWidth: '100%', height: 'auto' }}
+              />
+              {`자세히 보기`}
+            </DetailButton>
             <BubbleContainer>
               {content.map((el, index) => {
                 return (
+                  // 1~3위까지의 직업 결과 카드
                   <CareerResultCard
                     key={el?.careerName}
                     careerName={el?.careerName}
@@ -44,13 +82,10 @@ const CareerResultBubble = ({ content, role }) => {
                 );
               })}
             </BubbleContainer>
-            <button onClick={() => setAnalysisModalIsOpen(true)}>
-              자세히 보기
-            </button>
           </StyledBubble>
         </ImgContanier>
       </CareerResultBubbleContainer>
-      {/* 모달 */}
+      {/* Modal */}
       <Modal
         isOpen={analysisModalIsOpen}
         onRequestClose={handleModalClose}
@@ -58,8 +93,37 @@ const CareerResultBubble = ({ content, role }) => {
       >
         <ModalContent>
           <ModalSection>
-            <strong>Test</strong>
-            <CareerRadarChart />
+            <strong>적성검사 결과</strong>
+            {/* 레이더 차트 */}
+            <CareerRadarChart
+              labels={labels}
+              labelsData={labelsData.map((el) => el[1])}
+              careerTypeMap={careerTypeMap}
+            />
+            {/* 선호 유형 순위 및 타입 설명 */}
+            <TypeContainer>
+              {labelsDataRank.map((el, index) => {
+                const labelData = labels.find(
+                  (label) => label.subText[0] === el
+                );
+
+                return (
+                  <div key={JSON.stringify(el)}>
+                    <TypeLabel>
+                      {!index
+                        ? '가장 선호하는 적성 유형은 다음과 같습니다'
+                        : index === 1
+                          ? '두 번째로 선호하는 적성 유형은 다음과 같습니다'
+                          : ''}
+                    </TypeLabel>
+                    <TypeContent backColor={labelData.color}>
+                      {labelData.text} {labelData.subText[0]},{' '}
+                      {labelData.subText} Type
+                    </TypeContent>
+                  </div>
+                );
+              })}
+            </TypeContainer>
           </ModalSection>
           <CloseButton onClick={handleModalClose}>닫기</CloseButton>
         </ModalContent>
@@ -80,18 +144,14 @@ const CareerResultBubbleContainer = styled.div`
 
 const StyledBubble = styled.div`
   max-width: 100%;
+  margin: 0.2rem 0.1rem;
   padding: ${(props) => (props.role === 'assistant' ? '1rem' : '0')};
   border-radius: 1rem;
-  margin: 0.2rem 0.1rem;
-  word-wrap: break-word;
 
+  word-wrap: break-word;
   color: ${(props) => (props.role === 'assistant' ? 'black' : 'black')};
   background-color: ${(props) => (props.role === 'assistant' ? 'white' : null)};
   align-self: ${(props) => (props.role === 'user' ? 'flex-end' : 'flex-start')};
-
-  p {
-    margin: 0;
-  }
 
   border: ${(props) => (props.role === 'user' ? '0' : '3px solid #ececec')};
   text-align: left;
@@ -101,6 +161,8 @@ const StyledBubble = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  position: relative;
 `;
 
 const AvartarTitle = styled.span`
@@ -161,10 +223,24 @@ const ModalContent = styled.div`
 `;
 
 const ModalSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 2rem;
+
   strong {
-    display: block;
-    margin-bottom: 5px;
+    margin-bottom: 1rem;
+    padding: 0.4rem 1rem;
+
+    background-color: #ff6969;
+    color: white;
+
+    border-radius: 16px;
+
     font-family: AppleSDGothicNeoM00;
+    text-align: center;
   }
 `;
 
@@ -181,6 +257,66 @@ const CloseButton = styled.button`
   font-family: AppleSDGothicNeoM00;
 
   cursor: pointer;
+`;
+
+const DetailButton = styled.button`
+  width: 80px;
+  height: 80px;
+
+  border: none;
+  border-radius: 100%;
+
+  background-color: #ff6759;
+  color: white;
+
+  font-size: 0.8rem;
+  font-family: AppleSDGothicNeoM00;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 0.2rem;
+
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+
+  cursor: pointer;
+`;
+
+const TypeContainer = styled.div`
+  padding: 0.8rem 1rem;
+  border: 2px solid #efd1b5;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TypeLabel = styled.div`
+  width: 300px;
+  margin: 0.4rem 0;
+
+  font-size: 0.8rem;
+  font-family: AppleSDGothicNeoM00;
+
+  text-align: center;
+`;
+
+const TypeContent = styled.div`
+  width: 300px;
+  padding: 0.4rem 1rem;
+  background-color: ${(props) => props.backColor || 'none'};
+  color: white;
+  border-radius: 5px;
+
+  font-family: AppleSDGothicNeoM00;
+
+  text-align: center;
 `;
 
 export default CareerResultBubble;

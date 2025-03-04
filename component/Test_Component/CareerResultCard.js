@@ -55,7 +55,7 @@ const CareerResultCard = ({
         <CareerRankLabel backColor={'#f7404c'}>{rank}위</CareerRankLabel>
         {/* 직업 이미지 */}
         <ImgContainer backColor={backColor}>
-          <Image
+          <StyledImage
             src={imgURL}
             alt={'Soyes_Career_Img'}
             width={220}
@@ -121,7 +121,6 @@ const CareerResultCard = ({
   );
 };
 
-// Styled Components
 const CardContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -141,9 +140,9 @@ const CardContainer = styled.div`
 
   cursor: pointer;
 
-  &:hover {
+  /* &:hover {
     opacity: 0.9;
-  }
+  } */
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -169,21 +168,30 @@ const CareerRankLabel = styled.label`
 `;
 
 const ImgContainer = styled.div`
+  width: 220px;
+  height: 220px;
+
+  background-color: ${(props) => props.backColor || 'none'};
+  border-radius: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  background-color: ${(props) => props.backColor || 'none'};
-  border-radius: 100%;
-
-  width: 230px;
-  height: 230px;
+  overflow: hidden; /* 원 밖으로 넘치는 부분 숨김 */
+  position: relative;
 
   @media (max-width: 768px) {
     width: 120px;
     height: 120px;
   }
+`;
+
+const StyledImage = styled(Image)`
+  object-fit: cover; /* 이미지를 원형 컨테이너에 맞춤 */
+  width: 100%;
+  height: 100%;
 `;
 
 const CareerTitle = styled.h3`
