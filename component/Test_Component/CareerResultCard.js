@@ -197,6 +197,7 @@ const StyledImage = styled(Image)`
 const CareerTitle = styled.h3`
   font-size: 1.5rem;
   font-weight: 600;
+  font-family: AppleSDGothicNeoM00;
 
   @media (max-width: 768px) {
     font-size: 1.1rem;

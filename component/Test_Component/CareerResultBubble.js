@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import styled from 'styled-components';
 import CareerResultCard from '@/component/Test_Component/CareerResultCard';
+import CareerTypeCard from './CareerTypeCard';
 import CareerRadarChart from './CareerRadarChart';
 import Image from 'next/image';
 import Modal from 'react-modal';
@@ -11,12 +12,12 @@ Modal.setAppElement('#__next');
 
 // 적성검사 결과 분석 레이블
 const labels = [
-  { text: '실재형', subText: 'Realistic', color: '#FF4D4D', maxCount: 6 }, // R (Red)
-  { text: '탐구형', subText: 'Investigative', color: '#FFA500', maxCount: 5 }, // I (Orange)
-  { text: '예술형', subText: 'Artistic', color: '#6A5ACD', maxCount: 7 }, // A (Purple)
-  { text: '사회형', subText: 'Social', color: '#1E90FF', maxCount: 5 }, // S (Blue)
-  { text: '진취형', subText: 'Enterprising', color: '#32CD32', maxCount: 5 }, // E (Green)
-  { text: '관습형', subText: 'Conventional', color: '#FFD700', maxCount: 5 }, // C (Yellow)
+  { text: '실재형', subText: 'Realistic', color: '#ff4151', maxCount: 6 }, // R (Red)
+  { text: '탐구형', subText: 'Investigative', color: '#ff8d54', maxCount: 5 }, // I (Orange)
+  { text: '예술형', subText: 'Artistic', color: '#7756ff', maxCount: 7 }, // A (Purple)
+  { text: '사회형', subText: 'Social', color: '#1571ff', maxCount: 5 }, // S (Blue)
+  { text: '진취형', subText: 'Enterprising', color: '#00db81', maxCount: 5 }, // E (Green)
+  { text: '관습형', subText: 'Conventional', color: '#ffc55c', maxCount: 5 }, // C (Yellow)
 ];
 
 const CareerResultBubble = ({ content, role, careerTypeMap }) => {
@@ -124,6 +125,16 @@ const CareerResultBubble = ({ content, role, careerTypeMap }) => {
                 );
               })}
             </TypeContainer>
+            {labelsDataRank.map((el) => {
+              return (
+                <CareerTypeCard
+                  key={el}
+                  careerType={el}
+                  type="result"
+                  role="assistant"
+                />
+              );
+            })}
           </ModalSection>
           <CloseButton onClick={handleModalClose}>닫기</CloseButton>
         </ModalContent>
@@ -287,6 +298,7 @@ const DetailButton = styled.button`
 `;
 
 const TypeContainer = styled.div`
+  width: 350px;
   padding: 0.8rem 1rem;
   border: 2px solid #efd1b5;
   border-radius: 5px;
