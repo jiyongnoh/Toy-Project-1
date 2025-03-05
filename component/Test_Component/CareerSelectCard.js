@@ -11,7 +11,11 @@ const CareerSelectCard = ({ message, imgURL, type, role, clickHandler }) => {
   );
   return (
     <CardContainer type={type} role={role}>
-      <ImgContainer backColor={backColor} onClick={clickHandler}>
+      <ImgContainer
+        backColor={backColor}
+        onClick={clickHandler}
+        active={typeof clickHandler === 'function'}
+      >
         <Image
           src={imgURL}
           alt={'Soyes_Career_Img'}
@@ -41,7 +45,7 @@ const CardContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  gap: 2rem;
+  gap: 1rem;
   /* padding: 0.5rem 1.5rem; */
   cursor: ${(props) => (props.role === 'user' ? 'pointer' : '')};
 
@@ -66,17 +70,21 @@ const ImgContainer = styled.div`
   width: 100%;
   height: 100%;
 
-  cursor: pointer;
+  user-select: none;
 
-  /* user-select: none; */
+  ${(props) =>
+    props.active &&
+    `
+    &:active {
+      border: 2px solid red;
+    }
+    
+    &:hover{
+      opacity: 0.8
+    };
 
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:active {
-    border: 2px solid red;
-  }
+    cursor: pointer;
+  `}
 
   @media (max-width: 768px) {
     width: 100%;

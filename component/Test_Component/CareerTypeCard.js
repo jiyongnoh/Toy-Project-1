@@ -64,33 +64,38 @@ const CareerTypeCard = ({ careerType, type, role }) => {
 
   return (
     <CardContainer type={type} role={role}>
-      <ImgContainer>
-        <StyledImage
-          src={careerTypeData?.imgURL}
-          alt={'Career_Type_Img'}
-          width={195}
-          height={195}
-          style={{ maxWidth: '100%', height: 'auto' }}
-        />
-      </ImgContainer>
-      <TypeContent backColor={careerTypeData?.color}>
-        {careerTypeData?.category.split('\n')[1]}
-      </TypeContent>
-      <CareerCategory>{careerTypeData?.category}</CareerCategory>
-      <CareerCategory>{careerTypeData?.characteristic}</CareerCategory>
-      <CareerCategory>{careerTypeData?.recommend}</CareerCategory>
+      <CardColumnSection>
+        <ImgContainer>
+          <StyledImage
+            src={careerTypeData?.imgURL}
+            alt={'Career_Type_Img'}
+            width={195}
+            height={195}
+            style={{ maxWidth: '100%', height: 'auto' }}
+          />
+        </ImgContainer>
+        <TypeContent backColor={careerTypeData?.color}>
+          {careerTypeData?.category.split('\n')[1]}
+        </TypeContent>
+      </CardColumnSection>
+      <CardColumnSection>
+        <CareerCategory center={true}>
+          {careerTypeData?.category}
+        </CareerCategory>
+        <CareerCategory>{careerTypeData?.characteristic}</CareerCategory>
+        <CareerCategory>{careerTypeData?.recommend}</CareerCategory>
+      </CardColumnSection>
     </CardContainer>
   );
 };
 
 const CardContainer = styled.div`
-  width: 350px;
+  width: 100%;
 
   height: 100%;
   padding: 2rem;
 
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 
@@ -106,8 +111,8 @@ const CardContainer = styled.div`
 `;
 
 const ImgContainer = styled.div`
-  width: 195px;
-  height: 195px;
+  width: 175px;
+  height: 175px;
 
   background-color: ${(props) => props.backColor || 'none'};
   border-radius: 100%;
@@ -124,6 +129,15 @@ const ImgContainer = styled.div`
     width: 120px;
     height: 120px;
   }
+`;
+
+const CardColumnSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
 `;
 
 const TypeContent = styled.div`
@@ -145,7 +159,7 @@ const StyledImage = styled(Image)`
 `;
 
 const CareerCategory = styled.p`
-  width: 300px;
+  width: 100%;
 
   padding: 1rem;
 
@@ -153,7 +167,7 @@ const CareerCategory = styled.p`
   border-radius: 10px;
 
   font-size: 0.9rem;
-  text-align: center;
+  text-align: ${(props) => (props.center ? 'center' : 'left')};
   font-family: AppleSDGothicNeoM00;
 
   white-space: pre-wrap;
@@ -163,53 +177,6 @@ const CareerCategory = styled.p`
   @media (max-width: 768px) {
     font-size: 0.8rem;
     width: 200px;
-  }
-`;
-
-const TypeLabel = styled.label`
-  padding: 0.3rem;
-  border-radius: 10px;
-  background-color: ${(props) => props.backColor || 'none'};
-  color: white;
-
-  font-size: 1rem;
-  font-weight: 600;
-  font-family: AppleSDGothicNeoM00;
-  text-align: center;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  position: absolute;
-  top: 0%;
-  left: 0%;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-`;
-
-const CareerTypeContainer = styled.div`
-  width: 300px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1rem;
-
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-const CareerSpan = styled.span`
-  width: 70%;
-  font-size: 1rem;
-  font-family: AppleSDGothicNeoM00;
-
-  @media (max-width: 768px) {
-    font-size: 0.8rem;
-    width: 60%;
   }
 `;
 

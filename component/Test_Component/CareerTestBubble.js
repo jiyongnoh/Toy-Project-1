@@ -34,6 +34,7 @@ const CareerTestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
                 <SelectButton
                   backgroundColor={'#F5403F'}
                   onClick={setSelect ? () => selectHandler('1') : null}
+                  active={typeof setSelect === 'function'}
                 >
                   <Image
                     src="/src/Career_IMG/O.png"
@@ -46,6 +47,7 @@ const CareerTestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
                 <SelectButton
                   backgroundColor={'#1779FF'}
                   onClick={setSelect ? () => selectHandler('0') : null}
+                  active={typeof setSelect === 'function'}
                 >
                   <Image
                     src="/src/Career_IMG/X.png"
@@ -194,11 +196,15 @@ const SelectButton = styled.button`
   font-size: 1.2rem;
   font-weight: 400;
 
-  cursor: pointer;
+  ${(props) =>
+    props.active &&
+    `
+    &:active{
+      opacity: 0.8
+    };
 
-  &:hover {
-    opacity: 0.8;
-  }
+    cursor: pointer;
+  `}
 
   @media (max-width: 768px) {
     font-size: 0.9rem;

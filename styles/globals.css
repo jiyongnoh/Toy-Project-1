@@ -55,3 +55,9 @@ body {
 #loading {
   font-size: 50px;
 }
+
+button,
+a,
+div[onClick] {
+  -webkit-tap-highlight-color: transparent;
+}

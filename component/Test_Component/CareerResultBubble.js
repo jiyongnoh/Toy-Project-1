@@ -95,36 +95,40 @@ const CareerResultBubble = ({ content, role, careerTypeMap }) => {
         <ModalContent>
           <ModalSection>
             <strong>적성검사 결과</strong>
-            {/* 레이더 차트 */}
-            <CareerRadarChart
-              labels={labels}
-              labelsData={labelsData.map((el) => el[1])}
-              careerTypeMap={careerTypeMap}
-            />
-            {/* 선호 유형 순위 및 타입 설명 */}
-            <TypeContainer>
-              {labelsDataRank.map((el, index) => {
-                const labelData = labels.find(
-                  (label) => label.subText[0] === el
-                );
+            {/* Chart Section (Row)*/}
+            <ChartSection>
+              {/* 레이더 차트 */}
+              <CareerRadarChart
+                labels={labels}
+                labelsData={labelsData.map((el) => el[1])}
+                careerTypeMap={careerTypeMap}
+              />
+              {/* 선호 유형 순위 및 타입 설명 */}
+              <TypeContainer>
+                {labelsDataRank.map((el, index) => {
+                  const labelData = labels.find(
+                    (label) => label.subText[0] === el
+                  );
 
-                return (
-                  <div key={JSON.stringify(el)}>
-                    <TypeLabel>
-                      {!index
-                        ? '가장 선호하는 적성 유형은 다음과 같습니다'
-                        : index === 1
-                          ? '두 번째로 선호하는 적성 유형은 다음과 같습니다'
-                          : ''}
-                    </TypeLabel>
-                    <TypeContent backColor={labelData.color}>
-                      {labelData.text} {labelData.subText[0]},{' '}
-                      {labelData.subText} Type
-                    </TypeContent>
-                  </div>
-                );
-              })}
-            </TypeContainer>
+                  return (
+                    <div key={JSON.stringify(el)}>
+                      <TypeLabel>
+                        {!index
+                          ? '가장 선호하는 적성 유형은 다음과 같습니다'
+                          : index === 1
+                            ? '두 번째로 선호하는 적성 유형은 다음과 같습니다'
+                            : ''}
+                      </TypeLabel>
+                      <TypeContent backColor={labelData.color}>
+                        {labelData.text} {labelData.subText[0]},{' '}
+                        {labelData.subText} Type
+                      </TypeContent>
+                    </div>
+                  );
+                })}
+              </TypeContainer>
+            </ChartSection>
+            {/* 선호 유형 순위 및 타입 상세 설명 */}
             {labelsDataRank.map((el) => {
               return (
                 <CareerTypeCard
@@ -215,7 +219,7 @@ const modalStyles = {
   },
   content: {
     width: '90%',
-    maxWidth: '500px',
+    maxWidth: '900px',
     height: 'auto',
     margin: 'auto',
     padding: '20px',
@@ -295,6 +299,14 @@ const DetailButton = styled.button`
   right: 2rem;
 
   cursor: pointer;
+`;
+
+const ChartSection = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
 `;
 
 const TypeContainer = styled.div`

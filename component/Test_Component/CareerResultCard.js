@@ -144,6 +144,8 @@ const CardContainer = styled.div`
     opacity: 0.9;
   } */
 
+  -webkit-tap-highlight-color: transparent;
+
   @media (max-width: 768px) {
     padding: 1rem;
     gap: 1rem;
