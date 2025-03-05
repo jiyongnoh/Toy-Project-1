@@ -11,7 +11,7 @@ const avatarArr = [
     imgUrl: '/src/AvatarCard_IMG/Main/AvatarCard_Main_Soyes_Charc_IMG.png',
     backColor: '#B79FC6',
     title: '소예',
-    subtitle: '심리상담',
+    subtitle: '심리상담사',
   },
   {
     name: 'lala',
@@ -38,13 +38,13 @@ const avatarArr = [
     name: 'north',
     imgUrl: '/src/AvatarCard_IMG/Main/AvatarCard_Main_North_Charc_IMG.png',
     backColor: '#5289CD',
-    title: '북국이',
+    title: '북극이',
     subtitle: '이야기 친구',
   },
 ];
 
 const AvartarCard = () => {
-  const [avartaAI, setAvartaAI] = useRecoilState(avarta);
+  const [_, setAvartaAI] = useRecoilState(avarta);
 
   return (
     <AvartarCardContainer>
@@ -66,7 +66,7 @@ const AvartarCard = () => {
               style={{ maxWidth: '100%', height: 'auto' }}
             />
             <AvartarTextContainer backColor={avatar.backColor}>
-              {avatar.subtitle + ' '}
+              {avatar.subtitle + '\n'}
               <TitleTextSpan>{avatar.title}</TitleTextSpan>
             </AvartarTextContainer>
           </StyledLink>
@@ -100,10 +100,12 @@ const AvartarTextContainer = styled.div`
   font-family: AppleSDGothicNeoM00;
   color: white;
 
+  white-space: pre;
+
   @media (max-width: 768px) {
     border-radius: 0 0 0.7rem 0.7rem;
 
-    padding: 0.5rem;
+    padding: 0.2rem;
     font-size: 10px;
   }
 `;
@@ -116,7 +118,7 @@ const TitleTextSpan = styled.span`
 
   @media (max-width: 768px) {
     padding: 0.5rem;
-    font-size: 13px;
+    font-size: 11px;
   }
 `;
 

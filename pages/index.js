@@ -34,15 +34,6 @@ export default function Home() {
   return (
     <MasterContainer>
       <MainContainer>
-        {/* {!mobileFlag && (
-          <Image
-            src="/src/Home_IMG/Logo_소예키즈 로고2.png"
-            alt={'soyes_logo'}
-            width={359}
-            height={85}
-            style={{ maxWidth: '100%', height: 'auto' }}
-          />
-        )} */}
         <Carousel />
         <AvartarTitle>AI 상담 캐릭터</AvartarTitle>
         <AvartarCard />

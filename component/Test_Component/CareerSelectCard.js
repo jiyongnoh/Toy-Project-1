@@ -16,7 +16,7 @@ const CareerSelectCard = ({ message, imgURL, type, role, clickHandler }) => {
         onClick={clickHandler}
         active={typeof clickHandler === 'function'}
       >
-        <Image
+        <StyledImage
           src={imgURL}
           alt={'Soyes_Career_Img'}
           width={300}
@@ -31,10 +31,8 @@ const CareerSelectCard = ({ message, imgURL, type, role, clickHandler }) => {
 
 // Styled Components
 const CardContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  height: 400px;
 
   color: ${(props) =>
     props.selected ? 'black' : props.role === 'user' ? 'white' : 'black'};
@@ -42,12 +40,12 @@ const CardContainer = styled.div`
   border: ${(props) => (props.role === 'user' ? '1px solid #A278BD' : null)};
   border-radius: 10px;
 
-  width: 100%;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   gap: 1rem;
-  /* padding: 0.5rem 1.5rem; */
-  cursor: ${(props) => (props.role === 'user' ? 'pointer' : '')};
 
   @media (max-width: 768px) {
     width: 100%;
@@ -58,6 +56,9 @@ const CardContainer = styled.div`
 `;
 
 const ImgContainer = styled.div`
+  width: 300px;
+  height: 300px;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -67,10 +68,10 @@ const ImgContainer = styled.div`
   border: 2px solid white;
   border-radius: 10px;
 
-  width: 100%;
-  height: 100%;
-
   user-select: none;
+
+  overflow: hidden; /* 원 밖으로 넘치는 부분 숨김 */
+  position: relative;
 
   ${(props) =>
     props.active &&
@@ -90,6 +91,12 @@ const ImgContainer = styled.div`
     width: 100%;
     height: 100%;
   }
+`;
+
+const StyledImage = styled(Image)`
+  object-fit: cover; /* 이미지를 원형 컨테이너에 맞춤 */
+  width: 100%;
+  height: 100%;
 `;
 
 const MessageP = styled.p`

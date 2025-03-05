@@ -25,7 +25,7 @@ const CareerTestBubble = ({ message, role, imgURL, setSelect, setNext }) => {
         />
       ) : null}
       {imgURL ? (
-        <ImgContanier message={message}>
+        <ImgContanier>
           {role !== 'user' ? <AvartarTitle>심리상담 소예</AvartarTitle> : null}
           <StyledBubble role={role}>
             <BubbleContainer>
