@@ -3,6 +3,8 @@
   padding: 0;
   margin: 0;
   font-family: 'times';
+
+  -webkit-tap-highlight-color: transparent;
 }
 
 @font-face {
@@ -54,10 +56,4 @@ body {
 
 #loading {
   font-size: 50px;
-}
-
-button,
-a,
-div[onClick] {
-  -webkit-tap-highlight-color: transparent;
 }
