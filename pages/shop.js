@@ -1,32 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import UserGreeting from '@/component/MyPage_Component/UserGreeting';
-import SubscriptionStatus from '@/component/Shop_Component/SubscriptionStatus';
-import TicketCard from '@/component/Shop_Component/TicketCard';
-
-// Router
 import { useRouter } from 'next/router';
-// Params
 import { useSearchParams } from 'next/navigation';
 
 // SweetAlert2
 import Swal from 'sweetalert2';
 
-import { handleKakaoPayApprove } from '@/fetchAPI/kakaoPayAPI';
-
+import { handleKakaoPayApprove } from '@/fetchAPI/PayAPI';
 import { payInfo } from '@/store/payInfo';
 
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+import UserGreeting from '@/component/MyPage_Component/UserGreeting';
+import SubscriptionStatus from '@/component/Shop_Component/SubscriptionStatus';
+// import TicketCard from '@/component/Shop_Component/TicketCard';
+import PortOnePay from '@/component/Shop_Component/PortOnePay';
+
 const ticketArr = [
   {
     days: 'pay_day',
     originalPrice: '5,400',
-    discountedPrice: '2,000',
+    discountedPrice: 2000,
     value: '1daypass',
     backgroundUrl: '/src/Shop_IMG/Shop_Ticket_Bg1_IMG.png',
     color: '#FFF500',
@@ -34,7 +32,7 @@ const ticketArr = [
   {
     days: 'pay_month',
     originalPrice: '9,900',
-    discountedPrice: '6,000',
+    discountedPrice: 6000,
     value: '1monthpass',
     backgroundUrl: '/src/Shop_IMG/Shop_Ticket_Bg30_IMG.png',
     color: '#6EA4FF',
@@ -42,7 +40,7 @@ const ticketArr = [
   {
     days: 'pay_year',
     originalPrice: '99,000',
-    discountedPrice: '60,000',
+    discountedPrice: 60000,
     value: '1yearpass',
     backgroundUrl: '/src/Shop_IMG/Shop_Ticket_Bg365_IMG.png',
     color: '#A62AA9',
@@ -143,6 +141,19 @@ export default function Shop() {
         <TicketContainer>
           {ticketArr.map((el, index) => {
             return (
+              <PortOnePay
+                key={t(`${el.days}`) + index}
+                days={t(`${el.days}`)}
+                originalPrice={el.originalPrice}
+                discountedPrice={el.discountedPrice}
+                // value={el.value}
+                backgroundUrl={el.backgroundUrl}
+                color={el.color}
+              />
+            );
+          })}
+          {/* {ticketArr.map((el, index) => {
+            return (
               <TicketCard
                 key={index}
                 days={t(`${el.days}`)}
@@ -153,7 +164,7 @@ export default function Shop() {
                 color={el.color}
               />
             );
-          })}
+          })} */}
         </TicketContainer>
       </PlanContainer>
     </ShopPageContainer>

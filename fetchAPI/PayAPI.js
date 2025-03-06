@@ -20,7 +20,6 @@ export const handleKakaoPayReady = async (input) => {
     console.error(err);
   }
 };
-
 // KakaoPay Approve
 export const handleKakaoPayApprove = async (input) => {
   try {
@@ -43,7 +42,6 @@ export const handleKakaoPayApprove = async (input) => {
     };
   }
 };
-
 // User Expiration period 조회
 export const handleUserExpiration = async (input) => {
   try {
@@ -60,6 +58,28 @@ export const handleUserExpiration = async (input) => {
     return response;
   } catch (err) {
     console.log('UserExpiratio API 호출 실패');
+    console.error(err);
+    return {
+      status: 400,
+    };
+  }
+};
+// KakaoPay Compleate
+export const handlePortOnePayCompleate = async (input) => {
+  try {
+    const response = await axios.post(
+      `${process.env.NEXT_PUBLIC_URL}/portOnepay/compleate`,
+      { data: input },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    );
+    return response;
+  } catch (err) {
+    console.log('API 호출 실패');
     console.error(err);
     return {
       status: 400,

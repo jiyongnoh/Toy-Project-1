@@ -169,7 +169,7 @@ export default function Login() {
     if (code) {
       try {
         const res = await loginAPI_OAuth_Approve_Kakao({ code });
-        console.log(res.data);
+        // console.log(res.data);
 
         if (res.status === 200) {
           Swal.fire({

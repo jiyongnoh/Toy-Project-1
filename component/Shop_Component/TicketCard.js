@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { payInfo } from '@/store/payInfo';
-import { handleKakaoPayReady } from '@/fetchAPI/kakaoPayAPI';
+import { handleKakaoPayReady } from '@/fetchAPI/PayAPI';
 import { useRecoilState } from 'recoil';
 import { mobile } from '../../store/state';
 
@@ -14,7 +14,7 @@ const TicketCard = ({
   backgroundUrl,
   color,
 }) => {
-  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
+  const [mobileFlag] = useRecoilState(mobile);
 
   const kakaoPayHandle = async (e) => {
     // 카카오페이 결제 준비 API 호출 후, 받은 URL로 모달 띄우기

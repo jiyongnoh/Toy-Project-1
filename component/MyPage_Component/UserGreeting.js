@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
 import { uid } from '../../store/state';
-import { handleUserExpiration } from '@/fetchAPI/kakaoPayAPI';
+import { handleUserExpiration } from '@/fetchAPI/PayAPI';
 
 const UserGreeting = ({ purchaseDate }) => {
   const [userId, setUserId] = useRecoilState(uid);
