@@ -22,26 +22,26 @@ import PortOnePay from '@/component/Shop_Component/PortOnePay';
 
 const ticketArr = [
   {
-    days: 'pay_day',
-    originalPrice: '5,400',
-    discountedPrice: 2000,
-    value: '1daypass',
+    orderName: '1년 이용권',
+    days: 'pay_year',
+    discountedPrice: 99000,
+    value: '1yearpass',
     backgroundUrl: '/src/Shop_IMG/Shop_Ticket_Bg1_IMG.png',
     color: '#FFF500',
   },
   {
+    orderName: '30일 이용권',
     days: 'pay_month',
-    originalPrice: '9,900',
-    discountedPrice: 6000,
+    discountedPrice: 49000,
     value: '1monthpass',
     backgroundUrl: '/src/Shop_IMG/Shop_Ticket_Bg30_IMG.png',
     color: '#6EA4FF',
   },
   {
-    days: 'pay_year',
-    originalPrice: '99,000',
-    discountedPrice: 60000,
-    value: '1yearpass',
+    orderName: '무료 체험권',
+    days: 'pay_day',
+    discountedPrice: 0,
+    value: '1daypass',
     backgroundUrl: '/src/Shop_IMG/Shop_Ticket_Bg365_IMG.png',
     color: '#A62AA9',
   },
@@ -142,11 +142,9 @@ export default function Shop() {
           {ticketArr.map((el, index) => {
             return (
               <PortOnePay
-                key={t(`${el.days}`) + index}
-                days={t(`${el.days}`)}
-                originalPrice={el.originalPrice}
+                key={el.orderName + index}
+                orderName={el.orderName}
                 discountedPrice={el.discountedPrice}
-                // value={el.value}
                 backgroundUrl={el.backgroundUrl}
                 color={el.color}
               />
