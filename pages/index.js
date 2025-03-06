@@ -35,7 +35,7 @@ export default function Home() {
     <MasterContainer>
       <MainContainer>
         <Carousel />
-        <AvartarTitle>AI 상담 캐릭터</AvartarTitle>
+        <AvartarTitle />
         <AvartarCard />
         <ContentCard />
       </MainContainer>
