@@ -18,6 +18,13 @@ const testMap = {
     height: 193,
     path: '/test_pt',
   },
+  career: {
+    testClass: '적성 검사',
+    imgUrl: '/src/Intro_IMG/Intro_EBT_Icon1_IMG.png',
+    width: 250,
+    height: 193,
+    path: '/test_career',
+  },
   default: {
     testClass: '성격 검사',
     imgUrl: '/src/Intro_IMG/Intro_PT_Icon2_IMG.png',

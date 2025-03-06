@@ -50,6 +50,7 @@ const IntroBlock = ({ avartar }) => {
         <ButtonContainer>
           {avartar.codeName === 'soyes' && <TestButton testClass="ebt" />}
           {avartar.codeName === 'soyes' && <TestButton testClass="pt" />}
+          {avartar.codeName === 'soyes' && <TestButton testClass="career" />}
         </ButtonContainer>
         {avartar.codeName !== 'soyes' && (
           <ConsultButton
@@ -95,4 +96,8 @@ const Container = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   gap: 0.8rem;
+
+  /* display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(1, 1fr); */
 `;
