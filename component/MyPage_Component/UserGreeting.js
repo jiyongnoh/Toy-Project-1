@@ -7,7 +7,7 @@ import { uid } from '../../store/state';
 import { handleUserExpiration } from '@/fetchAPI/PayAPI';
 
 const UserGreeting = ({ purchaseDate }) => {
-  const [userId, setUserId] = useRecoilState(uid);
+  const [userId] = useRecoilState(uid);
   const [daysLeft, setDaysLeft] = useState(0);
 
   useEffect(() => {
@@ -68,12 +68,12 @@ const Container = styled.div`
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 `;
 
-const Avatar = styled.img`
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-right: 20px;
-`;
+// const Avatar = styled.img`
+//   width: 80px;
+//   height: 80px;
+//   border-radius: 50%;
+//   margin-right: 20px;
+// `;
 
 const TextContainer = styled.div`
   display: flex;

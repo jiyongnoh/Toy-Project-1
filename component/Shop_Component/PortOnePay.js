@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { handlePortOnePayCompleate } from '@/fetchAPI/PayAPI';
@@ -13,26 +12,25 @@ export default function PortOnePay({
   backgroundUrl,
   color,
 }) {
-  const [paymentStatus, setPaymentStatus] = useState({
-    status: 'IDLE',
-  });
-
+  // 랜덤 ID 생성 함수
   function randomId() {
     return [...crypto.getRandomValues(new Uint32Array(2))]
       .map((word) => word.toString(16).padStart(8, '0'))
       .join('');
   }
 
+  // 포트원 실행 함수
   const handleSubmit = async (e) => {
     if (discountedPrice === 0) {
       alert('준비중입니다');
       return;
     }
     e.preventDefault();
-    setPaymentStatus({ status: 'PENDING' });
+
     let payment;
     const paymentId = randomId();
     try {
+      //
       payment = await PortOne.requestPayment({
         storeId: 'store-841fac61-b3e4-4270-9377-1339ccbc63d0', // 포트원 관리자 콘솔 -> 결제연동 -> 연동정보 (우상단)
         channelKey: 'channel-key-bb8ee80f-17e7-466d-a8b9-aa4063a4f177', // 포트원 관리자 콘솔 -> 결제연동 -> 연동정보 -> 채널관리 -> 테스트 -> 채널키
@@ -47,6 +45,7 @@ export default function PortOnePay({
       });
     } catch (e) {
       console.error(e);
+      alert('PortOne Browser Fail');
       return;
     }
 
@@ -57,10 +56,6 @@ export default function PortOnePay({
         title: '결제 취소',
         showConfirmButton: true,
         // timer: 1000,
-      }).then(async () => {
-        setPaymentStatus({
-          status: 'IDLE',
-        });
       });
       return;
     }
@@ -79,10 +74,6 @@ export default function PortOnePay({
         text: 'Main Page로 이동합니다',
         showConfirmButton: false,
         timer: 1500,
-      }).then(() => {
-        setPaymentStatus({
-          status: paymentComplete.data.status,
-        });
       });
     }
     // 결제 실패
@@ -92,11 +83,6 @@ export default function PortOnePay({
         title: '결제 실패',
         showConfirmButton: false,
         timer: 1000,
-      }).then(async () => {
-        setPaymentStatus({
-          status: 'IDLE',
-          message: 'Payment Fail',
-        });
       });
     }
   };
