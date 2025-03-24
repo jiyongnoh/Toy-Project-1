@@ -3,20 +3,14 @@ import styled from 'styled-components';
 import { FlexContainer } from '../styled-component/common';
 import { useEffect, useState, useRef } from 'react';
 
-import { handlePtAnalsys } from '@/fetchAPI/testAPI';
+import { handleCtAnalsys } from '@/fetchAPI/testAPI';
+import { careerFirst } from '@/store/testGenerator';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import CareerTestBubble from '@/component/Test_Component/CareerTestBubble';
 import CareerTournamentBubble from '@/component/Test_Component/CareerTournamentBubble';
-
-// import Image from 'next/image';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 import CareerResultBubble from '@/component/Test_Component/CareerResultBubble';
-
-// import { motion } from 'framer-motion';
-import { careerFirst } from '@/store/testGenerator';
-
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
 export default function CareerTest() {
@@ -24,10 +18,6 @@ export default function CareerTest() {
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
   const [select, setSelect] = useState('2'); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
-
-  const [resultType, setResultType] = useState('');
-  const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
-
   const [messageArr, setMessageArr] = useState([]);
   const [careerTypeMap, setCareerTypeMap] = useState({}); // scrollToBottom 컴포넌트 고정
 
@@ -49,20 +39,13 @@ export default function CareerTest() {
   };
 
   // API 호출 메서드
-  const requetAnalysis = async () => {
+  const requetCareerSave = async (input) => {
     try {
       // 감정 분석 API 호출 이후 state 갱신
-      const data = await handlePtAnalsys({
-        resultText: resultType,
+      await handleCtAnalsys({
+        ...input,
         pUid: localStorage.getItem('id'),
       });
-
-      setIsPending(false);
-      setMessageArr([
-        ...messageArr,
-        { role: 'assistant', content: data.message },
-      ]);
-      setBottom(true);
     } catch (error) {
       console.log(error);
     }
@@ -140,11 +123,25 @@ export default function CareerTest() {
       // 검사 문항 종료 - 결과 및 AI 분석 요청
       else if (value) {
         const { rankCareers, interestedCareerTypeMap } = value;
+        // console.log(value);
         if (rankCareers.length === 0) {
           alert('흥미있는 직업이 없습니다');
           window.location.reload();
           return;
         }
+        // DB에 저장
+        requetCareerSave({
+          gradeType: 'LOW',
+          careerResult1st: rankCareers[0].careerKey,
+          careerResult2nd: rankCareers[1].careerKey,
+          careerResult3rd: rankCareers[2].careerKey,
+          careertypeA: interestedCareerTypeMap['A'],
+          careertypeC: interestedCareerTypeMap['C'],
+          careertypeE: interestedCareerTypeMap['E'],
+          careertypeI: interestedCareerTypeMap['I'],
+          careertypeR: interestedCareerTypeMap['R'],
+          careertypeS: interestedCareerTypeMap['S'],
+        });
         setCareerTypeMap({ ...interestedCareerTypeMap });
         setIsPending(true);
         setTimeout(() => {
@@ -156,8 +153,6 @@ export default function CareerTest() {
               session: 'result', // 결과 세션
             },
           ]);
-          // setResultType(type);
-          // setResultTrigger(true); // API 호출 메서드 트리거
           setIsPending(false);
           setNext(false);
           setBottom(true);
@@ -167,14 +162,6 @@ export default function CareerTest() {
       setBottom(true);
     }
   }, [next]);
-
-  // 성격검사 AI 분석 트리거
-  useEffect(() => {
-    if (resultTrigger) {
-      console.log('AI PT 분석 API 호출');
-      requetAnalysis();
-    }
-  }, [resultTrigger]);
 
   // 스크롤 바텀
   useEffect(() => {
@@ -198,7 +185,7 @@ export default function CareerTest() {
           <CareerBoxBody>
             {/* <CareerRadarChart /> */}
             <CareerTestBubble
-              message={'어른이 되면 어떤 일을 하고싶나요?'}
+              message={'어른이 되면 어떤 일을 하고싶어?'}
               role="assistant"
             />
             {messageArr.map((el, index) => {
@@ -259,7 +246,7 @@ export default function CareerTest() {
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['pt', 'nav'])),
+      ...(await serverSideTranslations(locale, ['shop', 'nav'])),
     },
   };
 }

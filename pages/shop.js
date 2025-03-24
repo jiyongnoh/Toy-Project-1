@@ -20,6 +20,8 @@ import SubscriptionStatus from '@/component/Shop_Component/SubscriptionStatus';
 // import TicketCard from '@/component/Shop_Component/TicketCard';
 import PortOnePay from '@/component/Shop_Component/PortOnePay';
 
+import { useReportWebVitals } from 'next/web-vitals';
+
 const ticketArr = [
   {
     orderName: '1년 이용권',
@@ -53,7 +55,11 @@ export default function Shop() {
   // 권한 code Params 찾기
   const searchParams = useSearchParams();
   const pg_token = searchParams.get('pg_token'); // 결제 성공 시 반환되는 Parameter 값
-  const { t } = useTranslation('shop');
+  // const { t } = useTranslation('shop');
+
+  useReportWebVitals((metric) => {
+    console.log(metric);
+  });
 
   useEffect(() => {
     // 페이지 언마운트 - 결제관련 정보 localStorage에서 제거

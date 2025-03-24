@@ -1,6 +1,7 @@
 const careers = [
   // R
   {
+    careerKey: 8,
     careerId: 'firefighter',
     careerName: '소방관',
     careerType: 'R',
@@ -16,6 +17,7 @@ const careers = [
     희생정신과 봉사 정신을 가지고 있어야 하며 동료들과 함께 단합할 수 있는 협동심과 리더십도 필요합니다. `,
   },
   {
+    careerKey: 9,
     careerId: 'police_officer',
     careerName: '경찰관',
     careerType: 'R',
@@ -28,6 +30,7 @@ const careers = [
     시민과 원활히 소통할 수 있는 대인관계능력도 요구됩니다. 강한 체력과 정신력이 필요하며, 공정하고 올바른 윤리의식을 갖추어야 합니다.`,
   },
   {
+    careerKey: 10,
     careerId: 'soldier',
     careerName: '직업군인',
     careerType: 'R',
@@ -41,6 +44,7 @@ const careers = [
       '체력이 우수하고 책임감이 강해야 하며, 협동심과 팀워크를 중요하게 생각하는 자세가 필요합니다.',
   },
   {
+    careerKey: 11,
     careerId: 'athlete',
     careerName: '운동선수',
     careerType: 'R',
@@ -55,6 +59,7 @@ const careers = [
     승부욕과 목표 지향적인 태도가 요구되며, 경기 중 압박을 이겨낼 수 있는 정신력과 집중력이 중요합니다.`,
   },
   {
+    careerKey: 2,
     careerId: 'pilot',
     careerName: '항공기 조종사',
     careerType: 'R',
@@ -69,6 +74,7 @@ const careers = [
     기체 조작을 위한 신체 운동 능력과 공간 지각 능력이 중요하며, 승무원 및 관제사와 원활한 의사소통을 할 수 있는 대인관계 능력도 요구됩니다.`,
   },
   {
+    careerKey: 5,
     careerId: 'chef',
     careerName: '조리사 및 주방장',
     careerType: 'R',
@@ -84,6 +90,7 @@ const careers = [
   },
   // I
   {
+    careerKey: 12,
     careerId: 'doctor',
     careerName: '의사',
     careerType: 'I',
@@ -98,6 +105,7 @@ const careers = [
     의료 기술과 지식을 꾸준히 습득하며 발전시켜야 하므로 학습 의지가 강해야 합니다.`,
   },
   {
+    careerKey: 13,
     careerId: 'veterinarian',
     careerName: '수의사',
     careerType: 'I',
@@ -112,6 +120,7 @@ const careers = [
     감염 예방 및 위생 관리에 철저해야 하며, 다양한 동물을 다룰 수 있는 용기와 인내심도 필요합니다.`,
   },
   {
+    careerKey: 14,
     careerId: 'computer_programmer',
     careerName: '컴퓨터 프로그래머',
     careerType: 'I',
@@ -127,6 +136,7 @@ const careers = [
     효율적인 코드 작성과 소프트웨어 최적화를 위해 창의력과 분석력이 필요합니다.`,
   },
   {
+    careerKey: 15,
     careerId: 'automotive_engineer',
     careerName: '자동차공학기술자',
     careerType: 'I',
@@ -142,6 +152,7 @@ const careers = [
     협업이 필수적인 분야이므로 팀워크와 의사소통 능력도 필요합니다.`,
   },
   {
+    careerKey: 16,
     careerId: 'robotics_engineer',
     careerName: '로봇공학기술자',
     careerType: 'I',
@@ -158,6 +169,7 @@ const careers = [
   },
   // A
   {
+    careerKey: 22,
     careerId: 'singer',
     careerName: '가수',
     careerType: 'A',
@@ -173,6 +185,7 @@ const careers = [
     창의력을 바탕으로 자신만의 음악 스타일을 개발할 수 있어야 하며, 인내심과 끈기가 필요합니다.`,
   },
   {
+    careerKey: 23,
     careerId: 'actor',
     careerName: '연기자',
     careerType: 'A',
@@ -188,6 +201,7 @@ const careers = [
     인내심과 끈기를 가지고 꾸준히 연습하며, 자신만의 연기 스타일을 개발해야 합니다.`,
   },
   {
+    careerKey: 24,
     careerId: 'dancer',
     careerName: '무용가',
     careerType: 'A',
@@ -203,6 +217,7 @@ const careers = [
     반복되는 연습과 공연을 견딜 수 있는 체력과 인내심이 필수적입니다.`,
   },
   {
+    careerKey: 25,
     careerId: 'painter',
     careerName: '화가',
     careerType: 'A',
@@ -216,6 +231,7 @@ const careers = [
     인내심과 끈기가 필요하며, 자기만의 예술적 스타일을 개발할 수 있는 탐구 정신이 요구됩니다.`,
   },
   {
+    careerKey: 26,
     careerId: 'cartoonist',
     careerName: '만화가',
     careerType: 'A',
@@ -229,6 +245,7 @@ const careers = [
     꾸준한 연습과 자기만의 스타일을 개발해야 하며, 독창적인 캐릭터와 세계관을 구상할 수 있어야 합니다.`,
   },
   {
+    careerKey: 31,
     careerId: 'makeup_artist',
     careerName: '메이크업 아티스트',
     careerType: 'A',
@@ -242,6 +259,7 @@ const careers = [
     고객과의 소통 능력이 중요하며, 트렌드를 파악하고 새로운 메이크업 스타일을 연구하는 탐구 정신이 요구됩니다.`,
   },
   {
+    careerKey: 33,
     careerId: 'youtuber',
     careerName: '유튜브 크리에이터',
     careerType: 'A',
@@ -256,6 +274,7 @@ const careers = [
   },
   // S
   {
+    careerKey: 34,
     careerId: 'psychologist',
     careerName: '심리상담사(임상심리사)',
     careerType: 'S',
@@ -269,6 +288,7 @@ const careers = [
     심리학적 지식을 지속적으로 습득해야 하며, 사람들과 원활한 소통이 필수적입니다.`,
   },
   {
+    careerKey: 36,
     careerId: 'nurse',
     careerName: '간호사',
     careerType: 'S',
@@ -281,6 +301,7 @@ const careers = [
     체력과 인내심이 요구되며, 의료 지식을 지속적으로 습득해야 합니다.`,
   },
   {
+    careerKey: 38,
     careerId: 'kindergarten_teacher',
     careerName: '유치원 교사',
     careerType: 'S',
@@ -293,6 +314,7 @@ const careers = [
     창의력과 인내심이 필요하며, 원활한 의사소통 능력이 중요합니다.`,
   },
   {
+    careerKey: 39,
     careerId: 'school_teacher',
     careerName: '초중등 교사',
     careerType: 'S',
@@ -306,6 +328,7 @@ const careers = [
     전달력이 뛰어나야 하며, 문제 해결 능력과 대인관계 기술이 중요합니다.`,
   },
   {
+    careerKey: 40,
     careerId: 'clergy',
     careerName: '성직자',
     careerType: 'S',
@@ -320,6 +343,7 @@ const careers = [
   },
   // E
   {
+    careerKey: 47,
     careerId: 'lawyer',
     careerName: '변호사',
     careerType: 'E',
@@ -333,6 +357,7 @@ const careers = [
     의뢰인과 원활하게 소통할 수 있는 언어 능력이 요구되며, 윤리의식과 책임감이 필수적입니다.`,
   },
   {
+    careerKey: 48,
     careerId: 'diplomat',
     careerName: '외교관',
     careerType: 'E',
@@ -346,6 +371,7 @@ const careers = [
     논리적인 사고력과 문제 해결 능력이 필수적이며, 공적인 업무를 수행할 책임감이 요구됩니다.`,
   },
   {
+    careerKey: 49,
     careerId: 'congressman',
     careerName: '국회의원',
     careerType: 'E',
@@ -359,6 +385,7 @@ const careers = [
     설득력 있는 언어 능력과 대중과 원활하게 소통할 수 있는 능력이 요구됩니다.`,
   },
   {
+    careerKey: 50,
     careerId: 'journalist',
     careerName: '기자',
     careerType: 'E',
@@ -372,6 +399,7 @@ const careers = [
     현장을 빠르게 판단하고 대응하는 순발력과 책임감이 요구됩니다.`,
   },
   {
+    careerKey: 51,
     careerId: 'broadcast_producer',
     careerName: '방송연출가(PD)',
     careerType: 'E',
@@ -386,6 +414,7 @@ const careers = [
   },
   // C
   {
+    careerKey: 55,
     careerId: 'public_official',
     careerName: '공무원',
     careerType: 'C',
@@ -399,6 +428,7 @@ const careers = [
     행정 업무를 수행할 논리적 사고력과 문제 해결 능력이 중요하며, 국민과 소통하는 대인관계 기술이 필요합니다.`,
   },
   {
+    careerKey: 56,
     careerId: 'librarian',
     careerName: '사서',
     careerType: 'C',
@@ -412,6 +442,7 @@ const careers = [
     이용자와 원활하게 소통할 수 있는 언어 능력과 정보 활용 능력이 중요합니다.`,
   },
   {
+    careerKey: 60,
     careerId: 'banker',
     careerName: '은행원',
     careerType: 'C',
@@ -425,6 +456,7 @@ const careers = [
     금융 관련 지식을 지속적으로 습득하고, 책임감과 윤리 의식을 갖춰야 합니다.`,
   },
   {
+    careerKey: 62,
     careerId: 'air_traffic_controller',
     careerName: '항공교통관제사',
     careerType: 'C',
@@ -438,6 +470,7 @@ const careers = [
     스트레스 상황에서도 침착함을 유지할 수 있어야 하며, 명확한 의사소통 능력이 중요합니다.`,
   },
   {
+    careerKey: 63,
     careerId: 'security_specialist',
     careerName: '정보보안전문가',
     careerType: 'C',

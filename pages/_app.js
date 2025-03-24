@@ -1,16 +1,15 @@
 /* eslint-disable @next/next/no-sync-scripts */
 import '@/styles/globals.css';
+import { AnimatePresence } from 'framer-motion';
+import { RecoilRoot } from 'recoil';
+import { appWithTranslation } from 'next-i18next';
+
 import Head from 'next/head';
 import Nav from '@/component/Home_Component/Nav';
 import Footer from '@/component/Home_Component/Footer';
 import TopButton from '@/component/Home_Component/TopButton';
 
-import Page from '@/component/Motion_Paging/Page'; // 모든 페이지 이동 시 적용되는 페이지 애니메이션
-import { AnimatePresence } from 'framer-motion';
-
-import { RecoilRoot } from 'recoil';
-
-import { appWithTranslation } from 'next-i18next';
+// import Page from '@/component/Motion_Paging/Page'; // 모든 페이지 이동 시 적용되는 페이지 애니메이션
 
 function App({ Component, pageProps, router }) {
   return (
