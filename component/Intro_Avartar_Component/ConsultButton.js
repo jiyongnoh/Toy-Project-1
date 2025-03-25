@@ -1,20 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
 const ConsultButton = ({ avartar, backColor, color, title }) => {
-  const router = useRouter();
   const { name } = avartar;
 
-  const clickHandler = () => {
-    if (name === '엘라') router.push('/ella/mood');
-    else if (name === '우비') router.push('/ubi');
-    else if (name === '북극이') router.push('/north');
-    else router.push('/test_all');
-  };
   return (
-    <StyledLink onClick={clickHandler} href={''}>
+    <StyledLink
+      href={
+        name === '엘라'
+          ? '/ella/mood'
+          : name === '우비'
+            ? '/ubi'
+            : name === '북극이'
+              ? '/north'
+              : '/test_all'
+      }
+    >
       <YellowButton backColor={backColor} color={color} title={title}>
         {title}
       </YellowButton>

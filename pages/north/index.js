@@ -7,10 +7,13 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import CareerTestBubble from '@/component/Test_Component/CareerTestBubble';
 import DiaryInput from '@/component/North_Component/DiaryInput';
-import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+
+function getRandomTag() {
+  return ['mood', 'friend', 'family', 'school'][Math.floor(Math.random() * 4)];
+}
 
 export default function NorthEmotionDiary() {
-  const [isPending, setIsPending] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [tag, setTag] = useState('');
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
 
@@ -26,22 +29,28 @@ export default function NorthEmotionDiary() {
         behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
       });
   };
-
   // API 호출 메서드
   const handleClickSubmitBtn = async (input) => {
-    try {
-      // 감정 분석 API 호출 이후 state 갱신
-      await handleDiaryCreate({
-        ...input,
-        pUid: localStorage.getItem('id'),
-      });
-    } catch (error) {
-      console.log(error);
+    if (confirm(`작성한 일기를 저장하시겠습니까?`)) {
+      try {
+        // 감정 분석 API 호출 이후 state 갱신
+        await handleDiaryCreate({
+          ...input,
+          tag,
+          pUid: localStorage.getItem('id'),
+        });
+        setDisabled(true);
+        setBottom(true);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
-  // 페이지 초기설정 - 검사 첫 문항 제시
-  useEffect(() => {}, []);
+  // 랜덤 태그 생성
+  useEffect(() => {
+    setTag(getRandomTag());
+  }, []);
 
   // 스크롤 바텀
   useEffect(() => {
@@ -55,15 +64,18 @@ export default function NorthEmotionDiary() {
     <MainContainer>
       <CareerBox ref={boxBody}>
         <CareerBoxBody>
+          <CareerTestBubble message={`${tag}`} role="assistant" />
+          <DiaryInput
+            disabled={disabled}
+            handleClickSubmitBtn={handleClickSubmitBtn}
+          />
+        </CareerBoxBody>
+        {disabled && (
           <CareerTestBubble
-            message={`안녕! 나는 네가 평소에 어떻게 행동하는지 알아보는 시간을 가질거야.
-너무 부담갖진 말고 편하게 대답해줘`}
+            message={`일기가 저장되었습니다.`}
             role="assistant"
           />
-          <DiaryInput tag={tag} handleClickSubmitBtn={handleClickSubmitBtn} />
-          {/* 로딩바 */}
-          {isPending ? <LoadingAnimation /> : null}
-        </CareerBoxBody>
+        )}
       </CareerBox>
     </MainContainer>
   );
@@ -99,16 +111,14 @@ const MainContainer = styled.div`
 
 const CareerBox = styled.div`
   width: 70%;
-  padding: 0 5rem;
-  border-radius: 8px;
+  min-height: 100vh;
+  height: 100%;
+  padding: 8rem 5rem;
 
   background-image: url('/src/NorthDiary_IMG/content_background.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
-  min-height: 100vh;
-  height: 100%;
 
   @media (max-width: 768px) {
     width: 100vw;
@@ -122,7 +132,6 @@ const CareerBoxBody = styled.div`
   min-height: 75vh;
   height: 100%;
 
-  margin-top: 6rem;
   padding: 1rem;
 
   background: inherit;

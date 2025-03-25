@@ -22,7 +22,7 @@ export const handleDiaryGet = async () => {
     };
   }
 };
-// #TODO: CREATE
+// CREATE
 export const handleDiaryCreate = async (input) => {
   try {
     const response = await axios.post(

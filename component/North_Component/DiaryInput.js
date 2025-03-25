@@ -1,17 +1,28 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-export default function DiaryInput({ tag, handleClickSubmitBtn }) {
+export default function DiaryInput({ disabled, handleClickSubmitBtn }) {
   const [content, setContent] = useState('');
 
   return (
     <DiaryInputContainer>
       <DiaryInputTextAreaContainer>
         <DiaryInputTextArea
+          disabled={disabled}
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <SubmitButton onClick={handleClickSubmitBtn}>다 적었어요</SubmitButton>
+        <SubmitButton
+          onClick={
+            !disabled
+              ? () => {
+                  handleClickSubmitBtn({ content });
+                }
+              : null
+          }
+        >
+          다 적었어요
+        </SubmitButton>
       </DiaryInputTextAreaContainer>
     </DiaryInputContainer>
   );
@@ -70,8 +81,8 @@ const DiaryInputTextAreaContainer = styled.div`
 
 const DiaryInputTextArea = styled.textarea`
   width: 80%;
-  height: 55%;
-  margin-top: 6rem;
+  height: 53%;
+  margin-top: 6.2rem;
   margin-left: 2.5rem;
 
   border-radius: 8px;
