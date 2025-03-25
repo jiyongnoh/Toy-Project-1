@@ -22,7 +22,6 @@ export const handleDirectoryGet = async () => {
     };
   }
 };
-
 // CREATE
 export const handleDirectoryCreate = async (input) => {
   try {
