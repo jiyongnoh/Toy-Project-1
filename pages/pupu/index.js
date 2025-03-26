@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled, { keyframes } from 'styled-components';
-import { FlexContainer } from '../../styled-component/common';
+import styled from 'styled-components';
 // import Live2DViewerTest from '@/component/Live2D_Component/Live2DViewerTest';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
@@ -19,7 +18,7 @@ import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
-import { log, avarta, mobile } from '../../store/state';
+import { log } from '../../store/state';
 // import CharacterSelector from '@/component/Chat_Component/CharacterSelector';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
@@ -40,57 +39,57 @@ const avartaAI_info = {
       '/src/Consult_IMG/Background/Consult_Pupu_Background_IMG.png',
     backColor: '#FEFFF6',
   },
-  ubi: {
-    name: 'ubi',
-    path: '/openAI/consulting_emotion_ubi',
-    headerTitle: '게임친구 우비',
-    placehold: '나는 게임친구 우비야. 같이 놀자!',
-    iconUrl: '/src/Consult_IMG/Icon/Consult_Ubi_Icon_IMG.png',
-    backgroundImgUrl:
-      '/src/Consult_IMG/Background/Consult_Ubi_Background_IMG.png',
-    backColor: '#F6FFF9',
-  },
-  lala: {
-    name: 'lala',
-    path: '/openAI/consulting_emotion_lala',
-    headerTitle: '정서멘토 엘라',
-    placehold: '나는 정서멘토 엘라야. 우리 얘기하자!',
-    iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
-    backgroundImgUrl:
-      '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
-    backColor: '#FFF6F9',
-  },
-  soyes: {
-    name: 'soyes',
-    path: '/openAI/consulting_emotion_soyes',
-    headerTitle: '심리상담 소예',
-    placehold: '나는 소예라고해!. 네 고민을 말해줘!',
-    iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
-    backgroundImgUrl:
-      '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
-    backColor: '#FDF6FF',
-  },
-  // 북극이는 임시로 소예로 보내기
-  north: {
-    name: 'soyes',
-    path: '/openAI/consulting_emotion_soyes',
-    headerTitle: '심리상담 소예',
-    placehold: '나는 소예라고해!. 네 고민을 말해줘!',
-    iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
-    backgroundImgUrl:
-      '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
-    backColor: '#FDF6FF',
-  },
-  default: {
-    name: 'lala',
-    path: '/openAI/consulting_emotion_lala',
-    headerTitle: '정서멘토 엘라',
-    placehold: '나는 정서멘토 엘라야. 우리 얘기하자!',
-    iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
-    backgroundImgUrl:
-      '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
-    backColor: '#FFF6F9',
-  },
+  // ubi: {
+  //   name: 'ubi',
+  //   path: '/openAI/consulting_emotion_ubi',
+  //   headerTitle: '게임친구 우비',
+  //   placehold: '나는 게임친구 우비야. 같이 놀자!',
+  //   iconUrl: '/src/Consult_IMG/Icon/Consult_Ubi_Icon_IMG.png',
+  //   backgroundImgUrl:
+  //     '/src/Consult_IMG/Background/Consult_Ubi_Background_IMG.png',
+  //   backColor: '#F6FFF9',
+  // },
+  // lala: {
+  //   name: 'lala',
+  //   path: '/openAI/consulting_emotion_lala',
+  //   headerTitle: '정서멘토 엘라',
+  //   placehold: '나는 정서멘토 엘라야. 우리 얘기하자!',
+  //   iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
+  //   backgroundImgUrl:
+  //     '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
+  //   backColor: '#FFF6F9',
+  // },
+  // soyes: {
+  //   name: 'soyes',
+  //   path: '/openAI/consulting_emotion_soyes',
+  //   headerTitle: '심리상담 소예',
+  //   placehold: '나는 소예라고해!. 네 고민을 말해줘!',
+  //   iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
+  //   backgroundImgUrl:
+  //     '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
+  //   backColor: '#FDF6FF',
+  // },
+  // // 북극이는 임시로 소예로 보내기
+  // north: {
+  //   name: 'soyes',
+  //   path: '/openAI/consulting_emotion_soyes',
+  //   headerTitle: '심리상담 소예',
+  //   placehold: '나는 소예라고해!. 네 고민을 말해줘!',
+  //   iconUrl: '/src/Consult_IMG/Icon/Consult_Soyes_Icon_IMG.png',
+  //   backgroundImgUrl:
+  //     '/src/Consult_IMG/Background/Consult_Soyes_Background_IMG.png',
+  //   backColor: '#FDF6FF',
+  // },
+  // default: {
+  //   name: 'lala',
+  //   path: '/openAI/consulting_emotion_lala',
+  //   headerTitle: '정서멘토 엘라',
+  //   placehold: '나는 정서멘토 엘라야. 우리 얘기하자!',
+  //   iconUrl: '/src/Consult_IMG/Icon/Consult_Ella_Icon_IMG.png',
+  //   backgroundImgUrl:
+  //     '/src/Consult_IMG/Background/Consult_Ella_Background_IMG.png',
+  //   backColor: '#FFF6F9',
+  // },
 };
 const unMount_api_info = {
   consultLog: {
@@ -100,19 +99,19 @@ const unMount_api_info = {
     path: '/openAI/clear_cookies',
   },
 };
-const ebtClassMapKorean = {
-  School: '학업/성적',
-  Friend: '대인관계',
-  Family: '가족관계',
-  Mood: '기분',
-  Health: '신체증상',
-  Self: '자기이해',
-};
-const gameMapKorean = {
-  remarks: '끝말잇기',
-  game2: '게임2',
-  game3: '게임3',
-};
+// const ebtClassMapKorean = {
+//   School: '학업/성적',
+//   Friend: '대인관계',
+//   Family: '가족관계',
+//   Mood: '기분',
+//   Health: '신체증상',
+//   Self: '자기이해',
+// };
+// const gameMapKorean = {
+//   remarks: '끝말잇기',
+//   game2: '게임2',
+//   game3: '게임3',
+// };
 
 // Renewel Test 페이지
 export default function Test() {
@@ -120,21 +119,26 @@ export default function Test() {
   const [flagEnter, setFlagEnter] = useState(false);
   const [isPending, setIsPending] = useState(false);
   const [isInitPending, setIsInitPending] = useState(true);
-  const [emotion, setEmotion] = useState('중립');
+  // const [emotion, setEmotion] = useState('중립');
   const [messageArr, setMessageArr] = useState([]);
   const [initArr, setInitArr] = useState([]);
   const [testType, setTestType] = useState(''); // 상담 주제 6종
   const [gameType, setGameType] = useState(''); // 게임 3종
-
   // 전역 변수
   const [login, setLogin] = useRecoilState(log);
-  const [avartaAI, setAvartaAI] = useRecoilState(avarta);
   // chatBoxRef
+  const router = useRouter();
   const chatBoxRef = useRef(null); // Reference for the chat container
 
-  const { name, path } = avartaAI_info[avartaAI];
-
-  const router = useRouter();
+  const {
+    name,
+    path,
+    backColor,
+    backgroundImgUrl,
+    iconUrl,
+    headerTitle,
+    placehold,
+  } = avartaAI_info['pupu'];
 
   // 언마운트 시점에 사용할 messageArr 변수값 유지
   const latestMessageArr = useRef(messageArr);
@@ -146,9 +150,9 @@ export default function Test() {
       messageArr.push({ role: 'user', content: message }); // 내 채팅 추가.
       setIsPending(true); // 로딩 on
       // 감정 분석 API 호출 이후 state 갱신 (임시로 막아둠)
-      const res = '긍정';
       // const res = await emotionAPI([{ role: 'user', content: message }]);
-      setEmotion(res);
+      // const res = '긍정';
+      // setEmotion(res);
 
       // Chat Compleation Request
 
@@ -216,7 +220,6 @@ export default function Test() {
       console.log(error);
     }
   };
-
   const scrollToBottom = () => {
     const chatBoxBody = chatBoxRef.current;
     if (chatBoxBody.scrollHeight > 900)
@@ -226,122 +229,43 @@ export default function Test() {
         behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
       });
   };
-  // 엘라 시작 멘트 관련 메서드
-  // const initElla = async () => {
-  //   // 유저 EBT 결과 조회 (11종)
-  //   const data = await handleEbtResult(
-  //     {
-  //       pUid: `${localStorage.getItem('id')}`,
-  //     },
-  //     '/openAI/ebtresult'
-  //   );
-
-  //   const { message } = data;
-
-  //   // 정서행동 검사를 1개라도 실시하지 않은 경우
-  //   if (!message[0].testStatus) {
-  //     setInitArr([
-  //       {
-  //         role: 'assistant',
-  //         content:
-  //           '안녕? 아직 정서행동검사를 모두 실시하지 않았구나? 상담 전에 검사하고 와줄래?',
-  //       },
-  //     ]);
-  //   }
-  //   // 정서행동 검사를 모두 실시한 경우
-  //   else {
-  //     const ment = {
-  //       role: 'assistant',
-  //       content: '안녕? 너의 심리검사 결과를 봤어. 아래의 상담 주제를 추천해',
-  //     };
-
-  //     const selectBtnArr = message
-  //       .map((el) => {
-  //         return {
-  //           role: 'assistant',
-  //           content: `${ebtClassMap[el.ebt_class]}`,
-  //           btn: true,
-  //         };
-  //       })
-  //       .filter(
-  //         (item, index, self) =>
-  //           index === self.findIndex((t) => t.content === item.content)
-  //       )
-  //       .filter((item, index) => index <= 2);
-
-  //     setInitArr([ment, ...selectBtnArr]);
-  //   }
-  // };
-
-  // // 우비 시작 멘트 관련 메서드
-  // const initUbi = async () => {
-  //   const ment = {
-  //     role: 'assistant',
-  //     content: '안녕? 같이 게임하자! 어떤 게임을 하고싶어?',
-  //   };
-
-  //   const selectBtnArr = ['remarks'].map((el) => {
-  //     return {
-  //       role: 'assistant',
-  //       content: `${el}`,
-  //       btn: true,
-  //     };
-  //   });
-
-  //   setInitArr([ment, ...selectBtnArr]);
-  // };
 
   // 상담 페이지 초기 설정
-  // useEffect(() => {
-  //   // 상담 화면에 처음 진입한 경우: 엘라 상담 화면으로 재설정
-  //   if (!localStorage.getItem('avarta') && avartaAI === 'default') {
-  //     localStorage.setItem('avarta', 'lala');
-  //     setAvartaAI('lala');
-  //   }
-  //   return () => {
-  //     // 로그인 세션이 존재할 경우 - 상담 내역 저장
-  //     const loginSession = JSON.parse(localStorage.getItem('log'));
-  //     if (loginSession) {
-  //       // audioURL 제거
-  //       const tmpMsgArr = [
-  //         ...JSON.parse(JSON.stringify(latestMessageArr.current)),
-  //       ];
-  //       tmpMsgArr.forEach((el) => delete el.audioURL);
-  //       // 상담 내역 저장 API 호출
-  //       handleConsultLogSave(
-  //         {
-  //           messageArr: tmpMsgArr,
-  //           avarta: name,
-  //           pUid: localStorage.getItem('id'),
-  //         },
-  //         unMount_api_info.consultLog.path
-  //       );
-  //     }
-
-  //     // setAvartaAI('default');
-  //     // localStorage.removeItem('avarta');
-
-  //     // Cookies Clear (session ID 초기화)
-  //     // handleClearCookies(unMount_api_info.clearCookie.path);
-
-  //     // 상담 내역 초기화 => 언마운트 시점에 자동으로 진행되기에 주석처리
-  //     // setMessageArr([]);
-  //     // messageArr.length = 0;
-  //   };
-  // }, []);
-
   useEffect(() => {
     // 푸푸 상담멘트 초기화
-    setInitArr([
-      {
-        role: 'assistant',
-        content: avartaAI_info['pupu'].placehold,
-      },
-    ]);
+    setTimeout(() => {
+      setInitArr([
+        {
+          role: 'assistant',
+          content: placehold,
+        },
+      ]);
+    }, 500);
     setIsInitPending(false);
 
     setMessageArr([]);
     setInitArr([]);
+
+    return () => {
+      // 로그인 세션이 존재할 경우 - 상담 내역 저장
+      const loginSession = JSON.parse(localStorage.getItem('log'));
+      if (loginSession) {
+        // audioURL 제거
+        const tmpMsgArr = [
+          ...JSON.parse(JSON.stringify(latestMessageArr.current)),
+        ];
+        tmpMsgArr.forEach((el) => delete el.audioURL);
+        // 상담 내역 저장 API 호출
+        handleConsultLogSave(
+          {
+            messageArr: tmpMsgArr,
+            avarta: name,
+            pUid: localStorage.getItem('id'),
+          },
+          unMount_api_info.consultLog.path
+        );
+      }
+    };
   }, []);
 
   // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
@@ -352,76 +276,31 @@ export default function Test() {
     }
   }, [login]);
 
-  // avartaAI 관련 처리
-  useEffect(() => {
-    // if (avartaAI === 'default') return;
-    // // 엘라일 경우
-    // else if (avartaAI === 'lala') {
-    //   setIsInitPending(true); // 채팅창 비활성화
-    //   setTestType(''); // 상담 주제 초기화
-    //   // 1초 뒤 init 메서드 호출
-    //   setTimeout(() => {
-    //     initUbi();
-    //   }, 1000);
-    // }
-    // // 우비일 경우
-    // else if (avartaAI === 'ubi') {
-    //   setIsInitPending(true); // 채팅창 비활성화
-    //   setGameType(''); // 게임 주제 초기화
-    //   // 1초 뒤 init 메서드 호출
-    //   setTimeout(() => {
-    //     initUbi();
-    //   }, 1000);
-    // }
-    // // 그 외
-    // else {
-    //   const initment = {
-    //     role: 'assistant',
-    //     content: avartaAI_info[avartaAI].placehold,
-    //   };
-    //   setTimeout(() => {
-    //     setInitArr([initment]);
-    //   }, 500);
-    //   setIsInitPending(false);
-    // }
-    const initment = {
-      role: 'assistant',
-      content: avartaAI_info[avartaAI].placehold,
-    };
-    setTimeout(() => {
-      setInitArr([initment]);
-    }, 500);
-    setIsInitPending(false);
+  // useEffect(() => {
+  //   // 엘라 상담 중, 주제가 선정되었을 경우
+  //   if (testType && avartaAI === 'pupu') {
+  //     const init_ending_ment = {
+  //       role: 'assistant',
+  //       content: `${ebtClassMapKorean[testType]} 관련 상담을 진행할게! 반가워 나는 푸푸야!`,
+  //     };
 
-    setMessageArr([]);
-    setInitArr([]);
-  }, [avartaAI]);
+  //     setInitArr([...initArr, init_ending_ment]);
+  //     setIsInitPending(false);
+  //   }
+  // }, [testType]);
 
-  useEffect(() => {
-    // 엘라 상담 중, 주제가 선정되었을 경우
-    if (testType && avartaAI === 'pupu') {
-      const init_ending_ment = {
-        role: 'assistant',
-        content: `${ebtClassMapKorean[testType]} 관련 상담을 진행할게! 반가워 나는 푸푸야!`,
-      };
+  // useEffect(() => {
+  //   // 우비 상담 중, 게임이 선택됐을 경우
+  //   if (gameType && avartaAI === 'ubi') {
+  //     const init_ending_ment = {
+  //       role: 'assistant',
+  //       content: `${gameMapKorean[gameType]}! 재밌겠다!! 너부터 시작해!`,
+  //     };
 
-      setInitArr([...initArr, init_ending_ment]);
-      setIsInitPending(false);
-    }
-  }, [testType]);
-
-  useEffect(() => {
-    // 우비 상담 중, 게임이 선택됐을 경우
-    if (gameType && avartaAI === 'ubi') {
-      const init_ending_ment = {
-        role: 'assistant',
-        content: `${gameMapKorean[gameType]}! 재밌겠다!! 너부터 시작해!`,
-      };
-
-      setInitArr([...initArr, init_ending_ment]);
-      setIsInitPending(false);
-    }
-  }, [gameType]);
+  //     setInitArr([...initArr, init_ending_ment]);
+  //     setIsInitPending(false);
+  //   }
+  // }, [gameType]);
 
   // Chat 관련 처리
   useEffect(() => {
@@ -439,49 +318,47 @@ export default function Test() {
   // }, [isPending, isInitPending]);
 
   useEffect(() => {
-    scrollToBottom();
+    if (isPending) scrollToBottom();
   }, [isPending]);
 
   return (
-    <MainContainer
-      className="main-container"
-      backColor={avartaAI_info[avartaAI].backColor}
-    >
+    <MainContainer className="main-container" backColor={backColor}>
       {/* <Avarta3DViewerContainer>
         <AvartaThree />
       </Avarta3DViewerContainer> */}
       <ChatBox
         className="chat-box"
         ref={chatBoxRef}
-        backgroundImgUrl={avartaAI_info[avartaAI].backgroundImgUrl}
+        backgroundImgUrl={backgroundImgUrl}
       >
         {/* <CharacterSelector isPending={isPending} /> */}
         {/* <ChatBoxHeader>{headerTitle}</ChatBoxHeader> */}
         <ChatBoxBody className="chat-box-body">
-          {/* <ChatBubble message={headerTitle} role="assistant" /> */}
+          {/* 푸푸 시작 멘트 */}
           {initArr.map((el, index) => (
             <InitChatBubble
               key={index}
               message={el.content}
               role={el.role}
-              iconUrl={avartaAI_info[avartaAI].iconUrl}
-              headerTitle={avartaAI_info[avartaAI].headerTitle}
+              iconUrl={iconUrl}
+              headerTitle={headerTitle}
               btn={el.btn}
               testType={testType}
               setTestType={setTestType}
               gameType={gameType}
               setGameType={setGameType}
-              avarta={avartaAI}
+              avarta={'pupu'}
             />
           ))}
+          {/* 푸푸 상담 내용 */}
           {messageArr.map((el, index) => (
             <ChatBubble
               key={index}
               lastKey={index === messageArr.length - 1}
               message={el.content}
               role={el.role}
-              iconUrl={avartaAI_info[avartaAI].iconUrl}
-              headerTitle={avartaAI_info[avartaAI].headerTitle}
+              iconUrl={iconUrl}
+              headerTitle={headerTitle}
               audioURL={el.audioURL}
               // media={
               //   el.media
