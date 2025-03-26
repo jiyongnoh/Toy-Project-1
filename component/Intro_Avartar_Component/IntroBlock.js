@@ -29,7 +29,7 @@ const avatarBtnInfo = {
   north: {
     backColor: '#FFB1B1',
     color: 'black',
-    title: '북극이와 상담하러 가기',
+    title: '북극이와 일기쓰러 가기',
   },
   default: {
     backColor: '#ffd700',
