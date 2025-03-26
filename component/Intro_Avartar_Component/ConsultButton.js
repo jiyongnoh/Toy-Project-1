@@ -14,7 +14,7 @@ const ConsultButton = ({ avartar, backColor, color, title }) => {
             ? '/ubi'
             : name === '북극이'
               ? '/north'
-              : '/test_all'
+              : '/pupu'
       }
     >
       <YellowButton backColor={backColor} color={color} title={title}>

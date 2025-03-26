@@ -173,72 +173,56 @@ export default function CareerTest() {
 
   return (
     <MainContainer>
-      <FlexContainer
-        justify="center"
-        align="center"
-        dir="col"
-        width="100%"
-        height="100%"
-        padding="0 1rem"
-      >
-        <CareerBox ref={chatBoxBody}>
-          <CareerBoxBody>
-            {/* <CareerRadarChart /> */}
-            <CareerTestBubble
-              message={'어른이 되면 어떤 일을 하고싶어?'}
-              role="assistant"
-            />
-            {messageArr.map((el, index) => {
-              // 적성검사 1차시
-              if (el?.session === 'first') {
-                return (
-                  <CareerTestBubble
-                    key={el.imgURL + index}
-                    message={el.content}
-                    role={el.role}
-                    imgURL={el.imgURL || null}
-                    setSelect={
-                      index === messageArr.length - 1 ? setSelect : null
-                    }
-                    setNext={index === messageArr.length - 1 ? setNext : null}
-                  />
-                );
-              }
-              // 적성검사 2차시
-              else if (el?.session === 'second') {
-                return (
-                  <CareerTournamentBubble
-                    key={JSON.stringify(el.content[0]) + index}
-                    content={el.content}
-                    role={el.role}
-                    setSelect={
-                      index === messageArr.length - 1 ? setSelect : null
-                    }
-                    setNext={index === messageArr.length - 1 ? setNext : null}
-                  />
-                );
-              }
-              // 적성검사 결과
-              else if (el?.session === 'result') {
-                // content: 직업 3개 Array
-                return (
-                  <CareerResultBubble
-                    key={JSON.stringify(el.content) + index}
-                    content={el.content}
-                    careerTypeMap={careerTypeMap}
-                    role={el.role}
-                  />
-                );
-              }
-            })}
-            {/* 로딩바 */}
-            {isPending ? <LoadingAnimation /> : null}
-          </CareerBoxBody>
-        </CareerBox>
-        <div class="codingnexus">
-          <a>Created by SoyesKids</a>
-        </div>
-      </FlexContainer>
+      <CareerBox ref={chatBoxBody}>
+        <CareerBoxBody>
+          {/* <CareerRadarChart /> */}
+          <CareerTestBubble
+            message={'어른이 되면 어떤 일을 하고싶어?'}
+            role="assistant"
+          />
+          {messageArr.map((el, index) => {
+            // 적성검사 1차시
+            if (el?.session === 'first') {
+              return (
+                <CareerTestBubble
+                  key={el.imgURL + index}
+                  message={el.content}
+                  role={el.role}
+                  imgURL={el.imgURL || null}
+                  setSelect={index === messageArr.length - 1 ? setSelect : null}
+                  setNext={index === messageArr.length - 1 ? setNext : null}
+                />
+              );
+            }
+            // 적성검사 2차시
+            else if (el?.session === 'second') {
+              return (
+                <CareerTournamentBubble
+                  key={JSON.stringify(el.content[0]) + index}
+                  content={el.content}
+                  role={el.role}
+                  setSelect={index === messageArr.length - 1 ? setSelect : null}
+                  setNext={index === messageArr.length - 1 ? setNext : null}
+                />
+              );
+            }
+            // 적성검사 결과
+            else if (el?.session === 'result') {
+              // content: 직업 3개 Array
+              return (
+                <CareerResultBubble
+                  key={JSON.stringify(el.content) + index}
+                  content={el.content}
+                  careerTypeMap={careerTypeMap}
+                  role={el.role}
+                />
+              );
+            }
+          })}
+          {/* 로딩바 */}
+          {isPending ? <LoadingAnimation /> : null}
+        </CareerBoxBody>
+      </CareerBox>
     </MainContainer>
   );
 }
@@ -254,10 +238,19 @@ export async function getStaticProps({ locale }) {
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
 
 const MainContainer = styled.div`
-  background-color: #fdf6ff;
   width: 100%;
   min-height: 100vh;
   height: 100%;
+
+  background-image: url('/src/EBT_IMG/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     overflow: hidden;
@@ -265,18 +258,15 @@ const MainContainer = styled.div`
 `;
 
 const CareerBox = styled.div`
-  /* 화면 좁히기 가능 */
-  width: 100vw;
-  background: inherit;
-  /* position: relative; */
-  /* margin: 0 auto; */
-  margin-top: 6rem;
-  padding: 0 5rem;
-  border-radius: 8px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-
+  width: 70%;
   min-height: 100vh;
   height: 100%;
+  padding: 8rem 5rem;
+
+  background-image: url('/src/NorthDiary_IMG/content_background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   @media (max-width: 768px) {
     width: 100vw;

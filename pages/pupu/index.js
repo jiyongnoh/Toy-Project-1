@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled, { keyframes } from 'styled-components';
-import { FlexContainer } from '../styled-component/common';
+import { FlexContainer } from '../../styled-component/common';
 // import Live2DViewerTest from '@/component/Live2D_Component/Live2DViewerTest';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
@@ -19,7 +19,7 @@ import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
-import { log, avarta, mobile } from '../store/state';
+import { log, avarta, mobile } from '../../store/state';
 // import CharacterSelector from '@/component/Chat_Component/CharacterSelector';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
@@ -100,23 +100,6 @@ const unMount_api_info = {
     path: '/openAI/clear_cookies',
   },
 };
-// const mediVideo = {
-//   candle: { type: 'candle', url: 'nKCY3qz30N8' },
-//   breath: { type: 'breath', url: 'tNao3xp5yjM' },
-// };
-// const ebtClassMap = {
-//   School: 'School',
-//   Friend: 'Friend',
-//   Family: 'Family',
-//   Mood: 'Mood',
-//   Unrest: 'Mood',
-//   Sad: 'Mood',
-//   Health: 'Health',
-//   Attention: 'School',
-//   Movement: 'Friend',
-//   Angry: 'Mood',
-//   Self: 'Self',
-// };
 const ebtClassMapKorean = {
   School: '학업/성적',
   Friend: '대인관계',
@@ -140,18 +123,16 @@ export default function Test() {
   const [emotion, setEmotion] = useState('중립');
   const [messageArr, setMessageArr] = useState([]);
   const [initArr, setInitArr] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [testType, setTestType] = useState(''); // 상담 주제 6종
   const [gameType, setGameType] = useState(''); // 게임 3종
 
   // 전역 변수
   const [login, setLogin] = useRecoilState(log);
   const [avartaAI, setAvartaAI] = useRecoilState(avarta);
-  const [mobileFlag, setMobileFlag] = useRecoilState(mobile);
   // chatBoxRef
   const chatBoxRef = useRef(null); // Reference for the chat container
 
-  const { name, path, headerTitle, placehold } = avartaAI_info[avartaAI];
+  const { name, path } = avartaAI_info[avartaAI];
 
   const router = useRouter();
 
@@ -292,61 +273,75 @@ export default function Test() {
   //   }
   // };
 
-  // 우비 시작 멘트 관련 메서드
-  const initUbi = async () => {
-    const ment = {
-      role: 'assistant',
-      content: '안녕? 같이 게임하자! 어떤 게임을 하고싶어?',
-    };
+  // // 우비 시작 멘트 관련 메서드
+  // const initUbi = async () => {
+  //   const ment = {
+  //     role: 'assistant',
+  //     content: '안녕? 같이 게임하자! 어떤 게임을 하고싶어?',
+  //   };
 
-    const selectBtnArr = ['remarks'].map((el) => {
-      return {
-        role: 'assistant',
-        content: `${el}`,
-        btn: true,
-      };
-    });
+  //   const selectBtnArr = ['remarks'].map((el) => {
+  //     return {
+  //       role: 'assistant',
+  //       content: `${el}`,
+  //       btn: true,
+  //     };
+  //   });
 
-    setInitArr([ment, ...selectBtnArr]);
-  };
+  //   setInitArr([ment, ...selectBtnArr]);
+  // };
 
   // 상담 페이지 초기 설정
+  // useEffect(() => {
+  //   // 상담 화면에 처음 진입한 경우: 엘라 상담 화면으로 재설정
+  //   if (!localStorage.getItem('avarta') && avartaAI === 'default') {
+  //     localStorage.setItem('avarta', 'lala');
+  //     setAvartaAI('lala');
+  //   }
+  //   return () => {
+  //     // 로그인 세션이 존재할 경우 - 상담 내역 저장
+  //     const loginSession = JSON.parse(localStorage.getItem('log'));
+  //     if (loginSession) {
+  //       // audioURL 제거
+  //       const tmpMsgArr = [
+  //         ...JSON.parse(JSON.stringify(latestMessageArr.current)),
+  //       ];
+  //       tmpMsgArr.forEach((el) => delete el.audioURL);
+  //       // 상담 내역 저장 API 호출
+  //       handleConsultLogSave(
+  //         {
+  //           messageArr: tmpMsgArr,
+  //           avarta: name,
+  //           pUid: localStorage.getItem('id'),
+  //         },
+  //         unMount_api_info.consultLog.path
+  //       );
+  //     }
+
+  //     // setAvartaAI('default');
+  //     // localStorage.removeItem('avarta');
+
+  //     // Cookies Clear (session ID 초기화)
+  //     // handleClearCookies(unMount_api_info.clearCookie.path);
+
+  //     // 상담 내역 초기화 => 언마운트 시점에 자동으로 진행되기에 주석처리
+  //     // setMessageArr([]);
+  //     // messageArr.length = 0;
+  //   };
+  // }, []);
+
   useEffect(() => {
-    // 상담 화면에 처음 진입한 경우: 엘라 상담 화면으로 재설정
-    if (!localStorage.getItem('avarta') && avartaAI === 'default') {
-      localStorage.setItem('avarta', 'lala');
-      setAvartaAI('lala');
-    }
-    return () => {
-      // 로그인 세션이 존재할 경우 - 상담 내역 저장
-      const loginSession = JSON.parse(localStorage.getItem('log'));
-      if (loginSession) {
-        // audioURL 제거
-        const tmpMsgArr = [
-          ...JSON.parse(JSON.stringify(latestMessageArr.current)),
-        ];
-        tmpMsgArr.forEach((el) => delete el.audioURL);
-        // 상담 내역 저장 API 호출
-        handleConsultLogSave(
-          {
-            messageArr: tmpMsgArr,
-            avarta: name,
-            pUid: localStorage.getItem('id'),
-          },
-          unMount_api_info.consultLog.path
-        );
-      }
+    // 푸푸 상담멘트 초기화
+    setInitArr([
+      {
+        role: 'assistant',
+        content: avartaAI_info['pupu'].placehold,
+      },
+    ]);
+    setIsInitPending(false);
 
-      // setAvartaAI('default');
-      // localStorage.removeItem('avarta');
-
-      // Cookies Clear (session ID 초기화)
-      // handleClearCookies(unMount_api_info.clearCookie.path);
-
-      // 상담 내역 초기화 => 언마운트 시점에 자동으로 진행되기에 주석처리
-      // setMessageArr([]);
-      // messageArr.length = 0;
-    };
+    setMessageArr([]);
+    setInitArr([]);
   }, []);
 
   // 로그인 권한이 없는 상태에서의 접근 시 login 페이지로 redirect
@@ -359,36 +354,44 @@ export default function Test() {
 
   // avartaAI 관련 처리
   useEffect(() => {
-    if (avartaAI === 'default') return;
-    // 엘라일 경우
-    else if (avartaAI === 'lala') {
-      setIsInitPending(true); // 채팅창 비활성화
-      setTestType(''); // 상담 주제 초기화
-      // 1초 뒤 init 메서드 호출
-      setTimeout(() => {
-        initUbi();
-      }, 1000);
-    }
-    // 우비일 경우
-    else if (avartaAI === 'ubi') {
-      setIsInitPending(true); // 채팅창 비활성화
-      setGameType(''); // 게임 주제 초기화
-      // 1초 뒤 init 메서드 호출
-      setTimeout(() => {
-        initUbi();
-      }, 1000);
-    }
-    // 그 외
-    else {
-      const initment = {
-        role: 'assistant',
-        content: avartaAI_info[avartaAI].placehold,
-      };
-      setTimeout(() => {
-        setInitArr([initment]);
-      }, 500);
-      setIsInitPending(false);
-    }
+    // if (avartaAI === 'default') return;
+    // // 엘라일 경우
+    // else if (avartaAI === 'lala') {
+    //   setIsInitPending(true); // 채팅창 비활성화
+    //   setTestType(''); // 상담 주제 초기화
+    //   // 1초 뒤 init 메서드 호출
+    //   setTimeout(() => {
+    //     initUbi();
+    //   }, 1000);
+    // }
+    // // 우비일 경우
+    // else if (avartaAI === 'ubi') {
+    //   setIsInitPending(true); // 채팅창 비활성화
+    //   setGameType(''); // 게임 주제 초기화
+    //   // 1초 뒤 init 메서드 호출
+    //   setTimeout(() => {
+    //     initUbi();
+    //   }, 1000);
+    // }
+    // // 그 외
+    // else {
+    //   const initment = {
+    //     role: 'assistant',
+    //     content: avartaAI_info[avartaAI].placehold,
+    //   };
+    //   setTimeout(() => {
+    //     setInitArr([initment]);
+    //   }, 500);
+    //   setIsInitPending(false);
+    // }
+    const initment = {
+      role: 'assistant',
+      content: avartaAI_info[avartaAI].placehold,
+    };
+    setTimeout(() => {
+      setInitArr([initment]);
+    }, 500);
+    setIsInitPending(false);
 
     setMessageArr([]);
     setInitArr([]);
@@ -447,136 +450,93 @@ export default function Test() {
       {/* <Avarta3DViewerContainer>
         <AvartaThree />
       </Avarta3DViewerContainer> */}
-      <FlexContainer
-        className="flex-container"
-        justify="center"
-        align="center"
-        dir="col"
-        width="100vw"
-        height="100%"
-        padding={mobileFlag ? '0' : '0 1rem'}
+      <ChatBox
+        className="chat-box"
+        ref={chatBoxRef}
+        backgroundImgUrl={avartaAI_info[avartaAI].backgroundImgUrl}
       >
-        {/* <Image
-          src="/src/soyesKids_Logo.png"
-          alt={'soyes_logo'}
-          width={529}
-          height={93}
-          style={{ maxWidth: '100%', height: 'auto' }}
-        /> */}
-        <ChatBox
-          className="chat-box"
-          ref={chatBoxRef}
-          backgroundImgUrl={avartaAI_info[avartaAI].backgroundImgUrl}
-        >
-          {/* <CharacterSelector isPending={isPending} /> */}
-          {/* <ChatBoxHeader>{headerTitle}</ChatBoxHeader> */}
-          <ChatBoxBody className="chat-box-body">
-            {/* <ChatBubble message={headerTitle} role="assistant" /> */}
-            {initArr.map((el, index) => (
-              <InitChatBubble
-                key={index}
-                message={el.content}
-                role={el.role}
-                iconUrl={avartaAI_info[avartaAI].iconUrl}
-                headerTitle={avartaAI_info[avartaAI].headerTitle}
-                btn={el.btn}
-                testType={testType}
-                setTestType={setTestType}
-                gameType={gameType}
-                setGameType={setGameType}
-                avarta={avartaAI}
-              />
-            ))}
-            {messageArr.map((el, index) => (
-              <ChatBubble
-                key={index}
-                lastKey={index === messageArr.length - 1}
-                message={el.content}
-                role={el.role}
-                iconUrl={avartaAI_info[avartaAI].iconUrl}
-                headerTitle={avartaAI_info[avartaAI].headerTitle}
-                audioURL={el.audioURL}
-                // media={
-                //   el.media
-                //     ? {
-                //         videoInfo: el.media,
-                //         modalIsOpen,
-                //         closeModal: () => {
-                //           setModalIsOpen(false);
-                //         },
-                //         openModal: () => {
-                //           setModalIsOpen(true);
-                //         },
-                //       }
-                //     : null
-                // }
-              />
-            ))}
-            {/* 로딩바 */}
-            {isPending ? <LoadingAnimation /> : null}
-          </ChatBoxBody>
-          <ChatBoxFooter>
-            <ChatBoxFooterInput
-              value={chat}
-              onChange={(e) => {
-                setChat(e.target.value);
-              }}
-              onKeyPress={(e) => {
-                if (
-                  e.key === 'Enter' &&
-                  chat !== '' &&
-                  !isPending &&
-                  !isInitPending
-                )
-                  setFlagEnter(true);
-              }}
-              // placeholder={placehold}
-              isPending={isPending}
-              isInitPending={isInitPending}
+        {/* <CharacterSelector isPending={isPending} /> */}
+        {/* <ChatBoxHeader>{headerTitle}</ChatBoxHeader> */}
+        <ChatBoxBody className="chat-box-body">
+          {/* <ChatBubble message={headerTitle} role="assistant" /> */}
+          {initArr.map((el, index) => (
+            <InitChatBubble
+              key={index}
+              message={el.content}
+              role={el.role}
+              iconUrl={avartaAI_info[avartaAI].iconUrl}
+              headerTitle={avartaAI_info[avartaAI].headerTitle}
+              btn={el.btn}
+              testType={testType}
+              setTestType={setTestType}
+              gameType={gameType}
+              setGameType={setGameType}
+              avarta={avartaAI}
             />
-            <ChatBoxFooterButton
-              onClick={() => {
-                if (chat !== '' && !isPending && !isInitPending)
-                  setFlagEnter(true);
-              }}
-              isPending={isPending || isInitPending}
-            >
-              <Image
-                src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
-                alt={'send_icon'}
-                width={72}
-                height={57}
-              />
-              {/* {isPending || isInitPending ? (
-                <span class="material-symbols-outlined">block</span>
-              ) : (
-                <Image
-                  src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
-                  alt={'send_icon'}
-                  width={72}
-                  height={57}
-                />
-              )} */}
-            </ChatBoxFooterButton>
-          </ChatBoxFooter>
-        </ChatBox>
-
-        <div class="codingnexus">
-          <a>Created by SoyesKids</a>
-        </div>
-
-        {/* <div>
-          <button onClick={openModal}>동영상 재생</button>
-          <VideoModal
-            isOpen={modalIsOpen}
-            onRequestClose={closeModal}
-            videoId={videoId}
+          ))}
+          {messageArr.map((el, index) => (
+            <ChatBubble
+              key={index}
+              lastKey={index === messageArr.length - 1}
+              message={el.content}
+              role={el.role}
+              iconUrl={avartaAI_info[avartaAI].iconUrl}
+              headerTitle={avartaAI_info[avartaAI].headerTitle}
+              audioURL={el.audioURL}
+              // media={
+              //   el.media
+              //     ? {
+              //         videoInfo: el.media,
+              //         modalIsOpen,
+              //         closeModal: () => {
+              //           setModalIsOpen(false);
+              //         },
+              //         openModal: () => {
+              //           setModalIsOpen(true);
+              //         },
+              //       }
+              //     : null
+              // }
+            />
+          ))}
+          {/* 로딩바 */}
+          {isPending ? <LoadingAnimation /> : null}
+        </ChatBoxBody>
+        <ChatBoxFooter>
+          <ChatBoxFooterInput
+            value={chat}
+            onChange={(e) => {
+              setChat(e.target.value);
+            }}
+            onKeyPress={(e) => {
+              if (
+                e.key === 'Enter' &&
+                chat !== '' &&
+                !isPending &&
+                !isInitPending
+              )
+                setFlagEnter(true);
+            }}
+            // placeholder={placehold}
+            isPending={isPending}
+            isInitPending={isInitPending}
           />
-        </div> */}
-      </FlexContainer>
-      {/* <Live2DViewerContainer>
-        <Live2DViewerTest emotion={emotion} avarta={name} />
-      </Live2DViewerContainer> */}
+          <ChatBoxFooterButton
+            onClick={() => {
+              if (chat !== '' && !isPending && !isInitPending)
+                setFlagEnter(true);
+            }}
+            isPending={isPending || isInitPending}
+          >
+            <Image
+              src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
+              alt={'send_icon'}
+              width={72}
+              height={57}
+            />
+          </ChatBoxFooterButton>
+        </ChatBoxFooter>
+      </ChatBox>
     </MainContainer>
   );
 }
@@ -591,77 +551,39 @@ export async function getStaticProps({ locale }) {
 }
 
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
-const FadeInSpan = keyframes`
-  0% {
-    opacity: 0;
-    font-size: 1rem;
-  }
-  100% {
-    opacity: 1;
-    font-size: 3rem;
-  }
-`;
-
 const MainContainer = styled.div`
-  /* background-image: url('/src/soyesKids_Background_image.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-
-  background-color: ${(props) => props.backColor || '#fdf6ff'};
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   height: 100%;
 
-  position: relative;
+  background-image: url('/src/Consult_IMG/background_pupu.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     overflow: hidden;
   }
 `;
 
-const Live2DViewerContainer = styled.div`
-  display: none; // 임시로 막아두기
-  position: fixed;
-  top: 25%;
-  right: 15%;
-
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const Avarta3DViewerContainer = styled.div`
-  display: flex;
-  position: absolute;
-  top: 15%;
-  right: 0%;
-
-  @media (max-width: 768px) {
-    top: 25%;
-    right: 10%;
-  }
-`;
-
 const ChatBox = styled.div`
-  /* background-image: ${(props) =>
-    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  width: 70%;
+  min-height: 100vh;
+  height: 100%;
+  padding: 8rem 5rem;
+
+  background-image: url('/src/NorthDiary_IMG/content_background.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; */
-
-  width: 100vw;
-  background: inherit;
-  /* position: relative; */
-  /* margin: 0 auto; */
-  margin-top: 6rem;
-  padding: 0 5rem;
-  border-radius: 8px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-
-  height: 100%;
+  background-repeat: no-repeat;
 
   @media (max-width: 768px) {
+    width: 100vw;
     height: 100%;
     max-width: 37rem;
     padding: 0;
@@ -685,7 +607,7 @@ const ChatBoxBody = styled.div`
   background-position: center;
   background-repeat: no-repeat; */
   width: 100vw;
-  background: inherit;
+
   padding: 1rem;
   overflow-y: auto;
   min-height: 75vh;

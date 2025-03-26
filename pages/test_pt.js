@@ -1,16 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled, { keyframes } from 'styled-components';
-import { FlexContainer } from '../styled-component/common';
+import styled from 'styled-components';
 import { useEffect, useState, useRef } from 'react';
 
 import { handlePtAnalsys } from '@/fetchAPI/testAPI';
 
 import PTestBubble from '@/component/Test_Component/PTestBubble';
-import Image from 'next/image';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
-import { useRouter } from 'next/router';
 
-import { motion } from 'framer-motion';
 import { psychologicalAsesssment } from '@/store/testGenerator';
 
 import { useTranslation } from 'next-i18next';
@@ -26,7 +22,6 @@ export default function PersnalityTest() {
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
 
-  const router = useRouter();
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
   const ptSessionRef = useRef(null);
   const chatBoxBody = useRef(null); // scrollToBottom 컴포넌트 고정
@@ -146,52 +141,34 @@ export default function PersnalityTest() {
 
   return (
     <MainContainer>
-      <FlexContainer
-        justify="center"
-        align="center"
-        dir="col"
-        width="100%"
-        height="100%"
-        padding="0 1rem"
-      >
-        {/* <Image
-          src="/src/soyesKids_Logo.png"
-          alt={"soyes_logo"}
-          width={529}
-          height={93}
-        /> */}
-        <PTBox ref={chatBoxBody}>
-          {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
-          <PTBoxBody>
-            <PTestBubble message={'성격검사 시작합니다!'} role="assistant" />
-            {messageArr.map((el, index) => (
-              <div key={index}>
-                {el.imgURL ? (
-                  <PTestBubble
-                    message={el.content}
-                    role={el.role}
-                    imgURL={el.imgURL}
-                    setSelect={index === messageArr.length - 1 && setSelect}
-                    setNext={index === messageArr.length - 1 && setNext}
-                  />
-                ) : (
-                  <PTestBubble
-                    message={el.content}
-                    role={el.role}
-                    setSelect={index === messageArr.length - 1 && setSelect}
-                    setNext={index === messageArr.length - 1 && setNext}
-                  />
-                )}
-              </div>
-            ))}
-            {/* 로딩바 */}
-            {isPending ? <LoadingAnimation /> : null}
-          </PTBoxBody>
-        </PTBox>
-        <div class="codingnexus">
-          <a>Created by SoyesKids</a>
-        </div>
-      </FlexContainer>
+      <PTBox ref={chatBoxBody}>
+        {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
+        <PTBoxBody>
+          <PTestBubble message={'성격검사 시작합니다!'} role="assistant" />
+          {messageArr.map((el, index) => (
+            <div key={index}>
+              {el.imgURL ? (
+                <PTestBubble
+                  message={el.content}
+                  role={el.role}
+                  imgURL={el.imgURL}
+                  setSelect={index === messageArr.length - 1 && setSelect}
+                  setNext={index === messageArr.length - 1 && setNext}
+                />
+              ) : (
+                <PTestBubble
+                  message={el.content}
+                  role={el.role}
+                  setSelect={index === messageArr.length - 1 && setSelect}
+                  setNext={index === messageArr.length - 1 && setNext}
+                />
+              )}
+            </div>
+          ))}
+          {/* 로딩바 */}
+          {isPending ? <LoadingAnimation /> : null}
+        </PTBoxBody>
+      </PTBox>
     </MainContainer>
   );
 }
@@ -207,14 +184,19 @@ export async function getStaticProps({ locale }) {
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
 
 const MainContainer = styled.div`
-  /* background-image: url('/src/soyesKids_Background_image.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-  background-color: #fdf6ff;
   width: 100%;
   min-height: 100vh;
   height: 100%;
+
+  background-image: url('/src/EBT_IMG/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     overflow: hidden;
@@ -240,28 +222,15 @@ const MainContainer = styled.div`
 // `;
 
 const PTBox = styled.div`
-  /* background-image: ${(props) =>
-    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  width: 70%;
+  min-height: 100vh;
+  height: 100%;
+  padding: 8rem 5rem;
+
+  background-image: url('/src/NorthDiary_IMG/content_background.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; */
-
-  /* 화면 좁히기 가능 */
-  width: 100vw;
-  background: inherit;
-  /* position: relative; */
-  /* margin: 0 auto; */
-  margin-top: 6rem;
-  padding: 0 5rem;
-  border-radius: 8px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-
-  height: 100%;
-
-  /* 채팅 중앙정렬 가능 */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+  background-repeat: no-repeat;
 
   @media (max-width: 768px) {
     width: 100vw;
@@ -271,42 +240,7 @@ const PTBox = styled.div`
   }
 `;
 
-// const PTBox = styled.div`
-//   position: relative;
-//   margin: 0 auto;
-//   margin-top: 6rem;
-
-//   width: 100%;
-//   max-width: 37rem;
-
-//   height: 100%;
-//   /* height: calc(100vh - 150px); */
-//   /* max-height: calc(100vh - 150px); */
-
-//   background-color: #ffffff;
-//   border-radius: 8px;
-
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-//   overflow: hidden;
-// `;
-
-const PTBoxHeader = styled.div`
-  background-color: #0084ff;
-  color: #ffffff;
-  padding: 16px;
-  font-size: 20px;
-  font-weight: bold;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  height: 9%;
-`;
-
 const PTBoxBody = styled.div`
-  /* background-image: ${(props) =>
-    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
   width: 100vw;
   background: inherit;
   padding: 1rem;
@@ -325,54 +259,3 @@ const PTBoxBody = styled.div`
     min-height: 70vh;
   }
 `;
-
-// const PTBoxBody = styled.div`
-//   padding: 6px;
-//   height: 91%;
-//   overflow-y: auto;
-//   /* height: calc(100% - 360px); */
-
-//   display: flex;
-//   flex-direction: column;
-//   width: auto;
-// `;
-
-// const PTBoxFooter = styled.div`
-//   bottom: 0;
-//   display: flex;
-//   align-items: center;
-//   background-color: #ffffff;
-//   border-top: 1px solid #e6e6e6;
-//   padding: 8px 16px;
-// `;
-
-// const PTBoxFooterInput = styled.input`
-//   flex: 1;
-//   padding: 8px;
-//   border: 1px solid #e6e6e6;
-//   border-radius: 8px;
-//   font-size: 16px;
-//   outline: none;
-// `;
-
-// const PTBoxFooterButton = styled.button`
-//   margin-left: 8px;
-//   padding: 5px 12px;
-//   background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0084ff")};
-//   color: #ffffff;
-//   font-size: 16px;
-//   font-weight: bold;
-//   border: none;
-//   border-radius: 8px;
-//   cursor: ${(props) => (props.isPending ? "" : "pointer")};
-
-//   &:hover {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-
-//   &:active {
-//     background-color: ${(props) => (props.isPending ? "#e5e5ea" : "#0073e6")};
-//   }
-//   display: flex;
-//   transition: 0.2s;
-// `;

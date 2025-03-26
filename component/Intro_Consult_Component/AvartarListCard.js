@@ -30,7 +30,7 @@ const AvartarListCard = ({
     localStorage.setItem('avarta', codeName);
   };
   return (
-    <StyledLink href={name === '엘라' ? '/ella/mood' : '/test_all'}>
+    <StyledLink href={name === '엘라' ? '/ella/mood' : '/pupu'}>
       <Container
         backColor={backColor}
         borderColor={borderColor}

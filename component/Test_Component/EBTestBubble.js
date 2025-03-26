@@ -36,7 +36,7 @@ const EBTestBubble = ({
           <StyledBubble role={role}>
             {role === 'user' ? (
               <BubbleContainer role={role}>
-                {message.map((el, index) => (
+                {message.map((_, index) => (
                   <EBTSelectRow
                     key={index}
                     selectHandler={setSelect && selectHandler}

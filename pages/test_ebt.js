@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-import styled, { keyframes } from 'styled-components';
-import { FlexContainer } from '../styled-component/common';
+import styled from 'styled-components';
 import { useEffect, useState, useRef } from 'react';
 
 import { handleEbtAnalsys } from '@/fetchAPI/testAPI';
 import EBTestBubble from '@/component/Test_Component/EBTestBubble';
-import EBTClassSelector from '@/component/Test_Component/EBTClassSelector';
+// import EBTClassSelector from '@/component/Test_Component/EBTClassSelector';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
 import EBTClassNextBtn from '@/component/Test_Component/EBTClassNextBtn';
 
@@ -96,29 +95,29 @@ export default function Test() {
     ebtSessionRef.current =
       ebtClassMap[localStorage.getItem('EBTClass') || 'School'].generator();
     setEbtType(localStorage.getItem('EBTClass') || 'School');
-    setTimeout(() => {
-      const { value, done } = ebtSessionRef.current.next(select);
-      if (!done) {
-        const start_message = {
-          role: 'assistant',
-          content: `정서행동 검사 - ${
-            ebtClassMap[localStorage.getItem('EBTClass') || 'School'].name
-          } 시작합니다!`,
-        };
-        const question_message = {
-          role: 'assistant',
-          content: value.question.content,
-          imgURL: value.question.imgURL,
-        };
-        const selection_message = {
-          role: 'user',
-          content: value.selection.content,
-          score: value.selection.score,
-          imgURL: value.selection.imgURL,
-        };
-        setMessageArr([start_message, question_message, selection_message]);
-      }
-    }, 1000);
+
+    const { value, done } = ebtSessionRef.current.next(select);
+    if (!done) {
+      const start_message = {
+        role: 'assistant',
+        content: `정서행동 검사 - ${
+          ebtClassMap[localStorage.getItem('EBTClass') || 'School'].name
+        } 시작합니다!`,
+      };
+      const question_message = {
+        role: 'assistant',
+        content: value.question.content,
+        imgURL: value.question.imgURL,
+      };
+      const selection_message = {
+        role: 'user',
+        content: value.selection.content,
+        score: value.selection.score,
+        imgURL: value.selection.imgURL,
+      };
+      setMessageArr([start_message, question_message, selection_message]);
+    }
+
     return () => {
       // 페이지 언마운트 시 로컬 스토리지의 EBTClass 값 삭제
       localStorage.removeItem('EBTClass');
@@ -143,13 +142,6 @@ export default function Test() {
           imgURL: value.selection.imgURL,
         };
 
-        // 선택 문항 갱신
-        // let updateMsgArr = [...messageArr];
-        // updateMsgArr[updateMsgArr.length - 1] = {
-        //   ...updateMsgArr[updateMsgArr.length - 1],
-        //   selected: select,
-        // };
-
         setMessageArr([...messageArr, question_message, selection_message]);
         setNext(false);
       }
@@ -157,13 +149,6 @@ export default function Test() {
       else if (value) {
         const { result, ebtScore } = value;
         setIsPending(true);
-        // 선택 문항 갱신
-        // let updateMsgArr = [...messageArr];
-        // updateMsgArr[updateMsgArr.length - 1] = {
-        //   ...updateMsgArr[updateMsgArr.length - 1],
-        //   selected: select,
-        // };
-
         setMessageArr([
           ...messageArr,
           {
@@ -202,40 +187,28 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <FlexContainer
-        justify="center"
-        align="center"
-        dir="col"
-        width="100vw"
-        height="100%"
-        padding="0 1rem"
-      >
-        <EBTBox>
-          <EBTBoxBody ref={chatBoxBody}>
-            {messageArr.map((el, index) => (
-              <div key={index}>
-                <EBTestBubble
-                  message={el.content}
-                  score={el.score}
-                  role={el.role}
-                  imgURL={el.imgURL}
-                  setSelect={index === messageArr.length - 1 && setSelect}
-                  setNext={index === messageArr.length - 1 && setNext}
-                />
-              </div>
-            ))}
-            {/* 로딩바 */}
-            {isPending ? <LoadingAnimation /> : null}
-            {/* 다음 검사 OR 총평 */}
-            {endTrigger ? (
-              <EBTClassNextBtn ebtType={ebtClassMap[ebtType].next} />
-            ) : null}
-          </EBTBoxBody>
-        </EBTBox>
-        <div class="codingnexus">
-          <a>Created by SoyesKids</a>
-        </div>
-      </FlexContainer>
+      <EBTBox>
+        <EBTBoxBody ref={chatBoxBody}>
+          {messageArr.map((el, index) => (
+            <div key={index}>
+              <EBTestBubble
+                message={el.content}
+                score={el.score}
+                role={el.role}
+                imgURL={el.imgURL}
+                setSelect={index === messageArr.length - 1 && setSelect}
+                setNext={index === messageArr.length - 1 && setNext}
+              />
+            </div>
+          ))}
+          {/* 로딩바 */}
+          {isPending ? <LoadingAnimation /> : null}
+          {/* 다음 검사 OR 총평 */}
+          {endTrigger ? (
+            <EBTClassNextBtn ebtType={ebtClassMap[ebtType].next} />
+          ) : null}
+        </EBTBoxBody>
+      </EBTBox>
     </MainContainer>
   );
 }
@@ -249,69 +222,40 @@ export async function getStaticProps({ locale }) {
 }
 
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
-const FadeInSpan = keyframes`
-  0% {
-    opacity: 0;
-    font-size: 1rem;
-  }
-  100% {
-    opacity: 1;
-    font-size: 3rem;
-  }
-`;
 
 const MainContainer = styled.div`
-  /* background-image: url('/src/soyesKids_Background_image.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat; */
-  background-color: #fdf6ff;
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   height: 100%;
 
-  position: relative;
+  background-image: url('/src/EBT_IMG/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     overflow: hidden;
   }
 `;
 
-// const MainContainer = styled.div`
-//   background-image: url('/src/soyesKids_Background_image.png');
-//   background-size: cover;
-//   background-position: center;
-//   background-repeat: no-repeat;
-
-//   width: 100vw;
-//   height: 100vh;
-
-//   @media (max-width: 768px) {
-//     overflow: hidden;
-//   }
-
-//   position: relative;
-// `;
-
 const EBTBox = styled.div`
-  /* background-image: ${(props) =>
-    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  width: 70%;
+  min-height: 100vh;
+  height: 100%;
+  padding: 8rem 5rem;
+
+  background-image: url('/src/NorthDiary_IMG/content_background.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; */
-
-  width: 100vw;
-  background: inherit;
-  /* position: relative; */
-  /* margin: 0 auto; */
-  margin-top: 6rem;
-  padding: 0 5rem;
-  border-radius: 8px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-
-  height: 100%;
+  background-repeat: no-repeat;
 
   @media (max-width: 768px) {
+    width: 100vw;
     height: 100%;
     max-width: 37rem;
     padding: 0;
@@ -336,17 +280,6 @@ const EBTBox = styled.div`
 //   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 //   overflow: hidden;
 // `;
-
-const EBTBoxHeader = styled.div`
-  background-color: #0084ff;
-  color: #ffffff;
-  padding: 16px;
-  font-size: 20px;
-  font-weight: bold;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  height: 9%;
-`;
 
 const EBTBoxBody = styled.div`
   /* background-image: ${(props) =>

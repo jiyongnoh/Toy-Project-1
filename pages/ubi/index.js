@@ -214,11 +214,14 @@ export async function getStaticProps({ locale }) {
 }
 
 const MainContainer = styled.div`
-  background-color: black;
-
   width: 100%;
   min-height: 100vh;
   height: 100%;
+
+  background-image: url('/src/Ubi_IMG/backgroung_ubi.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   display: flex;
   justify-content: center;
@@ -267,7 +270,7 @@ const ButtonContainer = styled.div`
 
 const StyledButton = styled.button`
   background-color: ${(props) =>
-    props.selected ? 'rgba(205, 205, 205, 0.5)' : 'rgba(255, 255, 255, 0.05)'};
+    props.selected ? 'rgba(0, 0, 0, 0.8)' : 'rgba(0, 0, 0, 0.4)'};
 
   backdrop-filter: blur(10px); // 불투명 필터
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -288,7 +291,7 @@ const StyledButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: rgba(205, 205, 205, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
     color: white;
   }
 

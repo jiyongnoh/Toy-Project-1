@@ -281,71 +281,59 @@ export default function Test() {
 
   return (
     <MainContainer>
-      <FlexContainer
-        justify="center"
-        align="center"
-        dir="col"
-        width="100%"
-        height="100%"
-        padding="0 1rem"
-      >
-        <EllaMoodBox ref={chatBoxBody}>
-          {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
-          <EllaMoodBoxBody>
-            {messageArr.map((el, index) => {
-              if (el.type === 'fix')
-                return <FixBubble fix_data={el} setNext={setNext} />;
-              else if (el.type === 'select' || el.type === 'input&select')
-                return (
-                  <SelectBubble
-                    select_data={el}
-                    setChat={index === messageArr.length - 1 && setChat}
-                    setNext={index === messageArr.length - 1 && setNext}
-                  />
-                );
-              else return;
-            })}
-            {/* 로딩바 */}
-            {isPending ? <LoadingAnimation /> : null}
-          </EllaMoodBoxBody>
-          <ChatBoxFooter>
-            <ChatBoxFooterInput
-              value={chat}
-              onChange={(e) => {
-                setChat(e.target.value);
-              }}
-              onKeyPress={(e) => {
-                if (e.key === 'Enter' && chat !== '' && !isPending) {
-                  setIsPending(true);
-                  setFlagEnter(true);
-                }
-              }}
-              ref={inputRef}
-              // placeholder={placehold}
-              inputTrigger={inputTrigger}
+      <EllaMoodBox ref={chatBoxBody}>
+        {/* <PTBoxHeader>성격 검사</PTBoxHeader> */}
+        <EllaMoodBoxBody>
+          {messageArr.map((el, index) => {
+            if (el.type === 'fix')
+              return <FixBubble fix_data={el} setNext={setNext} />;
+            else if (el.type === 'select' || el.type === 'input&select')
+              return (
+                <SelectBubble
+                  select_data={el}
+                  setChat={index === messageArr.length - 1 && setChat}
+                  setNext={index === messageArr.length - 1 && setNext}
+                />
+              );
+            else return;
+          })}
+          {/* 로딩바 */}
+          {isPending ? <LoadingAnimation /> : null}
+        </EllaMoodBoxBody>
+        <ChatBoxFooter>
+          <ChatBoxFooterInput
+            value={chat}
+            onChange={(e) => {
+              setChat(e.target.value);
+            }}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter' && chat !== '' && !isPending) {
+                setIsPending(true);
+                setFlagEnter(true);
+              }
+            }}
+            ref={inputRef}
+            // placeholder={placehold}
+            inputTrigger={inputTrigger}
+          />
+          <ChatBoxFooterButton
+            onClick={() => {
+              if (chat !== '' && !isPending) {
+                setIsPending(true);
+                setFlagEnter(true);
+              }
+            }}
+            inputTrigger={inputTrigger}
+          >
+            <Image
+              src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
+              alt={'send_icon'}
+              width={72}
+              height={57}
             />
-            <ChatBoxFooterButton
-              onClick={() => {
-                if (chat !== '' && !isPending) {
-                  setIsPending(true);
-                  setFlagEnter(true);
-                }
-              }}
-              inputTrigger={inputTrigger}
-            >
-              <Image
-                src="/src/Consult_IMG/Icon/Consult_Send_Icon_IMG.png"
-                alt={'send_icon'}
-                width={72}
-                height={57}
-              />
-            </ChatBoxFooterButton>
-          </ChatBoxFooter>
-        </EllaMoodBox>
-        <div class="codingnexus">
-          <a>Created by SoyesKids</a>
-        </div>
-      </FlexContainer>
+          </ChatBoxFooterButton>
+        </ChatBoxFooter>
+      </EllaMoodBox>
     </MainContainer>
   );
 }
@@ -361,16 +349,19 @@ export async function getStaticProps({ locale }) {
 // styled-component의 animation 설정 방법 (keyframes 메서드 사용)
 
 const MainContainer = styled.div`
-  background-image: url('/src/Ella_Mood_IMG/Background/Ella_Mood_Background_IMG.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed; /* 배경 고정 */
-
-  background-color: #fdf6ff;
   width: 100%;
   min-height: 100vh;
   height: 100%;
+
+  background-image: url('/src/Ella_Mood_IMG/Background/background_ella.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: 768px) {
     overflow: hidden;
@@ -378,31 +369,15 @@ const MainContainer = styled.div`
 `;
 
 const EllaMoodBox = styled.div`
-  /* background-image: ${(props) =>
-    props.backgroundImgUrl ? `url(${props.backgroundImgUrl})` : 'none'};
+  width: 70%;
+  min-height: 100vh;
+  height: 100%;
+  padding: 8rem 5rem;
+
+  background-image: url('/src/NorthDiary_IMG/content_background.png');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat; */
-
-  /* 화면 좁히기 가능 */
-  width: 50vw;
-  /* background: inherit; */
-  background-color: #fdf6ff;
-  /* position: relative; */
-  /* margin: 0 auto; */
-  margin-top: 6rem;
-  padding: 0 3rem;
-  /* border: 1px solid blue; */
-  border-radius: 8px;
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-
-  /* min-height: 70vh; */
-  height: 100%;
-
-  /* 채팅 중앙정렬 가능 */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+  background-repeat: no-repeat;
 
   @media (max-width: 768px) {
     width: 100vw;
