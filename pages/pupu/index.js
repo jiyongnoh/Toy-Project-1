@@ -1,32 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
-// import Live2DViewerTest from '@/component/Live2D_Component/Live2DViewerTest';
 import { useEffect, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { log } from '@/store/state';
+
 import {
-  // emotionAPI,
   handleClovaVoice,
-  // handleClearCookies,
   handleGptCompletion,
   handleConsultLogSave,
-  // handleEbtResult,
 } from '@/fetchAPI';
+
 import ChatBubble from '@/component/Chat_Component/ChatBubble';
 import InitChatBubble from '@/component/Chat_Component/InitChatBubble';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
-// import AvartaThree from '@/component/Chat_Component/AvartaThree';
-
-// 아바타 관련 전역 변수
-import { useRecoilState } from 'recoil';
-import { log } from '../../store/state';
-// import CharacterSelector from '@/component/Chat_Component/CharacterSelector';
 import Swal from 'sweetalert2';
-import { useRouter } from 'next/router';
 
 // import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-
-// import VideoModal from "@/component/Chat_Component/VideoModal";
 
 const avartaAI_info = {
   pupu: {
@@ -99,21 +91,8 @@ const unMount_api_info = {
     path: '/openAI/clear_cookies',
   },
 };
-// const ebtClassMapKorean = {
-//   School: '학업/성적',
-//   Friend: '대인관계',
-//   Family: '가족관계',
-//   Mood: '기분',
-//   Health: '신체증상',
-//   Self: '자기이해',
-// };
-// const gameMapKorean = {
-//   remarks: '끝말잇기',
-//   game2: '게임2',
-//   game3: '게임3',
-// };
 
-// Renewel Test 페이지
+// 푸푸 상담 페이지
 export default function Test() {
   const [chat, setChat] = useState('');
   const [flagEnter, setFlagEnter] = useState(false);
@@ -149,12 +128,6 @@ export default function Test() {
     try {
       messageArr.push({ role: 'user', content: message }); // 내 채팅 추가.
       setIsPending(true); // 로딩 on
-      // 감정 분석 API 호출 이후 state 갱신 (임시로 막아둠)
-      // const res = await emotionAPI([{ role: 'user', content: message }]);
-      // const res = '긍정';
-      // setEmotion(res);
-
-      // Chat Compleation Request
 
       // messageArr 깊은 복사 후 audioURL, media 속성 삭제
       const tmpMsgArr = [
@@ -276,32 +249,6 @@ export default function Test() {
     }
   }, [login]);
 
-  // useEffect(() => {
-  //   // 엘라 상담 중, 주제가 선정되었을 경우
-  //   if (testType && avartaAI === 'pupu') {
-  //     const init_ending_ment = {
-  //       role: 'assistant',
-  //       content: `${ebtClassMapKorean[testType]} 관련 상담을 진행할게! 반가워 나는 푸푸야!`,
-  //     };
-
-  //     setInitArr([...initArr, init_ending_ment]);
-  //     setIsInitPending(false);
-  //   }
-  // }, [testType]);
-
-  // useEffect(() => {
-  //   // 우비 상담 중, 게임이 선택됐을 경우
-  //   if (gameType && avartaAI === 'ubi') {
-  //     const init_ending_ment = {
-  //       role: 'assistant',
-  //       content: `${gameMapKorean[gameType]}! 재밌겠다!! 너부터 시작해!`,
-  //     };
-
-  //     setInitArr([...initArr, init_ending_ment]);
-  //     setIsInitPending(false);
-  //   }
-  // }, [gameType]);
-
   // Chat 관련 처리
   useEffect(() => {
     if (!flagEnter) return; // 공백 Enter 체크
@@ -311,28 +258,17 @@ export default function Test() {
     setChat('');
   }, [flagEnter]);
 
-  // 스크롤 바텀 효과. 채팅 시 발동
-  // useEffect(() => {
-  //   const chatBoxBody = document.querySelector('.chat-box-body');
-  //   chatBoxBody.scrollTop = chatBoxBody.scrollHeight;
-  // }, [isPending, isInitPending]);
-
   useEffect(() => {
     if (isPending) scrollToBottom();
   }, [isPending]);
 
   return (
     <MainContainer className="main-container" backColor={backColor}>
-      {/* <Avarta3DViewerContainer>
-        <AvartaThree />
-      </Avarta3DViewerContainer> */}
       <ChatBox
         className="chat-box"
         ref={chatBoxRef}
         backgroundImgUrl={backgroundImgUrl}
       >
-        {/* <CharacterSelector isPending={isPending} /> */}
-        {/* <ChatBoxHeader>{headerTitle}</ChatBoxHeader> */}
         <ChatBoxBody className="chat-box-body">
           {/* 푸푸 시작 멘트 */}
           {initArr.map((el, index) => (
