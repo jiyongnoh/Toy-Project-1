@@ -197,7 +197,7 @@ export default function Test() {
     const chatBoxBody = chatBoxRef.current;
     if (chatBoxBody.scrollHeight > 900)
       window.scrollTo({
-        top: chatBoxBody.scrollHeight, // 세로 스크롤 위치
+        top: chatBoxBody.scrollHeight - 1000, // 세로 스크롤 위치
         left: 0, // 가로 스크롤 위치
         behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
       });
@@ -259,7 +259,7 @@ export default function Test() {
   }, [flagEnter]);
 
   useEffect(() => {
-    if (isPending) scrollToBottom();
+    scrollToBottom();
   }, [isPending]);
 
   return (

@@ -5,12 +5,20 @@ import { useEffect, useState, useRef } from 'react';
 import { handleDiaryCreate } from '@/fetchAPI/northDiaryAPI';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
-import CareerTestBubble from '@/component/Test_Component/CareerTestBubble';
+import NorthBubble from '@/component/North_Component/NorthBubble';
 import DiaryInput from '@/component/North_Component/DiaryInput';
 
 function getRandomTag() {
   return ['mood', 'friend', 'family', 'school'][Math.floor(Math.random() * 4)];
 }
+
+const defaultMent = `안녕? 나는 북극이야 우리 같이 일기를 적어볼까? 내가 주제를 말해주면 그 주제에 맞게 일기를 적어보는거야!`;
+const tagMent = {
+  mood: `오늘의 주제는 기분이야. 너가 느끼는 기분에 대해서 한번 적어볼래?`,
+  friend: `오늘의 주제는 친구야. 너의 친구에 대해서나 친구와 했던 일들을 적어볼래?`,
+  family: `오늘의 주제는 가족이야. 너의 가족에 대해서나 가족과 있었던 일들을 적어볼래?`,
+  school: `오늘의 주제는 학교야. 너의 학교생활이나 학교에서 있었던 일들을 적어볼래?`,
+};
 
 export default function NorthEmotionDiary() {
   const [disabled, setDisabled] = useState(false);
@@ -31,6 +39,10 @@ export default function NorthEmotionDiary() {
   };
   // API 호출 메서드
   const handleClickSubmitBtn = async (input) => {
+    if (input.content.length > 50) {
+      alert('50자 이내로 작성해주세요.');
+      return;
+    }
     if (confirm(`작성한 일기를 저장하시겠습니까?`)) {
       try {
         // 감정 분석 API 호출 이후 state 갱신
@@ -64,15 +76,18 @@ export default function NorthEmotionDiary() {
     <MainContainer>
       <CareerBox ref={boxBody}>
         <CareerBoxBody>
-          <CareerTestBubble message={`${tag}`} role="assistant" />
+          <NorthBubble
+            message={`${defaultMent} ${tagMent[tag]}`}
+            role="assistant"
+          />
           <DiaryInput
             disabled={disabled}
             handleClickSubmitBtn={handleClickSubmitBtn}
           />
         </CareerBoxBody>
         {disabled && (
-          <CareerTestBubble
-            message={`일기가 저장되었습니다.`}
+          <NorthBubble
+            message={`일기를 저장했어! 내일도 일기쓰러 와줘!`}
             role="assistant"
           />
         )}

@@ -10,6 +10,7 @@ export default function DiaryInput({ disabled, handleClickSubmitBtn }) {
         <DiaryInputTextArea
           disabled={disabled}
           value={content}
+          placeholder={`50자 이내로 적어주세요.`}
           onChange={(e) => setContent(e.target.value)}
         />
         <SubmitButton
