@@ -1,0 +1,9 @@
+<svg width="auto" height="40" xmlns="http://www.w3.org/2000/svg">
+  <foreignObject width="100%" height="100%">
+    <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: center; background: #fde2bb; border-radius: 20px; padding: 0 16px; font-weight: bold; color: #bc1d18; height: 40px;">
+      <div style="width: 12px; height: 12px; background: #7b6868; border-radius: 50%; margin-right: 40px;"></div>
+      <span>결과 해석 시 유의사항</span>
+      <div style="width: 12px; height: 12px; background: #7b6868; border-radius: 50%; margin-left: 40px;"></div>
+    </div>
+  </foreignObject>
+</svg>
