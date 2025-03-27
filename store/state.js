@@ -24,4 +24,10 @@ const mobile = atom({
   default: false,
 });
 
-export { log, avarta, uid, mobile };
+// 모바일 상태 여부
+const ptResultData = atom({
+  key: 'ptResultData',
+  default: { resultType: '', selected: '' },
+});
+
+export { log, avarta, uid, mobile, ptResultData };

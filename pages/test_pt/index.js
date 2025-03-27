@@ -1,15 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
 import { useEffect, useState, useRef } from 'react';
-
 import { handlePtAnalsys } from '@/fetchAPI/testAPI';
 
 import PTestBubble from '@/component/Test_Component/PTestBubble';
 import LoadingAnimation from '@/component/Chat_Component/LoadingAnimation';
+import PTClassNextBtn from '@/component/Test_Component/PTClassNextBtn';
 
 import { psychologicalAsesssment } from '@/store/testGenerator';
-
-import { useTranslation } from 'next-i18next';
+// import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
@@ -21,6 +20,7 @@ export default function PersnalityTest() {
   const [resultType, setResultType] = useState('');
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
+  const [endTrigger, setEndTrigger] = useState(false); // 검사 종료 트리거
 
   // 제너레이터는 리렌더링 시점에 초기화 => useRef를 통해 인스턴스 고정
   const ptSessionRef = useRef(null);
@@ -36,9 +36,6 @@ export default function PersnalityTest() {
         left: 0, // 가로 스크롤 위치
         behavior: 'smooth', // 스크롤 애니메이션 (옵션: 'auto' 또는 'smooth')
       });
-    // if (chatBoxBody.current) {
-    //   chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
-    // }
   };
 
   // 성격 검사 분석 요청 API 호출 메서드
@@ -51,13 +48,20 @@ export default function PersnalityTest() {
       });
 
       setIsPending(false);
-      setMessageArr([
-        ...messageArr,
-        { role: 'assistant', content: data.message },
-      ]);
       setBottom(true);
+
+      if (data.status === 200) {
+        setEndTrigger(true);
+      }
     } catch (error) {
       console.log(error);
+      setIsPending(false);
+      setBottom(true);
+      setMessageArr([
+        ...messageArr,
+        { role: 'assistant', content: error.message },
+      ]);
+      setEndTrigger(true);
     }
   };
   // 페이지 초기설정 - 성격검사 첫 문항 제시
@@ -167,6 +171,9 @@ export default function PersnalityTest() {
           ))}
           {/* 로딩바 */}
           {isPending ? <LoadingAnimation /> : null}
+          {endTrigger ? (
+            <PTClassNextBtn resultType={resultType}>결과 보기</PTClassNextBtn>
+          ) : null}
         </PTBoxBody>
       </PTBox>
     </MainContainer>
@@ -202,24 +209,6 @@ const MainContainer = styled.div`
     overflow: hidden;
   }
 `;
-
-// const MainContainer = styled.div`
-//   /* background-image: url('/src/soyesKids_Background_image.png');
-//   background-size: cover;
-//   background-position: center;
-//   background-repeat: no-repeat; */
-
-//   background-color: #fdf6ff;
-
-//   width: 100vw;
-//   height: 100vh;
-
-//   @media (max-width: 768px) {
-//     overflow: hidden;
-//   }
-
-//   position: relative;
-// `;
 
 const PTBox = styled.div`
   width: 70%;

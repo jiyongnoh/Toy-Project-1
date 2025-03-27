@@ -146,6 +146,7 @@ export default function Nav() {
       { href: '/meditation_intro', label: t('meditation_intro') },
       { href: '/shop', label: t('shop') },
       { href: '/mypage', label: t('mypage') },
+      { href: '/test_pt/result', label: '성격검사 결과' },
       // { href: '/test_career', label: '적성검사' },
     ],
     [t]

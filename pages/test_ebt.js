@@ -12,7 +12,7 @@ import EBTClassNextBtn from '@/component/Test_Component/EBTClassNextBtn';
 // import { useRouter } from "next/router";
 import { ebtClassMap } from '@/store/testGenerator';
 
-import { useTranslation } from 'next-i18next';
+// import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Renewel Test 페이지
@@ -21,7 +21,6 @@ export default function Test() {
   const [next, setNext] = useState(false); // 유저 문항 선택 트리거
   const [select, setSelect] = useState(-1); // 유저 문항 선택지 1 || 2
   const [bottom, setBottom] = useState(false); // scrollToBottom 메서드 발동 트리거
-  const [isProceeding, setIsProceeding] = useState(false);
   const [scoreArr, setScoreArr] = useState([]);
   const [resultTrigger, setResultTrigger] = useState(false); // 결과 분석 요청 선택 트리거
   const [messageArr, setMessageArr] = useState([]);
@@ -46,7 +45,6 @@ export default function Test() {
     //   chatBoxBody.current.scrollTop = chatBoxBody.current.scrollHeight;
     // }
   };
-
   // EBT 분석 요청 API 호출 메서드
   const requetAnalysis = async () => {
     try {
@@ -79,7 +77,7 @@ export default function Test() {
         { role: 'assistant', content: data.message },
         // { role: "end", content: "다음 검사 진행하기" },
       ]);
-      setIsProceeding(false);
+      // setIsProceeding(false);
       setBottom(true);
 
       setTimeout(() => {
@@ -89,6 +87,7 @@ export default function Test() {
       console.log(error);
     }
   };
+
   // 페이지 초기설정 - EBT 첫 문항 제시
   useEffect(() => {
     // 정서행동 검사 제너레이터 생성
@@ -169,7 +168,7 @@ export default function Test() {
     }
   }, [next]);
 
-  // 성격검사 AI 분석 트리거
+  // AI 분석 트리거
   useEffect(() => {
     if (resultTrigger) {
       console.log('AI EBT 분석 API 호출');
