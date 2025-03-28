@@ -11,8 +11,7 @@ const contentText = `본 검사는 아동의 보고에 근거하여 아동의 �
 export default function PersnalityTestResultNote() {
   const router = useRouter();
   const handleDetailPageClick = () => {
-    alert('준비중 입니다!');
-    // router.push('/test_pt/result/detail'); // 결과 상세페이지 이동
+    router.push('/test_pt/result/detail'); // 결과 상세페이지 이동
   };
 
   return (

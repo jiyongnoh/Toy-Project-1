@@ -15,6 +15,11 @@ export default function PersnalityTestResult() {
     router.push('/test_pt/result/note'); // 결과 유의사항 페이지 이동
   };
 
+  const handleDetailPageClick = (el) => {
+    localStorage.setItem('PTDetailSelectedType', el);
+    router.push('/test_pt/result/detail');
+  };
+
   useEffect(() => {
     const ptResult = localStorage.getItem('PTResult');
     if (ptResult === null) {
@@ -51,7 +56,10 @@ export default function PersnalityTestResult() {
             <PtResultIconContainer>
               {ptResult.split('').map((el, index) => {
                 return (
-                  <PtResultIcon key={el + index}>
+                  <PtResultIcon
+                    key={el + index}
+                    onClick={() => handleDetailPageClick(el)}
+                  >
                     <Image
                       src={`/src/PT_IMG/PT_Result_Icon/${el}.png`}
                       alt={'avartar_icon'}
