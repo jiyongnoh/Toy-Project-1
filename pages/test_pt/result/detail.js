@@ -89,9 +89,9 @@ export default function PersnalityTestResultDetail() {
       localStorage.getItem('PTDetailSelectedType') || ptResult[0]
     );
 
-    return () => {
-      localStorage.removeItem('PTDetailSelectedType'); // 페이지 이동 시 localStorage 초기화
-    };
+    // return () => {
+    //   localStorage.removeItem('PTDetailSelectedType'); // 페이지 이동 시 localStorage 초기화
+    // };
   }, []);
 
   return (
@@ -107,6 +107,7 @@ export default function PersnalityTestResultDetail() {
                     key={el + index}
                     selected={el === ptResultSelectedType}
                     onClick={() => {
+                      localStorage.setItem('PTDetailSelectedType', el);
                       setPtResultSelectedType(el);
                     }}
                   >
