@@ -139,6 +139,8 @@ const PTResultBox = styled.div`
     height: 100%;
     max-width: 37rem;
     padding: 8rem 0;
+
+    gap: 2rem;
   }
 `;
 
@@ -169,6 +171,7 @@ const PtResultIconContainer = styled.div`
     width: 90%;
     height: 100%;
     padding: 0;
+    gap: 1rem;
   }
 `;
 
@@ -198,7 +201,8 @@ const PtNextPageButton = styled.button`
   cursor: pointer;
 
   @media (max-width: 768px) {
-    width: 5rem;
-    height: 5rem;
+    width: 50%;
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
   }
 `;
