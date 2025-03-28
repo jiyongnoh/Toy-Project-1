@@ -159,10 +159,9 @@ const PtResultNoteContent = styled.div`
 `;
 
 const PtNextPageButton = styled.button`
-  padding: 0.5rem 3rem;
+  padding: 1rem 3rem;
   border-radius: 1rem;
   border: none;
-
   background-color: #a378bd;
   color: white;
 
@@ -173,7 +172,8 @@ const PtNextPageButton = styled.button`
   cursor: pointer;
 
   @media (max-width: 768px) {
-    width: 5rem;
-    height: 5rem;
+    width: 40%;
+    padding: 0.5rem 2rem;
+    font-size: 1rem;
   }
 `;
