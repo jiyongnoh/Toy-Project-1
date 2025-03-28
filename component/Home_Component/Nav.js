@@ -147,7 +147,7 @@ export default function Nav() {
       { href: '/shop', label: t('shop') },
       { href: '/mypage', label: t('mypage') },
       { href: '/test_pt/result', label: '성격검사 결과' },
-      // { href: '/test_career', label: '적성검사' },
+      { href: '/soyes/ebt_result', label: '정서행동검사 결과' },
     ],
     [t]
   );
