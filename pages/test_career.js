@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import styled from 'styled-components';
-import { FlexContainer } from '../styled-component/common';
 import { useEffect, useState, useRef } from 'react';
 
 import { handleCtAnalsys } from '@/fetchAPI/testAPI';
@@ -130,18 +129,21 @@ export default function CareerTest() {
           return;
         }
         // DB에 저장
-        requetCareerSave({
-          gradeType: 'LOW',
-          careerResult1st: rankCareers[0].careerKey,
-          careerResult2nd: rankCareers[1].careerKey,
-          careerResult3rd: rankCareers[2].careerKey,
-          careertypeA: interestedCareerTypeMap['A'],
-          careertypeC: interestedCareerTypeMap['C'],
-          careertypeE: interestedCareerTypeMap['E'],
-          careertypeI: interestedCareerTypeMap['I'],
-          careertypeR: interestedCareerTypeMap['R'],
-          careertypeS: interestedCareerTypeMap['S'],
-        });
+        if (rankCareers.length) {
+          const [first, second, third] = rankCareers;
+          requetCareerSave({
+            gradeType: 'LOW',
+            careerResult1st: first ? first.careerKey : null,
+            careerResult2nd: second ? second.careerKey : null,
+            careerResult3rd: third ? third.careerKey : null,
+            careertypeA: interestedCareerTypeMap['A'],
+            careertypeC: interestedCareerTypeMap['C'],
+            careertypeE: interestedCareerTypeMap['E'],
+            careertypeI: interestedCareerTypeMap['I'],
+            careertypeR: interestedCareerTypeMap['R'],
+            careertypeS: interestedCareerTypeMap['S'],
+          });
+        }
         setCareerTypeMap({ ...interestedCareerTypeMap });
         setIsPending(true);
         setTimeout(() => {
