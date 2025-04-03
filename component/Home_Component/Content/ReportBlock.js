@@ -76,7 +76,7 @@ const ReportBlock = ({
           showCancelButton: true,
           confirmButtonText: '진행',
           cancelButtonText: '취소',
-        }).then((confirmResult) => {
+        }).then(async (confirmResult) => {
           if (confirmResult.isConfirmed) {
             let timerInterval;
             const input = {
@@ -87,99 +87,43 @@ const ReportBlock = ({
               pUid: localStorage.getItem('id'),
             };
 
-            let timeLeft = 20000;
-            let countdownSwal; // 후속 Swal 참조용
+            Swal.fire({
+              title: '결과보고서를 전송 중입니다...',
+              html: '남은 예상 시간: <b>15000</b> ms',
+              allowOutsideClick: false,
+              didOpen: () => {
+                Swal.showLoading();
+                const b = Swal.getPopup().querySelector('b');
+                let timeLeft = 20000;
 
-            const apiCall = async () => {
-              try {
-                const res = await handleReportResult(input);
-                return res;
-              } catch (err) {
-                throw err;
-              }
-            };
+                timerInterval = setInterval(() => {
+                  timeLeft -= 100;
+                  if (b) b.textContent = `${timeLeft}`;
+                  if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    Swal.close();
 
-            const countdown = new Promise((resolve) => {
-              Swal.fire({
-                title: '결과보고서를 전송 중입니다...',
-                html: '남은 예상 시간: <b>20000</b> ms',
-                allowOutsideClick: false,
-                didOpen: () => {
-                  Swal.showLoading();
-                  const b = Swal.getPopup().querySelector('b');
-
-                  timerInterval = setInterval(() => {
-                    timeLeft -= 100;
-                    if (b) b.textContent = `${timeLeft}`;
-                    if (timeLeft <= 0) {
-                      clearInterval(timerInterval);
-                      resolve('timeout'); // 15초 지나면 resolve
-                    }
-                  }, 100);
-                },
-                willClose: () => {
-                  clearInterval(timerInterval);
-                },
-              });
-            });
-
-            // ✅ 응답 vs 타이머 중 먼저 도착한 것 판별
-            Promise.race([apiCall(), countdown]).then(async (winner) => {
-              // 이미 Swal 열려 있다면 닫기
-              Swal.close();
-
-              if (winner === 'timeout') {
-                // ⏳ 15초 초과 후 응답 안 온 경우 → 진행 중 표시
-                countdownSwal = await Swal.fire({
-                  title: '진행 중...',
-                  text: '서버 응답을 기다리고 있습니다.',
-                  allowOutsideClick: false,
-                  didOpen: () => Swal.showLoading(),
-                });
-
-                // 이제 응답 기다리기
-                try {
-                  const res = await apiCall(); // 최종 응답 기다리기
-                  Swal.close();
-
-                  if (res.status !== 200) {
-                    await Swal.fire(
-                      '전송 실패',
-                      '결과보고서 전송 실패!',
-                      'error'
-                    );
-                  } else {
-                    await Swal.fire(
-                      '전송 완료',
-                      '이메일을 확인해주세요!',
-                      'success'
-                    );
+                    // ✅ 15초 후 이메일 확인 안내
+                    Swal.fire({
+                      icon: 'info',
+                      title: '처리 중입니다',
+                      text: '결과보고서가 전송되었습니다. 이메일을 확인해주세요!',
+                    });
                   }
-                } catch (error) {
-                  Swal.close();
-                  await Swal.fire(
-                    '에러 발생',
-                    '서버 통신 중 문제가 발생했습니다.',
-                    'error'
-                  );
-                }
-              } else {
-                // ✅ 응답이 먼저 온 경우 처리
-                if (winner.status !== 200) {
-                  await Swal.fire(
-                    '전송 실패',
-                    '결과보고서 전송 실패!',
-                    'error'
-                  );
-                } else {
-                  await Swal.fire(
-                    '전송 완료',
-                    '결과보고서 전송 성공!',
-                    'success'
-                  );
-                }
-              }
+                }, 100);
+              },
+              willClose: () => {
+                clearInterval(timerInterval);
+              },
             });
+
+            // ✅ 백그라운드에서 비동기 API 호출
+            try {
+              const res = await handleReportResult(input);
+              console.log('응답 상태:', res.status);
+            } catch (err) {
+              console.error('API 에러:', err);
+            }
           }
         });
       }
