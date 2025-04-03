@@ -89,12 +89,12 @@ const ReportBlock = ({
 
             Swal.fire({
               title: '결과보고서를 전송 중입니다...',
-              html: '남은 예상 시간: <b>15000</b> ms',
+              html: '남은 예상 시간: <b>30000</b> ms',
               allowOutsideClick: false,
               didOpen: () => {
                 Swal.showLoading();
                 const b = Swal.getPopup().querySelector('b');
-                let timeLeft = 20000;
+                let timeLeft = 30000;
 
                 timerInterval = setInterval(() => {
                   timeLeft -= 100;
