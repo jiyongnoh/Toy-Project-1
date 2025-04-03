@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { css } from 'styled-components';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
@@ -10,7 +10,7 @@ const EBTClassNextBtn = ({ ebtType }) => {
   const ebtChangeHandler = (e) => {
     // 마지막 검사인 경우
     if (e.target.value === 'END') {
-      router.push('/soyes/ebt_result'); // 총평으로 이동
+      router.push('/test_ebt/ebt_result'); // 총평으로 이동
     } else {
       // 로컬 스토리지에 EBTClass값 저장 후 리로드
       localStorage.setItem('EBTClass', e.target.value);

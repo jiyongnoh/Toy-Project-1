@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { handlePtResult } from '@/fetchAPI/testAPI';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // PT Result 페이지
@@ -20,18 +21,37 @@ export default function PersnalityTestResult() {
     router.push('/test_pt/result/detail');
   };
 
-  useEffect(() => {
-    const ptResult = localStorage.getItem('PTResult');
-    if (ptResult === null) {
-      alert('정상적인 경로로 접근해주세요!');
-      router.replace('/');
-      return;
-    }
-    setPtResult(ptResult);
+  // EBT 결과 배열 Load Method
+  const ptResultLoad = async () => {
+    // 유저 EBT 결과 조회 (11종)
+    try {
+      const data = await handlePtResult({
+        pUid: `${localStorage.getItem('id')}`,
+      });
 
-    // return () => {
-    //   localStorage.removeItem('PTResult'); // 페이지 이동 시 localStorage 초기화
-    // };
+      // Error Handling
+      if (data.status !== 200) {
+        alert('성격검사 데이터 로드 실패');
+        router.back();
+      }
+
+      const ptResult = data.data.data;
+
+      // Non PtResult Data
+      if (ptResult === '') {
+        alert('성격검사를 실시해주세요!');
+        router.back();
+      }
+
+      localStorage.setItem('PTResult', ptResult);
+      setPtResult(ptResult);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    ptResultLoad();
   }, []);
 
   return (

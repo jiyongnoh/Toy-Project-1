@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const ContentBlock = ({
@@ -14,11 +14,11 @@ const ContentBlock = ({
 }) => {
   return (
     <Container backColor={backColor} consult={consult}>
-      <Image
+      <img
         src={iconPath}
         alt="Content_Icon"
-        width={62}
-        height={62}
+        width={40}
+        height={40}
         style={{
           maxWidth: '100%',
           height: 'auto',
@@ -32,11 +32,11 @@ const ContentBlock = ({
       </TextContainer>
       <PlayButton consult={consult}>
         <Link href={linkUrl}>
-          <Image
+          <img
             src="/src/Content_IMG/Frame_재생버튼.png"
             alt="재생버튼"
-            width={60}
-            height={60}
+            width={50}
+            height={50}
             style={{
               maxWidth: '100%',
               height: 'auto',
@@ -52,16 +52,16 @@ const StyledLink = styled(Link)`
 `;
 
 const Container = styled.div`
-  width: ${(props) => (props.consult ? '610px' : '435px')};
+  width: 300px;
   height: 150px;
   display: flex;
   justify-content: center;
   align-items: center;
 
   border-radius: 1.5rem;
-  padding: 2.5rem;
+  padding: 1rem;
   background-color: ${(props) => props.backColor || '#FFFBE9'};
-  gap: ${(props) => (props.consult ? '2rem' : '3rem')};
+  gap: 1rem;
 
   border: 2.11px solid #e7e7e7;
 
@@ -81,7 +81,7 @@ const TextContainer = styled.div`
 const Title = styled.h2`
   margin: 0;
   color: ${(props) => props.color || '#9c6ef3'};
-  font-size: 1.8rem;
+  font-size: 1.2rem;
   font-family: AppleSDGothicNeoM00;
   letter-spacing: -0.1rem;
   font-weight: 600;
@@ -102,7 +102,7 @@ const Subtitle = styled.p`
   margin: 0;
   margin-top: 0.5rem;
   color: #333;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: 400;
 
   font-family: AppleSDGothicNeoM00;

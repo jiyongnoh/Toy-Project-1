@@ -143,11 +143,11 @@ export default function Nav() {
       // { href: '/test_pt', label: t('pt') },
       // { href: '/consult_intro', label: t('consult') },
       // { href: '/review', label: t('review') },
-      { href: '/meditation_intro', label: t('meditation_intro') },
+      // { href: '/meditation_intro', label: t('meditation_intro') },
       { href: '/shop', label: t('shop') },
       { href: '/mypage', label: t('mypage') },
-      { href: '/test_pt/result', label: '성격검사 결과' },
-      { href: '/soyes/ebt_result', label: '정서행동검사 결과' },
+      // { href: '/test_pt/result', label: '성격검사 결과' },
+      // { href: '/soyes/ebt_result', label: '정서행동검사 결과' },
     ],
     [t]
   );

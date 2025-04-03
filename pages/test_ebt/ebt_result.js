@@ -1,19 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-import { handleEbtResult } from '@/fetchAPI';
+import { handleEbtResult } from '@/fetchAPI/testAPI';
 
 // 아바타 관련 전역 변수
 import { useRecoilState } from 'recoil';
-import { log, mobile } from '../../store/state';
+import { log } from '../../store/state';
 import { useRouter } from 'next/router';
 
-import { useTranslation } from 'next-i18next';
+// import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 import EBTResultModal from '@/component/Test_Component/EBTResultModal';
 import EBTResultCard from '@/component/Test_Component/EBTResultCard';
+
 const ebtCardInfoArr = [
   {
     ebt_class: 'Overall',
@@ -129,14 +130,10 @@ export default function Test() {
   // EBT 결과 배열 Load Method
   const ebtResultLoad = async () => {
     // 유저 EBT 결과 조회 (11종)
-    const data = await handleEbtResult(
-      {
-        pUid: `${localStorage.getItem('id')}`,
-        contentKey: true,
-        // pKeyValue: 12,
-      },
-      '/openAI/ebtresult'
-    );
+    const data = await handleEbtResult({
+      pUid: `${localStorage.getItem('id')}`,
+      contentKey: true,
+    });
 
     setEbtDataArr([...data.message]);
   };

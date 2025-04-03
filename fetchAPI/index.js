@@ -333,34 +333,6 @@ export const handleConsultLogSave = async (input, path) => {
   }
 };
 
-// 정서행동 검사 (11종) 결과 반환 API 호출 함수
-export const handleEbtResult = async (input, path) => {
-  console.log('Ebt Result 호출');
-  //console.log(input, path);
-  try {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_URL}${path}`,
-      { EBTData: input },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      }
-    );
-    // console.log(response);
-    return response.data;
-  } catch (err) {
-    console.log('Gpt API 호출 실패');
-    console.error(err);
-    return {
-      status: err.response.status,
-      message: '미안해 지금은 대화가 힘들어...조금 뒤에 다시 말해줄래?',
-      emotion: 0,
-    };
-  }
-};
-
 // 캘린더 데이터 반환 API 호출 함수
 export const handleCalendarResult = async (input) => {
   console.log('Calendar Result API 호출');

@@ -1,9 +1,9 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { uid } from '../store/state';
 
-import { useTranslation } from 'next-i18next';
+// import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Calendar from '@/component/MyPage_Component/Calendar';
 import MyInfo from '@/component/MyPage_Component/MyInfo';
@@ -14,9 +14,9 @@ export default function MyPage() {
   const [date, setDate] = useState('1999-01-01');
   const [userId, setUserId] = useRecoilState(uid);
 
-  useEffect(() => {
-    console.log(date);
-  }, [date]);
+  // useEffect(() => {
+  //   console.log(date);
+  // }, [date]);
 
   return (
     <MainContainer>
