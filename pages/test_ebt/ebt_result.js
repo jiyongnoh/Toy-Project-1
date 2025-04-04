@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { handleEbtResult } from '@/fetchAPI/testAPI';
 
 // 아바타 관련 전역 변수
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { log } from '../../store/state';
 import { useRouter } from 'next/router';
 
@@ -109,8 +109,7 @@ export default function Test() {
   const [ebtClassData, setEbtClassData] = useState({ content: 'default' });
 
   // 전역 변수
-  const [login, setLogin] = useRecoilState(log);
-
+  const login = useRecoilValue(log);
   const router = useRouter();
 
   const handleEbtClassData = (ebt_class) => {
@@ -129,13 +128,31 @@ export default function Test() {
 
   // EBT 결과 배열 Load Method
   const ebtResultLoad = async () => {
-    // 유저 EBT 결과 조회 (11종)
-    const data = await handleEbtResult({
-      pUid: `${localStorage.getItem('id')}`,
-      contentKey: true,
-    });
+    try {
+      // 유저 EBT 결과 조회 (11종)
+      const data = await handleEbtResult({
+        pUid: `${localStorage.getItem('id')}`,
+        contentKey: true,
+      });
 
-    setEbtDataArr([...data.message]);
+      // Error Handling
+      if (data.status !== 200) {
+        alert('성격검사 데이터 로드 실패');
+        router.back();
+      }
+
+      const ebtResult = data.data.message;
+
+      // Non PtResult Data
+      if (ebtResult.length === 0) {
+        alert('정서행동검사를 실시해주세요!');
+        router.back();
+      }
+
+      setEbtDataArr([...ebtResult]);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   useEffect(() => {

@@ -90,7 +90,7 @@ export const handleEbtResult = async (input) => {
       }
     );
     // console.log(response);
-    return response.data;
+    return response;
   } catch (err) {
     console.log('Gpt API 호출 실패');
     console.error(err);
@@ -124,7 +124,8 @@ export const handleCtAnalsys = async (input) => {
     };
   }
 };
-// #TODO: 결과보고서 전송 API 호출 함수
+
+// 결과보고서 전송 API 호출 함수
 export const handleReportResult = async (input) => {
   //console.log(input, path);
   try {
